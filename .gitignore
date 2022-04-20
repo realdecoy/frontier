@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Coverage and Testing
+test-results/
+
+# Build Artifacts
+build/
+dist/
+lib/
+module/
+esnext/
+types/
+
+
+# Misc
+.DS_Store
+lerna-debug.log
+yarn-error.log 

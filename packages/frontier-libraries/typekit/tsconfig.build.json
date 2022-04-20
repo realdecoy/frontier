@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "types",
+    "isolatedModules": false,
+    "outDir": "esnext"
+  },
+  "exclude": [
+    "**/*spec.ts",
+    "**/setupTests.ts",
+  ]
+}

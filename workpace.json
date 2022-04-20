@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "projects": {
+    "@frontier/cli": {
+      "root": "packages/frontier-core/cli",
+      "type": "library"
+    },
+    "@frontier/lib-builder": {
+      "root": "packages/frontier-core/lib-builder",
+      "type": "library"
+    },
+    "@frontier/types": {
+      "root": "packages/frontier-libraries/typekit",
+      "type": "library"
+    },
+    "@frontier/stdlib": {
+      "root": "packages/frontier-libraries/stdlib",
+      "type": "library"
+    }
+  }
+}

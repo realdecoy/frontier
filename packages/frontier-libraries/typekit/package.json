@@ -1,0 +1,44 @@
+{
+  "name": "@frontier/typekit",
+  "version": "1.0.0",
+  "description": "Useful and relevant types",
+  "license": "UNLICENSED",
+  "author": "Gareth Thomas <oforevergareth@gmail.com>",
+  "homepage": "",
+  "main": "dist/index.js",
+  "module": "module/index.js",
+  "files": [
+    "dist/",
+    "module/",
+    "types/"
+  ],
+  "scripts": {
+    "build": "build-package",
+    "build:watch": "build-package --watch",
+    "clean": "rimraf dist esnext module types",
+    "fix": "run-s lint:es:fix lint:md:fix",
+    "lint": "run-s lint:es lint:md",
+    "lint:es": "cross-env LOCAL_TS=1 eslint --ignore-path ../../../.eslintignore \"**/*\"",
+    "lint:es:fix": "yarn lint:es --fix",
+    "lint:md": "yarn prettier \"**/*.md\" --check",
+    "lint:md:fix": "yarn prettier \"**/*.md\" --write",
+    "rebuild": "run-s clean build",
+    "typecheck": "tsc --noEmit"
+  },
+  "sideEffects": false,
+  "types": "types/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.15.0"
+  },
+  "devDependencies": {
+    "@frontier/lib-builder": "^1.0.0"
+  },
+  "browserslist": [
+    "chrome 38",
+    "ios >= 9"
+  ],
+  "engines": {
+    "node": "~16.13.2",
+    "yarn": "^1.22.18"
+  }
+}

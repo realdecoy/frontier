@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "es2015",
+      "es2016.array.include",
+      "es2017.object"
+    ],
+    "allowJs": false,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "alwaysStrict": true,
+    "removeComments": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "jsx": "preserve",
+
+  },
+  "files": [
+
+  ],
+  "include": [
+
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}
