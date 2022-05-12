@@ -15,5 +15,10 @@ types/
 
 # Misc
 .DS_Store
-lerna-debug.log
-yarn-error.log 
+*-debug.log
+*-error.log
+
+# OCLIF CLI related
+/.nyc_output
+/tmp
+oclif.manifest.json

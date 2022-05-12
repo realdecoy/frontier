@@ -1,3 +1,1 @@
-export function whereDoesYourCodeGo(): string {
-  return 'here!';
-}
+export {run} from '@oclif/core'

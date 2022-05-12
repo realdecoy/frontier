@@ -10,7 +10,7 @@ module.exports = function(env = {}) {
     mode: 'production',
     entry: resolve(__dirname, 'esnext', 'index'),
     resolve: {
-      extensions: ['.js' ],
+      extensions: ['.js'],
     },
     externals: [
       nodeExternals(nodeExternalsOpts),

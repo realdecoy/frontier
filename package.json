@@ -1,10 +1,10 @@
 {
-  "name": "@frontier",
+  "name": "frontier",
   "private": true,
   "version": "1.0.0",
   "description": "Realdecoy Labs Shared Libraries",
   "main": "index.js",
-  "author": "Realdecoy <oforevergareth@gmail.com>",
+  "author": "Realdecoy",
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
@@ -27,6 +27,7 @@
     "@types/jest": "^27.4.1",
     "babel-loader": "^8.2.4",
     "core-js": "^3.22.0",
+    "eslint": "^8.13.0",
     "jest": "^27.5.1",
     "jest-fetch-mock": "^3.0.3",
     "lerna": "^4.0.0",
@@ -39,7 +40,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
-    "eslint": "^8.13.0",
     "husky": "^7.0.4",
     "node-notifier": "^10.0.1",
     "nodemon": "^2.0.15",
