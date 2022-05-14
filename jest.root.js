@@ -21,7 +21,7 @@ module.exports = function (opts) {
     ],
     notify: true,
     transform: {
-      'ts': "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      'ts': 'ts-jest',
     },
     testRegex: '.*\\.spec\\.ts$',
     timers: 'modern',
