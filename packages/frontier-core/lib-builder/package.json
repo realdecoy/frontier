@@ -1,5 +1,5 @@
 {
-  "name": "@frontier/lib-builder",
+  "name": "@rdfrontier/lib-builder",
   "version": "1.0.0",
   "description": "Builds TS packages into tree-shaking compatible npm modules",
   "license": "UNLICENSED",

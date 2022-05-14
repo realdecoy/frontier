@@ -1,5 +1,5 @@
 {
-  "name": "@frontier/stdlib",
+  "name": "@rdfrontier/stdlib",
   "version": "1.0.0",
   "description": "stdlib functionality",
   "license": "UNLICENSED",
@@ -38,7 +38,7 @@
     "type-fest": "^2.3.4"
   },
   "devDependencies": {
-    "@frontier/lib-builder": "^1.0.0"
+    "@rdfrontier/lib-builder": "^1.0.0"
   },
   "browserslist": [
     "chrome 38",

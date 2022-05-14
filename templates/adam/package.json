@@ -37,7 +37,7 @@
     "@babel/runtime": "^7.15.0"
   },
   "devDependencies": {
-    "@frontier/lib-builder": "^1.0.0"
+    "@rdfrontier/lib-builder": "^1.0.0"
   },
   "browserslist": [
     "chrome 38",

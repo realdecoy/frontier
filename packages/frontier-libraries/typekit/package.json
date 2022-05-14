@@ -1,5 +1,5 @@
 {
-  "name": "@frontier/typekit",
+  "name": "@rdfrontier/typekit",
   "version": "1.0.0",
   "description": "Useful and relevant types",
   "license": "UNLICENSED",
@@ -31,14 +31,14 @@
     "@babel/runtime": "^7.15.0"
   },
   "devDependencies": {
-    "@frontier/lib-builder": "^1.0.0"
+    "@rdfrontier/lib-builder": "^1.0.0"
   },
   "browserslist": [
     "chrome 38",
     "ios >= 9"
   ],
   "engines": {
-    "node": "~16.13.1",
+    "node": "^16.13.1",
     "yarn": "^1.22.18"
   }
 }

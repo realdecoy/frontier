@@ -1,19 +1,19 @@
 {
   "version": 2,
   "projects": {
-    "@frontier/cli": {
+    "@rdfrontier/cli": {
       "root": "packages/frontier-core/cli",
       "type": "library"
     },
-    "@frontier/lib-builder": {
+    "@rdfrontier/lib-builder": {
       "root": "packages/frontier-core/lib-builder",
       "type": "library"
     },
-    "@frontier/types": {
+    "@rdfrontier/types": {
       "root": "packages/frontier-libraries/typekit",
       "type": "library"
     },
-    "@frontier/stdlib": {
+    "@rdfrontier/stdlib": {
       "root": "packages/frontier-libraries/stdlib",
       "type": "library"
     }
