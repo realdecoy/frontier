@@ -18,12 +18,15 @@
     "build": "yarn && run-s build:packages build:finish",
     "build:finish": "notify -t \"Frontier\" -m \"All packages rebuilt\"",
     "build:packages": "lerna run rebuild --stream",
-    "precommit": "test && lint-staged"
+    "precommit": "test && lint-staged",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@commitlint/cli": "^16.3.0",
+    "@commitlint/config-conventional": "^16.2.4",
     "@types/jest": "^27.4.1",
     "babel-loader": "^8.2.4",
     "core-js": "^3.22.0",
@@ -58,8 +61,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "prettier --write --no-semi --single-quote ",
-      "git add"
+      "prettier --write --no-semi --single-quote "
     ]
   }
 }
