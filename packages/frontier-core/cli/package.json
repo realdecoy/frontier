@@ -1,13 +1,13 @@
 {
   "name": "@rdfrontier/cli",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Frontier: Software Development Toolkit",
   "author": "Realdecoy Labs",
   "bin": {
     "frontier": "./bin/run"
   },
   "homepage": "https://github.com/realdecoy/frontier",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "main": "dist/index.js",
   "files": [
     "/bin",
@@ -40,6 +40,7 @@
   "oclif": {
     "bin": "frontier",
     "dirname": "frontier",
+    "scope": "rdfrontier",
     "commands": "./dist/commands",
     "helpClass": "./dist/help",
     "plugins": [
@@ -50,13 +51,24 @@
     }
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
-    "buildx": "build-package",
-    "lint": "eslint . --ext .ts --config .eslintrc",
-    "postpack": "shx rm -f oclif.manifest.json",
-    "posttest": "yarn lint",
-    "prepack": "yarn build && oclif manifest && oclif readme",
-    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "build": "build-package",
+    "build:watch": "build-package --watch",
+    "clean": "rimraf dist esnext module types lib",
+    "rebuild": "run-s clean build && oclif-dev manifest",
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --ci --coverage",
+    "test:coverage": "run-s test:ci test:coverage:open",
+    "test:coverage:open": "open ./test-results/index.html",
+    "test:watch": "jest --watch",
+    "lint": "run-s lint:es lint:md",
+    "lint:es": "eslint --ignore-path ../../../.eslintignore \"**/*\"",
+    "lint:es:ci": "yarn lint:es --format",
+    "lint:es:fix": "yarn lint:es --fix",
+    "lint:md": "yarn prettier \"**/*.md\" --check",
+    "lint:md:fix": "yarn prettier \"**/*.md\" --write",
+    "lint:ts:fix": "yarn prettier \"**/*.ts\" --write",
+    "postpack": "rimraf oclif.manifest.json",
+    "prepack": "rimraf lib && rimraf oclif.manifest.json && rimraf tsconfig.tsbuildinfo && tsc -b && oclif-dev manifest",
     "version": "oclif readme && git add README.md"
   },
   "engines": {

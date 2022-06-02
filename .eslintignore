@@ -7,6 +7,8 @@
 **/dist/*
 **/esnext/*
 **/module/*
+**/test-results/*
+**/bin/*
 
 # unlintable file types
 *.csv

@@ -1,9 +1,9 @@
 {
   "name": "@rdfrontier/typekit",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Useful and relevant types",
   "license": "UNLICENSED",
-  "author": "Gareth Thomas <oforevergareth@gmail.com>",
+  "author": "Realdecoy",
   "homepage": "",
   "main": "dist/index.js",
   "module": "module/index.js",

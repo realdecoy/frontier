@@ -1,6 +1,6 @@
 const configurator = require('../../../babel.root');
 
-module.exports = (api) => {
+module.exports = api => {
   api.cache.using(() => process.env.NODE_ENV);
 
   const envConfig = {

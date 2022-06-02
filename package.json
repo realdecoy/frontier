@@ -57,7 +57,10 @@
     "packages": [
       "packages/**"
     ],
-    "nohoist": []
+    "nohoist": [
+      "packages/frontier-plugins/plugin-qa/template/mobile-project-template",
+      "packages/frontier-plugins/plugin-qa/template/project-template"
+    ]
   },
   "lint-staged": {
     "src/**/*.ts": [

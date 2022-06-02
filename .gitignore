@@ -12,6 +12,8 @@ module/
 esnext/
 types/
 
+/test-projects
+/rdv-*
 
 # Misc
 .DS_Store
@@ -22,3 +24,4 @@ types/
 /.nyc_output
 /tmp
 oclif.manifest.json
+tsconfig.tsbuildinfo

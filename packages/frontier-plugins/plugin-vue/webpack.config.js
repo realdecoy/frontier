@@ -5,7 +5,7 @@ const { name: library } = require('./package.json');
 
 const nodeExternalsOpts = {};
 
-module.exports = function (env = {}) {
+module.exports = function(env = {}) {
   return {
     mode: 'production',
     entry: resolve(__dirname, 'esnext', 'index'),
