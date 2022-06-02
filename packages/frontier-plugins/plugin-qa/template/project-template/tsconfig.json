@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "moduleResolution": "node",  
+      "types": [
+          "node",
+          "webdriverio/async",
+          "@wdio/mocha-framework",
+          "mocha",
+          "expect-webdriverio"
+      ],
+      "target": "ES5",
+      "baseUrl": "src",
+      "paths": {
+      "@/page_objects/*": [
+        "page_objects/*"
+      ],
+      "@/assets/*": [
+        "@/assets/*"
+      ]
+    }
+  }
+}
