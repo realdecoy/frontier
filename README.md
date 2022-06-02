@@ -43,17 +43,17 @@ Frontier brings together engineering standards across disciplines for ease of us
 
 | Name | Package | Status | 
 | --- | --- | --- |
-| Backend           | `@rdfrontier/plugins-backend`      | Pre-Technical Proposal |
-| Spring Boot       | `@rdfrontier/plugins-java`         | Pre-Technical Proposal |
-| Javascript        | `@rdfrontier/plugins-js`           | Pre-Technical Proposal |
-| .Net              | `@rdfrontier/plugins-dotnet`       | Pre-Technical Proposal |
-| Frontend          | `@rdfrontier/plugins-frontend`     | Pre-Technical Proposal |
-| Vue               | `@rdfrontier/plugins-vue`          | Ready                  |
-| React             | `@rdfrontier/plugins-react`        | Pre-Technical Proposal |
-| QA                | `@rdfrontier/plugins-qa`           | Ready                  |
-| Mobile            | `@rdfrontier/plugins-mobile`       | Pre-Technical Proposal |
-| React Native      | `@rdfrontier/plugins-react-native` | Technical Proposal     |
-| Infrastructure    | `@rdfrontier/plugins-iac`          | Pre-Technical Proposal |
+| Backend           | `@rdfrontier/plugin-backend`      | Pre-Technical Proposal |
+| Spring Boot       | `@rdfrontier/plugin-java`         | Pre-Technical Proposal |
+| Javascript        | `@rdfrontier/plugin-js`           | Pre-Technical Proposal |
+| .Net              | `@rdfrontier/plugin-dotnet`       | Pre-Technical Proposal |
+| Frontend          | `@rdfrontier/plugin-frontend`     | Pre-Technical Proposal |
+| Vue               | `@rdfrontier/plugin-vue`          | Ready                  |
+| React             | `@rdfrontier/plugin-react`        | Pre-Technical Proposal |
+| QA                | `@rdfrontier/plugin-qa`           | Ready                  |
+| Mobile            | `@rdfrontier/plugin-mobile`       | Pre-Technical Proposal |
+| React Native      | `@rdfrontier/plugin-react-native` | Technical Proposal     |
+| Infrastructure    | `@rdfrontier/plugin-iac`          | Pre-Technical Proposal |
 
 &nbsp;
 &nbsp;
