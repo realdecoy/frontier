@@ -1,5 +1,5 @@
 
-const path = require('path')
+const path = require('path') 
 
 export const CONSTANTS = {
   TEMPLATE_REGEX: /project-([a-zA-Z]+)/g,

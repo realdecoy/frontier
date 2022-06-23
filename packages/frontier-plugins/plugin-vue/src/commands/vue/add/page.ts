@@ -2,9 +2,9 @@ import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
-import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parsePageName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
+import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../utils/files';
+import { checkProjectValidity, parsePageName, toKebabCase, toPascalCase, isJsonString } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
 
 const TEMPLATE_FOLDERS = ['page'];
 const CUSTOM_ERROR_MESSAGES = [
