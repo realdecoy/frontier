@@ -2660,6 +2660,18 @@
     "shelljs" "^0.8.4"
     "tslib" "^1.14.1"
 
+"@rdfrontier/plugin-shared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\plugin-shared":
+  "resolved" "file:packages/frontier-plugins/plugin-shared"
+  "version" "0.0.2"
+  dependencies:
+    "@oclif/command" "^1.8.0"
+    "@oclif/config" "^1.17.0"
+    "@oclif/plugin-help" "^3.2.2"
+    "chalk" "^4.1.1"
+    "replace-in-file" "^6.2.0"
+    "shelljs" "^0.8.4"
+    "tslib" "^1.14.1"
+
 "@rdfrontier/plugin-vue@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\plugin-vue":
   "resolved" "file:packages/frontier-plugins/plugin-vue"
   "version" "1.0.0"
