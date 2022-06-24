@@ -6,10 +6,10 @@ import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
-import { injectImportsIntoMain } from '../../../lib/plugins';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../utils/files';
+import { checkProjectValidity, isJsonString } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE } from '../../../utils/constants';
+import { injectImportsIntoMain } from '../../../utils/plugins';
 import { Route } from '../../../modules/manifest';
 
 const TEMPLATE_FOLDERS = ['buefy'];

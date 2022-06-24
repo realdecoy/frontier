@@ -1,7 +1,7 @@
 import { Help } from '@oclif/plugin-help';
 import { Command, Topic } from '@oclif/config';
 import chalk from 'chalk';
-import { log } from './lib/stdout';
+import { log } from './utils/stdout';
 
 export default class MyHelpClass extends Help {
   // acts as a 'router'
