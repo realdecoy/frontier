@@ -3,34 +3,60 @@ import { expect, test } from '@oclif/test';
 import { CLI_COMMANDS } from '../src/utils/constants';
 import { exec } from 'child_process';
 
-const skipPresets = '--skipPresets';
-const testProjectName = 'rdv-component-test';
-const testComponentName = 'hello-world';
-const { log } = console;
+import { validityFailed, addFunction } from '../src/functions/addelement'
+import { checkProjectValidity } from '../src/utils/utilities';
 
-describe(CLI_COMMANDS.AddComponent, () => {
+
+describe('test project validity check function', () => {
   test
-    .stdout()
-    .command([CLI_COMMANDS.AddComponent])
-    .it(`runs rdvue ${CLI_COMMANDS.AddComponent} ${testComponentName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddComponent} command must be run in an existing rdvue project`);
-    });
+  .stdout()
+  .it("should pass if a project-invalid error was thrown",  async function () {
+    const testinput = 'an error was thrown';
+    // const error = Error("This is an error")
+    const { isValid: isValidProject, projectRoot } = checkProjectValidity();
+    // block command unless being run within an rdvue project
+    try {
+      if (isValidProject === false) {
+        validityFailed(CLI_COMMANDS.AddComponent);
+      }
+    } catch (error) {
+      let err;
+      interface errorStructure {
+        code: string;
+        message: string;
+      }
+      if (error instanceof Error) err = error.message
+      let invalidProject: errorStructure = JSON.parse(`${err}`);
+      expect(invalidProject.code).equal('project-invalid')
+      console.log(error)
+    }
+  })
+})
 
-  test
-    .stdout()
-    .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
-    .do(() => process.chdir(testProjectName))
-    .command([CLI_COMMANDS.AddComponent, testComponentName])
-    .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddComponent} ${testComponentName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] component added: ${testComponentName}`);
-    });
 
-  // after(() => {
-  //   exec(`rm -r ${testProjectName}`, error => {
-  //     if (error) {
-  //       log(`error: ${error.message}`);
-  //     }
-  //   });
-  // });
-});
+//This test id not completed so it will not work
+// describe('test the catch function', () => {
+//   test
+//   .stdout()
+//   .it("should pass if template file missing error was thrown",  async function () {
+//     const testinput = 'an error was thrown';
+//     // const error = Error("This is an error")
+//     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
+//     const TEMPLATE_FOLDERS: string[] = ['component'];
+//     const args : {} = {name: "randomname"};
+    
+//     try {
+//       addFunction(TEMPLATE_FOLDERS, args, projectRoot)
+//     } catch (error) {
+//       let err;
+//       interface errorStructure {
+//         code: string;
+//         message: string;
+//       }
+//       if (error instanceof Error) err = error.message
+//       let invalidProject: errorStructure = JSON.parse(`${err}`);
+//       expect(invalidProject.code).equal('missing-template-file')
+//     }
+//   })
+
+// })

@@ -126,6 +126,7 @@ export default class Localization extends Command {
     await copyFiles(sourceDirectory, installDirectory, files);
     await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), DYNAMIC_OBJECTS.Routes);
     await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), DYNAMIC_OBJECTS.Options, true);
+    
     if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
       const { imports: mainImports, modules: mainModules } = config.manifest.main;
       injectImportsIntoMain(projectRoot, mainImports);

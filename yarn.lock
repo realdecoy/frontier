@@ -3031,11 +3031,6 @@
   "resolved" "https://registry.npmjs.org/@types/node/-/node-17.0.24.tgz"
   "version" "17.0.24"
 
-"@types/node@^10.17.55":
-  "integrity" "sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-10.17.60.tgz"
-  "version" "10.17.60"
-
 "@types/node@^10.17.60":
   "integrity" "sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-10.17.60.tgz"
