@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../src/utils/constants';
+import { CLI_COMMANDS } from '../src/utils/constants';
 import { exec } from 'child_process';
 
 const skipPresets = '--skipPresets';
@@ -26,11 +26,11 @@ describe(CLI_COMMANDS.AddComponent, () => {
       expect(ctx.stdout).to.contain(`[rdvue] component added: ${testComponentName}`);
     });
 
-  after(() => {
-    exec(`rm -r ${testProjectName}`, error => {
-      if (error) {
-        log(`error: ${error.message}`);
-      }
-    });
-  });
+  // after(() => {
+  //   exec(`rm -r ${testProjectName}`, error => {
+  //     if (error) {
+  //       log(`error: ${error.message}`);
+  //     }
+  //   });
+  // });
 });
