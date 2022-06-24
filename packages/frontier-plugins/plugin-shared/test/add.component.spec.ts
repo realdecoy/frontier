@@ -3,7 +3,7 @@ import { expect, test } from '@oclif/test';
 import { CLI_COMMANDS } from '../src/utils/constants';
 import { exec } from 'child_process';
 
-import { validityFailed, addFunction } from '../src/functions/addelement'
+import { validityFailed, addElementFunction } from '../src/functions/addelement'
 import { checkProjectValidity } from '../src/utils/utilities';
 
 
@@ -46,7 +46,7 @@ describe('test project validity check function', () => {
 //     const args : {} = {name: "randomname"};
     
 //     try {
-//       addFunction(TEMPLATE_FOLDERS, args, projectRoot)
+//       addElementFunction(TEMPLATE_FOLDERS, args, projectRoot)
 //     } catch (error) {
 //       let err;
 //       interface errorStructure {

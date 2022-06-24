@@ -65,7 +65,6 @@ export default class Buefy extends Command {
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
     const config = configs[0];
-    const files: Array<string | Files> = config.manifest.files;
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
