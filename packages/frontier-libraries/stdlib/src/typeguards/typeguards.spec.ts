@@ -1,4 +1,4 @@
-import { isBoolean, isNumber, isNumberArray, isString, isStringArray } from '.';
+import { isBoolean, isNumber, isNumberArray, isString, isStringArray, isJsonString } from '.';
 
 const booleans = [true, false];
 const numbers = [-1, 0, 1, Infinity, NaN];
@@ -19,6 +19,12 @@ const stringArrays = {
   wrapped: [[['a']], [['a', 'b', 'c']]],
 };
 const others = [['a', 1], {}, { a: 1 }, undefined, null];
+
+const jsonStrings = [
+  `{ "letter": "a", "number": 1, "color": "blue" }`,
+  `{ "letter": "b", "number": 2, "color": "red"}`,
+  `{ "character": " ", "number": NaN, "color": "brown"}`
+]
 
 describe(isBoolean, () => {
   it.each(booleans)('accepts %p', (target: unknown) => {
@@ -108,3 +114,22 @@ describe(isStringArray, () => {
     expect(isStringArray(target)).toBeFalsy();
   });
 });
+
+//Write test for isJsonString
+//Rewite test
+// describe(isJsonString, () => {
+//   it.each(jsonStrings)('accepts %p', (target: string) => {
+//     expect(isJsonString(target)).toBeTruthy();
+//   });
+
+//   it.each([
+//     ...booleans,
+//     ...strings,
+//     ...emptyArray.unwrapped,
+//     ...numberArrays.unwrapped,
+//     ...stringArrays.unwrapped,
+//     ...others,
+//   ])('rejects %p', (target: string) => {
+//     expect(isJsonString(target)).toBeFalsy();
+//   });
+// });

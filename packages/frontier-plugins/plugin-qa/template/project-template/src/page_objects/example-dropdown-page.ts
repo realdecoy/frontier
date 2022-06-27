@@ -1,7 +1,7 @@
 import BasePage from './page'
 
 class DropdownPage extends BasePage {
-    get open() {
+    open() {
         return browser.url('/dropdown');
     }
 

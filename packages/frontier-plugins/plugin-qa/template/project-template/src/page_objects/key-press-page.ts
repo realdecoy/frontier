@@ -1,7 +1,7 @@
 import BasePage from './page'
 
 class KeyPressPage extends BasePage {
-    get open() {
+    open() {
         return browser.url('/key_presses');
     }
 
