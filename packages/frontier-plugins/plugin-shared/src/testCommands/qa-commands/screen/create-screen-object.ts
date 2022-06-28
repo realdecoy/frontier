@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 import path from 'path'
 import {Command, flags} from '@oclif/command'
-import { CONSTANTS } from '../../qautils/constants'
-import { copyScreenObjectFile, updateScreenObjectFile, updateFileName } from '../../qautils/files'
-import { checkIfProjectIsValid } from '../../qautils/utilities'
-import { successResponseFile } from '../../functions/response'
+import { CONSTANTS } from '../../../qautils/constants'
+import { copyScreenObjectFile, updateScreenObjectFile, updateFileName } from '../../../qautils/files'
+import { checkIfProjectIsValid } from '../../../qautils/utilities'
+import { successResponseFile } from '../../../functions/response'
 
 const { SCREEN_OBJECT_REGEX } = CONSTANTS
 

@@ -11,5 +11,5 @@ export function successResponseFile(successfulReplace: boolean, elementName: str
 }
 
 export function successResponseProject(successfulReplace: boolean, elementName: string, elementType: string): string {
-    return ""
+    return `This ${successfulReplace} ${elementName}, ${elementType}`
 }

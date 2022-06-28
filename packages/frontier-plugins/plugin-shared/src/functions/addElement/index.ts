@@ -1,20 +1,9 @@
 import path from 'path';
 import chalk from 'chalk';
-import { Files } from '../modules';
-import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../utils/files';
-import { toKebabCase, toPascalCase} from '../utils/utilities';
+import { Files } from '../../modules';
+import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../utils/files';
+import { toKebabCase, toPascalCase} from '../../utils/utilities';
 
-
-
-export function validityFailed(commandType: string): Promise<void> {
-    // block command unless being run within an rdvue project
-    throw new Error(
-    JSON.stringify({
-        code: 'project-invalid',
-        message: `${commandType} command must be run in an existing ${chalk.yellow('rdvue')} project`,
-    }),
-    );
-}
 
 // override Command class error handler
 export async function addElementFunction(TEMPLATE_FOLDERS: string[], projectRoot: string, elementName: string): Promise<void> {

@@ -19,6 +19,7 @@ types/
 .DS_Store
 *-debug.log
 *-error.log
+.rdvue/
 
 # OCLIF CLI related
 /.nyc_output

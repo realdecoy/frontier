@@ -1,9 +1,9 @@
 import path from 'path';
 import chalk from 'chalk';
-import { Files } from '../modules';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../utils/files';
-import { injectImportsIntoMain } from '../utils/plugins';
-import { Route } from '../modules/manifest';
+import { Files } from '../../modules';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../utils/files';
+import { injectImportsIntoMain } from '../../utils/plugins';
+import { Route } from '../../modules/manifest';
 
 
 
