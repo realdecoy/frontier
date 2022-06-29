@@ -18,7 +18,7 @@ describe('test the catch function', () => {
     const args : {} = {name: "randomname"};
     
     try {
-      addElementFunction(TEMPLATE_FOLDERS, projectRoot, "component")
+      await addElementFunction(TEMPLATE_FOLDERS, projectRoot, "component")
     } catch (error) {
       let err;
       interface errorStructure {

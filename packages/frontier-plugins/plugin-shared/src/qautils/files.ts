@@ -3,8 +3,8 @@
 const replace = require('replace-in-file')
 import fs from 'fs'
 import path from 'path'
-import { PAGE_OBJECT_REPLACEMENT_FILE, SCREEN_OBJECT_REPLACEMENT_FILE, TEST_REPLACEMENT_FILE, IOS_MOBILE_ROOT_PROJECT_FILE, ANDROID_MOBILE_ROOT_PROJECT_FILE, ROOT_PROJECT_FILE} from '../utils/constants'
-import {checkIfProjectExists} from '../utils/utilities'
+import { PAGE_OBJECT_REPLACEMENT_FILE, SCREEN_OBJECT_REPLACEMENT_FILE, TEST_REPLACEMENT_FILE, IOS_MOBILE_ROOT_PROJECT_FILE, ANDROID_MOBILE_ROOT_PROJECT_FILE, ROOT_PROJECT_FILE} from './constants'
+import {checkIfProjectExists} from './utilities'
 
 /**
  * Description: Replace content in list of files based on configs passed in

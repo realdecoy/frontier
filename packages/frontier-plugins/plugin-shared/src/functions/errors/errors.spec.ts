@@ -7,6 +7,10 @@ import { checkProjectValidity } from '../../utils/utilities';
 
 
 describe('test project validity check function', () => {
+  beforeEach(() => {
+    jest.setTimeout(20000) 
+  });
+  
   test
   .stdout()
   .it("should pass if a project-invalid error was thrown",  async function () {

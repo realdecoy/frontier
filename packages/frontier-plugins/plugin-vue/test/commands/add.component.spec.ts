@@ -2,6 +2,7 @@
 import {expect, test} from '@oclif/test'
 import { CLI_COMMANDS } from '../../src/utils/constants';
 import { exec } from 'child_process';
+import Component from '../../src/commands/vue/add/component'
 
 const skipPresets = '--skipPresets';
 const testProjectName = 'rdv-component-test';

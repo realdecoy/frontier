@@ -6,7 +6,7 @@ export function successResponseFile(successfulReplace: boolean, elementName: str
     // Output message saying project is ready
         return (chalk.blue(`File ${elementName} is ready!`))
     } else {
-        return (chalk.red(`There was a issue in making your ${elementType} !`))
+        return (chalk.red(`There was a issue in making your ${elementType} file!`))
     }
 }
 
