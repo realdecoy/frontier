@@ -11,9 +11,9 @@ import { CLI_COMMANDS, CLI_STATE } from '../utils/constants';
 import { injectImportsIntoMain } from '../utils/plugins';
 import { Route } from '../modules/manifest';
 
-// import { validityFailed } from '../functions/errors';
-import catchFunction from '../functions/vue-functions/catch';
-import { addPluginFunction } from '../functions/vue-functions/addPlugin';
+import { validityFailed } from '../functions/errors';
+import catchFunction from '../functions/catch';
+import { addPluginFunction } from '../functions/addPlugin';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -53,8 +53,7 @@ export default class Buefy extends Command {
 
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
-        // validityFailed(CLI_COMMANDS.PluginBuefy);
-        console.log("pass")
+        validityFailed(CLI_COMMANDS.PluginBuefy);
 
     } else if (hasProjectName) {
         const dir = path.join(process.cwd(), projectName ?? '');

@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import { parseModuleConfig } from '../../../utils/files';
 import { checkProjectValidity, parseStoreModuleName, toKebabCase } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import catchFunction from '../../../functions/vue-functions/catch';
-import { addElementFunction } from '../../../functions/vue-functions/addElement';
-// import { validityFailed } from '../../../functions/errors';
+import catchFunction from '../../../functions/catch';
+import { addElementFunction } from '../../../functions/addElement';
+import { validityFailed } from '../../../functions/errors';
 
 const TEMPLATE_FOLDERS = ['store'];
 const CUSTOM_ERROR_CODES = [
@@ -36,8 +36,7 @@ export default class StoreModule extends Command {
 
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-        // validityFailed(CLI_COMMANDS.AddStore);
-        console.log("pass")
+        validityFailed(CLI_COMMANDS.AddStore);
     }
 
     const { args } = this.parse(StoreModule);

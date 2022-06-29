@@ -2,9 +2,9 @@ import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
 import { checkProjectValidity, parseComponentName, toKebabCase } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import catchFunction from '../../../functions/vue-functions/catch';
-import { addElementFunction } from '../../../functions/vue-functions/addElement'
-// import { validityFailed } from '../../../../../../frontier-libraries/frontier-shared/src/errors/index';
+import catchFunction from '../../../functions/catch';
+import { addElementFunction } from '../../../functions/addElement'
+import { validityFailed } from '../../../functions/errors';
 
 const TEMPLATE_FOLDERS = ['component'];
 
@@ -29,8 +29,7 @@ export default class Component extends Command {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-      // validityFailed(CLI_COMMANDS.AddComponent);
-      console.log("pass")
+      validityFailed(CLI_COMMANDS.AddComponent);
     }
     
 

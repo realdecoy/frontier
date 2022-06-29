@@ -2676,6 +2676,13 @@
     "@oclif/plugin-help" "^5"
     "@oclif/plugin-plugins" "^2.0.1"
 
+"@rdfrontier/frontier-shared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\frontier-shared":
+  "resolved" "file:packages/frontier-libraries/frontier-shared"
+  "version" "32.0.0"
+  dependencies:
+    "@babel/runtime" "^7.15.0"
+    "type-fest" "^2.3.4"
+
 "@rdfrontier/lib-builder@^1.0.0", "@rdfrontier/lib-builder@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-core\\lib-builder":
   "resolved" "file:packages/frontier-core/lib-builder"
   "version" "1.0.0"
@@ -2738,6 +2745,18 @@
   dependencies:
     "@babel/runtime" "^7.15.0"
     "type-fest" "^2.3.4"
+
+"@rdfrontier/testshared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\testShare":
+  "resolved" "file:packages/frontier-plugins/testShare"
+  "version" "0.0.2"
+  dependencies:
+    "@oclif/command" "^1.8.0"
+    "@oclif/config" "^1.17.0"
+    "@oclif/plugin-help" "^3.2.2"
+    "chalk" "^4.1.1"
+    "replace-in-file" "^6.2.0"
+    "shelljs" "^0.8.4"
+    "tslib" "^1.14.1"
 
 "@rdfrontier/typekit@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\typekit":
   "resolved" "file:packages/frontier-libraries/typekit"
@@ -15251,9 +15270,9 @@
   "version" "0.8.1"
 
 "type-fest@^2.3.4":
-  "integrity" "sha512-qt6ylCGpLjZ7AaODxbpyBZSs9fCI9SkL3Z9q2oxMBQhs/uyY+VD8jHA8ULCGmWQJlBgqvO3EJeAngOHD8zQCrQ=="
-  "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-2.12.2.tgz"
-  "version" "2.12.2"
+  "integrity" "sha512-hQnTQkFjL5ik6HF2fTAM8ycbr94UbQXK364wF930VHb0dfBJ5JBP8qwrR8TaK9zwUEk7meruo2JAUDMwvuxd/w=="
+  "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-2.14.0.tgz"
+  "version" "2.14.0"
 
 "typedarray-to-buffer@^3.1.5":
   "integrity" "sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q=="

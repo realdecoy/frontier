@@ -1,17 +1,16 @@
 {
-  "name": "@rdfrontier/plugin-shared",
+  "name": "@rdfrontier/testshared",
   "description": "Library for storing shared functions between plugins",
   "version": "0.0.2",
   "author": "RealDecoy",
   "bin": {
-    "plugin-shared": "./bin/run"
+    "testShared": "./bin/run"
   },
   "bugs": "https://github.com/realdecoy/frontier/issues",
   "dependencies": {
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "@rdfrontier/stdlib": "^0.0.1",
     "chalk": "^4.1.1",
     "replace-in-file": "^6.2.0",
     "shelljs": "^0.8.4",

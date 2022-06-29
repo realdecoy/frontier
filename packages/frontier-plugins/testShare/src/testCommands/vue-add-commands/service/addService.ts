@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import { parseModuleConfig } from '../../../utils/files';
 import { checkProjectValidity, parseServiceName, toKebabCase } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import catchFunction from '../../../functions/vue-functions/catch';
-import { addElementFunction } from '../../../functions/vue-functions/addElement';
-// import { validityFailed } from '../../../functions/errors';
+import catchFunction from '../../../functions/catch';
+import { addElementFunction } from '../../../functions/addElement';
+import { validityFailed } from '../../../functions/errors';
 
 const TEMPLATE_FOLDERS = ['service'];
 
@@ -29,8 +29,7 @@ export default class Service extends Command {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-        // validityFailed(CLI_COMMANDS.AddService);
-        console.log("pass")
+        validityFailed(CLI_COMMANDS.AddService);
     }
 
     const { args } = this.parse(Service);

@@ -3,7 +3,7 @@ import { expect, test } from '@oclif/test';
 import { exec } from 'child_process';
 
 import { addElementFunction } from '.'
-import { checkProjectValidity } from '../../utils/utilities';
+import { checkProjectValidity } from '../../../utils/utilities';
 
 
 // This test id not completed so it will not work
@@ -26,8 +26,8 @@ describe('test the catch function', () => {
         message: string;
       }
       if (error instanceof Error) err = error.message
-      // let invalidProject: errorStructure = JSON.parse(`${err}`);
-      expect(err).equal('missing-template-file')
+      let invalidProject: errorStructure = JSON.parse(`${err}`);
+      expect(invalidProject.code).equal('missing-template-file')
     }
   })
 
