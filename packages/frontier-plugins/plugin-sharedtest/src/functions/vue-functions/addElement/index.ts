@@ -1,5 +1,4 @@
 import path from 'path';
-import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../utils/files';
 import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib/src'; 
