@@ -45,8 +45,8 @@ import { log } from '@rdfrontier/stdlib/src';
 
 ## Options
 
-| Name | Package | Status | 
-| --- | --- | --- |
+| Name | Package  | 
+| --- | ------------- | 
 | Type Guards       | description                                                |
 | Case Conversions  | description                                                |
 | Email Validation  | description                                                |
