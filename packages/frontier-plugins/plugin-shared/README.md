@@ -9,7 +9,7 @@
 
 # @rdfrontier/plugin-shared
 
-### Frontier Type Library
+### Frontier Plugin Shared Functions Library
 A library of common functionalities utilized amongst the frontier plugins available. 
 
 

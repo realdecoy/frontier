@@ -4,16 +4,16 @@ const util = require('util');
 const exec = util.promisify(shell.exec);
 import { Command, flags } from '@oclif/command';
 import path from 'path';
-import { Files } from '../modules';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../utils/files'; 
-import { checkProjectValidity, isJsonString } from '../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE } from '../utils/constants';
-import { injectImportsIntoMain } from '../utils/plugins';
-import { Route } from '../modules/manifest';
+import { Files } from '../../../../modules';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../../utils/files'; 
+import { checkProjectValidity, isJsonString } from '../../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE } from '../../../../utils/constants';
+import { injectImportsIntoMain } from '../../../../utils/plugins';
+import { Route } from '../../../../modules/manifest';
 
 import { validityFailed } from '@rdfrontier/plugin-shared/src';
-import catchFunction from '../functions/vue-functions/catch';
-import { addPluginFunction } from '../functions/vue-functions/addPlugin';
+import catchFunction from '../../../../functions/vue-functions/catch';
+import { addPluginFunction } from '../../../../functions/vue-functions/addPlugin';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
