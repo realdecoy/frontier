@@ -16,6 +16,10 @@
     "@rdfrontier/stdlib": {
       "root": "packages/frontier-libraries/stdlib",
       "type": "library"
+    },
+    "@rdfrontier/plugin-shared": {
+      "root": "packages/frontier-plugins/frontier-shared",
+      "type": "library"
     }
   }
 }

@@ -4,7 +4,8 @@ import { Command, flags } from '@oclif/command';
 import Buefy from '../plugin/buefy';
 import Localization from '../plugin/localization';
 import Vuetify from '../plugin/vuetify';
-import { toKebabCase, parseProjectName, isJsonString, checkProjectValidity, parseProjectPresets } from '../../../utils/utilities';
+import { toKebabCase, isJsonString } from '@rdfrontier/stdlib/src';
+import { parseProjectName, checkProjectValidity, parseProjectPresets } from '../../../utils/utilities';
 import { replaceInFiles, checkIfFolderExists } from '../../../utils/files';
 import {
   TEMPLATE_REPO,

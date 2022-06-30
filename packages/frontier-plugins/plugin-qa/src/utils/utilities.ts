@@ -1,5 +1,5 @@
 import {existsSync, PathLike} from 'fs'
-import { ROOT_PROJECT_FILE, ANDROID_MOBILE_ROOT_PROJECT_FILE, IOS_MOBILE_ROOT_PROJECT_FILE } from '../utils/constants'
+import { ROOT_PROJECT_FILE, ANDROID_MOBILE_ROOT_PROJECT_FILE, IOS_MOBILE_ROOT_PROJECT_FILE } from './constants'
 
 /**
  * This method checks to see if the given file path already exists in a directory
@@ -11,6 +11,7 @@ export function checkIfProjectExists(filePath: PathLike) {
   if (existsSync(filePath) === true) {
     return true
   }
+  return false
 }
 
 /**
@@ -29,4 +30,5 @@ export function checkIfProjectIsValid() {
     return true
   } 
 
+  return false
 }

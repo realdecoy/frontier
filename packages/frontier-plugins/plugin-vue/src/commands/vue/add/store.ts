@@ -2,8 +2,9 @@ import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
+import { toKebabCase, toPascalCase, isJsonString } from '@rdfrontier/stdlib/src';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../utils/files';
-import { checkProjectValidity, parseStoreModuleName, toKebabCase, toPascalCase, isJsonString } from '../../../utils/utilities';
+import { checkProjectValidity, parseStoreModuleName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
 
 const TEMPLATE_FOLDERS = ['store'];

@@ -6,8 +6,9 @@ import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
+import { isJsonString } from '@rdfrontier/stdlib/src';
 import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../utils/files';
-import { checkProjectValidity, isJsonString } from '../../../utils/utilities';
+import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
 

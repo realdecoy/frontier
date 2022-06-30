@@ -1380,8 +1380,6 @@
     "write-file-atomic" "^3.0.0"
 
 "@jest/transform@^28.1.2":
-  "integrity" "sha512-3o+lKF6iweLeJFHBlMJysdaPbpoMmtbHEFsjzSv37HIq/wWt5ijTeO2Yf7MO5yyczCopD507cNwNLeX8Y/CuIg=="
-  "resolved" "https://registry.npmjs.org/@jest/transform/-/transform-28.1.2.tgz"
   "version" "28.1.2"
   dependencies:
     "@babel/core" "^7.11.6"
@@ -1424,8 +1422,6 @@
     "chalk" "^4.0.0"
 
 "@jest/types@^28.1.1":
-  "integrity" "sha512-vRXVqSg1VhDnB8bWcmvLzmg0Bt9CRKVgHPXqYwvWMX3TvAjeO+nRuK6+VdTKCtWOvYlmkF/HqNAL/z+N3B53Kw=="
-  "resolved" "https://registry.npmjs.org/@jest/types/-/types-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/schemas" "^28.0.2"
@@ -1454,8 +1450,6 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jridgewell/trace-mapping@^0.3.13":
-  "integrity" "sha512-bJWEfQ9lPTvm3SneWwRFVLzrh6nhjwqw7TUFFBEMzwvg7t7PCDenf2lDwqo4NQXzdpgBXyFgDWnQA+2vkruksQ=="
-  "resolved" "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.14.tgz"
   "version" "0.3.14"
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
@@ -2676,13 +2670,6 @@
     "@oclif/plugin-help" "^5"
     "@oclif/plugin-plugins" "^2.0.1"
 
-"@rdfrontier/frontier-shared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\frontier-shared":
-  "resolved" "file:packages/frontier-libraries/frontier-shared"
-  "version" "32.0.0"
-  dependencies:
-    "@babel/runtime" "^7.15.0"
-    "type-fest" "^2.3.4"
-
 "@rdfrontier/lib-builder@^1.0.0", "@rdfrontier/lib-builder@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-core\\lib-builder":
   "resolved" "file:packages/frontier-core/lib-builder"
   "version" "1.0.0"
@@ -2703,18 +2690,28 @@
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
     "@oclif/plugin-help" "^3.2.2"
+    "@rdfrontier/stdlib" "^0.0.1"
     "chalk" "^4.1.1"
     "replace-in-file" "^6.2.0"
     "shelljs" "^0.8.4"
     "tslib" "^1.14.1"
 
-"@rdfrontier/plugin-shared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\plugin-shared":
+"@rdfrontier/plugin-shared@^32.0.0", "@rdfrontier/plugin-shared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\plugin-shared":
   "resolved" "file:packages/frontier-plugins/plugin-shared"
+  "version" "32.0.0"
+  dependencies:
+    "@babel/runtime" "^7.15.0"
+    "type-fest" "^2.3.4"
+
+"@rdfrontier/plugin-sharedtest@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\plugin-sharedtest":
+  "resolved" "file:packages/frontier-plugins/plugin-sharedtest"
   "version" "0.0.2"
   dependencies:
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
     "@oclif/plugin-help" "^3.2.2"
+    "@rdfrontier/plugin-shared" "^32.0.0"
+    "@rdfrontier/stdlib" "^0.0.1"
     "chalk" "^4.1.1"
     "replace-in-file" "^6.2.0"
     "shelljs" "^0.8.4"
@@ -2739,24 +2736,12 @@
     "tslib" "^1.14.1"
     "util" "^0.12.4"
 
-"@rdfrontier/stdlib@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\stdlib":
+"@rdfrontier/stdlib@^0.0.1", "@rdfrontier/stdlib@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\stdlib":
   "resolved" "file:packages/frontier-libraries/stdlib"
   "version" "0.0.1"
   dependencies:
     "@babel/runtime" "^7.15.0"
     "type-fest" "^2.3.4"
-
-"@rdfrontier/testshared@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-plugins\\testShare":
-  "resolved" "file:packages/frontier-plugins/testShare"
-  "version" "0.0.2"
-  dependencies:
-    "@oclif/command" "^1.8.0"
-    "@oclif/config" "^1.17.0"
-    "@oclif/plugin-help" "^3.2.2"
-    "chalk" "^4.1.1"
-    "replace-in-file" "^6.2.0"
-    "shelljs" "^0.8.4"
-    "tslib" "^1.14.1"
 
 "@rdfrontier/typekit@file:C:\\Users\\JantaeLeckie\\Desktop\\RealDecoy\\newfrontier\\frontier\\packages\\frontier-libraries\\typekit":
   "resolved" "file:packages/frontier-libraries/typekit"
@@ -6184,8 +6169,6 @@
   "version" "28.0.2"
 
 "diff-sequences@^28.1.1":
-  "integrity" "sha512-FU0iFaH/E23a+a718l8Qa/19bF9p06kgE0KipMOMadwa3SjnaElKzPaUC0vnibs6/B/9ni97s61mcejk8W1fQw=="
-  "resolved" "https://registry.npmjs.org/diff-sequences/-/diff-sequences-28.1.1.tgz"
   "version" "28.1.1"
 
 "diff@^4.0.1":
@@ -7149,8 +7132,6 @@
     "jest-util" "^28.1.0"
 
 "expect@^28.1.1":
-  "integrity" "sha512-/AANEwGL0tWBwzLNOvO0yUdy2D52jVdNXppOqswC49sxMN2cPWsGCQdzuIf9tj6hHoBQzNvx75JUYuQAckPo3w=="
-  "resolved" "https://registry.npmjs.org/expect/-/expect-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/expect-utils" "^28.1.1"
@@ -9426,8 +9407,6 @@
     "pretty-format" "^28.1.0"
 
 "jest-diff@^28.1.1":
-  "integrity" "sha512-/MUUxeR2fHbqHoMMiffe/Afm+U8U4olFRJ0hiVG2lZatPJcnGxx292ustVu7bULhjV65IYMxRdploAKLbcrsyg=="
-  "resolved" "https://registry.npmjs.org/jest-diff/-/jest-diff-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "chalk" "^4.0.0"
@@ -9517,8 +9496,6 @@
     "fsevents" "^2.3.2"
 
 "jest-haste-map@^28.1.1":
-  "integrity" "sha512-ZrRSE2o3Ezh7sb1KmeLEZRZ4mgufbrMwolcFHNRSjKZhpLa8TdooXOOFlSwoUzlbVs1t0l7upVRW2K7RWGHzbQ=="
-  "resolved" "https://registry.npmjs.org/jest-haste-map/-/jest-haste-map-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/types" "^28.1.1"
@@ -9587,8 +9564,6 @@
     "pretty-format" "^28.1.0"
 
 "jest-matcher-utils@^28.1.1":
-  "integrity" "sha512-NPJPRWrbmR2nAJ+1nmnfcKKzSwgfaciCCrYZzVnNoxVoyusYWIjkBMNvu0RHJe7dNj4hH3uZOPZsQA+xAYWqsw=="
-  "resolved" "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "chalk" "^4.0.0"
@@ -9627,8 +9602,6 @@
     "stack-utils" "^2.0.3"
 
 "jest-message-util@^28.1.1":
-  "integrity" "sha512-xoDOOT66fLfmTRiqkoLIU7v42mal/SqwDKvfmfiWAdJMSJiU+ozgluO7KbvoAgiwIrrGZsV7viETjc8GNrA/IQ=="
-  "resolved" "https://registry.npmjs.org/jest-message-util/-/jest-message-util-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@babel/code-frame" "^7.12.13"
@@ -9660,8 +9633,6 @@
   "version" "27.5.1"
 
 "jest-regex-util@^28.0.2":
-  "integrity" "sha512-4s0IgyNIy0y9FK+cjoVYoxamT7Zeo7MhzqRGx7YDYmaQn1wucY9rotiGkBzzcMXTtjrCAP/f7f+E0F7+fxPNdw=="
-  "resolved" "https://registry.npmjs.org/jest-regex-util/-/jest-regex-util-28.0.2.tgz"
   "version" "28.0.2"
 
 "jest-resolve-dependencies@^27.5.1":
@@ -9781,8 +9752,6 @@
     "semver" "^7.3.2"
 
 "jest-snapshot@^28.1.2":
-  "integrity" "sha512-wzrieFttZYfLvrCVRJxX+jwML2YTArOUqFpCoSVy1QUapx+LlV9uLbV/mMEhYj4t7aMeE9aSQFHSvV/oNoDAMA=="
-  "resolved" "https://registry.npmjs.org/jest-snapshot/-/jest-snapshot-28.1.2.tgz"
   "version" "28.1.2"
   dependencies:
     "@babel/core" "^7.11.6"
@@ -9834,8 +9803,6 @@
     "picomatch" "^2.2.3"
 
 "jest-util@^28.1.1":
-  "integrity" "sha512-FktOu7ca1DZSyhPAxgxB6hfh2+9zMoJ7aEQA759Z6p45NuO8mWcqujH+UdHlCm/V6JTWwDztM2ITCzU1ijJAfw=="
-  "resolved" "https://registry.npmjs.org/jest-util/-/jest-util-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/types" "^28.1.1"
@@ -9880,8 +9847,6 @@
     "supports-color" "^8.0.0"
 
 "jest-worker@^28.1.1":
-  "integrity" "sha512-Au7slXB08C6h+xbJPp7VIb6U0XX5Kc9uel/WFc6/rcTzGiaVCBRngBExSYuXSLFPULPSYU3cJ3ybS988lNFQhQ=="
-  "resolved" "https://registry.npmjs.org/jest-worker/-/jest-worker-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@types/node" "*"
@@ -12733,8 +12698,6 @@
     "react-is" "^18.0.0"
 
 "pretty-format@^28.1.1":
-  "integrity" "sha512-wwJbVTGFHeucr5Jw2bQ9P+VYHyLdAqedFLEkdQUVaBF/eiidDwH5OpilINq4mEfhbCjLnirt6HTTDhv1HaTIQw=="
-  "resolved" "https://registry.npmjs.org/pretty-format/-/pretty-format-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/schemas" "^28.0.2"
@@ -13061,8 +13024,6 @@
   "version" "17.0.2"
 
 "react-is@^18.0.0":
-  "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
-  "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
 
 "read-cmd-shim@^2.0.0":
@@ -16008,8 +15969,6 @@
     "signal-exit" "^3.0.7"
 
 "write-file-atomic@^4.0.1":
-  "integrity" "sha512-nSKUxgAbyioruk6hU87QzVbY279oYT6uiwgDoujth2ju4mJ+TZau7SQBhtbTmUyuNYTuXnSyRn66FV0+eCgcrQ=="
-  "resolved" "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-4.0.1.tgz"
   "version" "4.0.1"
   dependencies:
     "imurmurhash" "^0.1.4"

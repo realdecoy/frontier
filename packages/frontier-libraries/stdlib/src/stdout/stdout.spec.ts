@@ -1,5 +1,5 @@
 //TODO
-import log from "./stdout";
+import { log } from ".";
 
 const messages = [
     "This is a random message to log",

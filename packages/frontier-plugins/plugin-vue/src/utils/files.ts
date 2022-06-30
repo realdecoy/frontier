@@ -9,7 +9,7 @@ import { Files, InjectOptions } from '../modules';
 const replace = require('replace-in-file');
 import { hasKebab } from './utilities';
 import { DYNAMIC_OBJECTS, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
-import { log } from './stdout';
+import { log } from '@rdfrontier/stdlib/src';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
