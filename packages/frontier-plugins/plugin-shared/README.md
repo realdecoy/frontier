@@ -1,10 +1,59 @@
-# Adam Package
 
-Adam is a skeleton package for frotier-based projects.
+<div align="left">
+  <br/>
+  <a href="https://www.realdecoy.com/jamaica/" title="REALDECOY">
+    <img width=400px src="https://www.realdecoy.com/wp-content/uploads/2019/02/Realdecoy-logo-transparent.png" alt="rd logo">
+  </a>
+  <br/>
+</div>
 
-# How to Use
-<Coming Soon>
+# @rdfrontier/plugin-shared
 
-## Process
-<Coming Soon>
+### Frontier Type Library
+A library of common functionalities utilized amongst the frontier plugins available. 
 
+
+&nbsp;
+&nbsp;
+&nbsp;
+<!-- custom-toc -->
+## Table of Contents
+
+* [Installation](#install)
+* [Usage](#usage)
+* [Options](#options)
+<!-- custom-tocstop -->
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+## Installation
+
+```sh
+$ yarn add @rdfrontier/plugin-shared
+```
+
+&nbsp;
+&nbsp;
+
+## Usage
+
+```sh
+Eg: import { validityFailed } from '@rdfrontier/plugin-shared/src';
+```
+
+
+&nbsp;
+&nbsp;
+
+## Options
+
+| Name | Description  | 
+| --- | ------------- | 
+| Errors                | Add Description                                        |
+| Responses             | Add Description                                         |
+
+&nbsp;
+&nbsp;

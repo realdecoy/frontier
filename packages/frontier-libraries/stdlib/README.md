@@ -9,6 +9,7 @@
 
 # @rdfrontier/stdlib
 
+### Frontier Standard Library
 A collection of functions/logic that are written in pure JavaScript with limited
 dependencies. These functions expose generic concepts available for use throughout the CLI. 
 
@@ -23,6 +24,10 @@ dependencies. These functions expose generic concepts available for use througho
 * [Options](#options)
 <!-- custom-tocstop -->
 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 ## Installation
 
@@ -36,7 +41,7 @@ $ yarn add @rdfrontier/stdlib
 ## Usage
 
 ```sh
-import { log } from '@rdfrontier/stdlib/src';
+Eg: import { log } from '@rdfrontier/stdlib/src';
 ```
 
 
@@ -45,14 +50,14 @@ import { log } from '@rdfrontier/stdlib/src';
 
 ## Options
 
-| Name | Package  | 
+| Name | Description  | 
 | --- | ------------- | 
-| Type Guards       | description                                                |
-| Case Conversions  | description                                                |
-| Email Validation  | description                                                |
-| Color Validation  | description                                                |
-| Standard Output   | description                                                |
-| Object Setting    | description                                                |
+| Type Guards       | Add Description                                            |
+| Case Conversions  | Add Description                                            |
+| Email Validation  | Add Description                                            |
+| Color Validation  | Add Description                                            |
+| Standard Output   | Add Description                                            |
+| Object Setting    | Add Description                                            |
 
 &nbsp;
 &nbsp;
