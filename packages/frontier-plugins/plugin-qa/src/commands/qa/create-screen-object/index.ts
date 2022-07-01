@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import path from 'path'
 import {Command, flags} from '@oclif/command'
-import { CONSTANTS } from '../../../utils/constants'
-import { copyScreenObjectFile, updateScreenObjectFile, updateFileName } from '../../../utils/files'
-import { checkIfProjectIsValid } from '../../../utils/utilities' 
+import { CONSTANTS } from 'utils/constants'
+import { copyScreenObjectFile, updateScreenObjectFile, updateFileName } from 'utils/files'
+import { checkIfProjectIsValid } from 'utils/utilities' 
 
 const { SCREEN_OBJECT_REGEX } = CONSTANTS
 

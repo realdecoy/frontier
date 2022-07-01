@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "declaration": true,
     "importHelpers": true,
     "module": "commonjs",
@@ -8,7 +14,7 @@
     "strict": true,
     "target": "es2017",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "include": [
     "src/**/*"

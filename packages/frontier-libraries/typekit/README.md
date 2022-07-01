@@ -7,9 +7,9 @@
   <br/>
 </div>
 
-# @rdfrontier/typekit
+# Frontier Type Library
 
-### Frontier Type Library
+### @rdfrontier/typekit
 A library of common reusable types. 
 
 
@@ -35,13 +35,19 @@ A library of common reusable types.
 $ yarn add @rdfrontier/typekit
 ```
 
+or 
+
+```sh
+$ npm install @rdfrontier/typekit
+```
+
 &nbsp;
 &nbsp;
 
 ## Usage
 
 ```sh
-Eg: import { SuccessCode } from '@rdfrontier/typekit/src';
+Eg: import { SuccessCode } from '@rdfrontier/typekit';
 ```
 
 

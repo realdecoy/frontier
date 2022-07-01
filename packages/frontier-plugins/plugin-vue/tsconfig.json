@@ -6,6 +6,12 @@
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "strict": true,
     "target": "es2017",
     "skipLibCheck": true,

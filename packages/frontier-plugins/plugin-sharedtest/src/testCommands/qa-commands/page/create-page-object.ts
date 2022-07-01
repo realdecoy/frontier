@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 import path from 'path'
 import {Command, flags} from '@oclif/command'
-import { CONSTANTS } from '../../../qautils/constants'
-import { copyPageObjectFile, updatePageObjectFile, updateFileName } from '../../../qautils/files'
-import { checkIfProjectIsValid } from '../../../qautils/utilities'
-import { successResponseFile } from '@rdfrontier/plugin-shared/src'
+import { CONSTANTS } from 'qautils/constants'
+import { copyPageObjectFile, updatePageObjectFile, updateFileName } from 'qautils/files'
+import { checkIfProjectIsValid } from 'qautils/utilities'
+import { successResponseFile } from '@rdfrontier/plugin-shared'
 
 const { PAGE_OBJECT_REGEX } = CONSTANTS
 export default class CreatePageObject extends Command {

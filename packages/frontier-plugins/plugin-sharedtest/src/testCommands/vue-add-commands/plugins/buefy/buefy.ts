@@ -4,16 +4,17 @@ const util = require('util');
 const exec = util.promisify(shell.exec);
 import { Command, flags } from '@oclif/command';
 import path from 'path';
-import { Files } from '../../../../modules';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../../utils/files'; 
-import { checkProjectValidity, isJsonString } from '../../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE } from '../../../../utils/constants';
-import { injectImportsIntoMain } from '../../../../utils/plugins';
-import { Route } from '../../../../modules/manifest';
+import { Files } from 'modules';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from 'utils/files'; 
+import { checkProjectValidity, isJsonString } from 'utils/utilities';
+import { CLI_COMMANDS, CLI_STATE } from 'utils/constants';
+import { injectImportsIntoMain } from 'utils/plugins';
+import { Route } from 'modules/manifest';
 
-import { validityFailed } from '@rdfrontier/plugin-shared/src';
-import catchFunction from '../../../../functions/vue-functions/catch';
-import { addPluginFunction } from '../../../../functions/vue-functions/addPlugin';
+import { validityFailed } from '@rdfrontier/plugin-shared';
+import catchFunction from 'functions/vue-functions/catch';
+import { addPluginFunction } from 'functions/vue-functions/addPlugin';
+import { installDepenedencies } from 'functions/vue-functions/installDependencies';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -69,27 +70,9 @@ export default class Buefy extends Command {
       .split(',')
       .join(' ');
 
-    if (skipInstallStep === false) {
-      try {
-        // install dependencies
-        cli.action.start(`${CLI_STATE.Info} installing buefy dependencies`);
-        await exec(`${preInstallCommand} npm install --save ${dependencies}`, { silent: true });
-        cli.action.stop();
-      } catch (error) {
-        throw new Error(
-          JSON.stringify({
-            code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} buefy dependencies failed to install`,
-          }),
-        );
-      }
-    } else {
-      cli.action.start(`${CLI_STATE.Info} adding buefy dependencies`);
-      await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
-      cli.action.stop();
-    }
+    await installDepenedencies("buefy", skipInstallStep, projectName, preInstallCommand, undefined, dependencies, this.id?.split(':')[1])
 
-    addPluginFunction(TEMPLATE_FOLDERS, TEMPLATE_MIN_VERSION_SUPPORTED, projectRoot)
+    await addPluginFunction(TEMPLATE_FOLDERS, TEMPLATE_MIN_VERSION_SUPPORTED, projectRoot)
 
     if (skipInstallStep === false) {
       this.log(`${CLI_STATE.Success} plugin added: ${this.id?.split(':')[1]}`);

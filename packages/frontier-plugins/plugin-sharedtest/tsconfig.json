@@ -6,9 +6,10 @@
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
+    "baseUrl": "src",
     "paths": {
-      "@/utils/*": [
-        "/utils/*"
+      "@/*": [
+        "src/*"
       ]
     },
     "strict": true,

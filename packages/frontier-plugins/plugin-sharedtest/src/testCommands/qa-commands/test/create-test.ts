@@ -1,9 +1,9 @@
 import {Command, flags} from '@oclif/command'
-import { copyTestFile, updateTestFiles } from '../../../qautils/files'
-import { checkIfProjectIsValid } from '../../../qautils/utilities'
-import {CONSTANTS} from '../../../qautils/constants'
+import { copyTestFile, updateTestFiles } from 'qautils/files'
+import { checkIfProjectIsValid } from 'qautils/utilities'
+import {CONSTANTS} from 'qautils/constants'
 import chalk = require('chalk')
-import { successResponseFile } from '@rdfrontier/plugin-shared/src'
+import { successResponseFile } from '@rdfrontier/plugin-shared'
 
 const {TEST_REGEX} = CONSTANTS
 

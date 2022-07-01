@@ -7,11 +7,11 @@
   <br/>
 </div>
 
-# @rdfrontier/stdlib
+# Frontier Standard Library
 
-### Frontier Standard Library
+### @rdfrontier/stdlib
 A collection of functions/logic that are written in pure JavaScript with limited
-dependencies. These functions expose generic concepts available for use throughout the CLI. 
+dependencies. These functions expose generic concepts available for use throughout any TypeScript or JavaScript project. 
 
 &nbsp;
 &nbsp;
@@ -34,14 +34,18 @@ dependencies. These functions expose generic concepts available for use througho
 ```sh
 $ yarn add @rdfrontier/stdlib
 ```
+or 
 
+```sh
+$ npm install @rdfrontier/stdlib
+```
 &nbsp;
 &nbsp;
 
 ## Usage
 
 ```sh
-Eg: import { log } from '@rdfrontier/stdlib/src';
+Eg: import { log } from '@rdfrontier/stdlib';
 ```
 
 

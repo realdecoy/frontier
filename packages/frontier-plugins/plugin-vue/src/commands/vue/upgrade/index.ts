@@ -2,9 +2,9 @@ import shell from 'shelljs';
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
-import { isJsonString } from '@rdfrontier/stdlib/src';
-import { checkProjectValidity } from '../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG } from '../../../utils/constants';
+import { isJsonString } from '@rdfrontier/stdlib';
+import { checkProjectValidity } from 'utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG } from 'utils/constants';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',

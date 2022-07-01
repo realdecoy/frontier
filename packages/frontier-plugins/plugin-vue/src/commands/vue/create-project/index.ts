@@ -4,9 +4,9 @@ import { Command, flags } from '@oclif/command';
 import Buefy from '../plugin/buefy';
 import Localization from '../plugin/localization';
 import Vuetify from '../plugin/vuetify';
-import { toKebabCase, isJsonString } from '@rdfrontier/stdlib/src';
-import { parseProjectName, checkProjectValidity, parseProjectPresets } from '../../../utils/utilities';
-import { replaceInFiles, checkIfFolderExists } from '../../../utils/files';
+import { toKebabCase, isJsonString } from '@rdfrontier/stdlib';
+import { parseProjectName, checkProjectValidity, parseProjectPresets } from 'utils/utilities';
+import { replaceInFiles, checkIfFolderExists } from 'utils/files';
 import {
   TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
@@ -16,7 +16,7 @@ import {
   TEMPLATE_REPLACEMENT_FILES,
   CLI_STATE,
   PLUGIN_PRESET_LIST,
-} from '../../../utils/constants';
+} from 'utils/constants';
 
 const CUSTOM_ERROR_CODES = [
   'existing-project',

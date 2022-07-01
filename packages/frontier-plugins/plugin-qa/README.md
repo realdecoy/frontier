@@ -7,8 +7,9 @@
 </div>
 
 
-# rdspec
+# Spectre
 
+### @rdfrontier/plugin-qa
 CLI to generate web automation projects
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
@@ -20,7 +21,7 @@ CLI to generate web automation projects
 - [Commands](#commands)
 
 # Usage
-
+ 
 ```sh-session
 $ npm install -g rdspec
 $ rdspec COMMAND

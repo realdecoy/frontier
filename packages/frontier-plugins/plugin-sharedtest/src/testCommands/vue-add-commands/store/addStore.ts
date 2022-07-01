@@ -1,11 +1,11 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
-import { parseModuleConfig } from '../../../utils/files';
-import { checkProjectValidity, parseStoreModuleName, toKebabCase } from '../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import catchFunction from '../../../functions/vue-functions/catch';
-import { addElementFunction } from '../../../functions/vue-functions/addElement';
-import { validityFailed } from '@rdfrontier/plugin-shared/src';
+import { parseModuleConfig } from 'utils/files';
+import { checkProjectValidity, parseStoreModuleName, toKebabCase } from 'utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from 'utils/constants';
+import catchFunction from 'functions/vue-functions/catch';
+import { addElementFunction } from 'functions/vue-functions/addElement';
+import { validityFailed } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['store'];
 const CUSTOM_ERROR_CODES = [

@@ -7,9 +7,9 @@
   <br/>
 </div>
 
-# @rdfrontier/plugin-shared
+# Frontier Plugin Shared Functions Library
 
-### Frontier Plugin Shared Functions Library
+### @rdfrontier/plugin-shared
 A library of common functionalities utilized amongst the frontier plugins available. 
 
 
@@ -35,13 +35,19 @@ A library of common functionalities utilized amongst the frontier plugins availa
 $ yarn add @rdfrontier/plugin-shared
 ```
 
+or 
+
+```sh
+$ npm install @rdfrontier/plugin-shared
+```
+
 &nbsp;
 &nbsp;
 
 ## Usage
 
 ```sh
-Eg: import { validityFailed } from '@rdfrontier/plugin-shared/src';
+Eg: import { validityFailed } from '@rdfrontier/plugin-shared';
 ```
 
 

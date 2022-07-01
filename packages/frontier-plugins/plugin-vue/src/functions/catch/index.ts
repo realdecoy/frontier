@@ -17,7 +17,7 @@ export default function catchFunction(error:Error): Promise<any> {
     const hasCustomErrorCode = customErrorCode !== undefined;
     
     if (hasCustomErrorCode === false) {
-        // throw cli errors to be handled globally
+        // throw cli errors to be handled globally 
         throw errorMessage;
       }
   

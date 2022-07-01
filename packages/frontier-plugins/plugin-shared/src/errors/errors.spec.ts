@@ -11,7 +11,7 @@ describe('test project validity check function', () => {
     const projectRoot = "./root"
     try {
       if (isValidProject === false) {
-        validityFailed("add:component");
+        validityFailed("add:component", "rdvue");
       }
     } catch (error) {
       let err;

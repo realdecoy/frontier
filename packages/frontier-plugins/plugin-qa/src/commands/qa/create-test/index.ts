@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
-import { copyTestFile, updateTestFiles } from '../../../utils/files'
-import { checkIfProjectIsValid } from '../../../utils/utilities'
-import {CONSTANTS} from '../../../utils/constants'
+import { copyTestFile, updateTestFiles } from 'utils/files'
+import { checkIfProjectIsValid } from 'utils/utilities'
+import {CONSTANTS} from 'utils/constants'
 import chalk = require('chalk')
 
 const {TEST_REGEX} = CONSTANTS
