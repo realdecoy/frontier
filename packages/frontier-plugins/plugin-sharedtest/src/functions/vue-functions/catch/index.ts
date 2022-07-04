@@ -1,5 +1,5 @@
 import { isJsonString } from '@rdfrontier/stdlib';
-import { CLI_STATE } from 'utils/constants';
+import { CLI_STATE } from '../../../utils/constants';
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',

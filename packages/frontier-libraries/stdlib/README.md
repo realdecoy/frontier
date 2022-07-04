@@ -56,12 +56,25 @@ Eg: import { log } from '@rdfrontier/stdlib';
 
 | Name | Description  | 
 | --- | ------------- | 
-| Type Guards       | Add Description                                            |
-| Case Conversions  | Add Description                                            |
-| Email Validation  | Add Description                                            |
-| Color Validation  | Add Description                                            |
-| Standard Output   | Add Description                                            |
-| Object Setting    | Add Description                                            |
+| #Type Guards                          |                                              |
+| @isBoolean(value: unknown)            | Cheacks if value is a boolean.               |
+| @isNumber(value: unknown)             | Cheacks if value is a number.                |
+| @isString(value: unknown)             | Cheacks if value is a string.                |
+| @isNumberArray(value: unknown)        | Cheacks if value is a number array.          |
+| @isStringArray(value: unknown)        | Cheacks if value is a string array.          |
+| @toStringArray(value: unknown[])      | Converts an array to a string array.         |
+| @isJsonString(value: string)          | Cheacks if a string value is a JSON string   |
+| #Case Conversions                     |                                              |
+| @toKebabCase(value: string)           | Converts a string to a kebab case string.    |
+| @toPascalCase(value: string)          | Converts an string to a pascal case string.  |
+| #Email Validation                     |                                              |
+| @isValidEmail(email: string)          | Checks if a string is a valid email address. |
+| #Color Validation                     |                                              |
+| @isValidHex(text: string)             | Checks if a string is a valid hex color.     |
+| #Standard Output                      |                                              |
+| @log(message: any = '', ...args: any) | Prints a message to the console.             |
+| #Object Setting                       |                                              |
+| @makeObjectReadOnly<T>(obj: T)        | Make an object readonly.                     |
 
 &nbsp;
 &nbsp;

@@ -8,11 +8,12 @@ describe('test the install dependencies function', () => {
   });
  
   it("should pass if an error was thrown",  async function () {
+    jest.setTimeout(80000) 
     console.log = jest.fn()
     let spy = jest.spyOn(console, 'log');
     const preInstallCommand = "C:/Users/JantaeLeckie/Desktop/RealDecoy/vue-testing-project"
     try {
-        await installDepenedencies(pluginName, false, "testInstall", `cd ${preInstallCommand} &&`, "@rdfrontier/stdlib", "typescript", undefined  )
+        await installDepenedencies(pluginName, false, "testInstall", `${preInstallCommand} &&`, "@rdfrontier/stdlib", "typescript", undefined  )
         expect(spy).toContain(`installing ${pluginName} dev dependencies`)
     } catch (error) {
         let err;
