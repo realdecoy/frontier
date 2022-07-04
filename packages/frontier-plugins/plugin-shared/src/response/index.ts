@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 
-export function successResponseFile(successfulReplace: boolean, elementName: string, elementType: string): string {
+export function successfulReplaceResponse(successfulReplace: boolean, elementName: string, elementType: string): string {
     if (successfulReplace) {
     // Output message saying project is ready
         return (chalk.blue(`File ${elementName} is ready!`))

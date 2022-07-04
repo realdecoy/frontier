@@ -1,4 +1,4 @@
-import { successResponseFile } from '.'
+import { successfulReplaceResponse } from '.'
 import chalk from 'chalk';
 
 
@@ -12,7 +12,7 @@ describe('test response function', () => {
         const elementName: string = "testFile";
         const elementType: string = "test file";
         const dummyResponse = (chalk.blue(`File ${elementName} is ready!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     });
 
     it("should pass test file was not successfully created",  async function () {
@@ -20,7 +20,7 @@ describe('test response function', () => {
         const elementName: string = "testFile";
         const elementType: string = "test";
         const dummyResponse = (chalk.red(`There was a issue in making your ${elementType} file!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     })
 
     it("should pass page object file was successfully created",  async function () {
@@ -28,7 +28,7 @@ describe('test response function', () => {
         const elementName: string = "pageObject";
         const elementType: string = "page object ";
         const dummyResponse = (chalk.blue(`File ${elementName} is ready!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     });
 
     it("should pass page object file was not successfully created",  async function () {
@@ -36,7 +36,7 @@ describe('test response function', () => {
         const elementName: string = "pageObject";
         const elementType: string = "page object";
         const dummyResponse = (chalk.red(`There was a issue in making your ${elementType} file!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     })
 
     it("should pass screen object file was successfully created",  async function () {
@@ -44,7 +44,7 @@ describe('test response function', () => {
         const elementName: string = "screenObject";
         const elementType: string = "screen object ";
         const dummyResponse = (chalk.blue(`File ${elementName} is ready!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     });
 
     it("should pass screen object file was not successfully created",  async function () {
@@ -52,7 +52,7 @@ describe('test response function', () => {
         const elementName: string = "screenObject";
         const elementType: string = "screen object";
         const dummyResponse = (chalk.red(`There was a issue in making your ${elementType} file!`));
-        expect(successResponseFile(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
+        expect(successfulReplaceResponse(successfulReplace, elementName, elementType)).toEqual(dummyResponse);
     })
   
 })
