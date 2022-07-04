@@ -1,4 +1,4 @@
-import { validityFailed } from '.'
+import { invalidProject } from '.'
 
 
 describe('test project validity check function', () => {
@@ -11,7 +11,7 @@ describe('test project validity check function', () => {
     const projectRoot = "./root"
     try {
       if (isValidProject === false) {
-        validityFailed("add:component", "rdvue");
+        invalidProject("add:component", "rdvue");
       }
     } catch (error) {
       let err;
