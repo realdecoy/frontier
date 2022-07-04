@@ -1,7 +1,12 @@
 import chalk from 'chalk';
 
+/**
+ * Description: Throws error if project is invalid.
+ * @param {string} commandType - Type of command being ran eg: "add:component"
+ * @param {string} projectType - Type of project being used eg: "rdvue"
+ * @returns {Promise<void>} - 
+ */
 export function invalidProject(commandType: string, projectType: string): Promise<void> {
-    // block command unless being run within a specific project 
     throw new Error(
     JSON.stringify({
         code: 'project-invalid',
@@ -11,9 +16,12 @@ export function invalidProject(commandType: string, projectType: string): Promis
 }
 
 
-
+/**
+ * Description: Throw error if project already exists.
+ * @param {string} projectType - Type of project being used eg: "rdvue"
+ * @returns {Promise<void>} - 
+ */
 export function existingProject(projectType: string): Promise<void> {
-    // block command unless being run within a specific project
     throw new Error(
         JSON.stringify({
           code: 'existing-project',
@@ -22,8 +30,12 @@ export function existingProject(projectType: string): Promise<void> {
       );
 }
 
+
+/**
+ * Description: Throw error if file has not been changed. 
+ * @returns {Promise<void>} - 
+ */
 export function fileNotChanged(): Promise<void> {
-  // block command unless being run within a specific project
   throw new Error(
     JSON.stringify({
       code: 'file-not-changed',

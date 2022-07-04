@@ -1,6 +1,12 @@
 import chalk from 'chalk';
 
-
+/**
+ * Description: .
+ * @param {boolean} successfulReplace - a boolean value eg: true
+ * @param {string} elementName - name of element being created eg: "testComponent"
+ * @param {string} elementType - type of element being created eg: "component"
+ * @returns {string} - 
+ */
 export function successfulReplaceResponse(successfulReplace: boolean, elementName: string, elementType: string): string {
     if (successfulReplace) {
     // Output message saying project is ready
