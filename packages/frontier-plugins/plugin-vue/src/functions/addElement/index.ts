@@ -4,7 +4,13 @@ import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetF
 import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib'; 
 
 
-// override Command class error handler
+/**
+ * Description: Creates a new element of a specific type in a folder.
+ * @param {string[]} TEMPLATE_FOLDERS - folders from which template files are located eg: ["component"]
+ * @param {string} projectRoot - root folder location where element should be created. 
+ * @param {string} elementName - name of element being created eg: "testComponent"
+ * @returns {Promise<void>} - 
+ */
 export async function addElementFunction(TEMPLATE_FOLDERS: string[], projectRoot: string, elementName: string): Promise<void> {
     
     const folderList = TEMPLATE_FOLDERS;

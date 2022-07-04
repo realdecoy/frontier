@@ -4,6 +4,17 @@ const util = require('util');
 const exec = util.promisify(shell.exec);
 import { CLI_STATE } from 'utils/constants';
 
+/**
+ * Description: Install plugin dependencies into a project.
+ * @param {string} pluginName - name of plugin eg:"buefy"
+ * @param {boolean} skipInstallStep - a boolean value eg: true
+ * @param {string | undefined} projectName - name of project eg: "rdvue-test-project"
+ * @param {string} preInstallCommand - command to run pre-installation eg: "cd .. &&"
+ * @param {any | undefine} devDependencies - dev dependencies to install 
+ * @param {any | undefine} dependencies - dependencies to install
+ * @param {string | undefined} id - 
+ * @returns {Promise<void>} - 
+ */
 export async function installDepenedencies(pluginName: string, skipInstallStep: boolean, projectName: string | undefined, preInstallCommand: string, devDependencies: any | undefined, dependencies: any, id: string | undefined): Promise<void> {
     if (skipInstallStep === false) {
       try {
