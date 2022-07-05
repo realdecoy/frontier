@@ -68,10 +68,10 @@ Eg: import { SuccessCode } from '@rdfrontier/typekit';
 This is ______________
 
 #### Information Code 
-* [Continue] - 100
-* SwitchingProtoclos - 101
-* Processing - 102
-* EarlyHints - 103 
+* + Continue - 100
+* +SwitchingProtoclos+ - 101
+* - Processing - - 102
+* -EarlyHints- - 103 
 
 #### Success Code 
 * OK - 200
@@ -126,7 +126,7 @@ This is ______________
 
 
 #### Server Error Code
-* [`InternalServerError`] - 500
+* InternalServerError - 500
 * NotImplemented - 501
 * BadGateway - 502
 * ServiceUnavailable - 503
