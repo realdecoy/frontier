@@ -89,6 +89,10 @@ npm install -g @rdfrontier
 | `@rdfrontier/plugin-vue`          | Ready |
 | `@rdfrontier/plugin-qa`           | Ready |
 
+&nbsp;
+&nbsp;
+&nbsp;
+
 ### Package Installation Instructions 
 
 #### Frontier Standard Library - @rdfrontier/stdlib
@@ -138,9 +142,9 @@ npm install --save--dev @rdfrontier/plugin-qa
 
 
 &nbsp;
+&nbsp; 
 &nbsp;
-&nbsp;
-
+s
 &nbsp;
 &nbsp;
 &nbsp;
