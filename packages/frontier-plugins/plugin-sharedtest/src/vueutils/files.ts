@@ -9,7 +9,7 @@ import { Files, InjectOptions } from '../modules';
 const replace = require('replace-in-file');
 import { hasKebab } from './utilities';
 import { DYNAMIC_OBJECTS, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
-import { log } from '../utils/stdout';
+import { log } from '@rdfrontier/stdlib';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -135,7 +135,7 @@ async function replaceInFiles(files: string | string[], from: RegExp, to: string
     throw new Error(
       JSON.stringify({
         code: 'file-not-changed',
-        message: error.message,
+        message: 'error.message',
       }),
     );
   }

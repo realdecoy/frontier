@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import { toKebabCase } from '@rdfrontier/stdlib';
 import { checkProjectValidity, parseComponentName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import { addElementFunction } from 'functions/addElement';
+import { addElementFunction } from '../../../functions/addElement';
 import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from 'functions/catch';
+import catchFunction from '../../../functions/catch';
 
 const TEMPLATE_FOLDERS = ['component'];
 

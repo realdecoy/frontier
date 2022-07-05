@@ -7,11 +7,11 @@ import path from 'path';
 import chalk from 'chalk';
 import { Files } from 'modules';
 import { isJsonString } from '@rdfrontier/stdlib';
-import { copyFiles, parseDynamicObjects, parseModuleConfig } from 'utils/files';
-import { checkProjectValidity } from 'utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from 'utils/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from 'utils/plugins';
-import catchFunction from 'functions/catch';
+import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../utils/files';
+import { checkProjectValidity } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
+import catchFunction from '../../../functions/catch';
 import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['vuetify'];

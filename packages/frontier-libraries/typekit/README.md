@@ -32,13 +32,13 @@ A library of common reusable types.
 ## Installation
 
 ```sh
-$ yarn add @rdfrontier/typekit
+$ yarn add --save--dev @rdfrontier/typekit
 ```
 
 or 
 
 ```sh
-$ npm install @rdfrontier/typekit
+$ npm install --save--dev @rdfrontier/typekit
 ```
 
 &nbsp;
@@ -47,7 +47,9 @@ $ npm install @rdfrontier/typekit
 ## Usage
 
 ```sh
-Eg: import { SuccessCode } from '@rdfrontier/typekit';
+import { SuccessCode } from '@rdfrontier/typekit';
+
+console.log(SuccessCode.Countinue)
 ```
 
 
@@ -114,7 +116,7 @@ This is ______________
 * `RangeNotSatisifiable - 416`
 * `ExpectationFailed - 417`
 * `ImATeapot - 418`
-* `MisdirectedRequest - 421`
+* `MisdirectedRequest - 421` 
 * `UnprocessableEntity - 422`
 * `Locked - 423`
 * `FailedDependency - 424`

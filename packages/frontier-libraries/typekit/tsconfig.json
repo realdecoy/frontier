@@ -1,4 +1,18 @@
 {
   "extends": "../../../tsconfig.base.json",
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "module": "commonjs",
+    "outDir": "lib",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+  }
 }

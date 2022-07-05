@@ -32,12 +32,12 @@ dependencies. These functions expose generic concepts available for use througho
 ## Installation
 
 ```sh
-$ yarn add @rdfrontier/stdlib
+$ yarn add --save--dev @rdfrontier/stdlib
 ```
 or 
 
 ```sh
-$ npm install @rdfrontier/stdlib
+$ npm install --save--dev @rdfrontier/stdlib
 ```
 &nbsp;
 &nbsp;

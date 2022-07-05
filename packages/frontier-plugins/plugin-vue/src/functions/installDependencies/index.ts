@@ -2,7 +2,7 @@ import shell from 'shelljs';
 import cli from 'cli-ux';
 const util = require('util');
 const exec = util.promisify(shell.exec);
-import { CLI_STATE } from 'utils/constants';
+import { CLI_STATE } from '../../utils/constants';
 
 /**
  * Description: Install plugin dependencies into a project.

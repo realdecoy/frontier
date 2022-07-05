@@ -1,11 +1,11 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
-import { toKebabCase } from '@rdfrontier/stdlib';\
-import { checkProjectValidity, parsePageName } from 'utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from 'utils/constants';
-import { addElementFunction } from 'functions/addElement';
+import { toKebabCase } from '@rdfrontier/stdlib';
+import { checkProjectValidity, parsePageName } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
+import { addElementFunction } from '../../../functions/addElement/index';
 import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from 'functions/catch';
+import catchFunction from '../../../functions/catch/index';
 
 const TEMPLATE_FOLDERS = ['page'];
 

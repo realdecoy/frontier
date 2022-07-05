@@ -5,12 +5,12 @@ const exec = util.promisify(shell.exec);
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import { Files } from 'modules';
-import { copyFiles, parseDynamicObjects, parseModuleConfig } from 'utils/files';
-import { checkProjectValidity } from 'utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from 'utils/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from 'utils/plugins';
+import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../utils/files';
+import { checkProjectValidity } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
 import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from 'functions/catch';
+import catchFunction from '../../../functions/catch';
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

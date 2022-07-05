@@ -1,8 +1,8 @@
 import { Command, flags } from '@oclif/command'
-import { CONSTANTS, TEMPLATE_REPLACEMENT_FILES, MOBILE_PROJECT_TEMPLATE } from 'utils/constants'
-import { copyFolderSync, replaceInFiles } from 'utils/files'
+import { CONSTANTS, TEMPLATE_REPLACEMENT_FILES, MOBILE_PROJECT_TEMPLATE } from '@/utils/constants'
+import { copyFolderSync, replaceInFiles } from '../../../utils/files'
 import chalk = require('chalk')
-import { checkIfProjectExists } from 'utils/utilities'
+import { checkIfProjectExists } from '../../../utils/utilities'
 import { exec } from 'child_process'
 
 const { TEMPLATE_REGEX } = CONSTANTS
