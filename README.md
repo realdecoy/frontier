@@ -96,51 +96,42 @@ npm install -g @rdfrontier
 ```
 yarn add --save--dev @rdfrontier/stdlib
 ```
-OR
 ```
 npm install --save--dev @rdfrontier/stdlib
 ```
 
-#### Frontier TypeKit
-`@rdfrontier/typekit` 
+#### Frontier TypeKit - @rdfrontier/typekit
 
 ```
 yarn add --save--dev @rdfrontier/typekit
 ```
-OR
 ```
 npm install --save--dev @rdfrontier/typekit
 ```
 
-#### Frontier Plugin Shared Library
-`@rdfrontier/plugin-shared` 
+#### Frontier Plugin Shared Library - @rdfrontier/plugin-shared
 
 ```
 yarn add --save--dev @rdfrontier/plugin-shared
 ```
-OR
 ```
 npm install --save--dev @rdfrontier/plugin-shared
 ```
 
-#### RDVue
-`@rdfrontier/plugin-vue` 
+#### RDVue - @rdfrontier/plugin-vue
 
 ```
 yarn add --save--dev @rdfrontier/plugin-vue
 ```
-OR
 ```
 npm install --save--dev @rdfrontier/plugin-vue
 ```
 
-#### Specture
-`@rdfrontier/plugin-qa` 
+#### Specture - @rdfrontier/plugin-qa
 
 ```
 yarn add --save--dev @rdfrontier/plugin-qa
 ```
-OR
 ```
 npm install --save--dev @rdfrontier/plugin-qa
 ```
