@@ -50,7 +50,7 @@ Eg: import { log } from '@rdfrontier/stdlib';
 
 
 &nbsp;
-&nbsp;
+&nbsp; 
 
 ## Options
 

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 /**
- * Description: .
+ * Description: Outputs if a file is ready for use nor not.
  * @param {boolean} successfulReplace - a boolean value eg: true
  * @param {string} elementName - name of element being created eg: "testComponent"
  * @param {string} elementType - type of element being created eg: "component"

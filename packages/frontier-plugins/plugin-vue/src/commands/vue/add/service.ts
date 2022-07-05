@@ -9,6 +9,9 @@ import { addElementFunction } from 'functions/addElement';
 
 const TEMPLATE_FOLDERS = ['service'];
 
+/**
+ * Description: Class for creating a service object.
+ */
 export default class Service extends Command {
   static description = 'add a new Service module.'
 

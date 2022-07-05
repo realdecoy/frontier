@@ -7,13 +7,13 @@
   <br/>
 </div>
 
-# Frontier 
+# Frontier  
 
 [Frontier](https://github.com/realdecoy/frontier),  Bringing a new frontier to software engineering. 
 
 Frontier brings together engineering standards across disciplines for ease of use, promoting consistent software development.  
 
- Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
+Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
 
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
@@ -39,6 +39,16 @@ Frontier brings together engineering standards across disciplines for ease of us
 
 ## Components
 
+###  Installation
+```
+yarn add -g @rdfrontier
+```
+or 
+
+```
+npm install -g @rdfrontier
+```
+
 ### Addons
 
 | Name | Package | Status | 
@@ -62,11 +72,57 @@ Frontier brings together engineering standards across disciplines for ease of us
 
 | Name | Package | Status | 
 | --- | --- | --- |
-| Frontier Standard Library  | `@rdfrontier/typekit`      | Ready |
-| Frontier TypeKit           | `@rdfrontier/stdlib`       | Ready |
+| Frontier Standard Library  | `@rdfrontier/stdlib`      | Ready |
+| Frontier TypeKit           | `@rdfrontier/typekit`       | Ready |
 
 &nbsp;
 &nbsp;
 &nbsp;
 
 
+### Options
+| Package | Description | 
+| --- | --- | --- |
+| `@rdfrontier/typekit`             | Ready |
+| `@rdfrontier/stdlib`              | Ready |
+| `@rdfrontier/plugin-shared`       | Ready |
+| `@rdfrontier/plugin-vue`          | Ready |
+| `@rdfrontier/plugin-qa`           | Ready |
+
+### Package Installation Instructions 
+
+#### Frontier Standard Library
+`@rdfrontier/stdlib` 
+
+```
+yarn add --save--dev @rdfrontier/stdlib
+
+OR
+
+npm install --save--dev @rdfrontier/stdlib
+```
+
+#### Frontier TypeKit
+`@rdfrontier/typekit` 
+
+```
+yarn add --save--dev @rdfrontier/typekit
+
+OR
+
+npm install --save--dev @rdfrontier/typekit
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+### Development Instructions 
+
+&nbsp;
+&nbsp;
+&nbsp;

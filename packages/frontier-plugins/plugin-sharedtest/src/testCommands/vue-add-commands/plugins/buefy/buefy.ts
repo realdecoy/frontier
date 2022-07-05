@@ -11,7 +11,7 @@ import { CLI_COMMANDS, CLI_STATE } from 'utils/constants';
 import { injectImportsIntoMain } from 'utils/plugins';
 import { Route } from 'modules/manifest';
 
-import { validityFailed } from '@rdfrontier/plugin-shared';
+import { invalidProject } from '@rdfrontier/plugin-shared';
 import catchFunction from 'functions/vue-functions/catch';
 import { addPluginFunction } from 'functions/vue-functions/addPlugin';
 import { installDepenedencies } from 'functions/vue-functions/installDependencies';
@@ -54,7 +54,7 @@ export default class Buefy extends Command {
 
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
-        validityFailed(CLI_COMMANDS.PluginBuefy);
+        invalidProject(CLI_COMMANDS.PluginBuefy, "rdvue");
 
     } else if (hasProjectName) {
         const dir = path.join(process.cwd(), projectName ?? '');

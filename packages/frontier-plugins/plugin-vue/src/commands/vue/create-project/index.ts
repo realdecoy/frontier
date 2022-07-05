@@ -26,6 +26,9 @@ const CUSTOM_ERROR_CODES = [
   'file-not-changed',
 ];
 
+/**
+ * Description: Class for creating a project.
+ */
 export default class CreateProject extends Command {
   static description = 'create a new rdvue project'
 

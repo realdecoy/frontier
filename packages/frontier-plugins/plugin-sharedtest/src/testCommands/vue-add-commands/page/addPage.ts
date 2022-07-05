@@ -5,7 +5,7 @@ import { checkProjectValidity, parsePageName, toKebabCase } from 'utils/utilitie
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from 'utils/constants';
 import catchFunction from 'functions/vue-functions/catch';
 import { addElementFunction } from 'functions/vue-functions/addElement';
-import { validityFailed } from '@rdfrontier/plugin-shared';
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['page'];
 
@@ -29,7 +29,7 @@ export default class Page extends Command {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-        validityFailed(CLI_COMMANDS.AddPage);
+        invalidProject(CLI_COMMANDS.AddPage, "rdvue");
     }
 
     const { args } = this.parse(Page);

@@ -9,6 +9,9 @@ import catchFunction from 'functions/catch';
 
 const TEMPLATE_FOLDERS = ['page'];
 
+/**
+ * Description: Class for creating a component object.
+ */
 export default class Page extends Command {
   static description = 'add a new Page module.'
 

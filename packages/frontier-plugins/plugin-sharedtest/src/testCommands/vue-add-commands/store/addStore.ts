@@ -5,7 +5,7 @@ import { checkProjectValidity, parseStoreModuleName, toKebabCase } from 'utils/u
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from 'utils/constants';
 import catchFunction from 'functions/vue-functions/catch';
 import { addElementFunction } from 'functions/vue-functions/addElement';
-import { validityFailed } from '@rdfrontier/plugin-shared';
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['store'];
 const CUSTOM_ERROR_CODES = [
@@ -36,7 +36,7 @@ export default class StoreModule extends Command {
 
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-        validityFailed(CLI_COMMANDS.AddStore);
+        invalidProject(CLI_COMMANDS.AddStore, "rdvue");
     }
 
     const { args } = this.parse(StoreModule);

@@ -9,6 +9,9 @@ import catchFunction from 'functions/catch';
 
 const TEMPLATE_FOLDERS = ['component'];
 
+/**
+ * Description: Class for creating a component object.
+ */
 export default class Component extends Command {
   static description = 'add a new Component module.'
 

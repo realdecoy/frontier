@@ -16,6 +16,9 @@ import { invalidProject } from '@rdfrontier/plugin-shared';
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 
+/**
+ * Description: Class for creating buefy -----.
+ */
 export default class Buefy extends Command {
   static description = 'lightweigth UI components for Vuejs'
 

@@ -3,7 +3,7 @@ import { copyTestFile, updateTestFiles } from 'qautils/files'
 import { checkIfProjectIsValid } from 'qautils/utilities'
 import {CONSTANTS} from 'qautils/constants'
 import chalk = require('chalk')
-import { successResponseFile } from '@rdfrontier/plugin-shared'
+import { successfulReplaceResponse } from '@rdfrontier/plugin-shared'
 
 const {TEST_REGEX} = CONSTANTS
 
@@ -35,7 +35,7 @@ export default class CreateTest extends Command {
       const successfulReplace = await updateTestFiles(file, replaceRegex, testName)
 
       // Output message saying whether project is ready or not 
-      const replacementMessage = await successResponseFile(successfulReplace, testName, "test file")
+      const replacementMessage = await successfulReplaceResponse(successfulReplace, testName, "test file")
       this.log(replacementMessage)
 
     } else {

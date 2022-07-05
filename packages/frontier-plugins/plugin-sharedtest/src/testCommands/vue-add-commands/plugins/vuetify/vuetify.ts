@@ -12,6 +12,8 @@ import { checkProjectValidity } from 'utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from 'utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from 'utils/plugins';
 import { installDepenedencies } from 'functions/vue-functions/installDependencies';
+import { invalidProject } from '@rdfrontier/plugin-shared';
+import catchFunction from 'functions/vue-functions/catch';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -35,26 +37,7 @@ export default class Vuetify extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    const errorMessage = error.message;
-    const isValidJSON = isJsonString(errorMessage);
-    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
-    const customErrorCode = parsedError.code;
-    const customErrorMessage = parsedError.message;
-    const hasCustomErrorCode = customErrorCode !== undefined;
-
-    if (hasCustomErrorCode === false) {
-      // throw cli errors to be handled globally
-      throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
-      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
-    } else {
-      throw new Error(customErrorMessage);
-    }
-
-    return Promise.resolve();
+    return catchFunction(error);
   }
 
   async run(): Promise<void> {
@@ -69,12 +52,7 @@ export default class Vuetify extends Command {
     let { projectRoot } = validityResponse;
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
-      throw new Error(
-        JSON.stringify({
-          code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('rdvue')} project`,
-        }),
-      );
+      invalidProject(CLI_COMMANDS.PluginVuetify, "rdvue");
     } else if (hasProjectName) {
       const dir = path.join(process.cwd(), projectName ?? '');
       projectRoot = dir.trim();

@@ -4,7 +4,7 @@ import {Command, flags} from '@oclif/command'
 import { CONSTANTS } from 'qautils/constants'
 import { copyPageObjectFile, updatePageObjectFile, updateFileName } from 'qautils/files'
 import { checkIfProjectIsValid } from 'qautils/utilities'
-import { successResponseFile } from '@rdfrontier/plugin-shared'
+import { successfulReplaceResponse } from '@rdfrontier/plugin-shared'
 
 const { PAGE_OBJECT_REGEX } = CONSTANTS
 export default class CreatePageObject extends Command {
@@ -37,7 +37,7 @@ export default class CreatePageObject extends Command {
       await updateFileName(currentFilenameSlug)
 
       // Output message saying whether project is ready or not 
-      const replacementMessage = await successResponseFile(successfulReplace, pageObjectName, "page object file")
+      const replacementMessage = await successfulReplaceResponse(successfulReplace, pageObjectName, "page object file")
       this.log(replacementMessage)
 
     } else {
