@@ -113,6 +113,40 @@ OR
 npm install --save--dev @rdfrontier/typekit
 ```
 
+#### Frontier Plugin Shared Library
+`@rdfrontier/plugin-shared` 
+
+```
+yarn add --save--dev @rdfrontier/plugin-shared
+
+OR
+
+npm install --save--dev @rdfrontier/plugin-shared
+```
+
+#### RDVue
+`@rdfrontier/plugin-vue` 
+
+```
+yarn add --save--dev @rdfrontier/plugin-vue
+
+OR
+
+npm install --save--dev @rdfrontier/plugin-vue
+```
+
+#### Specture
+`@rdfrontier/plugin-qa` 
+
+```
+yarn add --save--dev @rdfrontier/plugin-qa
+
+OR
+
+npm install --save--dev @rdfrontier/plugin-qa
+```
+
+
 &nbsp;
 &nbsp;
 &nbsp;
