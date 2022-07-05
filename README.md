@@ -82,7 +82,7 @@ npm install -g @rdfrontier
 
 ### Options
 | Package | Description | 
-| --- | --- | --- |
+| --- | --- |
 | `@rdfrontier/typekit`             | Ready |
 | `@rdfrontier/stdlib`              | Ready |
 | `@rdfrontier/plugin-shared`       | Ready |
@@ -91,14 +91,13 @@ npm install -g @rdfrontier
 
 ### Package Installation Instructions 
 
-#### Frontier Standard Library
-`@rdfrontier/stdlib` 
+#### Frontier Standard Library - @rdfrontier/stdlib
 
 ```
 yarn add --save--dev @rdfrontier/stdlib
-
+```
 OR
-
+```
 npm install --save--dev @rdfrontier/stdlib
 ```
 
@@ -107,9 +106,9 @@ npm install --save--dev @rdfrontier/stdlib
 
 ```
 yarn add --save--dev @rdfrontier/typekit
-
+```
 OR
-
+```
 npm install --save--dev @rdfrontier/typekit
 ```
 
@@ -118,9 +117,9 @@ npm install --save--dev @rdfrontier/typekit
 
 ```
 yarn add --save--dev @rdfrontier/plugin-shared
-
+```
 OR
-
+```
 npm install --save--dev @rdfrontier/plugin-shared
 ```
 
@@ -129,9 +128,9 @@ npm install --save--dev @rdfrontier/plugin-shared
 
 ```
 yarn add --save--dev @rdfrontier/plugin-vue
-
+```
 OR
-
+```
 npm install --save--dev @rdfrontier/plugin-vue
 ```
 
@@ -140,9 +139,9 @@ npm install --save--dev @rdfrontier/plugin-vue
 
 ```
 yarn add --save--dev @rdfrontier/plugin-qa
-
+```
 OR
-
+```
 npm install --save--dev @rdfrontier/plugin-qa
 ```
 
