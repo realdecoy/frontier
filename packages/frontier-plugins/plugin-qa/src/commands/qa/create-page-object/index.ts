@@ -6,6 +6,11 @@ import { copyPageObjectFile, updatePageObjectFile, updateFileName } from '../../
 import { checkIfProjectIsValid } from '../../../utils/utilities'
 
 const { PAGE_OBJECT_REGEX } = CONSTANTS
+
+/**
+ * Class representing a page object.
+ * @extends Command
+ */
 export default class CreatePageObject extends Command {
   static description = 'describe the command here'
 

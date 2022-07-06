@@ -10,7 +10,8 @@ import catchFunction from '../../../functions/catch/index';
 const TEMPLATE_FOLDERS = ['page'];
 
 /**
- * Description: Class for creating a component object.
+ * Class representing a page.
+ * @extends Command
  */
 export default class Page extends Command {
   static description = 'add a new Page module.'

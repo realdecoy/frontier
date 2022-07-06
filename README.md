@@ -12,9 +12,7 @@
 [Frontier](https://github.com/realdecoy/frontier),  Bringing a new frontier to software engineering. 
 
 Frontier brings together engineering standards across disciplines for ease of use, promoting consistent software development.<br />
-
-
-Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.   
+ 
 
 Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
 
@@ -28,6 +26,7 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 <!-- custom-toc -->
 ## Table of Contents
 
+* [About](#about)
 * [Installation](#install)
 * [Addons](#addons)
 * [Libraries](#libraries)
@@ -39,114 +38,41 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 &nbsp;
 &nbsp;
 
+## About 
+
+Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
 
 ## Components
 
-###  Installation
-```
-yarn add -g @rdfrontier
-```
-or 
-
-```
-npm install -g @rdfrontier
-```
-
 ### Addons
 
-| Name | Package | Status | 
-| --- | --- | --- |
-| Backend           | `@rdfrontier/plugin-backend`      | Pre-Technical Proposal |
-| Spring Boot       | `@rdfrontier/plugin-java`         | Pre-Technical Proposal |
-| Javascript        | `@rdfrontier/plugin-js`           | Pre-Technical Proposal |
-| .Net              | `@rdfrontier/plugin-dotnet`       | Pre-Technical Proposal |
-| Frontend          | `@rdfrontier/plugin-frontend`     | Pre-Technical Proposal |
-| Vue               | `@rdfrontier/plugin-vue`          | Ready                  |
-| React             | `@rdfrontier/plugin-react`        | Pre-Technical Proposal |
-| QA                | `@rdfrontier/plugin-qa`           | Ready                  |
-| Mobile            | `@rdfrontier/plugin-mobile`       | Pre-Technical Proposal |
-| React Native      | `@rdfrontier/plugin-react-native` | Technical Proposal     |
-| Infrastructure    | `@rdfrontier/plugin-iac`          | Pre-Technical Proposal |
+| Name | Package | Status | More Information
+| --- | --- | --- | --- |
+| Backend           | `@rdfrontier/plugin-backend`      | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Spring Boot       | `@rdfrontier/plugin-java`         | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Javascript        | `@rdfrontier/plugin-js`           | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| .Net              | `@rdfrontier/plugin-dotnet`       | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Frontend          | `@rdfrontier/plugin-frontend`     | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Vue               | `@rdfrontier/plugin-vue`          | Ready                | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-vue) |
+| React             | `@rdfrontier/plugin-react`        | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| QA                | `@rdfrontier/plugin-qa`           | Ready                  | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-qa) |
+| Mobile            | `@rdfrontier/plugin-mobile`       | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| React Native      | `@rdfrontier/plugin-react-native` | Technical Proposal     | [ Read More ](https://github.com/realdecoy/frontier) |
+| Infrastructure    | `@rdfrontier/plugin-iac`          | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
 
 &nbsp;
 &nbsp;
 
 ### Libraries
 
-| Name | Package | Status | 
-| --- | --- | --- |
-| Frontier Standard Library  | `@rdfrontier/stdlib`      | Ready |
-| Frontier TypeKit           | `@rdfrontier/typekit`       | Ready |
+| Name | Package | Status | More Information
+| --- | --- | --- | --- |
+| Frontier Standard Library  | `@rdfrontier/stdlib`      | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/stdlib) |
+| Frontier TypeKit           | `@rdfrontier/typekit`       | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit) |
 
 &nbsp;
 &nbsp;
 &nbsp;
-
-
-### Package Installation Options
-| Package | Description | 
-| --- | --- |
-| `@rdfrontier/typekit`             | Ready |
-| `@rdfrontier/stdlib`              | Ready |
-| `@rdfrontier/plugin-shared`       | Ready |
-| `@rdfrontier/plugin-vue`          | Ready |
-| `@rdfrontier/plugin-qa`           | Ready |
-
-&nbsp;
-&nbsp;
-&nbsp;
-
-### Package Installation Instructions 
-
-#### [ Frontier Standard Library ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/stdlib)
-
-```
-yarn add --save--dev @rdfrontier/stdlib
-```
-or
-```
-npm install --save--dev @rdfrontier/stdlib
-```
-
-#### [Frontier TypeKit ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit)
-
-```
-yarn add --save--dev @rdfrontier/typekit
-```
-or
-```
-npm install --save--dev @rdfrontier/typekit
-```
-
-#### [Frontier Plugin Shared Library ](https://github.com/realdecoy/frontier)
-
-```
-yarn add --save--dev @rdfrontier/plugin-shared
-```
-or
-```
-npm install --save--dev @rdfrontier/plugin-shared
-```
-
-#### [RDVue ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-vue)
-
-```
-yarn add --save--dev @rdfrontier/plugin-vue
-```
-or
-```
-npm install --save--dev @rdfrontier/plugin-vue
-```
-
-#### [Specture ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-qa)
-
-```
-yarn add --save--dev @rdfrontier/plugin-qa
-```
-or
-```
-npm install --save--dev @rdfrontier/plugin-qa
-```
 
 
 &nbsp;
@@ -155,6 +81,24 @@ npm install --save--dev @rdfrontier/plugin-qa
 
 
 ### Development Instructions 
+
+#### Development
+
+```bash
+npm install
+npm link
+```
+
+&nbsp; &nbsp; &nbsp;
+
+#### Testing
+
+##### Run Unit Test Suite
+
+```bash
+npm run test
+```
+
 
 #### [Bootstraping](https://lerna.js.org/docs/core-concepts/bootstrapping)
 Bootstraping allows for the linking of different frontier packages so they an import and utilize each other without having to be published.

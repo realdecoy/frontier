@@ -10,7 +10,8 @@ import catchFunction from '../../../functions/catch';
 const TEMPLATE_FOLDERS = ['store'];
 
 /**
- * Description: Class for creating a store module object.
+ * Class representing a store module.
+ * @extends Command
  */
 export default class StoreModule extends Command {
   static description = 'add a new Store module.'

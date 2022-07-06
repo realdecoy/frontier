@@ -7,6 +7,10 @@ import { exec } from 'child_process'
 
 const { TEMPLATE_REGEX } = CONSTANTS
 
+/**
+ * Class representing a mobile project.
+ * @extends Command
+ */
 export default class CreateMobileProject extends Command {
   static description = 'Create a new WDIO project for Mobile'
 

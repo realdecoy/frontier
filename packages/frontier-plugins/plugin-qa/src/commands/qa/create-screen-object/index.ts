@@ -7,6 +7,10 @@ import { checkIfProjectIsValid } from '../../../utils/utilities'
 
 const { SCREEN_OBJECT_REGEX } = CONSTANTS
 
+/**
+ * Class representing a screen object.
+ * @extends Command
+ */
 export default class CreateScreenObject extends Command {
   static description = 'describe the command here'
 

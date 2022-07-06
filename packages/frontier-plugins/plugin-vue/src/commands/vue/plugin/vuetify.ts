@@ -23,6 +23,10 @@ const CUSTOM_ERROR_CODES = [
   'dependency-install-error',
 ];
 
+/**
+ * Class representing vuetify plugin.
+ * @extends Command
+ */
 export default class Vuetify extends Command {
   static description = 'lightweigth UI components for Vuejs'
 

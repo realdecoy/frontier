@@ -15,6 +15,10 @@ import catchFunction from '../../../functions/catch';
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 
+/**
+ * Class representing localization plugin.
+ * @extends Command
+ */
 export default class Localization extends Command {
   static description = 'adds i18bn localization'
 

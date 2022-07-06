@@ -96,7 +96,7 @@ This is ______________
 * `TemporaryRedirect - 307`
 * `PermanentRedirect - 308`
 
-#### Client Error Code 
+#### Client Error Code  
 * `BadRequest - 400`
 * `Unauthorized - 401`
 * `PaymentRequired - 402`
@@ -138,3 +138,21 @@ This is ______________
 * `LoopDetected - 508`
 * `NotExtended - 510`
 * `NetworkAuthenticationRequired - 511`
+
+### Network Info
+
+#### Effective Connection Type
+* `FouthGeneration - 4g`
+* `SecondGeneration - 2g`
+* `SlowSecondGeneration - slow-2g`
+* `ThirdGeneration - 3g`
+
+#### Connection Type
+* `Bluetooth - bluetooth`
+* `Cellular - cellular`
+* `Ethernet - ethernet`
+* `None - none`
+* `Other - other`
+* `Unknown - unknown`
+* `WiFI - wifi`
+* `WiMax - wimax`

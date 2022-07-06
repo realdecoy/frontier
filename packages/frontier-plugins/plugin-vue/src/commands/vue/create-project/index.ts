@@ -27,7 +27,8 @@ const CUSTOM_ERROR_CODES = [
 ];
 
 /**
- * Description: Class for creating a project.
+ * Class representing a create project object.
+ * @extends Command
  */
 export default class CreateProject extends Command {
   static description = 'create a new rdvue project'
