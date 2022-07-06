@@ -37,6 +37,9 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 
 &nbsp; &nbsp; &nbsp;
 
+## About 
+
+Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
 
 ## About 
 
@@ -78,16 +81,6 @@ yarn run typecheck
 
 ## Components
 
-###  Installation
-```
-yarn add -g @rdfrontier
-```
-or 
-
-```
-npm install -g @rdfrontier
-```
-
 ### Addons
 
 | Name | Package | Status | More Information
@@ -115,7 +108,6 @@ npm install -g @rdfrontier
 | Frontier TypeKit           | `@rdfrontier/typekit`       | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit) |
 
 &nbsp; &nbsp; &nbsp;
-
 
 
 &nbsp;
