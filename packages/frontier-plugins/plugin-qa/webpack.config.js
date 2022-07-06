@@ -1,3 +1,4 @@
+const path = require('path');
 const { resolve } = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
@@ -10,8 +11,11 @@ module.exports = function(env = {}) {
     mode: 'production',
     entry: resolve(__dirname, 'esnext', 'index'),
     resolve: {
-      extensions: ['.js'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       //add alias reslove
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      }
     },
     externals: [
       nodeExternals(nodeExternalsOpts),

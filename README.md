@@ -11,7 +11,8 @@
 
 [Frontier](https://github.com/realdecoy/frontier),  Bringing a new frontier to software engineering. 
 
-Frontier brings together engineering standards across disciplines for ease of use, promoting consistent software development.  
+Frontier brings together engineering standards across disciplines for ease of use, promoting consistent software development.
+Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.   
 
 Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
 
@@ -80,7 +81,7 @@ npm install -g @rdfrontier
 &nbsp;
 
 
-### Options
+### Package Installation Options
 | Package | Description | 
 | --- | --- |
 | `@rdfrontier/typekit`             | Ready |
@@ -95,7 +96,7 @@ npm install -g @rdfrontier
 
 ### Package Installation Instructions 
 
-#### Frontier Standard Library - @rdfrontier/stdlib
+#### [ Frontier Standard Library - @rdfrontier/stdlib](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/stdlib)
 
 ```
 yarn add --save--dev @rdfrontier/stdlib
@@ -104,7 +105,7 @@ yarn add --save--dev @rdfrontier/stdlib
 npm install --save--dev @rdfrontier/stdlib
 ```
 
-#### Frontier TypeKit - @rdfrontier/typekit
+#### [Frontier TypeKit - @rdfrontier/typekit](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit)
 
 ```
 yarn add --save--dev @rdfrontier/typekit
@@ -113,7 +114,7 @@ yarn add --save--dev @rdfrontier/typekit
 npm install --save--dev @rdfrontier/typekit
 ```
 
-#### Frontier Plugin Shared Library - @rdfrontier/plugin-shared
+#### [Frontier Plugin Shared Library - @rdfrontier/plugin-shared](https://github.com/realdecoy/frontier)
 
 ```
 yarn add --save--dev @rdfrontier/plugin-shared
@@ -122,7 +123,7 @@ yarn add --save--dev @rdfrontier/plugin-shared
 npm install --save--dev @rdfrontier/plugin-shared
 ```
 
-#### RDVue - @rdfrontier/plugin-vue
+#### [RDVue - @rdfrontier/plugin-vue](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-vue)
 
 ```
 yarn add --save--dev @rdfrontier/plugin-vue
@@ -131,7 +132,7 @@ yarn add --save--dev @rdfrontier/plugin-vue
 npm install --save--dev @rdfrontier/plugin-vue
 ```
 
-#### Specture - @rdfrontier/plugin-qa
+#### [Specture - @rdfrontier/plugin-qa](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-qa)
 
 ```
 yarn add --save--dev @rdfrontier/plugin-qa
@@ -144,12 +145,21 @@ npm install --save--dev @rdfrontier/plugin-qa
 &nbsp;
 &nbsp; 
 &nbsp;
-s
-&nbsp;
-&nbsp;
-&nbsp;
+
 
 ### Development Instructions 
+
+#### Bootstraping
+Bootstraping allows for the linking of different frontier packages so they an import and utilize each other without having to be published.
+To bootstrap all frontier packages and their dependencies run the command:
+```
+npm run bootstrap 
+```
+OR
+```
+yarn run bootstrap 
+```
+
 
 &nbsp;
 &nbsp;

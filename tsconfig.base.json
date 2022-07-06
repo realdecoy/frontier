@@ -3,10 +3,10 @@
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
-    "baseUrl": ".",
+    "baseUrl": "packages",
     "paths": {
       "@/*": [
-        "packages/**/*"
+        "*"
       ]
     },
     "lib": [

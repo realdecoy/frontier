@@ -38,6 +38,7 @@
     "node-notifier-cli": "^2.0.0",
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
+    "typedoc": "^0.23.5",
     "webpack": "^4.0",
     "webpack-node-externals": "^3.0.0"
   },

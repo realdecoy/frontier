@@ -42,9 +42,9 @@ export function toStringArray(value: unknown[]): string[] {
 
 
 /**
- * Description: determine if string is valid JSON string
- * @param {string} value - a string value
- * @returns {boolean} -
+ * Description: Determine if string is valid JSON string
+ * @param {string} value - a string literal
+ * @returns {boolean} - True if string is valid qualified JSON
  */
  export function isJsonString(value: string): boolean {
   try {
@@ -55,5 +55,3 @@ export function toStringArray(value: unknown[]): string[] {
 
   return true;
 }
-
-
