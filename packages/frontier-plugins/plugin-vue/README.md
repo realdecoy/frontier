@@ -71,16 +71,16 @@ frontier vue:COMMAND
 
 <!-- custom-commands --> 
 
-- [`frontier vue:create-project [NAME]`](#frontier vue:create-project-name)
-- [`frontier vue:add:component [NAME]`](#frontier vue:add:component-name)
-- [`frontier vue:add:page [NAME]`](#frontier vue:add:page-name)
-- [`frontier vue:add:service [NAME]`](#frontier vue:add:service-name)
-- [`frontier vue:add:store [NAME]`](#frontier vue:add:store-name)
-- [`frontier vue:plugin [NAME]`](#frontier vue:plugin-name)
-- [`frontier vue:plugin:buefy `](#frontier vue:plugin:buefy-name)
-- [`frontier vue:plugin:localization `](#frontier vue:plugin:localization-name)
-- [`frontier vue:plugin:vuetify `](#frontier vue:plugin:vuetify-name)
-- [`frontier vue:upgrade [NAME]`](#frontier vue:upgrade-name)
+- [`frontier vue:create-project [NAME]`](#frontier-vue-create-project-name)
+- [`frontier vue:add:component [NAME]`](#frontier-vue-add-component-name)
+- [`frontier vue:add:page [NAME]`](#frontier-vue-add-page-name)
+- [`frontier vue:add:service [NAME]`](#frontier-vue-add-service-name)
+- [`frontier vue:add:store [NAME]`](#frontier-vue-add-store-name)
+- [`frontier vue:plugin [NAME]`](#frontier-vue-plugin-name)
+- [`frontier vue:plugin:buefy `](#frontier-vue-plugin-buefy-name)
+- [`frontier vue:plugin:localization `](#frontier-vue-plugin-localization-name)
+- [`frontier vue:plugin:vuetify `](#frontier-vue-plugin-vuetify-name)
+- [`frontier vue:upgrade [NAME]`](#frontier-vue-upgrade-name)
 
 
 ### `frontier vue:create-project [NAME] [PERSET]`
