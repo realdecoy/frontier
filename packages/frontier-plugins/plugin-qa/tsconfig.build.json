@@ -3,13 +3,6 @@
   "compilerOptions": {
     "declarationDir": "types",
     "outDir": "esnext",
-    "rootDir": "src",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": [
-        "*", "/*"
-      ]
-    },
   },
   "exclude": [
     "setupTests.ts",
