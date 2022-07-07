@@ -59,7 +59,7 @@ frontier --help
 The current version of rdvue can be retrieved with the command:
 
 ```bash
-npx rdvue -v|--version|version
+frontier -v|--version|version
 ```
 
 &nbsp; &nbsp;
@@ -84,8 +84,7 @@ Options:
 ## Development
 
 ```bash
-npm install
-npm link
+
 ```
 
 &nbsp; &nbsp; &nbsp;

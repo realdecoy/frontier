@@ -27,10 +27,12 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 
 * [About](#about)
 * [Usage](#install)
+* [Bootstrapping](#bootstrapinghttpslernajsorgdocscore-conceptsbootstrapping)
 * [Addons](#addons)
 * [Libraries](#libraries)
 * [Options](#options)
-* [Development Instructions](#Development)
+* [Development Instructions](#development-instructions)
+* [Contributions](#contribution-instructions)
 <!-- custom-tocstop -->
 
 &nbsp; &nbsp; &nbsp;
@@ -55,6 +57,34 @@ The frontier version can be accessed with the command:
 frontier --version
 ```
 <!-- custom-usagestop -->
+
+&nbsp; &nbsp; &nbsp;
+
+#### [Bootstraping](https://lerna.js.org/docs/core-concepts/bootstrapping)
+Bootstraping allows for the linking of different frontier packages so they an import and utilize each other without having to be published.
+To bootstrap all frontier packages and their dependencies run the command:
+```
+npm run bootstrap 
+```
+or
+```
+yarn run bootstrap 
+```
+
+&nbsp; &nbsp; &nbsp;
+
+#### [Type Checking](https://lerna.js.org/docs/core-concepts/bootstrapping)
+Type checking, see the validation of the type of very variable in the code base.
+To type check all frontier packages and their dependencies run the command:
+```
+npm run typecheck
+```
+or
+```
+yarn run typecheck
+```
+
+&nbsp; &nbsp; &nbsp;
 
 ## Components
 
@@ -93,36 +123,97 @@ frontier --version
 &nbsp;
 
 
-### Development Instructions 
+## Development Instructions 
 
-#### Development
+### Building
+
+#### Build
+The build command rebuilds all packages and notify the user of the success of the packages being rebuilt.
+To build the packages of frontier, run the command:
 
 ```bash
-npm install
-npm link
+yarn run build
+```
+or 
+```bash
+npm run build
 ```
 
 &nbsp; &nbsp; &nbsp;
 
-#### Testing
 
-##### Run Unit Test Suite
+#### Rebuild
+Rebuilding the frontier packages automatically reconstructs the packages forgetting about any previous compliation of them.
+To rebuild the frontier packages, run the command:
 
 ```bash
-npm run test
+yarn run rebuild
+```
+or 
+```bash
+npm run rebuild
 ```
 
+&nbsp; &nbsp; &nbsp;
 
-#### [Bootstraping](https://lerna.js.org/docs/core-concepts/bootstrapping)
-Bootstraping allows for the linking of different frontier packages so they an import and utilize each other without having to be published.
-To bootstrap all frontier packages and their dependencies run the command:
+
+### Testing
+
+##### Run Unit Test Suites
+Testing any piece of software created is critical for developers.
+To test all frontier packages run the command:
+
 ```
-npm run bootstrap 
+npm run test:packages
 ```
 or
 ```
-yarn run bootstrap 
+yarn run test:packages
 ```
 
+&nbsp; &nbsp; &nbsp;
+
+
+### Nuking
+
+#### Nuke
+To nuke the packages of frontier, run the command:
+
+```bash
+yarn run nuke
+```
+or 
+```bash
+npm run nuke
+```
 
 &nbsp; &nbsp; &nbsp;
+
+
+#### Nuke:artifacts
+To nuke artifacts of the frontier packages, run the command:
+
+```bash
+yarn run nuke:artifacts
+```
+or 
+```bash
+npm run nuke:artifacts
+```
+
+&nbsp; &nbsp; &nbsp;
+
+### Creating a frontier based project
+#### [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam)
+To support the creation of new frointer-based projects a template, [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based project. 
+
+
+## Contribution Instructions 
+### Testing Requirements
+All code contributions made to this repository be properly tested. For testing the testing framework Jest is used. All test files must be writen with the extension ".spec.ts", to maintain the consistency of this project.
+
+### GitHub Commits 
+All commits maded to this repository be rewritten according to the [Conventional Commit Messages Standard](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). This is to ensure that consistency is maintained throughout the repository. 
+
+### Pull Request
+When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number/s that the pull request satisfies. 

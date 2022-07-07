@@ -12,10 +12,8 @@
 ### @rdfrontier/plugin-qa
 CLI to generate web automation projects
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/rdspec.svg)](https://npmjs.org/package/rdspec)
-[![Downloads/week](https://img.shields.io/npm/dw/rdspec.svg)](https://npmjs.org/package/rdspec)
-[![License](https://img.shields.io/npm/l/rdspec.svg)](https://github.com/OrandiH/rdspec/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/rdspec.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
+[![Downloads/week](https://img.shields.io/npm/dw/rdspec.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
 
 &nbsp; &nbsp; &nbsp;
 
@@ -25,7 +23,6 @@ CLI to generate web automation projects
 
 - [Usage](#usage)
 - [Commands ](#options)
-- [Documentation](https://realdecoy.github.io/rdvue/)
 - [Dev Instructions](#Development)
 - [Testing](#Testing)
 <!-- custom-tocstop -->
@@ -35,7 +32,7 @@ CLI to generate web automation projects
 ## Usage
  
 <!-- custom-usage -->
-Installing RDVue can be done with the command:
+Installing Spectre can be done with the command:
 ```bash
 $ frontier plugins:install @rdfrontier/plugin-qa
 ```
@@ -46,7 +43,7 @@ The help menu can be accessed with the command:
 frontier qa --help
 ```
 
-The format for running an RDVue command is generally: 
+The format for running an Spectre command is generally: 
 
 ```bash
 frontier qa:COMMAND
