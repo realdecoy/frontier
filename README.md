@@ -217,5 +217,3 @@ All commits maded to this repository be rewritten according to the [Conventional
 
 ### Pull Request
 When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number/s that the pull request satisfies. 
-
-this is new

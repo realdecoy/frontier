@@ -3,12 +3,6 @@
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
-    "baseUrl": "packages",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
-    },
     "lib": [
       "dom",
       "dom.iterable",
