@@ -61,9 +61,9 @@ Eg: import { invalidProject } from '@rdfrontier/plugin-shared';
 | **Errors**                            |                                                |
 | invalidProject(commandType: string, projectType: string)  | Throw error if project location is invalid.     |
 | existingProject(projectType: string) | Throw error if project already exists.        |
-| fileNotChanged()                     | Throw error file has not been updated. <br /> |
+|  fileNotChanged()                     | Throw error file has not been updated. <br /> |
 | **Response**                          |                                              |
-| @successfulReplaceResponse(successfulReplace: boolean, elementName: string, elementType: string)           | Return response of whether file is ready for use or not.    |
+| successfulReplaceResponse(successfulReplace: boolean, elementName: string, elementType: string)           | Return response of whether file is ready for use or not.    |
 
 &nbsp;
 &nbsp;

@@ -12,10 +12,10 @@ const { SCREEN_OBJECT_REGEX } = CONSTANTS
  * @extends Command
  */
 export default class CreateScreenObject extends Command {
-  static description = 'describe the command here'
+  static description = 'Create a new screen object file'
 
   static examples = [
-    `$ rdspec create-screen-object
+    `$ frontier qa:create-screen-object
     Running this add command!
 `,
   ]

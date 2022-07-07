@@ -20,27 +20,41 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 
 
-&nbsp;
-&nbsp;
-&nbsp;
+&nbsp; &nbsp; &nbsp;
+
 <!-- custom-toc -->
 ## Table of Contents
 
 * [About](#about)
-* [Installation](#install)
+* [Usage](#install)
 * [Addons](#addons)
 * [Libraries](#libraries)
 * [Options](#options)
 * [Development Instructions](#Development)
 <!-- custom-tocstop -->
 
-&nbsp;
-&nbsp;
-&nbsp;
+&nbsp; &nbsp; &nbsp;
+
 
 ## About 
 
 Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
+
+## Usage
+ 
+<!-- custom-usage -->
+The help menu can be accessed with the command:
+
+```bash
+frontier --help
+```
+
+The frontier version can be accessed with the command:
+
+```bash
+frontier --version
+```
+<!-- custom-usagestop -->
 
 ## Components
 
@@ -70,9 +84,8 @@ Frontier offers a set of standard libraries and typing kits that can be use acro
 | Frontier Standard Library  | `@rdfrontier/stdlib`      | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/stdlib) |
 | Frontier TypeKit           | `@rdfrontier/typekit`       | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit) |
 
-&nbsp;
-&nbsp;
-&nbsp;
+&nbsp; &nbsp; &nbsp;
+
 
 
 &nbsp;
@@ -112,6 +125,4 @@ yarn run bootstrap
 ```
 
 
-&nbsp;
-&nbsp;
-&nbsp;
+&nbsp; &nbsp; &nbsp;

@@ -14,7 +14,7 @@ export default class CreateTest extends Command {
   static description = 'Create a new test file'
 
   static examples = [
-    `$ rdspec create-test
+    `$ frontier qa:create-test
     <name-of-file-without-extension>
 `,
   ]

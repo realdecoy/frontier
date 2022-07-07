@@ -17,35 +17,64 @@ CLI to generate web automation projects
 [![Downloads/week](https://img.shields.io/npm/dw/rdspec.svg)](https://npmjs.org/package/rdspec)
 [![License](https://img.shields.io/npm/l/rdspec.svg)](https://github.com/OrandiH/rdspec/blob/master/package.json)
 
-- [Usage](#usage)
-- [Commands](#commands)
+&nbsp; &nbsp; &nbsp;
 
-# Usage
+<!-- custom-toc -->
+
+## Table of Contents
+
+- [Usage](#usage)
+- [Commands ](#options)
+- [Documentation](https://realdecoy.github.io/rdvue/)
+- [Dev Instructions](#Development)
+- [Testing](#Testing)
+<!-- custom-tocstop -->
+
+&nbsp; &nbsp; &nbsp;
+
+## Usage
  
-```sh-session
-$ npm install -g rdspec
-$ rdspec COMMAND
-$ rdspec --help`
+<!-- custom-usage -->
+Installing RDVue can be done with the command:
+```bash
+$ frontier plugins:install @rdfrontier/plugin-qa
 ```
 
-# Commands
+The help menu can be accessed with the command:
 
-<!-- commands -->
+```bash
+frontier qa --help
+```
 
-- [`rdspec create-mobile-project [NAME]`](#rdspec-create-mobile-project-name)
-- [`rdspec create-page-object [NAME]`](#rdspec-create-page-object-name)
-- [`rdspec create-project [NAME]`](#rdspec-create-project-name)
-- [`rdspec create-screen-object [NAME]`](#rdspec-create-screen-object-name)
-- [`rdspec create-test [NAME]`](#rdspec-create-test-name)
-- [`rdspec help [COMMAND]`](#rdspec-help-command)
+The format for running an RDVue command is generally: 
 
-## `rdspec create-mobile-project [NAME]`
+```bash
+frontier qa:COMMAND
+```
+<!-- custom-usagestop -->
+
+&nbsp; &nbsp; &nbsp;
+
+
+## Commands
+
+<!-- custom-commands --> 
+
+- [`frontier qa:create-mobile-project [NAME]`](#frontier qa:create-mobile-project-name)
+- [`frontier qa:create-page-object [NAME]`](#frontier qa:create-page-object-name)
+- [`frontier qa:create-project [NAME]`](#frontier qa:create-project-name)
+- [`frontier qa:create-screen-object [NAME]`](#frontier qa:create-screen-object-name)
+- [`frontier qa:create-test [NAME]`](#frontier qa:create-test-name)
+- [`frontier qa --help [COMMAND]`](#frontier qa:help-command)
+
+
+### `frontier qa:create-mobile-project [NAME]`
 
 Create a new WDIO project for Mobile
 
 ```
 USAGE
-  $ rdspec create-mobile-project [NAME]
+  $ frontier qa:create-mobile-project [NAME]
 
 ARGUMENTS
   NAME  Name of the project to be created
@@ -55,15 +84,15 @@ OPTIONS
 ```
 
 _See code:
-[src/commands/create-mobile-project/index.ts](https://github.com/realdecoy/rdspec/blob/v0.2.4/src/commands/create-mobile-project/index.ts)_
+[src/commands/create-mobile-project/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-qa/src/commands/qa/create-mobile-project/index.ts)_
 
-## `rdspec create-page-object [NAME]`
+## `frontier qa:create-page-object [NAME]`
 
-describe the command here
+Create a new page object file
 
 ```
 USAGE
-  $ rdspec create-page-object [NAME]
+  $ frontier qa:create-page-object [NAME]
 
 ARGUMENTS
   NAME  Name of the page object file to be created
@@ -72,20 +101,20 @@ OPTIONS
   -h, --help  show CLI help
 
 EXAMPLE
-  $ rdspec create-page-object
+  $ frontier qa:create-page-object
        Running this add command!
 ```
 
 _See code:
-[src/commands/create-page-object/index.ts](https://github.com/realdecoy/rdspec/blob/v0.2.4/src/commands/create-page-object/index.ts)_
+[src/commands/create-page-object/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-qa/src/commands/qa/create-page-object/index.ts)_
 
-## `rdspec create-project [NAME]`
+## `frontier qa:create-project [NAME]`
 
 Create a new WDIO project
 
 ```
 USAGE
-  $ rdspec create-project [NAME]
+  $ frontier qa:create-project [NAME]
 
 ARGUMENTS
   NAME  Name of the project to be created
@@ -95,15 +124,15 @@ OPTIONS
 ```
 
 _See code:
-[src/commands/create-project/index.ts](https://github.com/realdecoy/rdspec/blob/v0.2.4/src/commands/create-project/index.ts)_
+[src/commands/create-project/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-qa/src/commands/qa/create-project/index.ts)_
 
-## `rdspec create-screen-object [NAME]`
+## `frontier qa:create-screen-object [NAME]`
 
-describe the command here
+Create a new screen object file
 
 ```
 USAGE
-  $ rdspec create-screen-object [NAME]
+  $ frontier qa:create-screen-object [NAME]
 
 ARGUMENTS
   NAME  Name of the page object file to be created
@@ -112,20 +141,20 @@ OPTIONS
   -h, --help  show CLI help
 
 EXAMPLE
-  $ rdspec create-screen-object
+  $ frontier qa:create-screen-object
        Running this add command!
 ```
 
 _See code:
-[src/commands/create-screen-object/index.ts](https://github.com/realdecoy/rdspec/blob/v0.2.4/src/commands/create-screen-object/index.ts)_
+[src/commands/create-screen-object/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-qa/src/commands/qa/create-screen-object/index.ts)_
 
-## `rdspec create-test [NAME]`
+## `frontier qa:create-test [NAME]`
 
 Create a new test file
 
 ```
 USAGE
-  $ rdspec create-test [NAME]
+  $ frontier qa:create-test [NAME]
 
 ARGUMENTS
   NAME  Name of the test file to be created
@@ -134,20 +163,20 @@ OPTIONS
   -h, --help  show CLI help
 
 EXAMPLE
-  $ rdspec create-test
+  $ frontier qa:create-test
        <name-of-file-without-extension>
 ```
 
 _See code:
-[src/commands/create-test/index.ts](https://github.com/realdecoy/rdspec/blob/v0.2.4/src/commands/create-test/index.ts)_
+[src/commands/create-test/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-qa/src/commands/qa/create-test/index.ts)_
 
-## `rdspec help [COMMAND]`
+## `frontier qa:[COMMAND] --help `
 
 display help for rdspec
 
 ```
 USAGE
-  $ rdspec help [COMMAND]
+  $ frontier qa:[COMMAND]  --help 
 
 ARGUMENTS
   COMMAND  command to show help for
