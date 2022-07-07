@@ -60,12 +60,12 @@ frontier qa:COMMAND
 
 <!-- custom-commands --> 
 
-- [`frontier qa:create-mobile-project [NAME]`](#frontier qa:create-mobile-project-name)
-- [`frontier qa:create-page-object [NAME]`](#frontier qa:create-page-object-name)
-- [`frontier qa:create-project [NAME]`](#frontier qa:create-project-name)
-- [`frontier qa:create-screen-object [NAME]`](#frontier qa:create-screen-object-name)
-- [`frontier qa:create-test [NAME]`](#frontier qa:create-test-name)
-- [`frontier qa --help [COMMAND]`](#frontier qa:help-command)
+* [`frontier qa:create-mobile-project [NAME]`](#frontier qa:create-mobile-project-name)
+* [`frontier qa:create-page-object [NAME]`](#frontier qa:create-page-object-name)
+* [`frontier qa:create-project [NAME]`](#frontier qa:create-project-name)
+* [`frontier qa:create-screen-object [NAME]`](#frontier qa:create-screen-object-name)
+* [`frontier qa:create-test [NAME]`](#frontier qa:create-test-name)
+* [`frontier qa --help [COMMAND]`](#frontier qa:help-command)
 
 
 ### `frontier qa:create-mobile-project [NAME]`
