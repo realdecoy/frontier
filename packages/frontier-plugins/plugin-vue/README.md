@@ -14,10 +14,8 @@ strong typing with TypeScript, standardized Component, Layout and Page models,
 and a data-layer design promoting unified consumption through Stores and
 Services.
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/rdvue.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-vue)
 [![Downloads/week](https://img.shields.io/npm/dw/rdvue.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-vue)
-[![License](https://img.shields.io/npm/l/rdvue.svg)](https://github.com/realdecoy/rdvue/blob/main/package.json)
 
 &nbsp; &nbsp; &nbsp;
 
