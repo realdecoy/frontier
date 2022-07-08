@@ -5,8 +5,8 @@ import chalk from 'chalk';
 import { isJsonString } from '@rdfrontier/stdlib';
 import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG } from '../../../utils/constants';
-import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
-import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',

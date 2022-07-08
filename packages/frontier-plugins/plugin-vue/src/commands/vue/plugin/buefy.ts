@@ -10,8 +10,8 @@ import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE } from '../../../utils/constants';
 import { injectImportsIntoMain } from '../../../utils/plugins';
 import { Route } from 'modules/manifest';
-import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
-import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

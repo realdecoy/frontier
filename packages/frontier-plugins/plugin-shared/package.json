@@ -31,6 +31,14 @@
     "typecheck": "tsc --noEmit"
   },
   "sideEffects": false,
+  "types": "types/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.15.0",
+    "@rdfrontier/stdlib": "^0.0.1"
+  },
+  "devDependencies": {
+    "@rdfrontier/lib-builder": "^1.0.0"
+  },
   "browserslist": [
     "chrome 38",
     "ios >= 9"

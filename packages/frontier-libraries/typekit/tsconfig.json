@@ -8,10 +8,10 @@
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     },
   }

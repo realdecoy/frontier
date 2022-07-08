@@ -3,8 +3,8 @@ import chalk from 'chalk';
 import { toKebabCase } from '@rdfrontier/stdlib';
 import { checkProjectValidity, parseServiceName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
-import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 import { addElementFunction } from '../../../functions/addElement';
 
 const TEMPLATE_FOLDERS = ['service'];

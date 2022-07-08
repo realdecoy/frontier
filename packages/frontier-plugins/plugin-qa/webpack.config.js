@@ -11,11 +11,7 @@ module.exports = function(env = {}) {
     mode: 'production',
     entry: resolve(__dirname, 'esnext', 'index'),
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      //add alias reslove
-      alias: {
-        "@": path.resolve(__dirname, "src"),
-      }
+      extensions: ['.js'],
     },
     externals: [
       nodeExternals(nodeExternalsOpts),

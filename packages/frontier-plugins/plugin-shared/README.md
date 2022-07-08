@@ -47,7 +47,7 @@ $ npm install @rdfrontier/plugin-shared
 ## Usage
 
 ```sh
-Eg: import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+Eg: import { invalidProject } from '@rdfrontier/plugin-shared';
 ```
 
 

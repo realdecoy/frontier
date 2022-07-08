@@ -17,8 +17,8 @@ import {
   CLI_STATE,
   PLUGIN_PRESET_LIST,
 } from '../../../utils/constants';
-import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
-import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared';
 
 const CUSTOM_ERROR_CODES = [
   'existing-project',

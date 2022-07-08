@@ -10,9 +10,9 @@ describe('test the install dependencies function', () => {
   it("should pass if an error was thrown",  async function () {
     console.log = jest.fn()
     let spy = jest.spyOn(console, 'log');
-    const preInstallCommand = "C:/Users/JantaeLeckie/Desktop/RealDecoy/vue-testing-project"
+    const preInstallCommand = "cd " + __dirname + " &&"
     try {
-        await installDepenedencies(pluginName, false, "testInstall", `cd ${preInstallCommand} &&`, "@rdfrontier/stdlib", "typescript", undefined  )
+        await installDepenedencies(pluginName, false, "testInstall", preInstallCommand, "@rdfrontier/stdlib", "typescript", undefined  )
         expect(spy).toContain(`installing ${pluginName} dev dependencies`)
     } catch (error) {
         let err;
@@ -33,29 +33,10 @@ describe('test the install dependencies function', () => {
       expect(spy).toContain("npx add-dependencies")
     } catch (error) {
         let err;
-        interface errorStructure {
-            code: string;
-            message: string;
-        }
         if (error instanceof Error) err = error.message
         expect(error).toBe(1)
     }
   })
-
-//   it("should pass if an error was thrown",  async function () {
-//     try {
-//       const caught = await installDepenedencies(Error("Random Error Message"))
-//       console.log(caught)
-//   } catch (error) {
-//       let err;
-//       interface errorStructure {
-//         code: string;
-//         message: string;
-//       }
-//       if (error instanceof Error) err = error.message
-//       expect(err).toBeUndefined()
-//   }
-//   })
 })
 
 

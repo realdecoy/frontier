@@ -11,8 +11,8 @@ import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../util
 import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
-import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
-import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
