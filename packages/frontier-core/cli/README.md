@@ -22,7 +22,25 @@ command using the syntax:
 ~$ frontier <COMMAND> <PARAMS> <FLAGS>
 ```
 
-&nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp;
+
+<!-- custom-toc -->
+## Table of Contents
+
+* [About](#about)
+* [Installation & Usage](#installation--usage)
+* [Check Commands](#check-commands)
+* [Help Menu](#help-menu)
+* [Check Version](#check-version)
+* [Options](#options)
+<!-- custom-tocstop -->
+
+&nbsp; &nbsp; &nbsp;
+
+## About 
+
+Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
+
 
 ## Installation & Usage
 
@@ -32,6 +50,10 @@ command using the syntax:
 
 ```bash
 npm install -g @rdfrontier/cli
+```
+or 
+```bash
+yarn global add @rdfrontier/cli
 ```
 
 &nbsp; &nbsp;

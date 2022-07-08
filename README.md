@@ -25,8 +25,7 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 <!-- custom-toc -->
 ## Table of Contents
 
-* [About](#about)
-* [Usage](#install)
+* [Usage](#usage)
 * [Bootstrapping](#bootstrapinghttpslernajsorgdocscore-conceptsbootstrapping)
 * [Addons](#addons)
 * [Libraries](#libraries)
@@ -38,24 +37,11 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 &nbsp; &nbsp; &nbsp;
 
 
-## About 
-
-Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
 
 ## Usage
  
 <!-- custom-usage -->
-The help menu can be accessed with the command:
-
-```bash
-frontier --help
-```
-
-The frontier version can be accessed with the command:
-
-```bash
-frontier --version
-```
+When using the frontier cli tool it is prefered that when runing commands `yarn` is used over `npm`. When `npm` is used some of the frontier's mono repositoy features may not work as they should so `yarn` is needed. Using `yarn` also allows for parallel installation of the frontier tool to take place. 
 <!-- custom-usagestop -->
 
 &nbsp; &nbsp; &nbsp;

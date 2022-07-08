@@ -31,11 +31,6 @@
     "typecheck": "tsc --noEmit"
   },
   "sideEffects": false,
-  "types": "types/index.d.ts",
-  "dependencies": {
-    "@babel/runtime": "^7.15.0",
-    "type-fest": "^2.3.4"
-  },
   "devDependencies": {
     "@rdfrontier/lib-builder": "^1.0.0"
   },
