@@ -27,7 +27,6 @@ command using the syntax:
 <!-- custom-toc -->
 ## Table of Contents
 
-* [About](#about)
 * [Installation & Usage](#installation--usage)
 * [Check Commands](#check-commands)
 * [Help Menu](#help-menu)
@@ -37,9 +36,7 @@ command using the syntax:
 
 &nbsp; &nbsp; &nbsp;
 
-## About 
-
-Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process.  
+ 
 
 
 ## Installation & Usage

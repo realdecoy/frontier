@@ -25,6 +25,7 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 <!-- custom-toc -->
 ## Table of Contents
 
+* [About](#about)
 * [Usage](#usage)
 * [Bootstrapping](#bootstrapinghttpslernajsorgdocscore-conceptsbootstrapping)
 * [Addons](#addons)
@@ -37,6 +38,9 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 &nbsp; &nbsp; &nbsp;
 
 
+## About 
+
+Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process. 
 
 ## Usage
  
@@ -147,6 +151,8 @@ npm run rebuild
 Testing any piece of software created is critical for developers. Frontier uses the jest configuration for testing the packages in its monorepository. 
 [`Testing Monorepo with Jest`](https://orlandobayo.com/blog/monorepo-testing-using-jest/)
 
+&nbsp; 
+
 ##### Run Unit Test Suites From Root
 To test all frontier packages from the root level run the command:
 
@@ -185,10 +191,12 @@ or
 yarn run test:packages:ci
 ```
 
-&nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp;  
 
 ### Nuking
+Nuking strips the source code of all distribuatble code previously built. 
 
+&nbsp; 
 #### Nuke
 To nuke the packages of frontier, run the command:
 
@@ -200,7 +208,7 @@ or
 npm run nuke
 ```
 
-&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; 
 
 
 #### Nuke:artifacts
