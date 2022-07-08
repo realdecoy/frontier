@@ -144,10 +144,24 @@ npm run rebuild
 
 
 ### Testing
+Testing any piece of software created is critical for developers. Frontier uses the jest configuration for testing the packages in its monorepository. 
+[`Testing Monorepo with Jest`](https://orlandobayo.com/blog/monorepo-testing-using-jest/)
 
-##### Run Unit Test Suites
-Testing any piece of software created is critical for developers.
-To test all frontier packages run the command:
+##### Run Unit Test Suites From Root
+To test all frontier packages from the root level run the command:
+
+```
+npm run test
+```
+or
+```
+yarn run test
+```
+
+&nbsp; &nbsp; 
+
+##### Run Unit Test Suites From Package Level
+To test all frontier packages from the package level run the command:
 
 ```
 npm run test:packages
@@ -157,8 +171,21 @@ or
 yarn run test:packages
 ```
 
-&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; 
 
+##### Run Unit Test Suites From Package Level with Coverage Report
+Test converage is a measure of the amount of testing preformed by a test suite. 
+To get a test coverage report of Frontier packages run the command:
+
+```
+npm run test:packages:ci
+```
+or
+```
+yarn run test:packages:ci
+```
+
+&nbsp; &nbsp; 
 
 ### Nuking
 

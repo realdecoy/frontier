@@ -4,8 +4,8 @@ import { toKebabCase } from '@rdfrontier/stdlib';
 import { checkProjectValidity, parsePageName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
 import { addElementFunction } from '../../../functions/addElement/index';
-import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from '../../../functions/catch/index';
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';
 
 const TEMPLATE_FOLDERS = ['page'];
 
@@ -26,7 +26,7 @@ export default class Page extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

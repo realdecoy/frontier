@@ -9,8 +9,8 @@ import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../util
 import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
-import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from '../../../functions/catch';
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -32,7 +32,7 @@ export default class Localization extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

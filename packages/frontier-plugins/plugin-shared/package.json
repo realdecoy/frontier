@@ -31,9 +31,6 @@
     "typecheck": "tsc --noEmit"
   },
   "sideEffects": false,
-  "devDependencies": {
-    "@rdfrontier/lib-builder": "^1.0.0"
-  },
   "browserslist": [
     "chrome 38",
     "ios >= 9"

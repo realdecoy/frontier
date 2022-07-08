@@ -11,8 +11,8 @@ import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../util
 import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
-import catchFunction from '../../../functions/catch';
-import { invalidProject } from '@rdfrontier/plugin-shared';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -40,7 +40,7 @@ export default class Vuetify extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

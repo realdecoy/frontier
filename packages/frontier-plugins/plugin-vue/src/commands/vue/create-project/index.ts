@@ -17,8 +17,8 @@ import {
   CLI_STATE,
   PLUGIN_PRESET_LIST,
 } from '../../../utils/constants';
-import catchFunction from '../../../functions/catch';
-import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
+import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared/types/errors';
 
 const CUSTOM_ERROR_CODES = [
   'existing-project',
@@ -49,7 +49,7 @@ export default class CreateProject extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

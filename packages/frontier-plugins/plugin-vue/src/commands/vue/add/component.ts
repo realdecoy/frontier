@@ -1,11 +1,11 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
-import { toKebabCase } from '@rdfrontier/stdlib';
+import { toKebabCase } from '@rdfrontier/stdlib/types/caseConversions';
 import { checkProjectValidity, parseComponentName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
 import { addElementFunction } from '../../../functions/addElement';
-import { invalidProject } from '@rdfrontier/plugin-shared';
-import catchFunction from '../../../functions/catch';
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';
 
 const TEMPLATE_FOLDERS = ['component'];
 
@@ -26,7 +26,7 @@ export default class Component extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

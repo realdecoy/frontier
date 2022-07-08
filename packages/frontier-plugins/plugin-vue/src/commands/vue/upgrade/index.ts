@@ -5,8 +5,8 @@ import chalk from 'chalk';
 import { isJsonString } from '@rdfrontier/stdlib';
 import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG } from '../../../utils/constants';
-import catchFunction from '../../../functions/catch';
-import { invalidProject } from '@rdfrontier/plugin-shared';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
@@ -25,7 +25,7 @@ export default class Upgrade extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

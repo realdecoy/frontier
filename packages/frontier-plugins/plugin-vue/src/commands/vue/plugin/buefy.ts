@@ -10,8 +10,8 @@ import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE } from '../../../utils/constants';
 import { injectImportsIntoMain } from '../../../utils/plugins';
 import { Route } from 'modules/manifest';
-import catchFunction from '../../../functions/catch';
-import { invalidProject } from '@rdfrontier/plugin-shared';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -33,7 +33,7 @@ export default class Buefy extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {

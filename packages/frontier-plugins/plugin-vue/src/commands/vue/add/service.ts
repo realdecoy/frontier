@@ -3,8 +3,8 @@ import chalk from 'chalk';
 import { toKebabCase } from '@rdfrontier/stdlib';
 import { checkProjectValidity, parseServiceName } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import catchFunction from '../../../functions/catch';
-import { invalidProject } from '@rdfrontier/plugin-shared';
+import { catchError } from '@rdfrontier/plugin-shared/types/catch';;
+import { invalidProject } from '@rdfrontier/plugin-shared/types/errors';
 import { addElementFunction } from '../../../functions/addElement';
 
 const TEMPLATE_FOLDERS = ['service'];
@@ -26,7 +26,7 @@ export default class Service extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchFunction(error);
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {
