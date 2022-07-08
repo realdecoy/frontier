@@ -8,7 +8,6 @@ describe('test project validity check function', () => {
 
   it("should pass if a project-invalid error was thrown",  async function () {
     const isValidProject = false;
-    const projectRoot = "./root"
     try {
       if (isValidProject === false) {
         invalidProject("add:component", "rdvue");
@@ -22,7 +21,6 @@ describe('test project validity check function', () => {
       if (error instanceof Error) err = error.message
       let invalidProject: errorStructure = JSON.parse(`${err}`);
       expect(invalidProject.code).toEqual('project-invalid')
-      console.log(error)
     }
   })
 
