@@ -54,7 +54,7 @@
   },
   "files": [
     "/bin",
-    "/lib",
+    "/dist",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -63,10 +63,10 @@
     "oclif"
   ],
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "oclif": {
-    "commands": "./lib/commands",
-    "helpClass": "./lib/help",
+    "commands": "./dist/commands",
+    "helpClass": "./dist/help",
     "bin": "rdvue"
   },
   "config": {
@@ -102,5 +102,5 @@
     "version": "oclif-dev readme && git add README.md",
     "typecheck": "tsc --noEmit"
   },
-  "types": "lib/index.d.ts"
+  "types": "dist/index.d.ts"
 }
