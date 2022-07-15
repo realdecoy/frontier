@@ -196,7 +196,6 @@ yarn run test:packages:ci
 ### Nuking
 Nuking strips the source code of all distribuatble code previously built. 
 
-&nbsp; 
 #### Nuke
 To nuke the packages of frontier, run the command:
 
@@ -224,7 +223,7 @@ npm run nuke:artifacts
 
 &nbsp; &nbsp; &nbsp;
 
-### Creating a frontier based project
+## Creating a frontier based project
 #### [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam)
 To support the creation of new frointer-based projects a template, [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based project. 
 
