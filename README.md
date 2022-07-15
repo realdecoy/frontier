@@ -45,7 +45,7 @@ Frontier offers a set of standard libraries and typing kits that can be use acro
 ## Usage
  
 <!-- custom-usage -->
-When using the frontier cli tool it is prefered that when runing commands `yarn` is used over `npm`. When `npm` is used some of the frontier's mono repositoy features may not work as they should so `yarn` is needed. Using `yarn` also allows for parallel installation of the frontier tool to take place. 
+When using the frontier cli tool it is prefered that when runing commands `yarn` is used over `npm`. When `npm` is used some  frontier's mono repositoy features may not work as they should therefore `yarn` is needed. Using `yarn` also allows for parallel installation of the frontier tool to take place. 
 <!-- custom-usagestop -->
 
 &nbsp; &nbsp; &nbsp;

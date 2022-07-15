@@ -1,4 +1,6 @@
-import util from 'util'
+import process from 'process';
+import util from 'util';
+
 /**
  * Emulates the log method from `@oclif/command`, since they don't seem to be
  * offering any alternatives. Can be replaced with another logging library.
