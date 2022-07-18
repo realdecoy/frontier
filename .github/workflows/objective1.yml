@@ -23,7 +23,7 @@ jobs:
   build:
     needs: check_labels
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && contains(github.ref, 'release')
+    if: github.event.pull_request.merged == true && contains(github.ref, 'testing')
     steps:
     - name: Setup Checkout 
       uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
         git config --global user.email "${{github.actor}}@users.noreply.github.com"
         git config --global user.name "${{github.actor}}"
         git commit -m "CI(changeset): add changeset for PR #${PR_NUMBER}"
-        git push origin testing-workflows
+        git push origin test
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         PR_NUMBER: ${{ github.event.pull_request.number }} 
