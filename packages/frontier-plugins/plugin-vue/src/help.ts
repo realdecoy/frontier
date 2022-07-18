@@ -10,7 +10,7 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {    
     log(`
-        frontier ${chalk.blue('vue')} <action>
+        frontier ${chalk.blue('vue:')}<action>
 
         Actions:
             create-project   -  Scaffold a new rdvue project
