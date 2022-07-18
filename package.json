@@ -19,12 +19,14 @@
     "build:finish": "notify -t \"Frontier\" -m \"All packages rebuilt\"",
     "build:packages": "lerna run rebuild --stream",
     "precommit": "test && lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "changeset": "changeset init"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@changesets/cli": "^2.6.1",
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
     "@types/jest": "^27.4.1",
@@ -36,6 +38,7 @@
     "lerna": "^4.0.0",
     "lint-staged": "^12.3.8",
     "node-notifier-cli": "^2.0.0",
+    "pr-to-changesets": "^1.0.1",
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
     "webpack": "^4.0",

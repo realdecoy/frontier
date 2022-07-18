@@ -6,11 +6,10 @@ name: 'Update Changelog on Merged PR Releases and Create Release PR'
 on:
   pull_request:
     branches:
-      - 'main'
+      - 'test'
     types:
       - closed
-      - labeled 
-
+      
 jobs:
   check_labels:
     name: Check labels
@@ -35,6 +34,7 @@ jobs:
     - name: Install Packages
       run:
         yarn 
+
     - name: Set Github Configuration
       run: |
         git add .
@@ -50,9 +50,7 @@ jobs:
         REPO: ${{ github.event.pull_request.head.repo.name }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Generate Updated Changelog
-      run:
-        npm run release -- --no-verify
+
     - name: Git push
       run: |
         git add .changeset
@@ -81,5 +79,5 @@ jobs:
           publish: npm run release-ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
