@@ -9,7 +9,7 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {
     log(`
-        frontier ${chalk.blue('qa')} <action>
+        frontier ${chalk.blue('qa:')}<action>
         Actions:
             create-project          Scaffold a new rdspec web automation project
             create-test             Create a test file 
