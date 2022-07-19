@@ -3,6 +3,7 @@ node_modules/
 
 # Coverage and Testing
 test-results/
+coverage/
 
 # Build Artifacts
 build/
@@ -19,6 +20,7 @@ types/
 .DS_Store
 *-debug.log
 *-error.log
+.rdvue/
 
 # OCLIF CLI related
 /.nyc_output

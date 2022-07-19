@@ -3,15 +3,19 @@ import path from 'path'
 import {Command, flags} from '@oclif/command'
 import { CONSTANTS } from '../../../utils/constants'
 import { copyScreenObjectFile, updateScreenObjectFile, updateFileName } from '../../../utils/files'
-import { checkIfProjectIsValid } from '../../../utils/utilities'
+import { checkIfProjectIsValid } from '../../../utils/utilities' 
 
 const { SCREEN_OBJECT_REGEX } = CONSTANTS
 
+/**
+ * Class representing a screen object.
+ * @extends Command
+ */
 export default class CreateScreenObject extends Command {
-  static description = 'describe the command here'
+  static description = 'Create a new screen object file'
 
   static examples = [
-    `$ rdspec create-screen-object
+    `$ frontier qa:create-screen-object
     Running this add command!
 `,
   ]
@@ -40,7 +44,7 @@ export default class CreateScreenObject extends Command {
       // Output message saying project is ready
         this.log(chalk.blue(`File ${screenObjectName} is ready!`))
       } else {
-        this.log(chalk.red('There was a issue in making your page object file!'))
+        this.log(chalk.red('There was a issue in making your screen object file!'))
       }
     } else {
       this.log(chalk.red('Unable to make screen object, ensure you are in a valid project!'))

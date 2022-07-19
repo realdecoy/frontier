@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const oclif = require('@oclif/core')
 
 const path = require('path')

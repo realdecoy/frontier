@@ -1,6 +1,6 @@
 import { Help, Command } from '@oclif/core';
 import { Topic } from '@oclif/config';
-import { log } from './lib/stdout';
+import { log } from '@rdfrontier/stdlib';
 
 export default class MyHelpClass extends Help {
   async showRootHelp(): Promise<void> {

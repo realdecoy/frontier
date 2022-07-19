@@ -1,7 +1,7 @@
 import { Help } from '@oclif/plugin-help';
 import { Command, Topic } from '@oclif/config';
 import chalk from 'chalk';
-import { log } from './utils/stdout';
+import { log } from '@rdfrontier/stdlib';
 
 export default class MyHelpClass extends Help {
   // acts as a 'router'
@@ -10,7 +10,7 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {    
     log(`
-        npx ${chalk.blue('rdvue')} <action>
+        frontier ${chalk.blue('vue:')}<action>
 
         Actions:
             create-project   -  Scaffold a new rdvue project

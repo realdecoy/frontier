@@ -7,6 +7,10 @@ import { exec } from 'child_process'
 
 const { TEMPLATE_REGEX } = CONSTANTS
 
+/**
+ * Class representing a web project.
+ * @extends Command
+ */
 export default class CreateProject extends Command {
   static description = 'Create a new WDIO project'
 

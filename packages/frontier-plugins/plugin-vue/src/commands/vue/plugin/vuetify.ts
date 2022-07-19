@@ -5,11 +5,14 @@ const exec = util.promisify(shell.exec);
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
-import { Files } from '../../../modules';
+import { Files } from 'modules';
+import { isJsonString } from '@rdfrontier/stdlib';
 import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../utils/files';
-import { checkProjectValidity, isJsonString } from '../../../utils/utilities';
+import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../utils/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../utils/plugins';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -20,6 +23,10 @@ const CUSTOM_ERROR_CODES = [
   'dependency-install-error',
 ];
 
+/**
+ * Class representing vuetify plugin.
+ * @extends Command
+ */
 export default class Vuetify extends Command {
   static description = 'lightweigth UI components for Vuejs'
 
@@ -33,26 +40,7 @@ export default class Vuetify extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    const errorMessage = error.message;
-    const isValidJSON = isJsonString(errorMessage);
-    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
-    const customErrorCode = parsedError.code;
-    const customErrorMessage = parsedError.message;
-    const hasCustomErrorCode = customErrorCode !== undefined;
-
-    if (hasCustomErrorCode === false) {
-      // throw cli errors to be handled globally
-      throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
-      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
-    } else {
-      throw new Error(customErrorMessage);
-    }
-
-    return Promise.resolve();
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {
@@ -67,12 +55,7 @@ export default class Vuetify extends Command {
     let { projectRoot } = validityResponse;
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
-      throw new Error(
-        JSON.stringify({
-          code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('rdvue')} project`,
-        }),
-      );
+      invalidProject(CLI_COMMANDS.PluginVuetify, "rdvue");
     } else if (hasProjectName) {
       const dir = path.join(process.cwd(), projectName ?? '');
       projectRoot = dir.trim();

@@ -24,6 +24,7 @@ module.exports = function (opts) {
       'ts': 'ts-jest',
     },
     testRegex: '.*\\.spec\\.ts$',
+    testTimeout: 80000,
     timers: 'modern',
     ...opts,
   };

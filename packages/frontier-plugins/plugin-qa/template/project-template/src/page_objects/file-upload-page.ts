@@ -1,7 +1,7 @@
 import BasePage from './page'
 
 class FileUploadPage extends BasePage {
-    get open() {
+    open() {
         return browser.url('/upload');
     }
 

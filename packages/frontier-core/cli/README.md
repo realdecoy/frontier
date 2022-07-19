@@ -22,7 +22,22 @@ command using the syntax:
 ~$ frontier <COMMAND> <PARAMS> <FLAGS>
 ```
 
-&nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp;
+
+<!-- custom-toc -->
+## Table of Contents
+
+* [Installation & Usage](#installation--usage)
+* [Check Commands](#check-commands)
+* [Help Menu](#help-menu)
+* [Check Version](#check-version)
+* [Options](#options)
+<!-- custom-tocstop -->
+
+&nbsp; &nbsp; &nbsp;
+
+ 
+
 
 ## Installation & Usage
 
@@ -32,6 +47,10 @@ command using the syntax:
 
 ```bash
 npm install -g @rdfrontier/cli
+```
+or 
+```bash
+yarn global add @rdfrontier/cli
 ```
 
 &nbsp; &nbsp;
@@ -59,7 +78,7 @@ frontier --help
 The current version of rdvue can be retrieved with the command:
 
 ```bash
-npx rdvue -v|--version|version
+frontier -v|--version|version
 ```
 
 &nbsp; &nbsp;
@@ -84,8 +103,7 @@ Options:
 ## Development
 
 ```bash
-npm install
-npm link
+
 ```
 
 &nbsp; &nbsp; &nbsp;

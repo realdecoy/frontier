@@ -1,7 +1,7 @@
 import BasePage from './page'
 
 class DynamicLoadingPage extends BasePage {
-    get open() {
+    open() {
         return browser.url('/dynamic_loading');
     }
 

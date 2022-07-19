@@ -6,11 +6,15 @@ import chalk = require('chalk')
 
 const {TEST_REGEX} = CONSTANTS
 
+/**
+ * Class representing a test.
+ * @extends Command
+ */
 export default class CreateTest extends Command {
   static description = 'Create a new test file'
 
   static examples = [
-    `$ rdspec create-test
+    `$ frontier qa:create-test
     <name-of-file-without-extension>
 `,
   ]

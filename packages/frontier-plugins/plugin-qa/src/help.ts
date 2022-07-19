@@ -1,7 +1,7 @@
 import { Help } from '@oclif/plugin-help'
 import { Command, Topic } from '@oclif/config'
 import chalk from 'chalk'
-import log from './utils/stdout'
+import { log } from '@rdfrontier/stdlib'
 export default class MyHelpClass extends Help {
   // acts as a 'router'
   // and based on the args it receives
@@ -9,7 +9,7 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {
     log(`
-        npx ${chalk.blue('rdspec')} <action>
+        frontier ${chalk.blue('qa:')}<action>
         Actions:
             create-project          Scaffold a new rdspec web automation project
             create-test             Create a test file 

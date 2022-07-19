@@ -1,7 +1,7 @@
 import BasePage from './page'
 
 class JavaScriptAlertsPage extends BasePage {
-    get open() {
+    open() {
         return browser.url('/javascript_alerts');
     }
 

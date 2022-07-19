@@ -6,11 +6,16 @@ import { copyPageObjectFile, updatePageObjectFile, updateFileName } from '../../
 import { checkIfProjectIsValid } from '../../../utils/utilities'
 
 const { PAGE_OBJECT_REGEX } = CONSTANTS
+
+/**
+ * Class representing a page object.
+ * @extends Command
+ */
 export default class CreatePageObject extends Command {
-  static description = 'describe the command here'
+  static description = 'Create a new page object file'
 
   static examples = [
-    `$ rdspec create-page-object
+    `$ fronter qa:create-page-object
     Running this add command!
 `,
   ]

@@ -2,8 +2,11 @@ import shell from 'shelljs';
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
-import { checkProjectValidity, isJsonString } from '../../../utils/utilities';
+import { isJsonString } from '@rdfrontier/stdlib';
+import { checkProjectValidity } from '../../../utils/utilities';
 import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG } from '../../../utils/constants';
+import { catchError } from '@rdfrontier/plugin-shared';;
+import { invalidProject } from '@rdfrontier/plugin-shared';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
@@ -22,38 +25,14 @@ export default class Upgrade extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    const errorMessage = error.message;
-    const isValidJSON = isJsonString(errorMessage);
-    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
-    const customErrorCode = parsedError.code;
-    const customErrorMessage = parsedError.message;
-    const hasCustomErrorCode = customErrorCode !== undefined;
-
-    if (hasCustomErrorCode === false) {
-      // throw cli errors to be handled globally
-      throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
-      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
-    } else {
-      throw new Error(customErrorMessage);
-    }
-
-    return Promise.resolve();
+    return catchError(error, CLI_STATE);
   }
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-      throw new Error(
-        JSON.stringify({
-          code: 'project-invalid',
-          message: `${CLI_COMMANDS.Upgrade} command must be run in an existing ${chalk.yellow('rdvue')} project`,
-        }),
-      );
+      invalidProject(CLI_COMMANDS.Upgrade, "rdvue");
     }
 
     const { args } = this.parse(Upgrade);

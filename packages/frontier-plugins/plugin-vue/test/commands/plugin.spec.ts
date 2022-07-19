@@ -1,5 +1,5 @@
-import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../src/lib/constants';
+import {expect, test} from '@oclif/test';
+import { CLI_COMMANDS } from '../../src/utils/constants';
 
 describe(`${CLI_COMMANDS.PluginLibrary} module`, () => {
   test

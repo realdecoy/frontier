@@ -10,6 +10,8 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
+    "@rdfrontier/plugin-shared": "^0.0.1",
+    "@rdfrontier/stdlib": "^0.0.1",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
@@ -30,7 +32,7 @@
     "@types/chai": "^4.2.15",
     "@types/inquirer": "^7.3.1",
     "@types/mkdirp": "^1.0.1",
-    "@types/node": "^10.17.55",
+    "@types/node": "^10.17.60",
     "@types/shelljs": "^0.8.8",
     "@types/sinon": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
@@ -52,7 +54,7 @@
   },
   "files": [
     "/bin",
-    "/lib",
+    "/dist",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -61,10 +63,10 @@
     "oclif"
   ],
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "oclif": {
-    "commands": "./lib/commands",
-    "helpClass": "./lib/help",
+    "commands": "./dist/commands",
+    "helpClass": "./dist/help",
     "bin": "rdvue"
   },
   "config": {
@@ -100,5 +102,5 @@
     "version": "oclif-dev readme && git add README.md",
     "typecheck": "tsc --noEmit"
   },
-  "types": "lib/index.d.ts"
+  "types": "dist/index.d.ts"
 }

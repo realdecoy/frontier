@@ -20,8 +20,11 @@ module.exports = function(env = {}) {
       }),
     ],
     module: {
-      rules: [
-      ],
+      rules: [{
+        loader: 'ts-loader',
+        test: '/\.(ts|tsx)$/',
+        exclude: /node_modules/
+      }],
     },
     output: {
       filename: 'index.js',

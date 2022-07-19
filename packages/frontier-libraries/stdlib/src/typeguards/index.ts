@@ -39,3 +39,19 @@ export function isStringArray(value: unknown): value is string[] {
 export function toStringArray(value: unknown[]): string[] {
   return Array.from(value, (v) => `${v}`);
 }
+
+
+/**
+ * Description: Determine if string is valid JSON string
+ * @param {string} value - a string literal
+ * @returns {boolean} - True if string is valid qualified JSON
+ */
+ export function isJsonString(value: string): boolean {
+  try {
+    JSON.parse(value);
+  } catch (error) {
+    return false;
+  }
+
+  return true;
+}
