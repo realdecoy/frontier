@@ -62,6 +62,14 @@
     ]
   },
   "url": "git+https://github.com/realdecoy/frontier.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-plugins/plugin-qa"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "build-package",
     "build:watch": "build-package --watch",

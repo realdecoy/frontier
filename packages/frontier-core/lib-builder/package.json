@@ -4,10 +4,18 @@
   "description": "Builds TS packages into tree-shaking compatible npm modules",
   "license": "UNLICENSED",
   "author": "Gareth Thomas <oforevergareth@gmail.com>",
-  "homepage": "",
+  "homepage": "https://github.com/realdecoy/frontier",
   "main": "index.js",
   "bin": {
     "build-package": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-core/lib-builder"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "fix": "run-s lint:es:fix lint:md:fix",
