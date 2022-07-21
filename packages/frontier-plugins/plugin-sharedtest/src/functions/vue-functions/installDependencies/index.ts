@@ -2,7 +2,7 @@ import shell from 'shelljs';
 import cli from 'cli-ux';
 const util = require('util');
 const exec = util.promisify(shell.exec);
-import { CLI_STATE } from 'utils/constants';
+import { CLI_STATE } from '../../../utils/constants';
 
 export async function installDepenedencies(pluginName: string, skipInstallStep: boolean, projectName: string | undefined, preInstallCommand: string, devDependencies: any | undefined, dependencies: any, id: string | undefined): Promise<void> {
     if (skipInstallStep === false) {
