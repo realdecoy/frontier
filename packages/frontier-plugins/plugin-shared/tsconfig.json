@@ -21,6 +21,9 @@
   "include": [
     "setupTests.ts",
     "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*"
   ]
  
 }

@@ -2,16 +2,17 @@ import shell from 'shelljs';
 import cli from 'cli-ux';
 const util = require('util');
 const exec = util.promisify(shell.exec);
-import { CLI_STATE } from '../../../utils/constants';
+import { CLI_STATE } from 'utils/constants';
 
-export async function installDepenedencies(pluginName: string, skipInstallStep: boolean, projectName: string | undefined, preInstallCommand: string, devDependencies: any, dependencies: any, id: string | undefined): Promise<void> {
+export async function installDepenedencies(pluginName: string, skipInstallStep: boolean, projectName: string | undefined, preInstallCommand: string, devDependencies: any | undefined, dependencies: any, id: string | undefined): Promise<void> {
     if (skipInstallStep === false) {
       try {
-        // // install dev dependencies
-        cli.action.start(`${CLI_STATE.Info} installing ${pluginName} dev dependencies`);
-        await exec(`${preInstallCommand} npm install --save-dev ${devDependencies}`, { silent: true });
-        cli.action.stop();
-
+        if (devDependencies !== undefined){
+          // // install dev dependencies
+          cli.action.start(`${CLI_STATE.Info} installing ${pluginName} dev dependencies`);
+          await exec(`${preInstallCommand} npm install --save-dev ${devDependencies}`, { silent: true });
+          cli.action.stop();
+        }
         // // install dependencies
         cli.action.start(`${CLI_STATE.Info} installing ${pluginName} dependencies`);
         await exec(`${preInstallCommand} npm install --save ${dependencies}`, { silent: true });

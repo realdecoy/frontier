@@ -4,25 +4,26 @@ import { installDepenedencies } from '.'
 const pluginName = "localization"
 describe('test the install dependencies function', () => {
   beforeEach(() => {
-    jest.setTimeout(20000) 
+    jest.setTimeout(80000) 
   });
  
   it("should pass if an error was thrown",  async function () {
     console.log = jest.fn()
     let spy = jest.spyOn(console, 'log');
+    const preInstallCommand = "C:/Users/JantaeLeckie/Desktop/RealDecoy/vue-testing-project"
     try {
-        await installDepenedencies(pluginName, false, "testInstall", "cd test", "@rdfrontier/stdlib", "eslint", "testInstall"  )
+        await installDepenedencies(pluginName, false, "testInstall", `cd ${preInstallCommand} &&`, "@rdfrontier/stdlib", "typescript", undefined  )
         expect(spy).toContain(`installing ${pluginName} dev dependencies`)
     } catch (error) {
         let err;
         interface errorStructure {
-            code: string;
-            message: string;
+          code: string;
+          message: string;
         }
         if (error instanceof Error) err = error.message
-        expect(err).toContain("dependency-install-error")
+        let instalationError: errorStructure = JSON.parse(`${err}`);
+        expect(instalationError.code).toBe("dependency-install-error")
     }
-    // expect(spy.mock.calls[0][0]).toContain(`installing ${pluginName} dev dependencies`)
   })
 
   it("should pass if installation was skipped",  async function () {
@@ -37,7 +38,7 @@ describe('test the install dependencies function', () => {
             message: string;
         }
         if (error instanceof Error) err = error.message
-        expect(err).toBeUndefined()
+        expect(error).toBe(1)
     }
   })
 

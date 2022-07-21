@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "declaration": true,
     "importHelpers": true,
     "isolatedModules": true,

@@ -41,6 +41,12 @@ or
 $ npm install --save--dev @rdfrontier/typekit
 ```
 
+or 
+
+```sh
+$ npm install @rdfrontier/typekit
+```
+
 &nbsp;
 &nbsp;
 
