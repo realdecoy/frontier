@@ -78,6 +78,16 @@ yarn run typecheck
 
 ## Components
 
+###  Installation
+```
+yarn add -g @rdfrontier
+```
+or 
+
+```
+npm install -g @rdfrontier
+```
+
 ### Addons
 
 | Name | Package | Status | More Information

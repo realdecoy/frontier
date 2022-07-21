@@ -1,4 +1,4 @@
-import { isJsonString, log } from '@rdfrontier/stdlib';
+import { isJsonString, log } from '@rdfrontier/stdlib";
 import { CLI_STATE } from 'utils/constants';
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
