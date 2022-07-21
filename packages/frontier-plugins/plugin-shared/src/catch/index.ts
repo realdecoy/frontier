@@ -1,9 +1,4 @@
-<<<<<<<< HEAD:packages/frontier-plugins/plugin-shared/src/catch/index.ts
 import { isJsonString, log } from '@rdfrontier/stdlib';
-========
-import { isJsonString } from '../../utils/utilities';
-import { CLI_STATE } from '../../utils/constants';
->>>>>>>> c05f44a (build: plugin-shared folder - functions folder restructured, tests added):packages/frontier-plugins/plugin-shared/src/functions/catch/index.ts
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
