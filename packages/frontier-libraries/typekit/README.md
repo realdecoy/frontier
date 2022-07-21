@@ -44,7 +44,7 @@ $ npm install --save--dev @rdfrontier/typekit
 or 
 
 ```sh
-$ npm install @rdfrontier/typekit
+$ npm install --save--dev @rdfrontier/typekit
 ```
 
 &nbsp;

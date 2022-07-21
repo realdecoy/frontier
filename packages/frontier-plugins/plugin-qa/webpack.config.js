@@ -11,6 +11,7 @@ module.exports = function(env = {}) {
     entry: resolve(__dirname, 'esnext', 'index'),
     resolve: {
       extensions: ['.js'],
+      //add alias reslove
     },
     externals: [
       nodeExternals(nodeExternalsOpts),
