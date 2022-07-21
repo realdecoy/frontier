@@ -6,6 +6,9 @@
     "module": "commonjs",
     "outDir": "dist",
     "rootDir": "src",
+    "strict": true,
+    "target": "es2017",
+    "skipLibCheck": true,
     "baseUrl": "src",
     "paths": {
       "@/*": [
@@ -25,7 +28,7 @@
   },
   "include": [
     "src/**/*"
-, "../plugin-shared/src/testCommands/vue-add-commands/component/addComponent.spec.ts"  ],
+  ],
   "exclude": [
     "node_modules/**/*"
   ]

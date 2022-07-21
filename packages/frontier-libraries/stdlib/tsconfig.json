@@ -13,10 +13,8 @@
     "target": "es2017",
   },
   "include": [
+    "setupTests.ts",
     "src/**/*"
-  ],
-  "exclude": [
-    "node_modules/**/*"
   ]
  
 }
