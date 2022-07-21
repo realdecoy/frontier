@@ -122,7 +122,6 @@ npm install -g @rdfrontier
 &nbsp; 
 &nbsp;
 
-
 ## Development Instructions 
 
 ### Building
