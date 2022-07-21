@@ -19,7 +19,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "../plugin-shared/src/testCommands/vue-add-commands/component/add.component.spec.ts"  ],
   "exclude": [
     "node_modules/**/*"
   ]

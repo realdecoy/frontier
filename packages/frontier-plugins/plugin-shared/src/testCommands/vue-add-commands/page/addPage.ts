@@ -1,10 +1,11 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
-import { parseModuleConfig } from '../../utils/files';
-import { checkProjectValidity, parsePageName, toKebabCase } from '../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../utils/constants';
-import catchFunction from '../../functions/catch';
-import { addElementFunction, validityFailed } from '../../functions/addelement';
+import { parseModuleConfig } from '../../../utils/files';
+import { checkProjectValidity, parsePageName, toKebabCase } from '../../../utils/utilities';
+import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
+import catchFunction from '../../../functions/catch';
+import { addElementFunction } from '../../../functions/addElement';
+import { validityFailed } from '../../../functions/errors';
 
 const TEMPLATE_FOLDERS = ['page'];
 
