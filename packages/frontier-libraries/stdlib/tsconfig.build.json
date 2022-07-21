@@ -2,12 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declarationDir": "types",
-    "outDir": "esnext",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+    "outDir": "esnext"
   },
   "exclude": [
     "setupTests.ts",
