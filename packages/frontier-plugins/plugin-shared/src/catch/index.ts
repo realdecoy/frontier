@@ -1,4 +1,9 @@
+<<<<<<<< HEAD:packages/frontier-plugins/plugin-shared/src/catch/index.ts
 import { isJsonString, log } from '@rdfrontier/stdlib';
+========
+import { isJsonString } from '@rdfrontier/stdlib/src';
+import { CLI_STATE } from '../../../utils/constants';
+>>>>>>>> 74a8f78 (build: plugin-shared folder - updated, plugin-vue and plugin-qa updated to use plugin-shared):packages/frontier-plugins/plugin-sharedtest/src/functions/vue-functions/catch/index.ts
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',

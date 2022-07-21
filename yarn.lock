@@ -1391,8 +1391,6 @@
     write-file-atomic "^3.0.0"
 
 "@jest/transform@^28.1.2":
-  "integrity" "sha512-3o+lKF6iweLeJFHBlMJysdaPbpoMmtbHEFsjzSv37HIq/wWt5ijTeO2Yf7MO5yyczCopD507cNwNLeX8Y/CuIg=="
-  "resolved" "https://registry.npmjs.org/@jest/transform/-/transform-28.1.2.tgz"
   "version" "28.1.2"
   dependencies:
     "@babel/core" "^7.11.6"
@@ -1452,8 +1450,6 @@
     "@jridgewell/trace-mapping" "^0.3.9"
 
 "@jest/types@^28.1.1":
-  "integrity" "sha512-vRXVqSg1VhDnB8bWcmvLzmg0Bt9CRKVgHPXqYwvWMX3TvAjeO+nRuK6+VdTKCtWOvYlmkF/HqNAL/z+N3B53Kw=="
-  "resolved" "https://registry.npmjs.org/@jest/types/-/types-28.1.1.tgz"
   "version" "28.1.1"
   dependencies:
     "@jest/schemas" "^28.0.2"
@@ -1503,8 +1499,6 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@jridgewell/trace-mapping@^0.3.13":
-  "integrity" "sha512-bJWEfQ9lPTvm3SneWwRFVLzrh6nhjwqw7TUFFBEMzwvg7t7PCDenf2lDwqo4NQXzdpgBXyFgDWnQA+2vkruksQ=="
-  "resolved" "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.14.tgz"
   "version" "0.3.14"
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"

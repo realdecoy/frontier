@@ -1,7 +1,14 @@
 import path from 'path';
+<<<<<<<< HEAD:packages/frontier-plugins/plugin-vue/src/functions/addElement/index.ts
 import { Files } from 'modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../utils/files';
 import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib'; 
+========
+import chalk from 'chalk';
+import { Files } from '../../../modules';
+import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../utils/files';
+import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib/src'; 
+>>>>>>>> 74a8f78 (build: plugin-shared folder - updated, plugin-vue and plugin-qa updated to use plugin-shared):packages/frontier-plugins/plugin-sharedtest/src/functions/vue-functions/addElement/index.ts
 
 
 /**
