@@ -11,6 +11,7 @@ export function checkIfProjectExists(filePath: PathLike) {
   if (existsSync(filePath) === true) {
     return true
   }
+  return false
 }
 
 /**
@@ -29,4 +30,5 @@ export function checkIfProjectIsValid() {
     return true
   } 
 
+  return false
 }

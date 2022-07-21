@@ -1,5 +1,4 @@
 import path from 'path';
-<<<<<<<< HEAD:packages/frontier-plugins/plugin-vue/src/functions/addElement/index.ts
 import { Files } from 'modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../utils/files';
 import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib'; 
@@ -12,15 +11,6 @@ import { toKebabCase, toPascalCase } from '@rdfrontier/stdlib';
  * @param {string} elementName - name of element being created eg: "testComponent"
  * @returns {Promise<void>} - 
  */
-========
-import chalk from 'chalk';
-import { Files } from '../../modules';
-import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../utils/files';
-import { toKebabCase, toPascalCase} from '../../utils/utilities';
-
-
-// override Command class error handler
->>>>>>>> c05f44a (build: plugin-shared folder - functions folder restructured, tests added):packages/frontier-plugins/plugin-shared/src/functions/addElement/index.ts
 export async function addElementFunction(TEMPLATE_FOLDERS: string[], projectRoot: string, elementName: string): Promise<void> {
     
     const folderList = TEMPLATE_FOLDERS;
