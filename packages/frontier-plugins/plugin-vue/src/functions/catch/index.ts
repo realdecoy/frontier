@@ -1,4 +1,4 @@
-import { isJsonString } from '@rdfrontier/stdlib';
+import { isJsonString, log } from '@rdfrontier/stdlib';
 import { CLI_STATE } from 'utils/constants';
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
@@ -7,6 +7,12 @@ const CUSTOM_ERROR_CODES = [
   'missing-template-folder',
 ];
 
+
+/**
+ * Description: Outputs if a file is ready for use nor not.
+ * @param {Error} error - 
+ * @returns {Promise<void>} - 
+ */
 // override Command class error handler
 export default function catchFunction(error:Error): Promise<any> {
     const errorMessage = error.message;
@@ -23,7 +29,7 @@ export default function catchFunction(error:Error): Promise<any> {
   
       // handle errors thrown with known error codes
       if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
-        console.log(`${CLI_STATE.Error} ${customErrorMessage}`);
+        log(`${CLI_STATE.Error} ${customErrorMessage}`);
       } else {
         throw new Error(customErrorMessage);
       }
