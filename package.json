@@ -3,9 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "description": "Realdecoy Labs Shared Libraries",
+  "homepage": "https://github.com/realdecoy/frontier/blob/main/package.json",
   "main": "index.js",
   "author": "Realdecoy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "typecheck": "lerna run typecheck",
@@ -20,13 +25,13 @@
     "build:packages": "lerna run rebuild --stream",
     "precommit": "test && lint-staged",
     "prepare": "husky install",
-    "changeset": "changeset init"
+    "add-changesets": "changeset add",
+    "release-ci": "lerna publish from-package --y --no-verify-access"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
-    "@changesets/cli": "^2.6.1",
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
     "@types/jest": "^27.4.1",
@@ -38,7 +43,6 @@
     "lerna": "^4.0.0",
     "lint-staged": "^12.3.8",
     "node-notifier-cli": "^2.0.0",
-    "pr-to-changesets": "^1.0.1",
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
     "webpack": "^4.0",
@@ -46,12 +50,14 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
+    "@changesets/cli": "^2.6.1",
     "husky": "^7.0.4",
     "node-notifier": "^10.0.1",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "open": "^8.4.0",
     "patch-package": "^6.4.7",
+    "pr-to-changesets": "^1.0.1",
     "rimraf": "^3.0.2",
     "tslib": "^2.3.1",
     "typescript": "^4.6.3"

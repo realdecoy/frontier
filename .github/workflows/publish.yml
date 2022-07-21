@@ -1,0 +1,25 @@
+# when the release pull request has been merged, it should contain all version 
+# bumped packages. Run a script to create an release to github updated  
+
+name: 'Create GitHub Releases'
+on:
+  pull_request:
+    branches:
+      - 'test'
+    types: [closed]
+
+jobs:
+  publish_npm:
+    name: Publish to NPM
+    if: github.event.pull_request.merged == true && contains(github.head_ref, 'changeset-release')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn
+      - run: npm run release-ci 
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
