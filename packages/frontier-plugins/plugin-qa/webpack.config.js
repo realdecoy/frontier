@@ -1,4 +1,3 @@
-const path = require('path');
 const { resolve } = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
