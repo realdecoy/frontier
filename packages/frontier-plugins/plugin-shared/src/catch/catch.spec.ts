@@ -1,5 +1,6 @@
-// import {expect, test} from '@oclif/test
-import catchFunction from '.'
+
+import { catchError } from '.';
+import chalk from 'chalk';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
@@ -7,6 +8,13 @@ const CUSTOM_ERROR_CODES = [
   'missing-template-folder',
   'dependency-install-error',
 ];
+
+const CLI_STATE = {
+  Info: `${chalk.blue('[rdvue]')}`,
+  Error: `${chalk.red('[rdvue]')}`,
+  Warning: `${chalk.yellow('[rdvue]')}`,
+  Success: `${chalk.green('[rdvue]')}`,
+};
 
 describe('test the catch function', () => {
   beforeEach(() => {
@@ -16,7 +24,7 @@ describe('test the catch function', () => {
   it("should pass if an error was thrown",  async function () {
     const errorMessage = "Random error message";
     try {
-      const caught = await catchFunction(Error(errorMessage));
+      const caught = await catchError(Error(errorMessage), CLI_STATE);
       expect(typeof(caught)).toBe(typeof(Promise));
   } catch (error) {
       expect(error).toContain(errorMessage);
@@ -27,7 +35,7 @@ describe('test the catch function', () => {
     const errorMessage = "code red project invalid";
     const errorCode = CUSTOM_ERROR_CODES[0];
     try {
-      const caught = await catchFunction(Error(`{ "code": ${errorCode}, "message": ${errorMessage} }`));
+      const caught = await catchError(Error(`{ "code": ${errorCode}, "message": ${errorMessage} }`), CLI_STATE);
       expect(typeof(caught)).toBe(typeof(Promise));
     } catch (error) {
       expect(error).toContain(errorCode);
@@ -39,7 +47,7 @@ describe('test the catch function', () => {
     const errorMessage = "code red project invalid";
     const errorCode = "component-invalid";
     try {
-      const caught = await catchFunction(Error(`{ "code": ${errorCode}, "message": ${errorMessage} }`));
+      const caught = await catchError(Error(`{ "code": ${errorCode}, "message": ${errorMessage} }`), CLI_STATE);
       expect(typeof(caught)).toBe(typeof(Promise));
     } catch (error) {
       expect(error).toContain(errorCode);

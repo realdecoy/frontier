@@ -1,20 +1,19 @@
 import { isJsonString, log } from '@rdfrontier/stdlib';
-import { CLI_STATE } from '../../utils/constants';
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
-  'missing-template-file',
+  'missing-template-file', 
   'missing-template-folder',
 ];
 
 
 /**
- * Description: Outputs if a file is ready for use nor not.
+ * Description: custom catch function to override the command class error handler.
  * @param {Error} error - 
  * @returns {Promise<void>} - 
  */
 // override Command class error handler
-export default function catchFunction(error:Error): Promise<any> {
+export function catchError(error:Error, CLI_STATE:{Info: string, Error: string, Warning: string, Success: string}): Promise<any> {
     const errorMessage = error.message;
     const isValidJSON = isJsonString(errorMessage);
     const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
