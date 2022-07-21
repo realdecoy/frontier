@@ -54,5 +54,9 @@
   "browserslist": [
     "chrome 38",
     "ios >= 9"
-  ]
+  ],
+  "engines": {
+    "node": "^16.13.1",
+    "yarn": "^1.22.18"
+  }
 }
