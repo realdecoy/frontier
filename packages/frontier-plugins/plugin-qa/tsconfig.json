@@ -15,6 +15,22 @@
       "@/*": [
         "./src/*"
       ]
+    },
+    "declaration": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "target": "es2017",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [

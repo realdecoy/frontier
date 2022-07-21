@@ -11,6 +11,15 @@
     "module/",
     "types/"
   ],
+  "homepage": "https://github.com/realdecoy/frontier",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-plugins/plugin-shared"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "build-package",
     "build:watch": "build-package --watch",
