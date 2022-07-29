@@ -1,0 +1,15 @@
+{
+    "majorLabels": [
+      "Semver: major",
+      "Type: Breaking Change"
+    ],
+    "minorLabels": [
+      "Semver: minor",
+      "Type: Feature"
+    ],
+    "patchLabels": [
+      "Semver: patch",
+      "Type: Bug"
+    ]
+  }
+  

@@ -4,7 +4,12 @@
   "description": "Useful and relevant types",
   "license": "UNLICENSED",
   "author": "Realdecoy",
-  "homepage": "",
+  "homepage": "https://github.com/realdecoy/frontier",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-libraries/typekit"
+  },
   "main": "dist/index.js",
   "module": "module/index.js",
   "files": [
@@ -12,6 +17,9 @@
     "module/",
     "types/"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "build-package",
     "build:watch": "build-package --watch",
