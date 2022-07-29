@@ -1,0 +1,71 @@
+# When a pull request is merged for a branch with prefix “release/****” and a 
+# version label to the main branch, trigger a github workflow to update the a 
+# changelog with the current versions changes. When merged, the workflow should 
+# create a pull request to the main branch collecting all changes for a release.
+
+name: 'Update Changelog on Merged PR Releases and Create Release PR'
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types: [closed]
+      
+jobs:
+  check_labels:
+    name: Check labels
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && contains(github.head_ref, 'release/') && contains(github.head_ref, 'changeset-release') == false
+    steps:
+      - uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          any_of: 'Semver: major,Type: Breaking Change,Semver: minor,Type: Feature,Semver: patch,Type: Bug'
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+     
+  update_changeset:
+    needs: check_labels
+    name: Update Changesets
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup Checkout 
+      uses: actions/checkout@v3
+    - name: Setup Node 
+      uses: actions/setup-node@v3
+      with:
+        node_version: 16
+        
+    - name: Install Packages
+      run: yarn install
+    - name: Build Packages
+      run: yarn build:packages
+
+    - name: Set Github Configuration
+      run: |
+        git add .
+        git config --global user.email "${{github.actor}}@users.noreply.github.com"
+        git config --global user.name "${{github.actor}}"
+    - name: PR to Changesets
+      run: 
+        npx pr-to-changesets --config .github/pr-to-changesets.json --owner ${OWNER} --repo ${REPO} --pullRequestNumber ${PR_NUMBER} --output ".changeset/${OWNER}-${REPO}-${PR_NUMBER}.md"
+      env:
+        OWNER: ${{ github.event.pull_request.head.repo.owner.login }}
+        REPO: ${{ github.event.pull_request.head.repo.name }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Git push
+      run: |
+        git add .changeset
+        git config --global user.email "${{github.actor}}@users.noreply.github.com"
+        git config --global user.name "${{github.actor}}"
+        git commit -m "chore: added changeset for PR #${PR_NUMBER}"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        PR_NUMBER: ${{ github.event.pull_request.number }} 
+
+    - name: Create/Update Release Pull Request
+      uses: changesets/action@v1
+      with:
+        commit: "chore: release changeset"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -15,6 +15,14 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-core/cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
@@ -74,7 +82,6 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "repository": "realdecoy/frontier",
   "bugs": "https://github.com/realdecoy/frontier/issues",
   "keywords": [
     "oclif"

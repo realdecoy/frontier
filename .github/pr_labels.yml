@@ -1,0 +1,10 @@
+version: '1'
+invalidStatus: "pending"
+labelRule:
+  values:
+    - "Semver: major"
+    - "Type: Breaking Change"
+    - "Semver: minor"
+    - "Type: Feature"
+    - "Semver: patch"
+    - "Type: Bug"

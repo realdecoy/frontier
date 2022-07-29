@@ -58,7 +58,6 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://www.realdecoy.com/",
   "keywords": [
     "oclif"
   ],
@@ -76,7 +75,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realdecoy/frontier.git"
+    "url": "git+https://github.com/realdecoy/frontier.git",
+    "directory": "packages/frontier-plugins/plugin-vue"
+  },
+  "homepage": "https://github.com/realdecoy/frontier",
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "build-package",
