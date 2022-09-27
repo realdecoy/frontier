@@ -7,7 +7,7 @@ import { checkProjectValidity, createChangelogReadme } from '../../../utils/util
 import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG, DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../utils/constants';
 import { catchError } from '@rdfrontier/plugin-shared';;
 import { invalidProject } from '@rdfrontier/plugin-shared';
-const fs = require("fs");
+import fs from 'fs';
 import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../utils/files';
 import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
 
@@ -88,7 +88,7 @@ export default class Upgrade extends Command {
       this.deleteProjectFiles(projectRoot, resourcesToDelete);
     }
 
-    fs.rmdirSync(temporaryProjectFolder); // TODO: Investigate this { recursive: true }
+    await shell.exec(`npx rimraf ${temporaryProjectFolder}`);
 
     this.log(`${CLI_STATE.Success} rdvue updated to version: ${chalk.green(versionName)}`);
 
@@ -195,7 +195,7 @@ export default class Upgrade extends Command {
   }
 
   jsonReader(filePath: string): any {
-    const text = fs.readFileSync(filePath);
+    const text = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(text);
   }
 }

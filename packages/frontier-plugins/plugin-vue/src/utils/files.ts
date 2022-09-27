@@ -11,6 +11,7 @@ import { hasKebab } from './utilities';
 import { DYNAMIC_OBJECTS, EMPTY_STRING, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
 import { log } from '@rdfrontier/stdlib';
 const ncp =  require('ncp').ncp; // Install package
+import shell from 'shelljs';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -201,7 +202,7 @@ function replaceTargetFileNames(
  async function copyDirectoryRecursive(source: string, target: string): Promise<boolean> {
   let success = false;
   if (directoryExists(target)) {
-    fileSystem.rmdirSync(target); // TODO: Investigate this { recursive: true }
+    await shell.exec(`npx rimraf ${target}`);
     fileSystem.mkdirSync(target);
   } else {
     fileSystem.mkdirSync(target);
