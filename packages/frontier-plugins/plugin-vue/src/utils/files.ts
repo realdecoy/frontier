@@ -10,7 +10,7 @@ const replace = require('replace-in-file');
 import { hasKebab } from './utilities';
 import { DYNAMIC_OBJECTS, EMPTY_STRING, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
 import { log } from '@rdfrontier/stdlib';
-const ncp =  require('ncp').ncp; // Install package
+const ncp =  require('ncp').ncp;
 import shell from 'shelljs';
 
 const UTF8 = 'utf-8';
@@ -141,7 +141,7 @@ async function replaceInFiles(files: string | string[], from: RegExp, to: string
     throw new Error(
       JSON.stringify({
         code: 'file-not-changed',
-        message: error.message,
+        message: (error as any).message,
       }),
     );
   }
@@ -202,7 +202,7 @@ function replaceTargetFileNames(
  async function copyDirectoryRecursive(source: string, target: string): Promise<boolean> {
   let success = false;
   if (directoryExists(target)) {
-    await shell.exec(`npx rimraf ${target}`);
+    deleteFolderRecursive(target);
     fileSystem.mkdirSync(target);
   } else {
     fileSystem.mkdirSync(target);
@@ -512,10 +512,10 @@ function parseDynamicObjects(
  * @param {InjectOptions?} options see InjectOptions type
  */
 function inject(targetPath: string, content: string, options?: InjectOptions): void {
-  const encoding = options?.encoding ?? 'utf-8';
+  const encoding = options?.encoding as BufferEncoding ?? 'utf-8';
   let index = options?.index ?? 0;
 
-  let targetContent = fs.readFileSync(targetPath, { encoding });
+  let targetContent = fileSystem.readFileSync(targetPath, encoding);
   const lines = targetContent.split(/\r?\n/g);
 
   if (typeof index === 'function') {
@@ -525,7 +525,7 @@ function inject(targetPath: string, content: string, options?: InjectOptions): v
   lines.splice(index, 0, content);
   targetContent = lines.join('\n');
 
-  fs.writeFileSync(targetPath, targetContent, { encoding });
+  fs.writeFileSync(targetPath, targetContent, encoding);
 }
 
 /**
@@ -579,6 +579,14 @@ async function updateDynamicImportsAndExports(
   return success;
 }
 
+/**
+ * Description: Delete folder and all its contents
+ * @param {string} folderPath - path to folder to be deleted
+ */
+ function deleteFolderRecursive(folderPath: string) {
+  shell.exec(`rm -rf ${folderPath}`);
+};
+
 export {
   updateDynamicImportsAndExports,
   parseDynamicObjects,
@@ -590,6 +598,7 @@ export {
   readAndUpdateFeatureFiles,
   copyFiles,
   copyDirectoryRecursive,
+  deleteFolderRecursive,
   getProjectRoot,
   readFile,
   fileExists,

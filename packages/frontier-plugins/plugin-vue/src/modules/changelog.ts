@@ -370,6 +370,11 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
                 operation: 'add',
             },
             {
+                key: 'devDependencies.file-loader',
+                value: '^6.2.0',
+                operation: 'add',
+            },
+            {
                 key: 'devDependencies.@types/dotenv-webpack',
                 value: '^7.0.2',
                 operation: 'add',
@@ -518,6 +523,11 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
                 key: 'devDependencies.sass',
                 value: '^1.45.1',
                 operation: 'add',
+            },
+            {
+                key: 'devDependencies.sass-loader',
+                value: '^7.1.0',
+                operation: 'remove',
             },
             {
                 key: 'devDependencies.sass-loader',

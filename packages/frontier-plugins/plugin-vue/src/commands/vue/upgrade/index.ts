@@ -8,7 +8,7 @@ import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG, DO
 import { catchError } from '@rdfrontier/plugin-shared';;
 import { invalidProject } from '@rdfrontier/plugin-shared';
 import fs from 'fs';
-import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../utils/files';
+import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile, deleteFolderRecursive } from '../../../utils/files';
 import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
 
 const CUSTOM_ERROR_CODES = [
@@ -16,7 +16,7 @@ const CUSTOM_ERROR_CODES = [
 ];
 
 export default class Upgrade extends Command {
-  static description = 'Specify rdvue template version for a project'
+  static description = 'Specify the rdvue template version for a project'
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -87,8 +87,8 @@ export default class Upgrade extends Command {
     if (resourcesToDelete) {
       this.deleteProjectFiles(projectRoot, resourcesToDelete);
     }
-
-    await shell.exec(`npx rimraf ${temporaryProjectFolder}`);
+    
+    deleteFolderRecursive(temporaryProjectFolder);
 
     this.log(`${CLI_STATE.Success} rdvue updated to version: ${chalk.green(versionName)}`);
 
