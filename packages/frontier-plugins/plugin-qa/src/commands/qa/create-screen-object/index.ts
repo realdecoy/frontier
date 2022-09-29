@@ -42,12 +42,12 @@ export default class CreateScreenObject extends Command {
 
       if (successfulReplace) {
       // Output message saying project is ready
-        this.log(chalk.blue(`File ${screenObjectName} is ready!`))
+        this.log(chalk.blueBright(`File ${screenObjectName} is ready!`))
       } else {
-        this.log(chalk.red('There was a issue in making your screen object file!'))
+        this.log(chalk.redBright('There was a issue in making your screen object file!'))
       }
     } else {
-      this.log(chalk.red('Unable to make screen object, ensure you are in a valid project!'))
+      this.log(chalk.redBright('Unable to make screen object, ensure you are in a valid project!'))
     }    
   }
 }

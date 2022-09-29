@@ -3,7 +3,7 @@ import { CONSTANTS, TEMPLATE_REPLACEMENT_FILES, PROJECT_TEMPLATE } from '../../.
 import { copyFolderSync, replaceInFiles } from '../../../utils/files'
 import chalk = require('chalk')
 import { checkIfProjectExists } from '../../../utils/utilities'
-import { exec } from 'child_process'
+import shell from 'shelljs';
 
 const { TEMPLATE_REGEX } = CONSTANTS
 
@@ -40,15 +40,11 @@ export default class CreateProject extends Command {
       // find and replace project name references
       const successfulReplace = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`)
       if (successfulReplace) {
-        exec(`cd ${projectName} && npm install`,(error) => {
-          if(error) {
-            console.log(error)
-          }
-          // Output message saying project is ready
-         this.log(chalk.blue(`Project ${projectName} is ready!`))
-        })
+        shell.exec(`cd ${projectName} && npm install`);
+        // Output message saying project is ready
+        this.log(chalk.blueBright(`Project ${projectName} is ready!`))
       } else {
-        this.log(chalk.red('There was a issue in making your project!'))
+        this.log(chalk.redBright('There was a issue in making your project!'))
       }
     }
   }

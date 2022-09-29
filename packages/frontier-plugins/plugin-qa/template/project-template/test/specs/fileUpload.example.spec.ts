@@ -7,7 +7,7 @@ describe('File upload Example', () => {
         const imageName = 'webdriverIO.png';
         const filePath = path.join(__dirname, '../../src/assets/webdriverIO.png');
 
-        await FileUploadPage.open;
+        await FileUploadPage.open();
         await FileUploadPage.chooseFile(filePath);
         await browser.pause(2000)
         await FileUploadPage.upload;

@@ -39,12 +39,12 @@ export default class CreateTest extends Command {
 
       if (successfulReplace) {
       // Output message saying project is ready
-        this.log(chalk.blue(`Test ${testName} is ready!`))
+        this.log(chalk.blueBright(`Test ${testName} is ready!`))
       } else {
-        this.log(chalk.red('There was a issue in making your test file!'))
+        this.log(chalk.redBright('There was a issue in making your test file!'))
       }
     } else {
-      this.log(chalk.red('Unable to make test, ensure you are in a valid project!'))
+      this.log(chalk.redBright('Unable to make test, ensure you are in a valid project!'))
     }
   }
 }
