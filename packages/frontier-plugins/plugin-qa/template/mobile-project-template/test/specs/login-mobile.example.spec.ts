@@ -1,6 +1,5 @@
 import TabBar from '@/screen_objects/components/tab-bar';
 import LoginScreen from '@/screen_objects/login-screen';
-import NativeAlert from '@/screenobjects/components/NativeAlert';
 
 describe('WebdriverIO and Appium, when interacting with a login form,', () => {
     beforeEach(async () => {
@@ -15,12 +14,6 @@ describe('WebdriverIO and Appium, when interacting with a login form,', () => {
         // Submit the data
         await LoginScreen.submitLoginForm({ username: 'test@webdriver.io', password: 'Test1234!' });
         // Wait for the alert and validate it
-        await NativeAlert.waitForIsShown();
-        await expect(await NativeAlert.text()).toEqual('Success\nYou are logged in!');
-
-        // Close the alert
-        await NativeAlert.topOnButtonWithText('OK');
-        await NativeAlert.waitForIsShown(false);
     });
 
     it('should be able sign up successfully', async () => {
@@ -29,11 +22,5 @@ describe('WebdriverIO and Appium, when interacting with a login form,', () => {
         // Submit the data
         await LoginScreen.submitSignUpForm({ username: 'test@webdriver.io', password: 'Test1234!' });
         // Wait for the alert and validate it
-        await NativeAlert.waitForIsShown();
-        await expect(await NativeAlert.text()).toEqual('Signed Up!\nYou successfully signed up!');
-
-        // Close the alert
-        await NativeAlert.topOnButtonWithText('OK');
-        await NativeAlert.waitForIsShown(false);
     });
 });

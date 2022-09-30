@@ -65,7 +65,7 @@ export const config: WebdriverIO.Config = {
         // The path to the app
         'appium:app': process.env.ANDROID_APP_PATH,
         // @ts-ignore
-        'appium:appWaitActivity': '',
+        'appium:appWaitActivity': '*',
         'appium:newCommandTimeout': 240,
     }],
     //
