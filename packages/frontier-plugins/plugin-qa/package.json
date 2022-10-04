@@ -1,7 +1,7 @@
 {
   "name": "@rdfrontier/plugin-qa",
   "description": "QA toolchain for generating automation projects",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "author": "RealDecoy",
   "bin": {
     "spectre": "./bin/run"
