@@ -10,10 +10,10 @@
 # Spectre
 
 ### @rdfrontier/plugin-qa
-CLI to generate web automation projects
+CLI to generate web & mobile automation projects
 
-[![Version](https://img.shields.io/npm/v/rdspec.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
-[![Downloads/week](https://img.shields.io/npm/dw/rdspec.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
+[![Version](https://img.shields.io/npm/v/spectre-cli.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
+[![Downloads/week](https://img.shields.io/npm/dw/spectre.svg)](https://www.npmjs.com/package/@rdfrontier/plugin-qa)
 
 &nbsp; &nbsp; &nbsp;
 
@@ -170,7 +170,7 @@ _See code:
 
 ## `frontier qa:[COMMAND] --help `
 
-display help for rdspec
+display help for spectre
 
 ```
 USAGE

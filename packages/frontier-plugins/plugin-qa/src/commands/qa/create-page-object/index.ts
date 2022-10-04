@@ -42,12 +42,12 @@ export default class CreatePageObject extends Command {
 
       if (successfulReplace) {
       // Output message saying project is ready
-        this.log(chalk.blue(`File ${pageObjectName} is ready!`))
+        this.log(chalk.blueBright(`File ${pageObjectName} is ready!`))
       } else {
-        this.log(chalk.red('There was a issue in making your page object file!'))
+        this.log(chalk.redBright('There was a issue in making your page object file!'))
       }
     } else {
-      this.log(chalk.red('Unable to make page object, ensure you are in a valid project!'))
+      this.log(chalk.redBright('Unable to make page object, ensure you are in a valid project!'))
     }    
   }
 }

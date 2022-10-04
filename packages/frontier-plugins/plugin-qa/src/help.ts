@@ -9,12 +9,12 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {
     log(`
-        frontier ${chalk.blue('qa:')}<action>
+        frontier ${chalk.blueBright('qa:')}<action>
         Actions:
-            create-project          Scaffold a new rdspec web automation project
+            create-project          Scaffold a new web automation project
             create-test             Create a test file 
             create-page-object      Create a page object file to be used in a test file
-            create-mobile-project   Scaffold a new rdspec mobile automation project
+            create-mobile-project   Scaffold a new mobile automation project
             create-screen-object    Create a screen object file to be used in a test file
         Options:
             --help | -h Show help information
@@ -75,7 +75,7 @@ export default class MyHelpClass extends Help {
 
     log(`
         Usage:
-            npx ${chalk.blue('rdspec')} ${commandId} ${argNames}
+            npx ${chalk.blueBright('spectre')} ${commandId} ${argNames}
         Arguments:${argsList}    
         
         Options:${optionList}`)

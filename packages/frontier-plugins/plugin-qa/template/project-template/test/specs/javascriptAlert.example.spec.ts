@@ -3,7 +3,7 @@ import JavaScriptAlertsPage from '@/page_objects/javascript-alerts-page';
 
 describe('JavaScript Alerts', () => {
     it('can be accepted', async () => {
-        await JavaScriptAlertsPage.open;
+        await JavaScriptAlertsPage.open();
         await JavaScriptAlertsPage.clickForAlert;
 
         await browser.acceptAlert();
