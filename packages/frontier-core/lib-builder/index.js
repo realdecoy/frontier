@@ -15,19 +15,20 @@ const argDefinitions = [
     defaultValue: cwd(),
   },
   { name: 'notify', alias: 'n', type: Boolean },
+  { name: 'tscOnly', alias: 't', type: Boolean },
   { name: 'watch', alias: 'w', type: Boolean },
   { name: 'serverOnly', alias: 'S', type: Boolean },
   { name: 'webpackOnly', alias: 'W', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
 ];
 
-function run({ help, notify, pkgDir, serverOnly, watch, webpackOnly }) {
+function run({ help, notify, pkgDir, serverOnly, watch, webpackOnly, tscOnly }) {
   if (help) {
     return showUsageGuide();
   }
 
   const pkgName = pkgDir.split('/').pop();
-  const buildOpts = { notify, pkgDir, pkgName, serverOnly, webpackOnly };
+  const buildOpts = { notify, pkgDir, pkgName, serverOnly, webpackOnly, tscOnly };
 
   // if not watching, build once and exit
   if (!watch) {

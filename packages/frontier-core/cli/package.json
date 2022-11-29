@@ -51,8 +51,8 @@
     "topics": {}
   },
   "scripts": {
-    "build": "build-package",
-    "build:watch": "build-package --watch",
+    "build": "build-package --tscOnly",
+    "build:watch": "build-package --tscOnly --watch",
     "clean": "rimraf dist esnext module types lib",
     "rebuild": "run-s clean build && oclif-dev manifest",
     "test": "jest --passWithNoTests",
@@ -68,7 +68,7 @@
     "lint:md:fix": "yarn prettier \"**/*.md\" --write",
     "lint:ts:fix": "yarn prettier \"**/*.ts\" --write",
     "postpack": "rimraf oclif.manifest.json",
-    "prepack": "rimraf lib && rimraf oclif.manifest.json && rimraf tsconfig.tsbuildinfo && tsc -b && oclif-dev manifest",
+    "prepack": "build",
     "version": "oclif readme && git add README.md"
   },
   "engines": {
