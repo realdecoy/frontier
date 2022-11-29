@@ -1,6 +1,6 @@
 {
   "name": "@rdfrontier/plugin-vue",
-  "version": "1.0.0",
+  "version": "1.1.1-beta.7",
   "author": "Realdecoy",
   "bin": {
     "rdvue": "./bin/run"
@@ -10,7 +10,8 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "@rdfrontier/stdlib": "^0.0.1",
+    "@rdfrontier/stdlib": "^0.0.2",
+    "@rdfrontier/plugin-shared": "^0.0.8",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
@@ -28,7 +29,6 @@
     "@oclif/dev-cli": "^1.26.0",
     "@oclif/test": "^1.2.8",
     "@rdfrontier/lib-builder": "^1.0.0",
-    "@rdfrontier/plugin-shared": "^0.0.1",
     "@types/bluebird": "^3.5.33",
     "@types/chai": "^4.2.15",
     "@types/inquirer": "^7.3.1",
@@ -80,8 +80,8 @@
     "url": "git+https://github.com/realdecoy/frontier.git"
   },
   "scripts": {
-    "build": "build-package",
-    "build:watch": "build-package --watch",
+    "build": "build-package --tscOnly",
+    "build:watch": "build-package --tscOnly --watch",
     "clean": "rimraf dist esnext module types lib",
     "rebuild": "run-s clean build && oclif-dev manifest",
     "test": "jest --passWithNoTests",
@@ -99,9 +99,9 @@
     "audit": "npm audit --production",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "npm run lint",
-    "prepack": "rimraf lib && rimraf oclif.manifest.json && rimraf tsconfig.tsbuildinfo && tsc -b && oclif-dev manifest",
+    "prepack": "npm run build",
     "version": "oclif-dev readme && git add README.md",
     "typecheck": "tsc --noEmit"
   },
-  "types": "dist/index.d.ts"
+  "types": "types/index.d.ts"
 }

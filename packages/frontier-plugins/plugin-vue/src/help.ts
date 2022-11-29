@@ -8,7 +8,7 @@ export default class MyHelpClass extends Help {
   // and based on the args it receives
   // calls one of showRootHelp, showTopicHelp,
   // or showCommandHelp
-  showRootHelp(): void {    
+  showRootHelp(): void {
     log(`
         frontier ${chalk.blue('vue:')}<action>
 
