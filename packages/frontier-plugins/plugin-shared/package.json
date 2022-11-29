@@ -1,6 +1,6 @@
 {
   "name": "@rdfrontier/plugin-shared",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "description": "plugin shared functionalities",
   "license": "UNLICENSED",
   "author": "Realdecoy",
@@ -12,8 +12,8 @@
     "types/"
   ],
   "scripts": {
-    "build": "build-package",
-    "build:watch": "build-package --watch",
+    "build": "build-package --tscOnly",
+    "build:watch": "build-package --tscOnly --watch",
     "clean": "rimraf dist esnext module types",
     "fix": "run-s lint:es:fix lint:md:fix",
     "lint": "run-s lint:es lint:md",
@@ -33,8 +33,7 @@
   "sideEffects": false,
   "types": "types/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.15.0",
-    "@rdfrontier/stdlib": "^0.0.1"
+    "@rdfrontier/stdlib": "^0.0.2"
   },
   "devDependencies": {
     "@rdfrontier/lib-builder": "^1.0.0"
