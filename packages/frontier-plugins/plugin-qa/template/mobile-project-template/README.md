@@ -3,6 +3,10 @@
 Boilerplate for a mobile automation project using WebDriverIO v7, Appium and
 BrowserStack
 
+An example page object and test spec is provided to show the expected structure for these files. You may delete this file once you are more comfortable writing test automation. 
+
+You can always check out [this link](https://github.com/webdriverio/awesome-webdriverio) for more help with test automation using WebDriverIO.
+
 ## NB
 
 Ensure you make a .env file in the root of the project, with the contents

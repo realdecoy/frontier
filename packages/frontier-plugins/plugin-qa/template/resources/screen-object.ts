@@ -20,4 +20,8 @@ class <ScreenObject> extends screen {
 
 }
 
-export default new <ScreenObject>();
+// Module Exports
+
+const <screen_object_name> = new <ScreenObject>();
+
+export { <screen_object_name> as default,  <screen_object_name> as <ScreenObject> }

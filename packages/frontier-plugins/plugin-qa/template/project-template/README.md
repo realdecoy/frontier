@@ -8,6 +8,10 @@ different types of testing scenarios.
 Once created, all dependencies will be installed, just cd into your newly
 created project folder!
 
+An example page object and test spec is provided to show the expected structure for these files. You may delete this file once you are more comfortable writing test automation. 
+
+You can always check out [this link](https://github.com/webdriverio/awesome-webdriverio) for more help with test automation using WebDriverIO.
+
 ## NB
 
 Leverage a .env file for credentials during testing. Please use .env.example for

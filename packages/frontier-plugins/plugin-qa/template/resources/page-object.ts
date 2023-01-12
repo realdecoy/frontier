@@ -20,4 +20,9 @@ class <PageObject> extends page {
 
 }
 
-export default new <PageObject>();
+// Module Exports
+
+const <page_object_name> = new <PageObject>();
+
+export { <page_object_name> as default,  <page_object_name> as <PageObject> }
+
