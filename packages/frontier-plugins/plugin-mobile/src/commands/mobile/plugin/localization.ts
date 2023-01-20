@@ -65,12 +65,12 @@ export default class Localization extends Command {
     const validityResponse = checkProjectValidity();
     const { isValid: isValidProject } = validityResponse;
     let { projectRoot } = validityResponse;
-    // block command unless being run within an rdvue project
+    // block command unless being run within an mobile project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginLocalization} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.PluginLocalization} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     } else if (hasProjectName) {

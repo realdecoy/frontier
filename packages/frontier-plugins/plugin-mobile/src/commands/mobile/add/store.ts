@@ -3,10 +3,9 @@ import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseComponentName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, parseStoreModuleName, toKebabCase, toPascalCase, isJsonString, getProjectConfig } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
-const TEMPLATE_FOLDERS = ['component'];
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
@@ -14,15 +13,15 @@ const CUSTOM_ERROR_CODES = [
   'missing-template-folder',
 ];
 
-export default class Component extends Command {
-  static description = 'add a new Component module.'
+export default class StoreModule extends Command {
+  static description = 'add a new Store module.'
 
   static flags = {
     help: flags.help({ char: 'h' }),
   }
 
   static args = [
-    { name: 'name', description: 'name of new component' },
+    { name: 'name', description: 'name of new store module' },
   ]
 
   // override Command class error handler
@@ -51,17 +50,20 @@ export default class Component extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+
+    // block command unless being run within an mobile project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddComponent} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.AddStore} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     }
 
-    const { args } = this.parse(Component);
+    const { args } = this.parse(StoreModule);
+    const projectConfig = getProjectConfig();
+    const TEMPLATE_FOLDERS = projectConfig.isMobile ?  ['context'] : ['store'];
     const folderList = TEMPLATE_FOLDERS;
     let sourceDirectory: string;
     let installDirectory: string;
@@ -69,24 +71,25 @@ export default class Component extends Command {
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
 
-    // retrieve component name
-    const componentName = await parseComponentName(args);
-    // parse kebab and pascal case of componentName
-    const componentNameKebab = toKebabCase(componentName);
-    const componentNamePascal = toPascalCase(componentName);
+    // retrieve storeModule name
+    const storeModuleName = await parseStoreModuleName(args);
+    // parse kebab and pascal case of storeModuleName
+    const storeModuleNameKebab = toKebabCase(storeModuleName);
+    const storeModuleNamePascal = toPascalCase(storeModuleName);
 
     configs.forEach(async config => {
       const files: Array<string | Files> = config.manifest.files;
       // replace file names in config with kebab case equivalent
-      replaceTargetFileNames(files, componentNameKebab);
+      replaceTargetFileNames(files, storeModuleNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, componentNameKebab);
-      // copy and update files for component being added
+      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+
+      // copy and update files for storeModule being added
       await copyFiles(sourceDirectory, installDirectory, files);
-      await readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);
+      await readAndUpdateFeatureFiles(installDirectory, files, storeModuleNameKebab, storeModuleNamePascal);
     });
 
-    this.log(`${CLI_STATE.Success} component added: ${componentNameKebab}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Component)}\n`);
+    this.log(`${CLI_STATE.Success} store added: ${storeModuleNameKebab}`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Store)}\n`);
   }
 }

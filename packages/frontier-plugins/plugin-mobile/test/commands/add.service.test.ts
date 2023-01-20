@@ -12,8 +12,8 @@ describe(CLI_COMMANDS.AddService, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.AddService])
-    .it(`runs rdvue ${CLI_COMMANDS.AddService} ${testServiceName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddService} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.AddService} ${testServiceName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.AddService} command must be run in an existing mobile project`);
     });
 
   test
@@ -22,8 +22,8 @@ describe(CLI_COMMANDS.AddService, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.AddService, testServiceName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddService} ${testServiceName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] service added: ${testServiceName}`);
+    .it(`runs mobile ${CLI_COMMANDS.AddService} ${testServiceName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] service added: ${testServiceName}`);
     });
 
   // test

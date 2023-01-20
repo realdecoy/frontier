@@ -3,26 +3,25 @@ import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseScreenName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, parseServiceName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
-const TEMPLATE_FOLDERS = ['screen'];
+const TEMPLATE_FOLDERS = ['service'];
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
   'missing-template-file',
-  'missing-template-folder',
 ];
 
-export default class Screen extends Command {
-  static description = 'add a new Screen module.'
+export default class Service extends Command {
+  static description = 'add a new Service module.'
 
   static flags = {
     help: flags.help({ char: 'h' }),
   }
 
   static args = [
-    { name: 'name', description: 'name of new screen' },
+    { name: 'name', description: 'name of new service' },
   ]
 
   // override Command class error handler
@@ -50,19 +49,18 @@ export default class Screen extends Command {
   }
 
   async run(): Promise<void> {
-    this.log(`\n  Test:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Page)}\n`);
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+    // block command unless being run within an mobile project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddScreen} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.AddService} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     }
 
-    const { args } = this.parse(Screen);
+    const { args } = this.parse(Service);
     const folderList = TEMPLATE_FOLDERS;
     let sourceDirectory: string;
     let installDirectory: string;
@@ -70,24 +68,25 @@ export default class Screen extends Command {
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
 
-    // retrieve screen name
-    const screenName = await parseScreenName(args);
-    // parse kebab and pascal case of screenName
-    const screenNameKebab = toKebabCase(screenName);
-    const screenNamePascal = toPascalCase(screenName);
+    // retrieve service name
+    const serviceName = await parseServiceName(args);
+    // parse kebab and pascal case of serviceName
+    const serviceNameKebab = toKebabCase(serviceName);
+    const serviceNamePascal = toPascalCase(serviceName);
 
     configs.forEach(async config => {
       const files: Array<string | Files> = config.manifest.files;
       // replace file names in config with kebab case equivalent
-      replaceTargetFileNames(files, screenNameKebab);
+      replaceTargetFileNames(files, serviceNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, screenNameKebab);
-      // copy and update files for screen being added
+      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+
+      // copy and update files for service being added
       await copyFiles(sourceDirectory, installDirectory, files);
-      await readAndUpdateFeatureFiles(installDirectory, files, screenNameKebab, screenNamePascal);
+      await readAndUpdateFeatureFiles(installDirectory, files, serviceNameKebab, serviceNamePascal);
     });
 
-    this.log(`${CLI_STATE.Success} screen added: ${screenNameKebab}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Page)}\n`);
+    this.log(`${CLI_STATE.Success} service added: ${serviceNameKebab}`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Service)}\n`);
   }
 }

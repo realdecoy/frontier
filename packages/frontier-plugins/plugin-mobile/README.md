@@ -8,7 +8,7 @@
 
 # RDVue Mobile [![npm version](https://badge.fury.io/js/rdvue.svg)](https://badge.fury.io/js/rdvue)
 
-[RDVue](https://github.com/realdecoy/rdvue) is an opinionated CLI for generating Vue.js projects. We do so by adopting
+[RDVue](https://github.com/realdecoy/rdmobile) is an opinionated CLI for generating Vue.js projects. We do so by adopting
 a development style guide which enforces strong typing with TypeScript, standardized Component, Layout and Page models,
 and a data-layer design promoting unified consumption through Stores and Services.
 
@@ -27,7 +27,7 @@ and a data-layer design promoting unified consumption through Stores and Service
 
 * [Usage](#usage)
 * [Options](#options)
-* [Documentation](https://realdecoy.github.io/rdvue/)
+* [Documentation](https://realdecoy.github.io/rdmobile/)
 * [Dev Instructions](#Development)
 * [Testing](#Testing)
 <!-- custom-tocstop -->
@@ -40,18 +40,18 @@ and a data-layer design promoting unified consumption through Stores and Service
 <!-- custom-usage -->
 
 ```bash
-npx rdvue [command]
+npx mobile [command]
 ```
 
 The help menu can be accessed with the command:
 
 ```bash
-npx rdvue --help
+npx mobile --help
 ```
-The current version of rdvue can be retrieved with the command:
+The current version of mobile can be retrieved with the command:
 
 ```bash
-npx rdvue -v|--version|version
+npx mobile -v|--version|version
 ```
 <!-- custom-usagestop -->
 
@@ -62,16 +62,17 @@ npx rdvue -v|--version|version
 ## Options
 ```txt
 Usage:
-  npx rdvue <action>
+  npx mobile <action>
 
 Actions:
-    create-project   -  Scaffold a new rdvue project
+    create-project   -  Scaffold a new mobile project
     add              -  Add a feature to a project
     plugin           -  Inject a utility to extend project functionality
-    upgrade          -  Specify the rdvue template version for a project
   
 Options:
     --help | -h      -  Show help information
+    --verbose        -  Show debug logs to get more information
+
 ```
 
 &nbsp;
@@ -80,7 +81,7 @@ Options:
 
 ## About
 
-The RDVue CLI is the product of RealDecoy's Frontend Practice group. Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
+The Mobile CLI is the product of RealDecoy's Frontend Practice group. Contributions are welcome! You can help us by reporting or fixing bugs and giving us feedback on new/existing features.
 
 &nbsp;
 &nbsp;

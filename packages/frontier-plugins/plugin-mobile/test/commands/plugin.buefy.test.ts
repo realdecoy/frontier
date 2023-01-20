@@ -11,8 +11,8 @@ describe(CLI_COMMANDS.PluginBuefy, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.PluginBuefy])
-    .it(`runs rdvue ${CLI_COMMANDS.PluginBuefy} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.PluginBuefy} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginBuefy} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.PluginBuefy} command must be run in an existing mobile project`);
     });
 
   test
@@ -21,8 +21,8 @@ describe(CLI_COMMANDS.PluginBuefy, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.PluginBuefy])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.PluginBuefy}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] plugin added: ${CLI_COMMANDS.PluginBuefy.split(':')[1]}`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginBuefy}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] plugin added: ${CLI_COMMANDS.PluginBuefy.split(':')[1]}`);
     });
 
   after(() => {

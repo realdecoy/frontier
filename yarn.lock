@@ -2565,7 +2565,7 @@
     "@oclif/core" "^1"
     "@oclif/plugin-help" "^5"
     "@oclif/plugin-plugins" "^2.0.1"
-    "@rdfrontier/stdlib" "^0.0.2"
+    "@rdfrontier/stdlib" "^0.0.1"
 
 "@rdfrontier/lib-builder@^1.0.0", "@rdfrontier/lib-builder@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-core/lib-builder":
   "resolved" "file:packages/frontier-core/lib-builder"
@@ -2582,7 +2582,7 @@
 
 "@rdfrontier/plugin-mobile@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-plugins/plugin-mobile":
   "resolved" "file:packages/frontier-plugins/plugin-mobile"
-  "version" "1.0.0"
+  "version" "1.0.0-beta.0"
   dependencies:
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
@@ -2609,27 +2609,27 @@
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
     "@oclif/plugin-help" "^3.2.2"
-    "@rdfrontier/stdlib" "^0.0.2"
+    "@rdfrontier/stdlib" "^0.0.1"
     "chalk" "^4.1.1"
     "replace-in-file" "^6.2.0"
     "shelljs" "^0.8.4"
     "tslib" "^1.14.1"
 
-"@rdfrontier/plugin-shared@^0.0.8", "@rdfrontier/plugin-shared@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-plugins/plugin-shared":
+"@rdfrontier/plugin-shared@^0.0.1", "@rdfrontier/plugin-shared@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-plugins/plugin-shared":
   "resolved" "file:packages/frontier-plugins/plugin-shared"
-  "version" "0.0.8"
+  "version" "0.0.1"
   dependencies:
-    "@rdfrontier/stdlib" "^0.0.2"
+    "@babel/runtime" "^7.15.0"
+    "@rdfrontier/stdlib" "^0.0.1"
 
 "@rdfrontier/plugin-vue@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-plugins/plugin-vue":
   "resolved" "file:packages/frontier-plugins/plugin-vue"
-  "version" "1.1.1-beta.7"
+  "version" "1.0.0"
   dependencies:
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
     "@oclif/plugin-help" "^3.2.2"
-    "@rdfrontier/plugin-shared" "^0.0.8"
-    "@rdfrontier/stdlib" "^0.0.2"
+    "@rdfrontier/stdlib" "^0.0.1"
     "bluebird" "^3.7.2"
     "chalk" "^4.1.0"
     "cli-ux" "^5.5.1"
@@ -2643,9 +2643,9 @@
     "tslib" "^1.14.1"
     "util" "^0.12.4"
 
-"@rdfrontier/stdlib@^0.0.2", "@rdfrontier/stdlib@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-libraries/stdlib":
+"@rdfrontier/stdlib@^0.0.1", "@rdfrontier/stdlib@file:/Users/realdecoy/RealDecoy/Projects/frontier/packages/frontier-libraries/stdlib":
   "resolved" "file:packages/frontier-libraries/stdlib"
-  "version" "0.0.2"
+  "version" "0.0.1"
   dependencies:
     "@babel/runtime" "^7.15.0"
     "type-fest" "^2.3.4"
@@ -6447,7 +6447,7 @@
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   "version" "1.0.5"
 
-"escape-string-regexp@^1.0.5":
+"escape-string-regexp@^1.0.5", "escape-string-regexp@1.0.5":
   "integrity" "sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg=="
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   "version" "1.0.5"
@@ -6461,11 +6461,6 @@
   "integrity" "sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA=="
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   "version" "4.0.0"
-
-"escape-string-regexp@1.0.5":
-  "integrity" "sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg=="
-  "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
-  "version" "1.0.5"
 
 "escodegen@^2.0.0":
   "integrity" "sha512-mmHKys/C8BFUGI+MAWNcSYoORYLMdPzjrknd2Vc+bUsjN5bXcr8EhrNB+UTqfL1y3I9c4fw2ihgtMPQLBRiQxw=="
@@ -10885,11 +10880,11 @@
   "version" "1.0.4"
 
 "mkdirp@0.5.1":
-  "integrity" "sha512-SknJC52obPfGQPnjIkXbmA6+5H15E+fR+E4iR2oQ3zzCLbd7/ONua69R/Gw7AgkTLsRG+r5fzksYwWe1AgTyWA=="
-  "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
-  "version" "0.5.1"
+  "integrity" "sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw=="
+  "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz"
+  "version" "0.5.6"
   dependencies:
-    "minimist" "0.0.8"
+    "minimist" "^1.2.6"
 
 "mocha@^10.0.0":
   "integrity" "sha512-0Wl+elVUD43Y0BqPZBzZt8Tnkw9CMUdNYnUsTfOM1vuhJVZL+kiesFYsqwBkEEuEixaiPe5ZQdqDgX2jddhmoA=="
@@ -14209,9 +14204,9 @@
   "version" "9.2.2"
 
 "supports-color@5.4.0":
-  "integrity" "sha512-zjaXglF5nnWpsq470jSv6P9DwPvgLkuapYmfDm3JWOm0vkNTVF2tI4UrN2r6jH1qM/uc/WtxYY1hYoA2dOKj5w=="
-  "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-5.4.0.tgz"
-  "version" "5.4.0"
+  "integrity" "sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow=="
+  "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"
+  "version" "5.5.0"
   dependencies:
     "has-flag" "^3.0.0"
 
@@ -14647,7 +14642,7 @@
     "commander" "^2.20.0"
     "globby" "^9.2.0"
 
-"tslib@^1.14.1":
+"tslib@^1.14.1", "tslib@^1.9.0":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"

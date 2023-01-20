@@ -10,16 +10,16 @@ export default class MyHelpClass extends Help {
   // or showCommandHelp
   showRootHelp(): void {
     log(`
-        npx ${chalk.blue('rdvue')} <action>
+        npx ${chalk.blue('mobile')} <action>
 
         Actions:
-            create-project   -  Scaffold a new rdvue project
+            create-project   -  Scaffold a new mobile project
             add              -  Add a feature to a project
             plugin           -  Inject a utility to extend project functionality
-            upgrade          -  Specify the rdvue template version for a project
             
         Options:
             --help | -h      -  Show help information
+            --verbose        -  Show debug logs to get more information
         `,
     );
   }
@@ -77,7 +77,7 @@ export default class MyHelpClass extends Help {
 
     log(`
         Usage:
-            npx ${chalk.blue('rdvue')} ${commandId} ${argNames}
+            npx ${chalk.blue('mobile')} ${commandId} ${argNames}
 
         Arguments:${argsList}    
         

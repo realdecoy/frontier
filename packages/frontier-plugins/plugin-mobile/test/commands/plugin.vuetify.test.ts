@@ -11,8 +11,8 @@ describe(CLI_COMMANDS.PluginVuetify, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.PluginVuetify])
-    .it(`runs rdvue ${CLI_COMMANDS.PluginVuetify} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.PluginVuetify} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginVuetify} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.PluginVuetify} command must be run in an existing mobile project`);
     });
 
   test
@@ -21,8 +21,8 @@ describe(CLI_COMMANDS.PluginVuetify, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.PluginVuetify])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.PluginVuetify}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] plugin added: ${CLI_COMMANDS.PluginVuetify.split(':')[1]}`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginVuetify}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] plugin added: ${CLI_COMMANDS.PluginVuetify.split(':')[1]}`);
     });
 
   after(() => {

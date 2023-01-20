@@ -11,8 +11,8 @@ describe(CLI_COMMANDS.PluginLocalization, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.PluginLocalization])
-    .it(`runs rdvue ${CLI_COMMANDS.PluginLocalization} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.PluginLocalization} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginLocalization} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.PluginLocalization} command must be run in an existing mobile project`);
     });
 
   test
@@ -21,8 +21,8 @@ describe(CLI_COMMANDS.PluginLocalization, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.PluginLocalization])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.PluginLocalization}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] plugin added: ${CLI_COMMANDS.PluginLocalization.split(':')[1]}`);
+    .it(`runs mobile ${CLI_COMMANDS.PluginLocalization}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] plugin added: ${CLI_COMMANDS.PluginLocalization.split(':')[1]}`);
     });
 
   after(() => {

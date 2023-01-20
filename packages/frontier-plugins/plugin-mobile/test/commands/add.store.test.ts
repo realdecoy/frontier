@@ -12,8 +12,8 @@ describe(CLI_COMMANDS.AddStore, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.AddStore])
-    .it(`runs rdvue ${CLI_COMMANDS.AddStore} ${testStoreName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddStore} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.AddStore} ${testStoreName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.AddStore} command must be run in an existing mobile project`);
     });
 
   test
@@ -22,8 +22,8 @@ describe(CLI_COMMANDS.AddStore, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.AddStore, testStoreName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddStore} ${testStoreName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] store added: ${testStoreName}`);
+    .it(`runs mobile ${CLI_COMMANDS.AddStore} ${testStoreName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] store added: ${testStoreName}`);
     });
 
   // test

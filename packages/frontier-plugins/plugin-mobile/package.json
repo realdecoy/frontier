@@ -3,9 +3,9 @@
   "version": "1.0.0-beta.0",
   "author": "Realdecoy",
   "bin": {
-    "rdvue": "./bin/run"
+    "rdmobile": "./bin/run"
   },
-  "bugs": "https://github.com/realdecoy/rdvue/issues",
+  "bugs": "https://github.com/realdecoy/rdmobile/issues",
   "dependencies": {
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
@@ -69,7 +69,7 @@
   "oclif": {
     "commands": "./dist/commands",
     "helpClass": "./dist/help",
-    "bin": "rdvue"
+    "bin": "mobile"
   },
   "config": {
     "commitizen": {
@@ -78,7 +78,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realdecoy/rdvue.git"
+    "url": "git+https://github.com/realdecoy/rdmobile.git"
   },
   "scripts": {
     "build": "build-package --tscOnly",

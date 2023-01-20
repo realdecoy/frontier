@@ -3,10 +3,10 @@ import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseLayoutName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, parseComponentName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
-const TEMPLATE_FOLDERS = ['layout'];
+const TEMPLATE_FOLDERS = ['component'];
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
@@ -14,15 +14,15 @@ const CUSTOM_ERROR_CODES = [
   'missing-template-folder',
 ];
 
-export default class Layout extends Command {
-  static description = 'add a new Layout module.'
+export default class Component extends Command {
+  static description = 'add a new Component module.'
 
   static flags = {
     help: flags.help({ char: 'h' }),
   }
 
   static args = [
-    { name: 'name', description: 'name of new layout' },
+    { name: 'name', description: 'name of new component' },
   ]
 
   // override Command class error handler
@@ -51,17 +51,17 @@ export default class Layout extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+    // block command unless being run within an mobile project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddLayout} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.AddComponent} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     }
 
-    const { args } = this.parse(Layout);
+    const { args } = this.parse(Component);
     const folderList = TEMPLATE_FOLDERS;
     let sourceDirectory: string;
     let installDirectory: string;
@@ -70,24 +70,23 @@ export default class Layout extends Command {
     const configs = parseModuleConfig(folderList, projectRoot);
 
     // retrieve component name
-    const layoutName = await parseLayoutName(args);
-    // parse kebab and pascal case of layoutName
-    const layoutNameKebab = toKebabCase(layoutName);
-    const layoutNamePascal = toPascalCase(layoutName);
+    const componentName = await parseComponentName(args);
+    // parse kebab and pascal case of componentName
+    const componentNameKebab = toKebabCase(componentName);
+    const componentNamePascal = toPascalCase(componentName);
 
     configs.forEach(async config => {
       const files: Array<string | Files> = config.manifest.files;
       // replace file names in config with kebab case equivalent
-      replaceTargetFileNames(files, layoutNameKebab);
+      replaceTargetFileNames(files, componentNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, config.manifest.installWithinFolder ? layoutNameKebab : '');
+      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, componentNameKebab);
       // copy and update files for component being added
       await copyFiles(sourceDirectory, installDirectory, files);
-      await readAndUpdateFeatureFiles(installDirectory, files, layoutNameKebab, layoutNamePascal);
+      await readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);
     });
 
-    this.log(`${CLI_STATE.Success} component added: ${layoutNameKebab}`);
+    this.log(`${CLI_STATE.Success} component added: ${componentNameKebab}`);
     this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Component)}\n`);
   }
 }

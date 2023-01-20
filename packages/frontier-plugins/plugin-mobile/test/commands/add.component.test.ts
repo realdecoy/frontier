@@ -12,8 +12,8 @@ describe(CLI_COMMANDS.AddComponent, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.AddComponent])
-    .it(`runs rdvue ${CLI_COMMANDS.AddComponent} ${testComponentName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddComponent} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.AddComponent} ${testComponentName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.AddComponent} command must be run in an existing mobile project`);
     });
 
   test
@@ -22,8 +22,8 @@ describe(CLI_COMMANDS.AddComponent, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.AddComponent, testComponentName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddComponent} ${testComponentName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] component added: ${testComponentName}`);
+    .it(`runs mobile ${CLI_COMMANDS.AddComponent} ${testComponentName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] component added: ${testComponentName}`);
     });
 
   after(() => {

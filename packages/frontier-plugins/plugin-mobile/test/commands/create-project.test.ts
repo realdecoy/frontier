@@ -12,7 +12,7 @@ describe(CLI_COMMANDS.CreateProject, () => {
     .stdout()
     .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
     .it(`runs ${CLI_COMMANDS.CreateProject} ${testProjectName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${testProjectName} is ready!`);
+      expect(ctx.stdout).to.contain(`[mobile] ${testProjectName} is ready!`);
     });
 
   test
@@ -21,7 +21,7 @@ describe(CLI_COMMANDS.CreateProject, () => {
     .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
     .do(() => process.chdir('../'))
     .it(`runs ${CLI_COMMANDS.CreateProject} ${testProjectName}`, ctx => {
-      expect(ctx.stdout).to.contain('[rdvue] you are already in an existing rdvue project');
+      expect(ctx.stdout).to.contain('[mobile] you are already in an existing mobile project');
     });
 
   // test

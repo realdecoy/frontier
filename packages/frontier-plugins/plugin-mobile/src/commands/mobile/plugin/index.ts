@@ -9,10 +9,10 @@ export default class Plugin extends Command {
   }
 
   static args = [
-    { name: 'buefy', description: 'lightweigth UI components for Vue.js', hidden: false },
+    // { name: 'buefy', description: 'lightweigth UI components for Vue.js', hidden: false },
     { name: 'localization', description: 'library for localizing content', hidden: false },
-    { name: 'vuetify', description: 'material design framework for Vue.js', hidden: false },
-    { name: 'storybook', description: '[coming soon] UI component explorer for frontend devs', hidden: true },
+    // { name: 'vuetify', description: 'material design framework for Vue.js', hidden: false },
+    // { name: 'storybook', description: '[coming soon] UI component explorer for frontend devs', hidden: true },
   ]
 
   showHelp(): void {
@@ -48,7 +48,7 @@ export default class Plugin extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.blue('rdvue')} ${commandId}:<library>
+            npx ${chalk.blue('mobile')} ${commandId}:<library>
 
         Libraries: \t - Utilities to extend project functionality${argsList}    
         

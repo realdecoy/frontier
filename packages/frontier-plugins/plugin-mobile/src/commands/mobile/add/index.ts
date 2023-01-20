@@ -44,7 +44,7 @@ export default class Add extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.blue('rdvue')} ${commandId}:<feature>
+            npx ${chalk.blue('mobile')} ${commandId}:<feature>
 
         Features: \t - Utilities to create repeatable project elements${argsList}    
         

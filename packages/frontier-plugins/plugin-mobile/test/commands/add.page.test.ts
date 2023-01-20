@@ -12,8 +12,8 @@ describe(CLI_COMMANDS.AddScreen, () => {
   test
     .stdout()
     .command([CLI_COMMANDS.AddScreen])
-    .it(`runs rdvue ${CLI_COMMANDS.AddScreen} ${testPageName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddScreen} command must be run in an existing rdvue project`);
+    .it(`runs mobile ${CLI_COMMANDS.AddScreen} ${testPageName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] ${CLI_COMMANDS.AddScreen} command must be run in an existing mobile project`);
     });
 
   test
@@ -22,8 +22,8 @@ describe(CLI_COMMANDS.AddScreen, () => {
     .do(() => process.chdir(testProjectName))
     .command([CLI_COMMANDS.AddScreen, testPageName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddScreen} ${testPageName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] page added: ${testPageName}`);
+    .it(`runs mobile ${CLI_COMMANDS.AddScreen} ${testPageName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[mobile] page added: ${testPageName}`);
     });
 
   // test
