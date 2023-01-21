@@ -6,7 +6,7 @@
   <br/>
 </div>
 
-# RDVue Mobile [![npm version](https://badge.fury.io/js/rdvue.svg)](https://badge.fury.io/js/rdvue)
+# RD Mobile [![npm version](https://badge.fury.io/js/rdvue.svg)](https://badge.fury.io/js/rdvue)
 
 [RDVue](https://github.com/realdecoy/rdmobile) is an opinionated CLI for generating Vue.js projects. We do so by adopting
 a development style guide which enforces strong typing with TypeScript, standardized Component, Layout and Page models,

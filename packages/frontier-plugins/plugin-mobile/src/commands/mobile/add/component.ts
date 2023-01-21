@@ -6,7 +6,8 @@ import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetF
 import { checkProjectValidity, parseComponentName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
-const TEMPLATE_FOLDERS = ['component'];
+const TEMPLATE_FOLDERS = ['component-class'];
+const TEMPLATE_FUNCTION_FOLDERS = ['component-function'];
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
   'failed-match-and-replace',
@@ -19,10 +20,12 @@ export default class Component extends Command {
 
   static flags = {
     help: flags.help({ char: 'h' }),
+    type: flags.string({ hidden: true, char: 't', default: "class" }),
   }
 
   static args = [
     { name: 'name', description: 'name of new component' },
+    { name: 'type', description: 'Whether class or function based components. The default is "class". Options "class" | "function" )' },
   ]
 
   // override Command class error handler
@@ -61,8 +64,10 @@ export default class Component extends Command {
       );
     }
 
-    const { args } = this.parse(Component);
-    const folderList = TEMPLATE_FOLDERS;
+    const { args, flags } = this.parse(Component);
+    const isFunctionBased = flags.type.toLowerCase() === 'function';
+    const folderList = isFunctionBased ? TEMPLATE_FUNCTION_FOLDERS : TEMPLATE_FOLDERS;
+
     let sourceDirectory: string;
     let installDirectory: string;
 

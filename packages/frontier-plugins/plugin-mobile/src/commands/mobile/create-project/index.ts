@@ -103,12 +103,6 @@ export default class CreateProject extends Command {
     // retrieve project files from template source
     await shell.exec(`git clone ${template} --depth 1 --branch ${tag} ${kebabProjectName}`, { silent: !versbose });
     
-    // remove git folder reference to base project
-
-    CliUx.ux.action.start(`${CLI_STATE.Info} Initializing Git`);
-    await shell.exec(`npm install rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
-    CliUx.ux.action.stop();
-    
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${kebabProjectName}`);
 
@@ -129,18 +123,22 @@ export default class CreateProject extends Command {
       );
     } 
 
+    CliUx.ux.action.start(`${CLI_STATE.Info} Initializing Git`);
+    // remove git folder reference to base project    
+    await shell.exec(`npm install rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
+    
     // initialize git in the created project
-    await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
+    await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: !versbose });
+    CliUx.ux.action.stop();
 
     // Installing dependencies
     CliUx.ux.action.start(`${CLI_STATE.Info} Installing dependencies`);
     await shell.exec(`cd ${kebabProjectName} && npm install`, { silent: !versbose });
     CliUx.ux.action.stop();
 
-
     this.log(`\n${CLI_STATE.Success} ${chalk.whiteBright(kebabProjectName)} is ready!`);
 
     // Output final instructions to user
-    this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(kebabProjectName)}\n${chalk.magenta('-')} npm run [ android || ios ]\n\nIf you want to integrate with the ${chalk.blue('native')} project, you can run the following command inside the project's root directroy:\n${chalk.magenta('-')} npm run eject\n`);
+    this.log(`\n${chalk.magenta('Next Steps:')}\n${chalk.magenta('-')} cd ${chalk.whiteBright(kebabProjectName)}\n${chalk.magenta('-')} npm run [ android || ios ]\n\nIf you want to integrate with the ${chalk.blue('native')} project, you can run the following command inside the project's root directroy:\n${chalk.magenta('-')} npm run eject\n`);
   }
 }
