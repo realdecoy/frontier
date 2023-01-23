@@ -122,7 +122,7 @@ export default class CreateProject extends Command {
 
     CliUx.ux.action.start(`${CLI_STATE.Info} Initializing Git`);
     // remove git folder reference to base project    
-    await shell.exec(`npm install rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
+    await shell.exec(`npm install -g rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
     
     // initialize git in the created project
     await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: !versbose });

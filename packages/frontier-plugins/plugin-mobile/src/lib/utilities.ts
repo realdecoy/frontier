@@ -3,6 +3,7 @@ import * as inquirer from 'inquirer';
 import { Lookup } from '../modules';
 import { CLI_STATE, TEMPLATE_TAG } from './constants';
 import { getProjectRoot, readConfigFile } from './files';
+import { toPascalCase } from '@rdfrontier/stdlib';
 
 
 /**
@@ -26,7 +27,7 @@ function hasKebab(value = ''): boolean {
  */
 function hasCamel(value = ''): boolean {
   let result = false;
-  if (value.toLowerCase().match(/camel/gi) !== null) {
+  if (value.match(/Camel/gi) !== null) {
     result = true;
   }
 
@@ -34,21 +35,14 @@ function hasCamel(value = ''): boolean {
 }
 
 /**
- * Description: convert a string to kebab case (e.g. my-project-name)
+ * Description: convert a string to camel case (e.g. myProjectName)
  * @param {string} value - a
  * @returns {string} - string value
  */
 function toCamelCase(value: string): string {
-  return (
-    value &&
-    (
-      value.match(
-        /[A-Z]{2,}(?=[A-Z][a-z]+\d*|\b)|[A-Z]?[a-z]+\d*|[A-Z]|\d+/g,
-      ) ?? ['']
-    )
-      .map(x => x.toLowerCase())
-      .join('-')
-  );
+  const pascal = toPascalCase(value);
+
+  return pascal.charAt(0).toLowerCase() + pascal.substr(1);
 }
 
 /**

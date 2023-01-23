@@ -1,9 +1,10 @@
 import { Command, flags } from '@oclif/command';
+import { toKebabCase, toPascalCase, isJsonString } from '@rdfrontier/stdlib';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseStoreModuleName, toKebabCase, toPascalCase, isJsonString, getProjectConfig } from '../../../lib/utilities';
+import { checkProjectValidity, parseStoreModuleName, toCamelCase } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
 const TEMPLATE_FOLDERS = ['context'];
@@ -76,6 +77,7 @@ export default class StoreModule extends Command {
     // parse kebab and pascal case of storeModuleName
     const storeModuleNameKebab = toKebabCase(storeModuleName);
     const storeModuleNamePascal = toPascalCase(storeModuleName);
+    const storeModuleNameCamel = toCamelCase(storeModuleName);
 
     configs.forEach(async config => {
       const files: Array<string | Files> = config.manifest.files;
@@ -86,7 +88,7 @@ export default class StoreModule extends Command {
 
       // copy and update files for storeModule being added
       await copyFiles(sourceDirectory, installDirectory, files);
-      await readAndUpdateFeatureFiles(installDirectory, files, storeModuleNameKebab, storeModuleNamePascal);
+      await readAndUpdateFeatureFiles(installDirectory, files, storeModuleNameKebab, storeModuleNamePascal, storeModuleNameCamel);
     });
 
     this.log(`${CLI_STATE.Success} store added: ${storeModuleNameKebab}`);
