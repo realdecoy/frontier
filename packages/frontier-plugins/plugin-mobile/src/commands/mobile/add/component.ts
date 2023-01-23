@@ -1,9 +1,10 @@
+import { toKebabCase, toPascalCase, isJsonString } from '@rdfrontier/stdlib';
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
 import { Files } from '../../../modules';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseComponentName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, parseComponentName } from '../../../lib/utilities';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
 const TEMPLATE_FOLDERS = ['components'];

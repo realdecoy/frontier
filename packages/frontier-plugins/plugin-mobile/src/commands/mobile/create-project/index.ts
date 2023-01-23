@@ -2,13 +2,10 @@ import shell from 'shelljs';
 import chalk from 'chalk';
 import { Command, flags } from '@oclif/command';
 import {CliUx} from '@oclif/core';
-
+import { toKebabCase, toPascalCase, isJsonString } from '@rdfrontier/stdlib';
 import { 
-  toKebabCase, 
   parseProjectName, 
-  isJsonString, 
   checkProjectValidity, 
-  toPascalCase, 
   parseBundleIdentifier 
 } from '../../../lib/utilities';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
