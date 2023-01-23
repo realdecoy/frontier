@@ -17,7 +17,7 @@ export function toKebabCase(value: string): string {
 }
 
 /**
- * Description: convert a string to pascal case (e.g. myProjectName)
+ * Description: convert a string to pascal case (e.g. PyProjectName)
  * @param {string} value - a string value
  * @returns {string} -
  */
@@ -40,6 +40,6 @@ export function toPascalCase(value: string): string {
  */
 export function toCamelCase(value: string): string {
   const pascal = toPascalCase(value);
-  
+
   return pascal.charAt(0).toLowerCase() + pascal.substr(1);
 }
