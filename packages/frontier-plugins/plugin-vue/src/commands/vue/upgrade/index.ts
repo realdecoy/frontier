@@ -9,7 +9,7 @@ import { catchError } from '@rdfrontier/plugin-shared';;
 import { invalidProject } from '@rdfrontier/plugin-shared';
 import fs from 'fs';
 import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile, deleteFolderRecursive } from '../../../utils/files';
-import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../../modules';
+import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
 
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
