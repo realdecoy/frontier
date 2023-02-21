@@ -80,7 +80,7 @@ frontier vue:COMMAND
 - [`frontier vue:upgrade [NAME]`](#frontier-vue-upgrade-name)
 
 
-### `frontier vue:create-project [NAME] [PERSET]`
+### `frontier vue:create-project [NAME] [PRESET]`
 
 Create a RDVue project
 
