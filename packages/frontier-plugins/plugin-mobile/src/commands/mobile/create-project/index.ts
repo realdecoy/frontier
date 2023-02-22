@@ -1,12 +1,12 @@
 import shell from 'shelljs';
 import chalk from 'chalk';
 import { Command, flags } from '@oclif/command';
-import {CliUx} from '@oclif/core';
+import { CliUx } from '@oclif/core';
 import { toKebabCase, toPascalCase, isJsonString } from '@rdfrontier/stdlib';
-import { 
-  parseProjectName, 
-  checkProjectValidity, 
-  parseBundleIdentifier 
+import {
+  parseProjectName,
+  checkProjectValidity,
+  parseBundleIdentifier
 } from '../../../lib/utilities';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
 import {
@@ -35,8 +35,7 @@ export default class CreateProject extends Command {
 
   static args = [
     { name: 'name', description: 'name of created project' },
-    { name: 'verbose', description:  'Show debug logs to get more information'},
-    { name: 'bundleIdenifier', description: 'The name of the unique identifier that will used for deployment to the App & Google play Store (eg. com.company.app)' },
+    { name: 'bundleIdenifier', description: 'The name of the unique identifier that will used for deployment to the App & Google play Store (eg. com.company.app)' }
   ]
 
   // override Command class error handler
@@ -70,7 +69,7 @@ export default class CreateProject extends Command {
     const tag: string = TEMPLATE_TAG;
     const replaceRegex = TEMPLATE_PROJECT_NAME_REGEX;
     let filesToReplace = MOBILE_TEMPLATE_REPLACEMENT_FILES;
-    
+
     const { isValid: isValidProject } = checkProjectValidity();
 
     if (isValidProject) {
@@ -99,16 +98,16 @@ export default class CreateProject extends Command {
 
     // retrieve project files from template source
     await shell.exec(`git clone ${template} --depth 1 --branch ${tag} ${kebabProjectName}`, { silent: !versbose });
-    
+
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${kebabProjectName}`);
 
     MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES
-        .map(file => `${kebabProjectName}/${file}`)
-        .forEach(async file => {
-          await replaceInFiles(file, /__PROJECT_SCHEME__/g, toPascalCase(projectName));
-          await replaceInFiles(file, /__BUNDLE_IDENTIFIER__/g, bundleIdenifier.toLowerCase());
-        });
+      .map(file => `${kebabProjectName}/${file}`)
+      .forEach(async file => {
+        await replaceInFiles(file, /__PROJECT_SCHEME__/g, toPascalCase(projectName));
+        await replaceInFiles(file, /__BUNDLE_IDENTIFIER__/g, bundleIdenifier.toLowerCase());
+      });
 
 
     if (success === false) {
@@ -118,12 +117,12 @@ export default class CreateProject extends Command {
           message: 'updating your project failed',
         }),
       );
-    } 
+    }
 
     CliUx.ux.action.start(`${CLI_STATE.Info} Initializing Git`);
     // remove git folder reference to base project    
     await shell.exec(`npm install -g rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
-    
+
     // initialize git in the created project
     await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: !versbose });
     CliUx.ux.action.stop();
