@@ -1,57 +1,143 @@
-# Rdvue Features
+# Features
 
-This section will provide a brief introduction to generating features inside a project. We provide two examples, namely generating a Page and a Component. Each available feature has a dedicated section in our documentation.
+This section will provide a brief introduction to generating features inside a project. Each available feature has a dedicated section in our documentation.
 
 Reading through this section will get you comfortable with the CLI.
 
-An in depth look at the command used in this section, along with all available commands, can be found in [CLI Commands](CLI-Commands.md#cli-commands-1).
+An in depth look at the command used in this section, along with all available commands, can be found in [CLI Commands](cli-reference.md#add). 
 
-RDvue provides an elegant way for generating features.
+> It is recommended to read through the [CLI Reference](cli-reference.md#add) before continuing with this document.
+
+
+* * *
+
+
+## Components
+
+Components are independent and reusable bits of code. They include the functional logic of the component along with styling and are imported by [Screens](#screens) and [Layout](#layouts).
+
+Unlike Screens, Components are never used in Nagivation. That would deviate from our development style guide.
+
+### Usage
+
+```bash
+frontier mobile:add:component <component-name>
+
+# Example
+frontier mobile:add:component fancy-text
+```
+
+### Technical
+
+A Component folder consists of for two files. These file include:
+
+*   \[component\]**.tsx**: This file holds actual functional logic and view hierarchy for the component you are trying to create..
+    
+
+*   \[component\]**.styles.tsx**: This contains the styling of the component. It is an abstraction similar to CSS StyleSheets with some of the attribute but not all. 
+
+See example of a component:
+
+<image src="https://github.com/realdecoy/frontier/tree/mobile-integration/packages/frontier-plugins/plugin-mobile/docs/images/component.png"> 
+
+
+**Example**
+
+Below is an example of a component called `fancy-text.tsx`
+
+```tsx
+// @/component/fancy-text/fancy-text.tsx
+
+import { Component } from "react";
+import styles from "./fancy-text.styles";
+
+class FancyText extends Component {
+  render() {
+    return <Text style={styles.title}>Some Fancy Text</Text>
+  }
+}
+
+```
+
+This is an example of the stylesheetc (`fancy-text.styles.tsx`).
+
+```tsx
+// @/component/fancy-text/fancy-text.style.tsx
+
+import { StyleSheet } from "react-native";
+
+export StyleSheet.create({
+    text: {
+      color: "red",
+      fontSize: 18,
+    }
+  });
+};
+```
+
+* * *
+
+## Screens
+
+A Screen is a conceptual grouping for React Native Components used in nagivation. Technically a screen is a component but in order to standardize how we work with react we want you to think of screen as its own thing. Screen are **not** to be imported by other Screen, Components or Layouts.
+
+A Screen needs to be added to the [Navigator](#nagivation) before it can be used within a mobile application.
+### Usage
+
+```bash
+frontier mobile:add:screen <screen-name>
+
+# Example
+frontier mobile:add:screen login
+```
+### Technical
+
+Each generated Screen is contained within it's own sub-folder within the **src/screens** directory. The directory contains the following files which each carry out a specific role in developing a Screen:
+
+*   \[screen\].**tsx**: This is similar to a [Component](#component) but this is generally where we make API calls to fetch data to populate the views and import other components. Screen are also used within navigation. 
+
+    
+*   \[screen\].**styles.tsx**: All Stylesheet file are the same as the stylesheet used shown in [Component](#component).
+    
+
+***
+
 
 ## Services
 
 Services are focused classed designed to interact with web API endpoints. As a good design pattern a service should:
 
-*   only interact with a single domain
+*   Only interact with a single domain
+
+*   Only provide features from the domain which are relevant to the theme of the service. Eg. A user service should be focused on methods that support such; adding order related data would make for poor encapsulation.
     
-*   only provide features from the domain which are relevant to the theme of the service. Eg. A user service should be focused on methods that support such; adding order related data would make for poor encapsulation.
-    
+```bash
+frontier mobile:add:service <service-name>
+
+# Example
+frontier mobile:add:service auth
+
+# Output File 
+> src/services/auth.service.tsx
+```
 
 ### Technical
+
+Each generated serive is contained within the sub-folder `src/services` directory. The directory contains a file for each service that has been created:
+
+*   \[service-name\].**serivce.tsx**: The file will contain a related grouping of http functions.
 
 *   While each generated service resides in its own file and class, all services extend a predefined BaseService class in order to provide centralized functionality.
     
 *   Each service is able to specify a unique web API endpoint with which to interact - or none at all for services providing local functionality (Eg. wrapper storage mechanism over AsyncStorage).
     
-*   Each service has access to the following protected memebers:
-    
 
-| **Member**                                     | **Description**                                                                                                                      |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| api (field)  <br>type: Axios                   | Helper to invoke web APIs. Individual service methods need only specify their endpoint paths relative to the registered root domain. |
-| onRequest(config: AxiosRequestConfig) => void | Invoked before requests are sent to the web API endpoint.                                                                            |
-| onResponse(response: AxiosResponse) => void    | Invoked before responses are handled by a Service's methods.                                                                         |
-| onResponseError(error: unknown)                             | Invoked for errors during request or response.                                                                                       |
 
-## Screens
+***
 
-A Screen is a conceptual grouping for React Native Components used in routing. Screen are **not** to be imported by other Screen, Components or Layouts.
+## Nagivation
 
-A special feature of Screen are that they can benefit from Layouts to automatically add a parent container with common pieces of UI/State that's shared throughout the application - like Headers and Footers. The [Layouts](#layouts) section goes into more detail on this approach.
-
-?> A Page needs to be added to the [Router](#routing) before it can be previewed within a web browser.
-
-### Technical
-
-Each generated Screen is contained within it's own sub-folder within the **src/screens** directory. The directory contains the following files which each carry out a specific role in developing a Screen:
-
-*   \[screen\].**tsx**: This contains the TypeScript controller which provides the procedural code-behind logic needed to add integrations to a page as well as the jsx markup needed to implement the structure and layout of a Screen. Through this file you may expose data and handle events generated by Screen elements.
-    
-*   \[screen\].**styles.tsx**: This contains the react-native stylesheet to be applied to the screen - and that screen only. The styles within this file are scoped, meaning they cannot be used to target any elements except those defined directly within the \[screen\].tsx file.
-    
-## Routing
-
-In order to determine the Pages that get loaded for a particular path within the application, Routes are setup to create the respective mappings.
+In order to determine the Screens that get loaded for a particular path within the application, Routes are setup to create the respective mappings.
 
 Below is an example of a Route definition for a sample Login page:
 
@@ -70,98 +156,11 @@ Navigation should be centralized within the **src/core/navigation** directory. T
 
 ?> For more details on the available options for configuring a Stack, please refer to the [React Navigation](https://reactnavigation.org/docs/stack-navigator/) documentation, and more specifically, the [API Definition](https://reactnavigation.org/docs/stack-navigator/#api-definition).
 
-## Components
-
-A Component is a conceptual grouping for Vue components which are imported by [Pages](#pages) and other Components.
-
-Unlike Pages, Components are never used in Routing. That would deviate from the RDVue development style guide.
-
-### Technical
-
-A Component contains all the files present for [Pages](#pages) with the addition of:
-
-*   \[component\]**.story.ts**: This contains the list of stories which describe the component’s usage. This is helpful for documentation purposes in providing live examples of key ways a Component can be used through the included Storybook preview tool.
-    
 
 * * *
 
-Components use special decorators within their TypeScript file to add metadata useful for generating its documentation within Storybook:
 
-*   **@StoryComponent**: decorates the Component’s class, providing the same functionality as @Component (used in pages) with the addition of:
-    
-
-|                                                                           |                                                                                                                                                     |
-| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **description**  <br>type: string; default: undefined                     | Describe the component’s overall purpose.                                                                                                           |
-| **module**  <br>type: string; default: undefined                          | Text stating the module used in the import statement (eg. “@/components/foo”)                                                                       |
-| **playground** (optional)  <br>type: boolean, default: true               | Toggles the Playground feature for this component within the Storybook preview.                                                                     |
-| **api** (optional)  <br>type: boolean, default: true                      | Display the Component’s list of props, slots and events on the API tab within the Storybook preview tool.                                           |
-| slots (optional)  <br>type: {\[key: string\]: string}, default: undefined | Describe the slots available within the component. Eg.<br><br>```<br>slots: { <br>  header: ‘The header component goes here’,<br>  ... <br>}<br>``` |
-
-*   **@StoryProp**: decorates the Component’s Props, providing the same functionality as @Prop with the addition of:
-    
-
-|                                                        |                                                                                                                                               |
-| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **description**  <br>type: string; default: undefined  | Describe the prop's overall purpose.                                                                                                          |
-| **values** (optional)  <br>\[array; default: undefined | An optional list of values which are considered acceptable for the prop. This is great for constraining Props that are bound to an enum type. |
-
-*   **@StoryEvent**: decorates the Component’s Events, providing the same functionality as @Event with the addition of:
-    
-
-|                                                       |                                       |
-| ----------------------------------------------------- | ------------------------------------- |
-| **description**  <br>type: string; default: undefined | Describe the event’s overall purpose. |
-
-## Layouts
-
-A Layout is a conceptual grouping given to components which serve the purpose of rendering re-usable pieces of UI shared by many pages. An easy example is the header and footer information displayed on many sites: though the body of the page changes often, those elements remain the same.
-
-?>A Layout allows us to define the common elements while leaving a slot (router-view) to inject the actual body of the Page.
-
-### Technical
-
-To get a Page to use a Layout, edit it’s definition in the **router.ts** file and add the following option:
-
-```
-meta: {
-  layout: '<layout-name>',
-}
-```
-
-For example:
-
-```
- routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: [...],
-      meta: {
-        layout: 'two-column',
-      },
-    },
-  ]
-```
-
-Above, the Layout refers to a component within the **src/layouts** directory called **two-column**.
-
-A Layout must contain a router-view to display the Page within the area designated for it’s content.
-
-Each generated Layout is contained within it’s own sub-folder within the **src/layouts** directory. The directory contains the following files which each carry out a specific role in developing a Layout:
-
-*   \[layout\].**vue**: This contains the Vue template markup used to implement the structure and layout of a Layout. It is a mix of HTML and special Vue syntaxes which allow declarative databinding and structural manipulation.
-    
-*   \[layout\].**ts**: This contains the controller which provides the procedural code-behind logical needed to add integrations to a Layout. Through this file you may expose data and handle events generated by Layout elements.
-    
-*   \[layout\].**scss**: This contains the stylesheet to be applied to the Layout- and that Layout only. The styles within this file are scoped, meaning they cannot be used to target any elements except those defined directly within the \[layout\].vue template file.
-    
-
-?>Scoped CSS may seem weird at first because regular CSS operates with global impunity, however it is a great approach for compartmentalizing styles so they do not jump their intended scope and affect other elements. Global level styles can be added in the [Theme](Theming.md#global-styles) directory.
-
-*   \[layout\].**spec.ts**: This contains the unit-level tests for the Layout. Read the [testing section](Testing.md#unit-tests-with-jest) for more details about writing tests.
-
-## Stores
+## Stores / Context
 
 A Store is a mechanism for maintain application state in a way which is globally accessible to all components. We use them as intermediary layers to issue API calls to relevant services, and cache the results for \[re\]use. Though the thought may occur to use a plain JavaScript object to achieve state management, a Vue Store differs in two distinct ways:
 
