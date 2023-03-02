@@ -2,7 +2,7 @@
 
 [Mobile](https://github.com/realdecoy/rdmobile) is an opinionated CLI for generating React Native Expo projects. We do so by adopting a development style guide which enforces strong typing with TypeScript, standardized Component, Layout and Screen models,
 and a data-layer design promoting unified consumption through React Contexts and Services.
-Follow the [installation guide](#Step-1:-Installation) below to set up the Stripe CLI.
+Follow the [installation guide](#installation) below to set up the Stripe CLI.
 
 
 ## System Requirements
@@ -27,7 +27,7 @@ $ frontier plugins:install @rdfrontier/plugin-mobile
 
 ### Validate installation
 
-The current version of mobile can be retrieved with the command:
+To check if the everything went will you can check the current version of mobile:
 
 ```bash
 frontier mobile -v | --version
@@ -36,8 +36,7 @@ frontier mobile -v | --version
 ---
 
 ## Usage
-Now we can start using the CLI if the installation was successful. To check if the everything went will, run the following commands below:
-
+Now we can start using the CLI if the installation was successful.
 ### Step 1: Create a project 
 
 ```bash
@@ -68,7 +67,7 @@ npm run android
 
 ## Next Steps
 
-From here you can perform multiple other actions but a good next step is to learn to add features.
+From here you can perform multiple other actions but a good next step is to [learn to add features](#cli-commands.md#add). See examples below:
 
 ### Generating a Screen
 

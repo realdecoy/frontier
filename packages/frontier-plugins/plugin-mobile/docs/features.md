@@ -21,10 +21,10 @@ Unlike Screens, Components are never used in Nagivation. That would deviate from
 ### Usage
 
 ```bash
-frontier mobile:add:component <component-name>
+$ frontier mobile:add:component <component-name>
 
 # Example
-frontier mobile:add:component fancy-text
+$ frontier mobile:add:component fancy-text
 ```
 
 ### Technical
@@ -75,7 +75,34 @@ export StyleSheet.create({
 };
 ```
 
+### Choosing between Class and Function components
+
+There are two ways in which components can be create in React / React Native. We can use Class or Function based components. Function based components are generally quicker to create for simple use cases. However, as the components get more complicated and require more logic Class based components make this a bit easier to work with. Here are some reasons how to help make your decision a bit easier.
+
+**When to choose Class-Based components:**
+
+1. If you want to work with components lifecycle functions - Even though react provides hooks like `useEffect()`, this can get quite cumbersome when the components grows.
+
+2. If you are creating a [Screen](#screens).
+
+3. If you are creating a [Context Provider](#tores/Context).
+
+4. If your component has a lot a **state** variables - A general rule of thump is to keep state variable count at a max of 5.
+
+5. If your component has a lot a **props** variables - A general rule of thump is to keep props variable count at a max of 5.
+
+6. If you intend on making API calls from within the component.
+
+**When to choose Function-Based components:**
+
+1. If the component is mostly visual with little to no functional logic.
+
+
+Applying these to your development are not aim at providing technical benefit (for most scenarios) but these will help to ensure the code is more readable and easier to adapt for new developers.
+
+
 * * *
+
 
 ## Screens
 
@@ -85,10 +112,10 @@ A Screen needs to be added to the [Navigator](#nagivation) before it can be used
 ### Usage
 
 ```bash
-frontier mobile:add:screen <screen-name>
+$ frontier mobile:add:screen <screen-name>
 
 # Example
-frontier mobile:add:screen login
+$ frontier mobile:add:screen login
 ```
 ### Technical
 
@@ -112,10 +139,10 @@ Services are focused classed designed to interact with web API endpoints. As a g
 *   Only provide features from the domain which are relevant to the theme of the service. Eg. A user service should be focused on methods that support such; adding order related data would make for poor encapsulation.
     
 ```bash
-frontier mobile:add:service <service-name>
+$ frontier mobile:add:service <service-name>
 
 # Example
-frontier mobile:add:service auth
+$ frontier mobile:add:service auth
 
 # Output File 
 > src/services/auth.service.tsx
@@ -154,7 +181,7 @@ The **component** property specifies the Screen component to load for the given 
 
 Navigation should be centralized within the **src/core/navigation** directory. This is where the [React Navigation](https://reactnavigation.org/) library is configured and where the `Stack`.
 
-?> For more details on the available options for configuring a Stack, please refer to the [React Navigation](https://reactnavigation.org/docs/stack-navigator/) documentation, and more specifically, the [API Definition](https://reactnavigation.org/docs/stack-navigator/#api-definition).
+For more details on the available options for configuring a Stack, please refer to the [React Navigation](https://reactnavigation.org/docs/stack-navigator/) documentation, and more specifically, the [API Definition](https://reactnavigation.org/docs/stack-navigator/#api-definition).
 
 
 * * *
@@ -169,18 +196,31 @@ A Context is a mechanism for maintain application state in a way which is global
 
 An application can have as many Contexts as needed to logically group state concerns. The Frontier CLI creates strongly typed Contexts, enabling full Intellisense and compiler support when writing code against them.
 
+### Usage
+    
+```bash
+$ frontier mobile:add:store <store-name>
+
+# Example
+$ frontier mobile:add:store auth
+
+# Output File 
+> src/contexts/auth.context.tsx
+```
+
 ### Technical
 
-A Store consists of a standard Class, with **Decorators** providing the special functionality:
+Each generated serive is contained within the sub-folder `src/contexts` directory. The context will provide high order functions that will help you to inject global state within you Class based components. It will also provide you will hooks for you to use in your function based components.
 
-*   The **@Module** Decorator is added to the class itself and will be preconfigured with the necessary options whenever you use the CLI to create a new Store.
-    
-*   The **@Action** Decorator is added to the class’ methods that want to carry-out business logic and be able to persist the result of that into state. @MultiParamAction is preferred over this Decorator due to Vuex quirks in how multiple parameters are handled.
-    
+| **Member**                                     | **Type**        | **Description**                                                                                                                      |
+| ---------------------------------------------- | ----------------| ------------------------------------------------------------------------------------------------------------------------------------ |
+| `ContextName`ContextProvider        |  React Component           | Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes. |
+| `ContextName`Consumer | React Component | Allows components to subscribe to changes in the global state endpoint.                                                                            |
+| with`ContextName`  | HOC[^1]  | Used when Class-based components would like to consume data from the a context                                                                  |
+| use`ContextName`    |     HOC[^1]                   | Used when function-based components would like to consume data from the a contextresponse.                                                                                       |
 
-?>If multiple parameters are used in a base @Action, the real value of the first parameter will be an array with a payload object, and the second parameter will be an options object. This will likely be entirely misaligned from the type information you specified in TypeScript.
+<br>
 
-*   The **@MultiParamAction** Decorator is the preferred alternative to @Action because it allows methods to receive multiple parameters.
-    
-*   The **@Mutation** Decorator flags a method as being able to update the Store’s state. That means any fields which belong to the class may be set within the execution context of these methods.
-    
+- `ContextName` - This is the provided name for the context when created using the CLI's `add` command above.
+
+- [^1]_HOC (High-Order Component)_ - a higher-order component is a function that takes a component and returns a new enhanced component.
