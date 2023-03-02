@@ -18,12 +18,20 @@ types/
 
 # Misc
 .DS_Store
-*-debug.log
-*-error.log
+*.log*
+*.iml
+sw.*
 .rdvue/
+.env
+.nuxt
+.idea
+.output
+
 
 # OCLIF CLI related
 /.nyc_output
 /tmp
 oclif.manifest.json
 tsconfig.tsbuildinfo
+
+
