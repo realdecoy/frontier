@@ -1,6 +1,6 @@
 
 
-# CLI Reference
+# CLI Commands
 --------------
 This reference documents every command and flag available in Stripe’s command-line interface. The mobile CLI helps with scaffolfing project, components and other features right from the terminal.
 
@@ -36,12 +36,15 @@ _create-project_ will scaffold a new project for you, using one of the presets s
 
 **Usage**
 ```bash
-$ npx mobile:create-project <project name>
+$ npx mobile:create-project <project-name>
 ```
 
-| **Option**   | **Description**         |
-| ------------ | :---------------------- |
-| --verbose    | Show debug logs when creating the project. |
+
+ 
+| **Option**            | **Description**          |
+| :---------------------| :----------------------- |
+| --verbose             | Show debug logs when creating the project. |
+| --bundleIdenifier     | The name of the unique identifier that will used for deployment to the App & Google play Store (eg. com.company.app). |
 
 * * *
 

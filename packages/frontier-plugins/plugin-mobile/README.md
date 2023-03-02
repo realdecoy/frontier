@@ -92,7 +92,7 @@ OPTIONS
 ```
 
 _See code:
-[src/commands/create-project/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-mobile/src/commands/mobile/create-project/index.ts)_
+[src/commands/mobile/create-project/index.ts](https://github.com/realdecoy/frontier/blob/main/packages/frontier-plugins/plugin-mobile/src/commands/mobile/create-project/index.ts)_
 
 
 ### Add a new component module to project
