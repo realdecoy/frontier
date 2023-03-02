@@ -25,7 +25,6 @@ sw.*
 .env
 .nuxt
 .idea
-.output
 
 
 # OCLIF CLI related
