@@ -8,7 +8,7 @@ const { webpackAsync } = require('./webpack');
 /**
  * Builds types, module and bundle output, and cleans up artifacts in a single pass
  */
-function buildOnce({ notify, pkgDir, pkgName, serverOnly, webpackOnly }) {
+function buildOnce({ notify, pkgDir, pkgName, serverOnly, webpackOnly, tscOnly }) {
   console.log(`Building ${pkgName} package...\n`);
 
   function onTimerFinish({ durationSec }) {
@@ -22,12 +22,14 @@ function buildOnce({ notify, pkgDir, pkgName, serverOnly, webpackOnly }) {
   const buildAsync = webpackOnly
     ? webpackAsync({ pkgDir })
     : tscAsync(pkgDir)
-        .then(() =>
-          Promise.all([
-            webpackAsync({ pkgDir }),
-            serverOnly ? undefined : babelAsync({ pkgDir }),
-          ]),
-        )
+        .then(() => {
+          if (!tscOnly) {
+            Promise.all([
+              webpackAsync({ pkgDir }),
+              serverOnly ? undefined : babelAsync({ pkgDir }),
+            ])
+          }
+        })
         .then(() => cleanupArtifactsAsync({ pkgDir }));
 
   return buildAsync.then(timer.end).catch((e) => {

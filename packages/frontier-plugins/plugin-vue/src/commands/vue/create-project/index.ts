@@ -4,7 +4,7 @@ import { Command, flags } from '@oclif/command';
 import Buefy from '../plugin/buefy';
 import Localization from '../plugin/localization';
 import Vuetify from '../plugin/vuetify';
-import { toKebabCase } from '@rdfrontier/stdlib';
+import { isJsonString, log, toKebabCase } from '@rdfrontier/stdlib';
 import { parseProjectName, checkProjectValidity, parseProjectPresets } from '../../../utils/utilities';
 import { replaceInFiles, checkIfFolderExists } from '../../../utils/files';
 import {
@@ -17,7 +17,7 @@ import {
   CLI_STATE,
   PLUGIN_PRESET_LIST,
 } from '../../../utils/constants';
-import { catchError } from '@rdfrontier/plugin-shared';;
+// import { catchError } from '@rdfrontier/plugin-shared';
 import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared';
 
 const CUSTOM_ERROR_CODES = [
@@ -49,7 +49,26 @@ export default class CreateProject extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchError(error, CLI_STATE);
+    const errorMessage = error.message;
+    const isValidJSON = isJsonString(errorMessage);
+    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
+    const customErrorCode = parsedError.code;
+    const customErrorMessage = parsedError.message;
+    const hasCustomErrorCode = customErrorCode !== undefined;
+
+    if (hasCustomErrorCode === false) {
+      // throw cli errors to be handled globally
+      throw errorMessage;
+    }
+
+    // handle errors thrown with known error codes
+    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
+      log(`${CLI_STATE.Error} ${customErrorMessage}`);
+    } else {
+      throw new Error(customErrorMessage);
+    }
+
+    return Promise.resolve();
   }
 
   async run(): Promise<void> {
@@ -71,7 +90,7 @@ export default class CreateProject extends Command {
     const { isValid: isValidProject } = checkProjectValidity();
     // block command if being run within an rdvue project
     if (isValidProject) {
-      existingProject("rdvue");
+      existingProject('rdvue');
     }
 
     // retrieve project name
