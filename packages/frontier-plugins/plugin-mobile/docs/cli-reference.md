@@ -39,9 +39,11 @@ _create-project_ will scaffold a new project for you, using one of the presets s
 $ npx mobile:create-project <project name>
 ```
 
-| **Option**   | **Description**         |
-| ------------ | :---------------------- |
-| --verbose    | Show debug logs when creating the project. |
+
+| **Option**                   | **Description**          |
+| :--------------------------- | :----------------------- |
+| --bundleIdenifier            | The name of the unique identifier that will used for deployment to the App & Google play Store (eg. com.company.app). |
+| --verbose                    | Show debug logs when creating the project. |
 
 * * *
 

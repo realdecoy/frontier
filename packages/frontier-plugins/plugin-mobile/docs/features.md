@@ -2,9 +2,129 @@
 
 This section will provide a brief introduction to generating features inside a project. We provide two examples, namely generating a Page and a Component. Each available feature has a dedicated section in our documentation.
 
-Reading through this section will get you comfortable with the CLI.
+Reading through this section will get you comfortable with the CLI. An in depth look at the command used in this section, along with all available commands, can be found in [CLI Commands](cli-reference.md#add). 
 
-An in depth look at the command used in this section, along with all available commands, can be found in [CLI Commands](CLI-Commands.md#cli-commands-1).
+<br/>
+> It is recommended to read through the [CLI Reference](cli-reference.md#add) before continuing with this document.
+
+
+* * *
+
+
+## Components
+
+Components are independent and reusable bits of code. They include the functional logic of the component along with styling and are imported by [Screens](#screens) and [Layout](#layouts). Unlike Screens, Components are never used in Nagivation. That would deviate from our development style guide.
+
+### Usage
+
+```bash
+$ frontier mobile:add:component <component-name>
+
+# Example
+$ frontier mobile:add:component fancy-text
+```
+
+### Technical
+
+A Component folder consists of for two files. These file include:
+
+*   \[component\]**.tsx**: This file holds actual functional logic and view hierarchy for the component you are trying to create..
+    
+
+*   \[component\]**.styles.tsx**: This contains the styling of the component. It is an abstraction similar to CSS StyleSheets with some of the attribute but not all. 
+
+See below for example of folder structure after creating a component called `fancy-text`:
+
+<image src="https://github.com/realdecoy/frontier/tree/mobile-integration/packages/frontier-plugins/plugin-mobile/docs/images/component.png"> 
+
+
+**Example**
+
+Below is an example of a component called `fancy-text.tsx`
+
+```tsx
+// @/component/fancy-text/fancy-text.tsx
+
+import { Component } from "react";
+import styles from "./fancy-text.styles";
+
+class FancyText extends Component {
+  render() {
+    return <Text style={styles.title}>Some Fancy Text</Text>
+  }
+}
+
+```
+
+This is an example of the stylesheet `fancy-text.styles.tsx`.
+
+```tsx
+// @/component/fancy-text/fancy-text.style.tsx
+
+import { StyleSheet } from "react-native";
+
+export StyleSheet.create({
+    text: {
+      color: "red",
+      fontSize: 18,
+    }
+  });
+};
+```
+
+### Choosing between Class and Function components
+
+There are two ways in which components can be create in React / React Native. We can use Class or Function based components. Function based components are generally quicker to create for simple use cases. However, as the components get more complicated and require more logic Class based components make this a bit easier to work with. Here are some reasons how to help make your decision a bit easier.
+
+**When to choose Class-Based components:**
+
+1. If you want to work with components lifecycle functions - Even though react provides hooks like `useEffect()`, this can get quite cumbersome when the components grows.
+
+2. If you are creating a [Screen](#screens).
+
+3. If you are creating a [Context Provider](#stores--context).
+
+4. If your component has a lot a **state** variables - A general rule of thump is to keep state variable count at a max of 5.
+
+5. If your component has a lot a **props** variables - A general rule of thump is to keep props variable count at a max of 5.
+
+6. If you intend on making API calls from within the component.
+
+**When to choose Function-Based components:**
+
+1. If the component is mostly visual with little to no functional logic.
+
+
+Applying these to your development are not aim at providing technical benefit (for most scenarios) but these will help to ensure the code is more readable and easier to adapt for new developers.
+
+
+* * *
+
+
+## Screens
+
+A Screen is a conceptual grouping for React Native Components used in nagivation. Technically a screen is a component but in order to standardize how we work with react we want you to think of screen as its own thing. Screen are **not** to be imported by other Screen, Components or Layouts.
+
+A Screen needs to be added to the [Navigator](#nagivation) before it can be used within a mobile application.
+### Usage
+
+```bash
+$ frontier mobile:add:screen <screen-name>
+
+# Example
+$ frontier mobile:add:screen login
+```
+### Technical
+
+Each generated Screen is contained within it's own sub-folder within the **src/screens** directory. The directory contains the following files which each carry out a specific role in developing a Screen:
+
+*   \[screen\].**tsx**: This is similar to a [Component](#component) but this is generally where we make API calls to fetch data to populate the views and import other components. Screen are also used within navigation. 
+
+    
+*   \[screen\].**styles.tsx**: All Stylesheet file are the same as the stylesheet used shown in [Component](#component).
+    
+
+***
 
 RDvue provides an elegant way for generating features.
 
@@ -43,7 +163,7 @@ A special feature of Pages are that they can benefit from Layouts to automatical
 
 ### Technical
 
-Each generated Page is contained within it’s own sub-folder within the **src/pages** directory. The directory contains the following files which each carry out a specific role in developing a Page:
+Each generated context is contained within the sub-folder `src/contexts` directory. The context will provide high order functions that will help you to inject global state within you Class based components. It will also provide you will hooks for you to use in your function based components.
 
 *   \[page\].**vue**: This contains the Vue template markup used to implement the structure and layout of a Page. It is a mix of HTML and special Vue syntaxes which allow declarative databinding and structural manipulation.
     
