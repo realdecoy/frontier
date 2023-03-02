@@ -162,22 +162,12 @@ Navigation should be centralized within the **src/core/navigation** directory. T
 
 ## Stores / Context
 
-A Store is a mechanism for maintain application state in a way which is globally accessible to all components. We use them as intermediary layers to issue API calls to relevant services, and cache the results for \[re\]use. Though the thought may occur to use a plain JavaScript object to achieve state management, a Vue Store differs in two distinct ways:
+A Context is a mechanism for maintain application state in a way which is globally accessible to all components. We use them as intermediary layers to issue API calls to relevant services, and cache the results for \[re\]use. Though the thought may occur to use a plain JavaScript object to achieve state management, a React Context differs in one distinct ways:
 
-*   Properties are reactive. Changing Store values will automatically propagate to the component-level bindings which use them.
-    
-*   Stores enforce a strong process-control for mutating values. Every change within a store **must** go through a specially designed method, called a **Mutation**, in order to update an internal value. This also produces the side-effect of making state manipulation atomic and track-able (using the [Vue DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en)).
+*   Properties are reactive. Changing Context values will automatically propagate to the component-level bindings which use them.
     
 
-An application can have as many Stores as needed to logically group state concerns. The RDVue CLI creates strongly typed Stores, enabling full Intellisense and compiler support when writing code against them.
-
-Data within a Store can be managed using 3 intrinsic functionalities of every Store:
-
-*   Getters: Retrieve a value within the store.
-    
-*   Actions - Arbitrary, asynchronous, functions which can perform business logic and invoke mutations.
-    
-*   Mutations - Special, synchronous, functions which only update the values in Store. The operate atomically, meaning their changes are indivisible.
+An application can have as many Contexts as needed to logically group state concerns. The Frontier CLI creates strongly typed Contexts, enabling full Intellisense and compiler support when writing code against them.
 
 ### Technical
 
