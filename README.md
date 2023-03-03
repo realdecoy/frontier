@@ -51,7 +51,7 @@ When using the frontier cli tool it is prefered that when runing commands `yarn`
 &nbsp; &nbsp; &nbsp;
 
 #### [Bootstraping](https://lerna.js.org/docs/core-concepts/bootstrapping)
-Bootstraping allows for the linking of different frontier packages so they an import and utilize each other without having to be published.
+Bootstraping allows for the linking of different frontier packages so they can import and utilize each other without having to be published.
 To bootstrap all frontier packages and their dependencies run the command:
 ```
 npm run bootstrap 

@@ -13,8 +13,8 @@
     "types/"
   ],
   "scripts": {
-    "build": "build-package",
-    "build:watch": "build-package --watch",
+    "build": "build-package --tscOnly",
+    "build:watch": "build-packag --tscOnly --watch",
     "clean": "rimraf dist esnext module types",
     "fix": "run-s lint:es:fix lint:md:fix",
     "lint": "run-s lint:es lint:md",

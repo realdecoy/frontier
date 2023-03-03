@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declarationDir": "types",
     "isolatedModules": false,
-    "outDir": "esnext"
+    "outDir": "dist"
   },
   "exclude": [
     "**/*spec.ts",

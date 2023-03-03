@@ -1,6 +1,6 @@
 {
   "name": "@rdfrontier/stdlib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "stdlib functionality",
   "license": "UNLICENSED",
   "author": "Realdecoy",
@@ -13,7 +13,7 @@
     "types/"
   ],
   "scripts": {
-    "build": "build-package",
+    "build": "build-package --tscOnly",
     "build:watch": "build-package --watch",
     "clean": "rimraf dist esnext module types",
     "fix": "run-s lint:es:fix lint:md:fix",
