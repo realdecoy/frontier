@@ -1,5 +1,0 @@
-// ROLLUP_NO_REPLACE 
- const helloWorld = "{\"parsed\":{\"_path\":\"/_partials/hello-world\",\"_dir\":\"_partials\",\"_draft\":false,\"_partial\":true,\"_locale\":\"\",\"_empty\":false,\"title\":\"I am a partial\",\"description\":\"With some Hello World text.\",\"body\":{\"type\":\"root\",\"children\":[{\"type\":\"element\",\"tag\":\"h1\",\"props\":{\"id\":\"i-am-a-partial\"},\"children\":[{\"type\":\"text\",\"value\":\"I am a partial\"}]},{\"type\":\"element\",\"tag\":\"p\",\"props\":{},\"children\":[{\"type\":\"text\",\"value\":\"With some Hello World text.\"}]},{\"type\":\"element\",\"tag\":\"button-link\",\"props\":{\":blank\":\"true\",\"class\":\"mr-2\",\"href\":\"https://stackblitz.com/github/nuxt/starter/tree/content\"},\"children\":[{\"type\":\"text\",\"value\":\"Play on StackBlitz\"}]}],\"toc\":{\"title\":\"\",\"searchDepth\":2,\"depth\":2,\"links\":[]}},\"_type\":\"markdown\",\"_id\":\"content:_partials:hello-world.md\",\"_source\":\"content\",\"_file\":\"_partials/hello-world.md\",\"_extension\":\"md\"},\"hash\":\"wwplP0GfK6\"}";
-
-export { helloWorld as default };
-//# sourceMappingURL=hello-world.mjs.map
