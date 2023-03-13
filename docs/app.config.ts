@@ -6,8 +6,8 @@ export default defineAppConfig({
   },
   docus: {
     title: 'Frontier',
-    description: 'Write pages in markdown, use Vue components and enjoy the power of Nuxt with a blazing fast developer experience.',
-    image: 'https://content.nuxtjs.org/preview.png',
+    description: '',
+    image: '',
     url: 'https://realdecoy.com',
     socials: {
       github: 'realdecoy/frontier'
