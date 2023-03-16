@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 export enum ChangelogMetaDataTypes {
   MIGRATION = 'migration',
   UPDATE = 'update',
@@ -49,7 +50,7 @@ export type Metadata = {
 
 export type ChangeLog = {
   metadata: Metadata;
-  recomendations: string;
+  reccomendations: string;
   create?: ChangelogResources;
   update?: ChangelogResources;
   delete?: ChangelogResources;
@@ -57,7 +58,6 @@ export type ChangeLog = {
 
 export function handleArraysAndObjects(data: any, key: string, operation: string, newValue: any): void {
   const currentValue = data[key];
-  // eslint-disable-next-line unicorn/prefer-switch
   if (operation === ChangelogContentOperations.REMOVE) {
     if (Array.isArray(newValue)) {
       for (const item of newValue) {
@@ -92,16 +92,17 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
     version: 'default',
     type: ChangelogMetaDataTypes.MIGRATION,
   },
-  recomendations: `For this release, we recommend the following:
-        - Update node to version **16.x**
-        - Compare the changes to the files with a **.update** file extension and its original file
-        - Optionally, you can run \`npm run upgrade\` to automatically update your project files
-        - Delete existing node_modules and run \`npm install\` to update your dependencies to the latest version
-        - Run \`npm run serve\` to launch webpack-dev-server
-        
-        For any issues regarding the recent tailwind upgrade, please refer to the following links:
-        - https://tailwindcss.com/docs/upgrading-to-v2
-        - https://tailwindcss.com/docs/upgrade-guide
+  reccomendations: `For this release, we recommend the following:
+    - Update node to version **16.x**
+    - Compare the changes to the files with a **.update** file extension and its original file
+    - Optionally, you can run \`npm run upgrade\` to automatically update your project files
+    - Delete existing node_modules and run \`npm install\` to update your dependencies to the latest version
+    - Run \`npm run serve\` to launch webpack-dev-server
+
+    For any issues regarding the recent tailwind upgrade, please refer to the following links:
+    - https://tailwindcss.com/docs/upgrading-to-v2
+    - https://tailwindcss.com/docs/upgrade-guide
+
     `,
   create: {
     resources: [{
@@ -361,16 +362,6 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
         operation: 'add',
       },
       {
-        key: 'dependencies.@rdfrontier/stdlib',
-        value: '^1.0.0',
-        operation: 'add',
-      },
-      {
-        key: 'dependencies.@rdfrontier/typekit',
-        value: '^1.0.0',
-        operation: 'add',
-      },
-      {
         key: 'devDependencies.@babel/register',
         value: '^7.16.9',
         operation: 'add',
@@ -378,11 +369,6 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
       {
         key: 'devDependencies.@types/copy-webpack-plugin',
         value: '^8.0.1',
-        operation: 'add',
-      },
-      {
-        key: 'devDependencies.file-loader',
-        value: '^6.2.0',
         operation: 'add',
       },
       {
@@ -468,6 +454,11 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
       {
         key: 'devDependencies.css-loader',
         value: '^5.2.6',
+        operation: 'add',
+      },
+      {
+        key: 'devDependencies.file-loader',
+        value: '^6.2.0',
         operation: 'add',
       },
       {
@@ -598,11 +589,6 @@ export const DEFAULT_CHANGE_LOG: ChangeLog = {
       {
         key: 'devDependencies.node-sass',
         value: '^4.9.0',
-        operation: 'remove',
-      },
-      {
-        key: 'devDependencies.sass-loader',
-        value: '^7.1.0',
         operation: 'remove',
       },
       {

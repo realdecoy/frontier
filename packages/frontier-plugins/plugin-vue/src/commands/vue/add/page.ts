@@ -1,18 +1,19 @@
 import { Command, flags } from '@oclif/command';
+import path from 'path';
 import chalk from 'chalk';
-import { toKebabCase } from '@rdfrontier/stdlib';
-import { checkProjectValidity, parsePageName } from '../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../utils/constants';
-import { addElementFunction } from '../../../functions/addElement/index';
-import { invalidProject } from '@rdfrontier/plugin-shared';
-import { catchError } from '@rdfrontier/plugin-shared';
+import { Files } from '../../../modules';
+import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
+import { checkProjectValidity, parsePageName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
+import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 
 const TEMPLATE_FOLDERS = ['page'];
+const CUSTOM_ERROR_MESSAGES = [
+  'project-invalid',
+  'failed-match-and-replace',
+  'missing-template-file',
+  'missing-template-folder',
+];
 
-/**
- * Class representing a page.
- * @extends Command
- */
 export default class Page extends Command {
   static description = 'add a new Page module.'
 
@@ -26,25 +27,67 @@ export default class Page extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchError(error, CLI_STATE);
+    const errorMessage = error.message;
+    const isValidJSON = isJsonString(errorMessage);
+    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
+    const customErrorCode = parsedError.code;
+    const customErrorMessage = parsedError.message;
+    const hasCustomErrorCode = customErrorCode !== undefined;
+
+    if (hasCustomErrorCode === false) {
+      // throw cli errors to be handled globally
+      throw errorMessage;
+    }
+
+    // handle errors thrown with known error codes
+    if (CUSTOM_ERROR_MESSAGES.includes(customErrorCode)) {
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
+    } else {
+      throw new Error(customErrorMessage);
+    }
+
+    return Promise.resolve();
   }
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-      invalidProject(CLI_COMMANDS.AddPage, "rdvue");
+      throw new Error(
+        JSON.stringify({
+          code: 'project-invalid',
+          message: `${CLI_COMMANDS.AddPage} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+        }),
+      );
     }
 
     const { args } = this.parse(Page);
-    
-    // retrieve page name
-    const pageName = await parsePageName(args);
+    const folderList = TEMPLATE_FOLDERS;
+    let sourceDirectory: string;
+    let installDirectory: string;
 
     // parse config files required for scaffolding this module
-    addElementFunction(TEMPLATE_FOLDERS, projectRoot, pageName)
+    const configs = parseModuleConfig(folderList, projectRoot);
 
-    this.log(`${CLI_STATE.Success} page added: ${toKebabCase(pageName)}`);
+    // retrieve page name
+    const pageName = await parsePageName(args);
+    // parse kebab and pascal case of pageName
+    const pageNameKebab = toKebabCase(pageName);
+    const pageNamePascal = toPascalCase(pageName);
+
+    configs.forEach(async config => {
+      const files: Array<string | Files> = config.manifest.files;
+      // replace file names in config with kebab case equivalent
+      replaceTargetFileNames(files, pageNameKebab);
+      sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
+      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, pageNameKebab);
+
+      // copy and update files for page being added
+      await copyFiles(sourceDirectory, installDirectory, files);
+      await readAndUpdateFeatureFiles(installDirectory, files, pageNameKebab, pageNamePascal);
+    });
+
+    this.log(`${CLI_STATE.Success} page added: ${pageNameKebab}`);
     this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Page)}\n`);
   }
 }

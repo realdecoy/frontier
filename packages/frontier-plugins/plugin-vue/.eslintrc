@@ -71,7 +71,7 @@
     ],
     "max-lines": [
       2,
-      700
+      200
     ],
     "new-parens": 2,
     "newline-before-return": 2,

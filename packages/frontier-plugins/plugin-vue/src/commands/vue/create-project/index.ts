@@ -4,9 +4,8 @@ import { Command, flags } from '@oclif/command';
 import Buefy from '../plugin/buefy';
 import Localization from '../plugin/localization';
 import Vuetify from '../plugin/vuetify';
-import { isJsonString, log, toKebabCase } from '@rdfrontier/stdlib';
-import { parseProjectName, checkProjectValidity, parseProjectPresets } from '../../../utils/utilities';
-import { replaceInFiles, checkIfFolderExists } from '../../../utils/files';
+import { toKebabCase, parseProjectName, isJsonString, checkProjectValidity, parseProjectPresets } from '../../../lib/utilities';
+import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
 import {
   TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
@@ -16,9 +15,7 @@ import {
   TEMPLATE_REPLACEMENT_FILES,
   CLI_STATE,
   PLUGIN_PRESET_LIST,
-} from '../../../utils/constants';
-// import { catchError } from '@rdfrontier/plugin-shared';
-import { existingProject, fileNotChanged } from '@rdfrontier/plugin-shared';
+} from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = [
   'existing-project',
@@ -26,10 +23,6 @@ const CUSTOM_ERROR_CODES = [
   'file-not-changed',
 ];
 
-/**
- * Class representing a create project object.
- * @extends Command
- */
 export default class CreateProject extends Command {
   static description = 'create a new rdvue project'
 
@@ -56,14 +49,14 @@ export default class CreateProject extends Command {
     const customErrorMessage = parsedError.message;
     const hasCustomErrorCode = customErrorCode !== undefined;
 
-    if (hasCustomErrorCode === false) {
+    if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
       throw errorMessage;
     }
 
     // handle errors thrown with known error codes
     if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
-      log(`${CLI_STATE.Error} ${customErrorMessage}`);
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
     }
@@ -90,7 +83,12 @@ export default class CreateProject extends Command {
     const { isValid: isValidProject } = checkProjectValidity();
     // block command if being run within an rdvue project
     if (isValidProject) {
-      existingProject('rdvue');
+      throw new Error(
+        JSON.stringify({
+          code: 'existing-project',
+          message: `you are already in an existing ${chalk.yellow('rdvue')} project`,
+        }),
+      );
     }
 
     // retrieve project name
@@ -122,7 +120,12 @@ export default class CreateProject extends Command {
     const shouldInstallDesignSystem = withDesignSystem === true;
 
     if (success === false) {
-      fileNotChanged();
+      throw new Error(
+        JSON.stringify({
+          code: 'file-not-changed',
+          message: 'updating your project failed',
+        }),
+      );
     } else {
       if (shouldInstallBuefy === true) { // buefy
         await Buefy.run(['--forceProject', projectName, '--skipInstall']);

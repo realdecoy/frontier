@@ -1,3 +1,3 @@
 export interface Lookup {
-  [name: string]: any;
+    [name: string]: any;
 }

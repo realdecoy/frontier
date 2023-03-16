@@ -1,16 +1,13 @@
+/* eslint-disable max-lines */
+const fs = require('fs');
 import shell from 'shelljs';
 import { Command, flags } from '@oclif/command';
 import path from 'path';
 import chalk from 'chalk';
-import { isJsonString } from '@rdfrontier/stdlib';
-import { checkProjectValidity, createChangelogReadme } from '../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG, DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../utils/constants';
-import { catchError } from '@rdfrontier/plugin-shared';;
-import { invalidProject } from '@rdfrontier/plugin-shared';
-import fs from 'fs';
-import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile, deleteFolderRecursive } from '../../../utils/files';
+import { checkProjectValidity, createChangelogReadme, isJsonString } from '../../../lib/utilities';
+import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../lib/files';
+import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG, DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../lib/constants';
 import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
-
 const CUSTOM_ERROR_CODES = [
   'project-invalid',
 ];
@@ -28,23 +25,45 @@ export default class Upgrade extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchError(error, CLI_STATE);
+    const errorMessage = error.message;
+    const isValidJSON = isJsonString(errorMessage);
+    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
+    const customErrorCode = parsedError.code;
+    const customErrorMessage = parsedError.message;
+    const hasCustomErrorCode = customErrorCode !== undefined;
+
+    if (hasCustomErrorCode === false) {
+      // throw cli errors to be handled globally
+      throw errorMessage;
+    }
+    // handle errors thrown with known error codes
+    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
+    } else {
+      throw new Error(customErrorMessage);
+    }
+
+    return Promise.resolve();
   }
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an rdvue project
     if (isValidProject === false) {
-      invalidProject(CLI_COMMANDS.Upgrade, "rdvue");
+      throw new Error(
+        JSON.stringify({
+          code: 'project-invalid',
+          message: `${CLI_COMMANDS.Upgrade} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+        }),
+      );
     }
 
     const { args } = this.parse(Upgrade);
     const template: string = TEMPLATE_REPO;
-
-    // // retrieve component name
     const versionName = args.name ?? TEMPLATE_TAG;
     const temporaryProjectFolder = path.join(projectRoot, 'node_modules', '_temp');
     const templateSourcePath = path.join(temporaryProjectFolder, TEMPLATE_ROOT);
+
     const templateDestinationPath = path.join(projectRoot, TEMPLATE_ROOT);
     const changelogPath = path.join(projectRoot, CHANGE_LOG_FILENAME);
 
@@ -53,8 +72,6 @@ export default class Upgrade extends Command {
 
     // copy template files to project local template storage
     const result = await copyDirectoryRecursive(templateSourcePath, templateDestinationPath);
-
-
     /**
      * @Todo create method to generate changelog dynamically from git diff.
      * add changelog to project temp directory and read based on release version number
@@ -87,8 +104,8 @@ export default class Upgrade extends Command {
     if (resourcesToDelete) {
       this.deleteProjectFiles(projectRoot, resourcesToDelete);
     }
-    
-    deleteFolderRecursive(temporaryProjectFolder);
+
+    fs.rmdirSync(temporaryProjectFolder, { recursive: true });
 
     this.log(`${CLI_STATE.Success} rdvue updated to version: ${chalk.green(versionName)}`);
 
@@ -96,7 +113,7 @@ export default class Upgrade extends Command {
     this.log(`${CLI_STATE.Success} CHANGELOG.md generated at : ${chalk.green(changelogPath)}`);
 
     this.log(`\n  ${chalk.yellow('rdvue')} has been updated to use the esbuild bundler!\n  Learn more here: ${chalk.yellow(DOCUMENTATION_LINKS.EsBuild)}\n`);
-    this.log(changeLogData.recomendations);
+    this.log(changeLogData.reccomendations);
   }
 
   async createProjectFiles(projectRoot: string, temporaryProjectFolder: string, resources: ChangelogResource[]): Promise<void> {
@@ -195,7 +212,7 @@ export default class Upgrade extends Command {
   }
 
   jsonReader(filePath: string): any {
-    const text = fs.readFileSync(filePath, 'utf-8');
+    const text = fs.readFileSync(filePath);
     return JSON.parse(text);
   }
 }

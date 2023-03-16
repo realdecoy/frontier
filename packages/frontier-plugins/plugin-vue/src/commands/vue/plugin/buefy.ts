@@ -4,22 +4,23 @@ const util = require('util');
 const exec = util.promisify(shell.exec);
 import { Command, flags } from '@oclif/command';
 import path from 'path';
-import { Files } from 'modules';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../utils/files';
-import { checkProjectValidity } from '../../../utils/utilities';
-import { CLI_COMMANDS, CLI_STATE } from '../../../utils/constants';
-import { injectImportsIntoMain } from '../../../utils/plugins';
-import { Route } from 'modules/manifest';
-import { catchError } from '@rdfrontier/plugin-shared';;
-import { invalidProject } from '@rdfrontier/plugin-shared';
+import chalk from 'chalk';
+import { Files } from '../../../modules';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
+import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
+import { CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { injectImportsIntoMain } from '../../../lib/plugins';
+import { Route } from '../../../modules/manifest';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
+const CUSTOM_ERROR_CODES = [
+  'project-invalid',
+  'missing-template-file',
+  'missing-template-folder',
+  'dependency-install-error',
+];
 
-/**
- * Class representing buefy plugin.
- * @extends Command
- */
 export default class Buefy extends Command {
   static description = 'lightweigth UI components for Vuejs'
 
@@ -33,7 +34,26 @@ export default class Buefy extends Command {
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
-    return catchError(error, CLI_STATE);
+    const errorMessage = error.message;
+    const isValidJSON = isJsonString(errorMessage);
+    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
+    const customErrorCode = parsedError.code;
+    const customErrorMessage = parsedError.message;
+    const hasCustomErrorCode = customErrorCode !== undefined;
+
+    if (hasCustomErrorCode === false) {
+      // throw cli errors to be handled globally
+      throw errorMessage;
+    }
+
+    // handle errors thrown with known error codes
+    if (CUSTOM_ERROR_CODES.includes(customErrorCode)) {
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
+    } else {
+      throw new Error(customErrorMessage);
+    }
+
+    return Promise.resolve();
   }
 
   async run(): Promise<void> {
@@ -49,7 +69,12 @@ export default class Buefy extends Command {
 
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
-      invalidProject(CLI_COMMANDS.PluginBuefy, "rdvue");
+      throw new Error(
+        JSON.stringify({
+          code: 'project-invalid',
+          message: `${CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+        }),
+      );
     } else if (hasProjectName) {
       const dir = path.join(process.cwd(), projectName ?? '');
       projectRoot = dir.trim();

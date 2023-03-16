@@ -1,6 +1,6 @@
 {
   "name": "@rdfrontier/plugin-vue",
-  "version": "1.1.1-beta.7",
+  "version": "1.1.1-beta.8",
   "author": "Realdecoy",
   "bin": {
     "rdvue": "./bin/run"
@@ -10,11 +10,10 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "@rdfrontier/stdlib": "^0.0.2",
-    "@rdfrontier/plugin-shared": "^0.0.8",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
+    "fs": "0.0.1-security",
     "git-user-name": "^2.0.0",
     "inquirer": "^8.1.0",
     "mkdirp": "^1.0.4",
@@ -28,12 +27,12 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@oclif/test": "^1.2.8",
-    "@rdfrontier/lib-builder": "^1.0.0",
     "@types/bluebird": "^3.5.33",
     "@types/chai": "^4.2.15",
     "@types/inquirer": "^7.3.1",
     "@types/mkdirp": "^1.0.1",
-    "@types/node": "^10.17.60",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.17.55",
     "@types/shelljs": "^0.8.8",
     "@types/sinon": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
@@ -55,7 +54,7 @@
   },
   "files": [
     "/bin",
-    "/dist",
+    "/lib",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -64,10 +63,10 @@
     "oclif"
   ],
   "license": "ISC",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "oclif": {
-    "commands": "./dist/commands",
-    "helpClass": "./dist/help",
+    "commands": "./lib/commands",
+    "helpClass": "./lib/help",
     "bin": "rdvue"
   },
   "config": {
@@ -80,28 +79,14 @@
     "url": "git+https://github.com/realdecoy/frontier.git"
   },
   "scripts": {
-    "build": "build-package --tscOnly",
-    "build:watch": "build-package --tscOnly --watch",
-    "clean": "rimraf dist esnext module types lib",
-    "rebuild": "run-s clean build && oclif-dev manifest",
-    "test": "jest --passWithNoTests",
-    "test:ci": "jest --ci --coverage",
-    "test:coverage": "run-s test:ci test:coverage:open",
-    "test:coverage:open": "open ./test-results/index.html",
-    "test:watch": "jest --watch",
-    "lint": "run-s lint:es lint:md",
-    "lint:es": "eslint --ignore-path ../../../.eslintignore \"**/*\"",
-    "lint:es:ci": "yarn lint:es --format",
-    "lint:es:fix": "yarn lint:es --fix",
-    "lint:md": "yarn prettier \"**/*.md\" --check",
-    "lint:md:fix": "yarn prettier \"**/*.md\" --write",
-    "lint:ts:fix": "yarn prettier \"**/*.ts\" --write",
+    "build": "tsc -b",
     "audit": "npm audit --production",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "npm run lint",
-    "prepack": "npm run build",
+    "prepack": "rimraf lib && rimraf oclif.manifest.json && rimraf tsconfig.tsbuildinfo && tsc -b && oclif-dev manifest",
     "version": "oclif-dev readme && git add README.md",
-    "typecheck": "tsc --noEmit"
+    "test": "nyc --extension .ts mocha \"test/**/*.test.ts\" --forbid-only ",
+    "lint": "eslint . --ext .ts --config .eslintrc"
   },
-  "types": "types/index.d.ts"
+  "types": "lib/index.d.ts"
 }
