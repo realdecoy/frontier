@@ -45,13 +45,15 @@
     "commands": "./dist/commands",
     "helpClass": "./dist/help",
     "plugins": [
+      "@oclif/plugin-help",
       "@oclif/plugin-plugins"
     ],
     "topicSeparator": ":",
     "topics": {}
   },
   "scripts": {
-    "build": "build-package --tscOnly",
+    "build": "shx rm -rf dist && tsc -b",
+    "build-package": "build-package --tscOnly",
     "build:watch": "build-package --tscOnly --watch",
     "clean": "rimraf dist esnext module types lib",
     "rebuild": "run-s clean build && oclif-dev manifest",

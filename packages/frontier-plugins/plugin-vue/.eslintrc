@@ -9,13 +9,13 @@
     "node": true,
     "mocha": true
   },
-  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint"
   ],
+  "ignorePatterns": ["dist/*", "test/*"],
   "rules": {
     "no-console": 1,
     "no-extra-semi": 2,
@@ -71,7 +71,7 @@
     ],
     "max-lines": [
       2,
-      700
+      200
     ],
     "new-parens": 2,
     "newline-before-return": 2,
