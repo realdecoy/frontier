@@ -18,7 +18,15 @@
       "type": "library"
     },
     "@rdfrontier/plugin-shared": {
-      "root": "packages/frontier-plugins/frontier-shared",
+      "root": "packages/frontier-plugins/plugin-shared",
+      "type": "library"
+    },
+    "@rdfrontier/plugin-vue": {
+      "root": "packages/frontier-plugins/plugin-vue",
+      "type": "library"
+    },
+    "@rdfrontier/plugin-mobile": {
+      "root": "packages/frontier-plugins/plugin-mobile",
       "type": "library"
     }
   }
