@@ -1,11 +1,11 @@
 {
   "name": "@rdfrontier/plugin-vue",
-  "version": "1.1.1-beta.8",
-  "author": "Realdecoy",
+  "version": "2.2.3",
+  "author": "realdecoy",
   "bin": {
     "rdvue": "./bin/run"
   },
-  "bugs": "https://github.com/realdecoy/frontier/issues",
+  "bugs": "https://github.com/realdecoy/rdvue/issues",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
@@ -69,7 +69,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/realdecoy/frontier",
+  "homepage": "https://realdecoy.github.io/rdvue/#/",
   "keywords": [
     "oclif",
     "vue",
@@ -84,24 +84,26 @@
     "dirname": "rdvue",
     "commands": "./dist/commands",
     "helpClass": "./dist/help.js",
-    "plugins": [
-      "@oclif/plugin-help"
-    ],
+    "plugins": [],
     "topicSeparator": " "
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realdecoy/frontier.git"
+    "url": "git+https://github.com/realdecoy/rdvue.git"
   },
   "scripts": {
     "audit": "npm audit --production",
-    "build": "build-package --tscOnly",
+    "build-new": "build-package --tscOnly",
+    "rebuild": "run-s clean build && oclif manifest",
+    "build": "tsc -b",
+    "clean": "shx rm -f dist esnext module types lib",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "lint:fix": "eslint . --ext .ts --config .eslintrc --fix",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",
     "prepack": "shx rm -rf dist && shx rm -f oclif.manifest.json && shx rm -f tsconfig.tsbuildinfo && yarn build && oclif manifest",
-    "version": "oclif-dev readme && git add README.md",
     "test": "nyc mocha \"test/**/*.test.ts\"",
-    "lint": "eslint . --ext .ts --config .eslintrc"
+    "version": "oclif readme && git add README.md"
   },
   "types": "dist/index.d.ts"
 }
