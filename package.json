@@ -1,6 +1,6 @@
 {
   "name": "frontier",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.0",
   "description": "Frontier: Software Development Toolkit",
   "author": "Realdecoy Labs",
   "bin": {
