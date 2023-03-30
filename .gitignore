@@ -1,37 +1,10 @@
-# Dependencies
-node_modules/
-
-# Coverage and Testing
-test-results/
-coverage/
-
-# Build Artifacts
-build/
-dist/
-lib/
-!**/packages/frontier-plugins/plugin-mobile/src/**/lib
-module/
-esnext/
-types/
-
-/test-projects
-/rdv-*
-
-# Misc
-.DS_Store
-*.log*
-*.iml
-sw.*
-.rdvue/
-.env
-.nuxt
-.idea
-
-
-# OCLIF CLI related
+*-debug.log
+*-error.log
 /.nyc_output
+/dist
+/lib
+/package-lock.json
 /tmp
+node_modules
 oclif.manifest.json
-tsconfig.tsbuildinfo
-
-
+/rdv-*
