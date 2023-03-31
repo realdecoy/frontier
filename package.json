@@ -60,9 +60,7 @@
       "init": "./dist/hooks/init.js",
       "command_incomplete": "./dist/hooks/command-incomplete.js"
     },
-    "plugins": [
-      "@oclif/plugin-help"
-    ],
+    "plugins": [],
     "topicSeparator": " "
   },
   "scripts": {

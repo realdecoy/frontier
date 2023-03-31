@@ -49,7 +49,7 @@ export default class MyHelpClass extends Help {
 
   // the formatting for a list of topics
   protected formatTopics(_topics: Topic[]): string {
-    return '\t----------------------------------------------------';
+    return '';
   }
 
   // the formatting for a list of commands
@@ -75,7 +75,8 @@ export default class MyHelpClass extends Help {
     return `\tNamespaces:${argsList}
 
     \tOptions:
-    \t    --help | -h ${Array.from({ length: 9 }).join(' ')}`;
+    \t    --help     ${Array.from({ length: 4 }).join(' ')} - Show help information
+    \t    --version  ${Array.from({ length: 4 }).join(' ')} - Show CLI version`;
   }
 
   // the formatting for an individual command
