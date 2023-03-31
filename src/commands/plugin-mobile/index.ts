@@ -19,7 +19,8 @@ export default class PluginMobile extends Command {
   }
 
   showHelp(): void {
-    const commandId = PluginMobile.id;
+    // const commandId = PluginMobile.id;
+    const commandAlias = PluginMobile.aliases[0];
     const commandArgs = Object.values(PluginMobile.args);
     // const commandFlags = Object.values(PluginMobile.flags);
 
@@ -44,10 +45,10 @@ export default class PluginMobile extends Command {
     //   });
 
     this.log(`
-        USAGE:
-            npx ${chalk.yellow('frontier')} ${commandId} <command>
+        Usage:
+            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandAlias)} <command>
 
-        COMMANDS: ${argsList}
+        Commands: ${argsList}
     `);
   }
 

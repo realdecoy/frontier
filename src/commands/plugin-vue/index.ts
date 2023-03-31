@@ -12,14 +12,15 @@ export default class PluginVue extends Command {
   }
 
   static args = {
-    add: Args.string({ name: 'component', description: 'add a new module', hidden: false }),
-    create: Args.string({ name: 'create-project', description: 'create a new rdvue project', hidden: false }),
+    add: Args.string({ name: 'add', description: 'add a new module', hidden: false }),
+    'create-project': Args.string({ name: 'create-project', description: 'create a new rdvue project', hidden: false }),
     plugin: Args.string({ name: 'plugin', description: 'install an rdvue plugin', hidden: false }),
     upgrade: Args.string({ name: 'upgrade', description: 'specify the rdvue template version for a project', hidden: false }),
   }
 
   showHelp(): void {
-    const commandId = PluginVue.id;
+    // const commandId = PluginVue.id;
+    const commandAlias = PluginVue.aliases[0];
     const commandArgs = Object.values(PluginVue.args);
     // const commandFlags = Object.values(PluginVue.flags);
 
@@ -44,10 +45,10 @@ export default class PluginVue extends Command {
     //   });
 
     this.log(`
-        USAGE:
-            npx ${chalk.yellow('frontier')} ${commandId} <command>
+        Usage:
+            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandAlias)} <command>
 
-        COMMANDS: ${argsList}
+        Commands: ${argsList}
     `);
   }
 

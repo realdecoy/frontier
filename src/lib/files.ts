@@ -15,7 +15,7 @@ import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
 import { hasKebab } from './utilities';
 import { Files, InjectOptions } from '../modules';
-import { DYNAMIC_OBJECTS, EMPTY_STRING, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
+import { DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -76,6 +76,21 @@ function readConfigFile(filePath: string): any {
         message: 'template file not found, run rdvue upgrade to continue',
       }),
     );
+  }
+
+  return JSON.parse(readFile(filePath));
+}
+
+/**
+ * Description: Read project config file to determine options the tool can take
+ * @param {string} filePath -
+ * @returns {any} -
+ */
+function readProjectConfig(): any {
+  const filePath: string = path.join(getProjectRoot() as string, FRONTIER_RC);
+  const isExistingFile = fileExists(filePath);
+  if (isExistingFile === false) {
+    return {};
   }
 
   return JSON.parse(readFile(filePath));
@@ -597,6 +612,7 @@ export {
   getProjectRoot,
   readFile,
   readConfigFile,
+  readProjectConfig,
   fileExists,
   writeFile,
   inject,

@@ -54,6 +54,7 @@
     "bin": "frontier",
     "dirname": "frontier",
     "commands": "./dist/commands",
+    "helpClass": "./dist/help",
     "flexibleTaxonomy": true,
     "hooks": {
       "init": "./dist/hooks/init.js",

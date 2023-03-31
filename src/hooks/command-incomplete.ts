@@ -1,20 +1,12 @@
-import path from 'node:path';
+import chalk from 'chalk';
 import prompts from 'prompts';
-import { FRONTIER_RC } from '../lib/constants';
+import { ProjectConfig } from '../modules/project';
+import { readProjectConfig } from '../lib/files';
 import { Hook, toConfiguredId, toStandardizedId } from '@oclif/core';
-import { getProjectRoot, readConfigFile } from '../lib/files';
 
 const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id }) {
-  let projectConfig: { type?: string } = {};
-  let command = '';
-
-  // Parse frontier rc file to determine existing project type
-  try {
-    projectConfig = readConfigFile(path.join(getProjectRoot() as string, FRONTIER_RC));
-    // console.log(projectConfig);
-  } catch {
-    // console.log(error.message);
-  }
+  const projectConfig: ProjectConfig = readProjectConfig();
+  let command: string | undefined = '';
 
   // eslint-disable-next-line no-negated-condition
   if (projectConfig.type !== undefined) {
@@ -38,19 +30,27 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
         },
       ], {
         onCancel() {
+          // eslint-disable-next-line no-console
+          console.log(`command ${chalk.red(id)} canceled`);
+
           return false;
         },
       },
     );
     const commandIndex = responses.command;
-    command = choices[commandIndex].title;
+    // eslint-disable-next-line no-negated-condition
+    command = commandIndex !== undefined ? choices[commandIndex].title : undefined;
+  }
+
+  if (command === undefined) {
+    return;
   }
 
   if (argv.includes('--help') || argv.includes('-h')) {
-    return config.runCommand('help', [toStandardizedId(command, config)]);
+    return config.runCommand('help', [toStandardizedId(command as string, config)]);
   }
 
-  return config.runCommand(toStandardizedId(command, config), argv);
+  return config.runCommand(toStandardizedId(command as string, config), argv);
 };
 
 export default hook;

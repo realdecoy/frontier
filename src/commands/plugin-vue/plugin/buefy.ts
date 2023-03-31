@@ -24,6 +24,8 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Buefy extends Command {
+  static aliases = ['vue:plugin:buefy']
+
   static description = 'lightweigth UI components for Vuejs'
 
   static flags = {

@@ -45,9 +45,9 @@ export default class Plugin extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.blue('rdvue')} ${commandId.split(':')[1]} <feature>
+            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId.split(':')[1])} <plugin>
 
-        Features: \t - Utilities to create repeatable project elements${argsList}
+        Plugins: \t - Utilities to create repeatable project elements${argsList}
 
         Options:${optionList}
     `);

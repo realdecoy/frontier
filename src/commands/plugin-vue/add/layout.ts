@@ -16,6 +16,8 @@ const CUSTOM_ERROR_MESSAGES = new Set([
 ]);
 
 export default class Layout extends Command {
+  static aliases = ['vue:add:layout']
+
   static description = 'add a new Layout module.'
 
   static flags = {
