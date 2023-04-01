@@ -3,7 +3,7 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Vue extends Command {
-  static hidden = true;
+  static hidden = false;
 
   static description = 'Vue.js scaffolding';
 
@@ -31,7 +31,7 @@ export default class Vue extends Command {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
     // parse option config list
@@ -46,7 +46,7 @@ export default class Vue extends Command {
 
     this.log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId)}  <command>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId)} ${chalk.blue('<command>')}
 
         Commands:${argsList}
 

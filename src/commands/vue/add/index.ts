@@ -3,9 +3,9 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Add extends Command {
-  static aliases = ['vue add'];
+  static aliases = ['add'];
 
-  static description = 'add a new module';
+  static description = 'add a new modulezzz';
 
   static flags = {
     help: Flags.help({ name: 'help', char: 'h', hidden: false }),
@@ -26,29 +26,29 @@ export default class Add extends Command {
 
     // parse argument config list
     const argsList = commandArgs
-      .filter(arg => !arg.hidden)
-      .map(arg => {
-        const maxSpaces = 15;
+      .filter((arg: any) => !arg.hidden)
+      .map((arg: any) => {
+        const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
     // parse option config list
     const optionList = commandFlags
-      .filter(flag => !flag.hidden)
-      .map(flag => {
-        const maxSpaces = 8;
+      .filter((flag: any) => !flag.hidden)
+      .map((flag: any) => {
+        const maxSpaces = 22;
         const numOfSpaces = maxSpaces - flag.name.length;
 
-        return `\n\t    --${flag.name} | -${flag.char}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
+        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
       });
 
     this.log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} <feature>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} ${chalk.blue('<command>')}
 
-        Features: \t - Utilities to create repeatable project elements${argsList}
+        Commands:${argsList}
 
         Options:${optionList}
     `);

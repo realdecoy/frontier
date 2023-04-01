@@ -19,7 +19,7 @@ export default class MyHelpClass extends Help {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
     // parse option config list
@@ -34,7 +34,7 @@ export default class MyHelpClass extends Help {
 
     log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} <command>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} ${chalk.blue('<command>')}
 
         Commands:${argsList}
 
@@ -45,17 +45,18 @@ export default class MyHelpClass extends Help {
   formatRoot(): string {
     return `
         Usage:
-            ${chalk.yellow('frontier')} <namespace> <command>`;
+            ${chalk.yellow('frontier')} ${chalk.green('<namespace>')} <command>`;
   }
 
   // the formatting for a list of topics
   protected formatTopics(topics: Topic[]): string {
+    // console.log(topics);
     const argsList = topics
       .map((arg: any) => {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+        return `\n\t    ${chalk.green(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
     return `\tNamespaces:${argsList}`;

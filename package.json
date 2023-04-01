@@ -58,7 +58,8 @@
     "flexibleTaxonomy": true,
     "hooks": {
       "init": "./dist/hooks/init.js",
-      "command_incomplete": "./dist/hooks/command-incomplete.js"
+      "command_incomplete": "./dist/hooks/command-incomplete.js",
+      "command_not_found": "./dist/hooks/command-not-found.js"
     },
     "plugins": [],
     "topicSeparator": " "
