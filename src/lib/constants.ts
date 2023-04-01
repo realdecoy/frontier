@@ -7,7 +7,7 @@ export const MOBILE_TEMPLATE_REPO =
   'https://github.com/realdecoy/rdvue-mobile-template';
 export const VUE_TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';
 export const DESIGN_TEMPLATE_REPO = 'https://github.com/realdecoy/design-system-components';
-export const VUE_TEMPLATE_TAG = 'v2.2.3'; // replace this with the appropriate release tag in the template repo
+export const VUE_TEMPLATE_TAG = 'v2.3.1'; // replace this with the appropriate release tag in the template repo
 export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the appropriate release tag in the template repo
 export const DESIGN_TEMPLATE_FOLDER = 'library';
 export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
