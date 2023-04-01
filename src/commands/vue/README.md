@@ -22,14 +22,14 @@
 <!-- custom-usage -->
 
 ```bash
+npx @realdecoy/frontier vue <command>
+```
+Global installation:
+
+```bash
 npm install --global @realdecoy/frontier
 frontier vue <command>
 ```
-or
-```bash
-npx @realdecoy/frontier vue <command>
-```
-
 The help menu can be accessed with the command:
 
 ```bash
