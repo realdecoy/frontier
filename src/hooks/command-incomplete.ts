@@ -5,7 +5,6 @@ import { readProjectConfig } from '../lib/files';
 import { Hook, toConfiguredId, toStandardizedId } from '@oclif/core';
 
 const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id }) {
-  console.log('INCOMPLETE');
   const projectConfig: ProjectConfig = readProjectConfig();
   let command: string | undefined = '';
 
