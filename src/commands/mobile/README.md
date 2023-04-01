@@ -49,6 +49,7 @@ Usage:
 Commands:
     add              -  Add a feature to a project
     create-project   -  Scaffold a new project
+    plugin           -  Inject a utility to extend project functionality
   
 Options:
     --help           -  Show help information
