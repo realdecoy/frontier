@@ -16,7 +16,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Upgrade extends Command {
-  static aliases = ['vue:upgrade'];
+  static aliases = ['vue upgrade'];
 
   static description = 'Specify the rdvue template version for a project'
 

@@ -87,7 +87,7 @@ function readConfigFile(filePath: string): any {
  * @returns {any} -
  */
 function readProjectConfig(): any {
-  const filePath: string = path.join(getProjectRoot() as string, FRONTIER_RC);
+  const filePath: string = path.join(getProjectRoot() ?? '', FRONTIER_RC);
   const isExistingFile = fileExists(filePath);
   if (isExistingFile === false) {
     return {};

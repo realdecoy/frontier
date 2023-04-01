@@ -2,8 +2,8 @@
 const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
-export default class PluginMobile extends Command {
-  static aliases = ['mobile'];
+export default class Mobile extends Command {
+  static hidden = true;
 
   static description = 'React Native scaffolding';
 
@@ -12,17 +12,15 @@ export default class PluginMobile extends Command {
   }
 
   static args = {
-    add: Args.string({ name: 'component', description: 'add a new module', hidden: false }),
-    create: Args.string({ name: 'create-project', description: 'create a new rdvue project', hidden: false }),
-    plugin: Args.string({ name: 'plugin', description: 'install an rdvue plugin', hidden: false }),
-    upgrade: Args.string({ name: 'upgrade', description: 'specify the rdvue template version for a project', hidden: false }),
+    add: Args.string({ name: 'component', description: 'Add a new module', hidden: false }),
+    create: Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
   }
 
   showHelp(): void {
-    // const commandId = PluginMobile.id;
-    const commandAlias = PluginMobile.aliases[0];
-    const commandArgs = Object.values(PluginMobile.args);
-    // const commandFlags = Object.values(PluginMobile.flags);
+    // const commandId = Mobile.id;
+    const commandId = Mobile.id;
+    const commandArgs = Object.values(Mobile.args);
+    // const commandFlags = Object.values(Mobile.flags);
 
     // parse argument config list
     const argsList = commandArgs
@@ -46,14 +44,14 @@ export default class PluginMobile extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandAlias)} <command>
+            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId)} <command>
 
         Commands: ${argsList}
     `);
   }
 
   async run(): Promise<void> {
-    const { args } = await this.parse(PluginMobile);
+    const { args } = await this.parse(Mobile);
     const commandArgs = Object.values(args);
 
     if (commandArgs.length === 0) {

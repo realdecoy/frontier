@@ -2,27 +2,26 @@
 const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
-export default class Add extends Command {
-  static aliases = ['vue:add'];
+export default class Plugin extends Command {
+  static aliases = ['vue plugin'];
 
-  static description = 'add a new module';
+  static description = 'install a plugin'
 
   static flags = {
     help: Flags.help({ name: 'help', char: 'h', hidden: false }),
   }
 
   static args = {
-    component: Args.string({ name: 'component', description: 'component module', hidden: false }),
-    page: Args.string({ name: 'page', description: 'page module', hidden: false }),
-    service: Args.string({ name: 'service', description: 'service module', hidden: false }),
-    store: Args.string({ name: 'store', description: 'store module', hidden: false }),
-    layout: Args.string({ name: 'layout', description: 'layout module', hidden: false }),
+    buefy: Args.string({ name: 'buefy', description: 'lightweigth UI components for Vue.js', hidden: false }),
+    localization: Args.string({ name: 'localization', description: 'library for localizing content', hidden: false }),
+    vuetify: Args.string({ name: 'vuetify', description: 'material design framework for Vue.js', hidden: false }),
+    storybook: Args.string({ name: 'storybook', description: '[coming soon] UI component explorer for frontend devs', hidden: true }),
   }
 
   showHelp(): void {
-    const commandId = Add.id;
-    const commandArgs = Object.values(Add.args);
-    const commandFlags = Object.values(Add.flags);
+    const commandId = Plugin.id;
+    const commandArgs = Object.values(Plugin.args);
+    const commandFlags = Object.values(Plugin.flags);
 
     // parse argument config list
     const argsList = commandArgs
@@ -46,16 +45,16 @@ export default class Add extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId.split(':')[1])} <feature>
+            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId.split(':')[1])} <plugin>
 
-        Features: \t - Utilities to create repeatable project elements${argsList}
+        Plugins: \t - Utilities to create repeatable project elements${argsList}
 
         Options:${optionList}
     `);
   }
 
   async run(): Promise<void> {
-    const { args } = await this.parse(Add);
+    const { args } = await this.parse(Plugin);
     const commandArgs = Object.values(args);
 
     if (commandArgs.length === 0) {

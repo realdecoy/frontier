@@ -8,13 +8,12 @@ const exec = util.promisify(shell.exec);
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
-import { Route } from '../../../modules/manifest';
-import { injectImportsIntoMain } from '../../../lib/plugins';
-import { CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
+import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../lib/constants';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
 
-const TEMPLATE_FOLDERS = ['buefy'];
+const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -23,19 +22,19 @@ const CUSTOM_ERROR_CODES = new Set([
   'dependency-install-error',
 ]);
 
-export default class Buefy extends Command {
-  static aliases = ['vue:plugin:buefy']
+export default class Vuetify extends Command {
+  static aliases = ['vue plugin vuetify'];
 
-  static description = 'lightweigth UI components for Vuejs'
+  static description = 'lightweigth UI components for Vuejs';
 
   static flags = {
     help: Flags.help({ char: 'h' }),
     isTest: Flags.boolean({ hidden: true }),
     forceProject: Flags.string({ hidden: true }),
     skipInstall: Flags.boolean({ hidden: true }),
-  }
+  };
 
-  static args = {}
+  static args = {};
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
@@ -62,23 +61,22 @@ export default class Buefy extends Command {
   }
 
   async run(): Promise<void> {
-    const { flags } = await this.parse(Buefy);
+    const { flags } = await this.parse(Vuetify);
     const projectName = flags.forceProject;
     const isTest = flags.isTest === true;
     const skipInstallStep = flags.skipInstall === true;
     const hasProjectName = projectName !== undefined;
     const preInstallCommand = hasProjectName ? `cd ${projectName} &&` : '';
 
-    const projectValidity = checkProjectValidity();
-    const { isValid: isValidProject } = projectValidity;
-    let { projectRoot } = projectValidity;
-
+    const validityResponse = checkProjectValidity();
+    const { isValid: isValidProject } = validityResponse;
+    let { projectRoot } = validityResponse;
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('rdvue')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -87,6 +85,8 @@ export default class Buefy extends Command {
     }
 
     const folderList = TEMPLATE_FOLDERS;
+    let sourceDirectory = '';
+    let installDirectory = '';
 
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
@@ -95,12 +95,26 @@ export default class Buefy extends Command {
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
+    const devDependencies = config.manifest.packages.devDependencies.toString()
+      .split(',')
+      .join(' ');
 
     if (skipInstallStep === false) {
       try {
+        // install dev dependencies
+        if (isTest !== true) {
+          ux.action.start(`${CLI_STATE.Info} installing vuetify dev dependencies`);
+        }
+
+        await exec(`${preInstallCommand} npm install --save-dev --legacy-peer-deps ${devDependencies}`, { silent: true });
+
+        if (isTest !== true) {
+          ux.action.stop();
+        }
+
         // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing buefy dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing vuetify dependencies`);
         }
 
         await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
@@ -109,18 +123,19 @@ export default class Buefy extends Command {
           ux.action.stop();
         }
       } catch {
-        this.error(
+        throw new Error(
           JSON.stringify({
             code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} dependencies failed to install`,
+            message: `${this.id?.split(':')[1]} vuetify dependencies failed to install`,
           }),
         );
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding buefy dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding vuetify dependencies`);
       }
 
+      await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
@@ -128,40 +143,30 @@ export default class Buefy extends Command {
       }
     }
 
-    const sourceDirectory: string = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-    const installDirectory: string = path.join(projectRoot, 'src', config.manifest.installDirectory);
-    const routePath: string = path.join(projectRoot, 'src', 'config', 'router.ts');
+    sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
+    installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
 
-    // copy and update files for plugin being added
+    // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    const { routes }: { routes: Array<Route> } = config.manifest;
-    if (routes && routes.length > 0) {
-      const formattedContent: string = JSON.stringify(routes, null, 2)
-        .replace(/(?<!\\)"/g, '')     // remove escaped quotes added by JSON.stringify
-        .replace(/\\+"/g, '"')      // remove extra escaping slashes from escaped double quotes
-        .replace(/^\s*\[\n/, '')      // remove the array notation from the start of the string
-        .replace(/\s*]$/, '')        // remove the array notation from the end of the string
-        .replace(/^(\s*)/gm, '$1  '); // add extra spaces to align injected code with existing code
-      const content = `${formattedContent},`;
-      inject(routePath, content, {
-        index: (lines, file) => {
-          const index = lines.findIndex(line => line.trim().startsWith('routes: ['));
-          if (index < 0) {
-            throw new Error(`Could not find routes in ${file}`);
-          }
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), DYNAMIC_OBJECTS.Routes);
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), DYNAMIC_OBJECTS.Options, true);
 
-          return index + 1;
-        },
-      });
-    }
-
-    const { manifest } = config;
-    const { projectTheme, version, main, moduleImports } = manifest;
-    updateDynamicImportsAndExports(projectRoot, 'theme', projectTheme, '_all.scss');
-    updateDynamicImportsAndExports(projectRoot, 'modules/core', moduleImports, 'index.ts');
-    if (version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
-      const { imports: mainImports } = main;
+    if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
+      const { imports: mainImports, modules: mainModules } = config.manifest.main;
       injectImportsIntoMain(projectRoot, mainImports);
+      try {
+        injectModulesIntoMain(projectRoot, mainModules);
+      } catch {
+        this.error(
+          JSON.stringify({
+            code: 'import-injection-error',
+            message: `${this.id?.split(':')[1]} failed to inject import statements`,
+          }),
+        );
+      }
+    } else {
+      // FP-414: backwards compatibility
+      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), DYNAMIC_OBJECTS.Modules, true);
     }
 
     if (skipInstallStep === false) {

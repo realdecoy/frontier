@@ -21,20 +21,27 @@ enum DYNAMIC_OBJECTS_ENUM {
   Modules = 'modules',
 }
 export const DYNAMIC_OBJECTS = DYNAMIC_OBJECTS_ENUM;
+enum CLI_NAMESPACES {
+  'vue',
+  'mobile',
+  'dotnet',
+  'iac',
+  'qa',
+}
 
 enum CLI_COMMANDS_ENUM {
-  CreateProject = 'plugin-vue create-project',
-  Upgrade = 'plugin-vue upgrade',
-  AddComponent = 'plugin-vue add component',
-  AddPage = 'plugin-vue add page',
-  AddService = 'plugin-vue add service',
-  AddStore = 'plugin-vue add store',
-  AddLayout = 'plugin-vue add layout',
-  AddModule = 'plugin-vue add',
-  PluginBuefy = 'plugin-vue plugin buefy',
-  PluginLocalization = 'plugin-vue plugin localization',
-  PluginVuetify = 'plugin-vue plugin vuetify',
-  PluginLibrary = 'plugin-vue plugin',
+  CreateProject = 'vue create-project',
+  Upgrade = 'vue upgrade',
+  AddComponent = 'vue add component',
+  AddPage = 'vue add page',
+  AddService = 'vue add service',
+  AddStore = 'vue add store',
+  AddLayout = 'vue add layout',
+  AddModule = 'vue add',
+  PluginBuefy = 'vue plugin buefy',
+  PluginLocalization = 'vue plugin localization',
+  PluginVuetify = 'vue plugin vuetify',
+  PluginLibrary = 'vue plugin',
   PoorHelpCommand = 'add-help'
 }
 export const CLI_COMMANDS = CLI_COMMANDS_ENUM;

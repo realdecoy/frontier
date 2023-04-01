@@ -26,9 +26,9 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class CreateProject extends Command {
-  static aliases = ['vue:create-project'];
+  static aliases = ['vue create-project'];
 
-  static description = 'create a new rdvue project'
+  static description = 'Scaffold a new project'
 
   static flags = {
     help: Flags.help({ char: 'h' }),

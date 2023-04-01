@@ -1,19 +1,20 @@
-// eslint-disable-next-line unicorn/prefer-module
-const shell = require('shelljs');
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
 const util = require('util');
-const exec = util.promisify(shell.exec);
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
+// eslint-disable-next-line unicorn/prefer-module
+const shell = require('shelljs');
+const exec = util.promisify(shell.exec);
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
+import { Route } from '../../../modules/manifest';
+import { injectImportsIntoMain } from '../../../lib/plugins';
+import { CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
-import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../lib/files';
+import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
 
-const TEMPLATE_FOLDERS = ['localization'];
+const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,10 +23,10 @@ const CUSTOM_ERROR_CODES = new Set([
   'dependency-install-error',
 ]);
 
-export default class Localization extends Command {
-  static aliases = ['vue:plugin:localization']
+export default class Buefy extends Command {
+  static aliases = ['vue plugin buefy']
 
-  static description = 'adds i18bn localization'
+  static description = 'lightweigth UI components for Vuejs'
 
   static flags = {
     help: Flags.help({ char: 'h' }),
@@ -61,22 +62,23 @@ export default class Localization extends Command {
   }
 
   async run(): Promise<void> {
-    const { flags } = await this.parse(Localization);
+    const { flags } = await this.parse(Buefy);
     const projectName = flags.forceProject;
     const isTest = flags.isTest === true;
     const skipInstallStep = flags.skipInstall === true;
     const hasProjectName = projectName !== undefined;
     const preInstallCommand = hasProjectName ? `cd ${projectName} &&` : '';
 
-    const validityResponse = checkProjectValidity();
-    const { isValid: isValidProject } = validityResponse;
-    let { projectRoot } = validityResponse;
+    const projectValidity = checkProjectValidity();
+    const { isValid: isValidProject } = projectValidity;
+    let { projectRoot } = projectValidity;
+
     // block command unless being run within an rdvue project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginLocalization} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('rdvue')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -85,8 +87,6 @@ export default class Localization extends Command {
     }
 
     const folderList = TEMPLATE_FOLDERS;
-    let sourceDirectory = '';
-    let installDirectory = '';
 
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
@@ -95,26 +95,12 @@ export default class Localization extends Command {
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
-    const devDependencies = config.manifest.packages.devDependencies.toString()
-      .split(',')
-      .join(' ');
 
     if (skipInstallStep === false) {
       try {
-        // // install dev dependencies
+        // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing localization dev dependencies`);
-        }
-
-        await exec(`${preInstallCommand} npm install --save-dev --legacy-peer-deps ${devDependencies}`, { silent: true });
-
-        if (isTest !== true) {
-          ux.action.stop();
-        }
-
-        // // install dependencies
-        if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing localization dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing buefy dependencies`);
         }
 
         await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
@@ -123,19 +109,18 @@ export default class Localization extends Command {
           ux.action.stop();
         }
       } catch {
-        throw new Error(
+        this.error(
           JSON.stringify({
             code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} localization dependencies failed to install`,
+            message: `${this.id?.split(':')[1]} dependencies failed to install`,
           }),
         );
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding localization dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding buefy dependencies`);
       }
 
-      await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
@@ -143,29 +128,40 @@ export default class Localization extends Command {
       }
     }
 
-    sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-    installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+    const sourceDirectory: string = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
+    const installDirectory: string = path.join(projectRoot, 'src', config.manifest.installDirectory);
+    const routePath: string = path.join(projectRoot, 'src', 'config', 'router.ts');
 
-    // copy files for plugin being added
+    // copy and update files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), DYNAMIC_OBJECTS.Options, true);
-    if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
-      const { imports: mainImports, modules: mainModules } = config.manifest.main;
+    const { routes }: { routes: Array<Route> } = config.manifest;
+    if (routes && routes.length > 0) {
+      const formattedContent: string = JSON.stringify(routes, null, 2)
+        .replace(/(?<!\\)"/g, '')     // remove escaped quotes added by JSON.stringify
+        .replace(/\\+"/g, '"')      // remove extra escaping slashes from escaped double quotes
+        .replace(/^\s*\[\n/, '')      // remove the array notation from the start of the string
+        .replace(/\s*]$/, '')        // remove the array notation from the end of the string
+        .replace(/^(\s*)/gm, '$1  '); // add extra spaces to align injected code with existing code
+      const content = `${formattedContent},`;
+      inject(routePath, content, {
+        index: (lines, file) => {
+          const index = lines.findIndex(line => line.trim().startsWith('routes: ['));
+          if (index < 0) {
+            throw new Error(`Could not find routes in ${file}`);
+          }
+
+          return index + 1;
+        },
+      });
+    }
+
+    const { manifest } = config;
+    const { projectTheme, version, main, moduleImports } = manifest;
+    updateDynamicImportsAndExports(projectRoot, 'theme', projectTheme, '_all.scss');
+    updateDynamicImportsAndExports(projectRoot, 'modules/core', moduleImports, 'index.ts');
+    if (version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
+      const { imports: mainImports } = main;
       injectImportsIntoMain(projectRoot, mainImports);
-      try {
-        injectModulesIntoMain(projectRoot, mainModules);
-      } catch {
-        this.error(
-          JSON.stringify({
-            code: 'import-injection-error',
-            message: `${this.id?.split(':')[1]} failed to inject import statements`,
-          }),
-        );
-      }
-    } else {
-      // FP-414: backwards compatibility
-      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), DYNAMIC_OBJECTS.Modules, true);
     }
 
     if (skipInstallStep === false) {

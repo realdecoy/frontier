@@ -16,7 +16,7 @@ export default class MyHelpClass extends Help {
     const argsList = commandArgs
       .filter((arg: any) => !arg.hidden)
       .map((arg: any) => {
-        const maxSpaces = 15;
+        const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
         return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
@@ -26,61 +26,65 @@ export default class MyHelpClass extends Help {
     const optionList = commandFlags
       .filter((flag: any) => !flag.hidden)
       .map((flag: any) => {
-        const maxSpaces = 8;
+        const maxSpaces = 22;
         const numOfSpaces = maxSpaces - flag.name.length;
 
-        return `\n\t    --${flag.name} | -${flag.char}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
+        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
       });
 
     log(`
-        Command:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${commandId} <feature>
+        Usage:
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} <command>
 
-        Features:${argsList}
+        Commands:${argsList}
 
-        Options:${optionList}`);
+        Options:${optionList}
+    `);
   }
 
   formatRoot(): string {
     return `
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} <namespace> <command>`;
+            ${chalk.yellow('frontier')} <namespace> <command>`;
   }
 
   // the formatting for a list of topics
-  protected formatTopics(_topics: Topic[]): string {
-    return '';
+  protected formatTopics(topics: Topic[]): string {
+    const argsList = topics
+      .map((arg: any) => {
+        const maxSpaces = 25;
+        const numOfSpaces = maxSpaces - arg.name.length;
+
+        return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+      });
+
+    return `\tNamespaces:${argsList}`;
   }
 
   // the formatting for a list of commands
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types, no-unused-vars
   formatCommands(commands: any): string {
     // parse argument config list
-    // console.log(commands);
-    const argsList = commands
-      .filter((arg: any) => {
-        const isHidden = arg.hidden;
-        const isStrict = arg.strict;
-        const isAlias = arg.aliases.includes(arg.id);
+    // console.log(JSON.parse(JSON.stringify(commands)));
+    // const argsList = commands
+    //   .filter((arg: any) => {
+    //     const isHidden = arg.hidden;
+    //     const isStrict = arg.strict;
+    //     const commandId = arg.id;
+    //     const levels = commands.filter((c: any) => c.id.includes(commandId)).length;
+    //     const oneLevelDeep =  levels > 1;
 
-        return !isHidden && isStrict && isAlias;
-      })
-      .map((arg: any) => {
-        const maxSpaces = 15;
-        const numOfSpaces = maxSpaces - arg.id.length;
+    //     return (!isHidden && isStrict && oneLevelDeep);
+    //   })
+    //   .map((arg: any) => {
+    //     const maxSpaces = 25;
+    //     const numOfSpaces = maxSpaces - arg.id.length;
 
-        return `\n\t    ${arg.id}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
-      });
+    //     return `\n\t    ${arg.id}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+    //   });
 
-    return `\tNamespaces:${argsList}
-
-    \tOptions:
-    \t    --help     ${Array.from({ length: 4 }).join(' ')} - Show help information
-    \t    --version  ${Array.from({ length: 4 }).join(' ')} - Show CLI version`;
-  }
-
-  // the formatting for an individual command
-  formatCommand(): string {
-    return '';
+    return `\tOptions:
+    \t    --help     ${Array.from({ length: 14 }).join(' ')} - Show help information
+    \t    --version  ${Array.from({ length: 14 }).join(' ')} - Show CLI version`;
   }
 }

@@ -5,27 +5,27 @@ import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
 import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseComponentName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
+import { checkProjectValidity, parsePageName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
 
-const TEMPLATE_FOLDERS = ['component'];
-const CUSTOM_ERROR_CODES = new Set([
+const TEMPLATE_FOLDERS = ['page'];
+const CUSTOM_ERROR_MESSAGES = new Set([
   'project-invalid',
   'failed-match-and-replace',
   'missing-template-file',
   'missing-template-folder',
 ]);
 
-export default class Component extends Command {
-  static aliases = ['vue:add:component']
+export default class Page extends Command {
+  static aliases = ['vue add page']
 
-  static description = 'add a new Component module.'
+  static description = 'add a new Page module.'
 
   static flags = {
     help: Flags.help({ char: 'h' }),
   }
 
   static args = {
-    name: Args.string({ name: 'name', description: 'name of new component' }),
+    name: Args.string({ name: 'name', description: 'name of new page' }),
   }
 
   // override Command class error handler
@@ -43,7 +43,7 @@ export default class Component extends Command {
     }
 
     // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.has(customErrorCode)) {
+    if (CUSTOM_ERROR_MESSAGES.has(customErrorCode)) {
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
@@ -59,12 +59,12 @@ export default class Component extends Command {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddComponent} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${CLI_COMMANDS.AddPage} command must be run in an existing ${chalk.yellow('rdvue')} project`,
         }),
       );
     }
 
-    const { args } = await this.parse(Component);
+    const { args } = await this.parse(Page);
     const folderList = TEMPLATE_FOLDERS;
     let sourceDirectory: string;
     let installDirectory: string;
@@ -72,25 +72,26 @@ export default class Component extends Command {
     // parse config files required for scaffolding this module
     const configs = parseModuleConfig(folderList, projectRoot);
 
-    // retrieve component name
-    const componentName = await parseComponentName(args);
-    // parse kebab and pascal case of componentName
-    const componentNameKebab = toKebabCase(componentName);
-    const componentNamePascal = toPascalCase(componentName);
+    // retrieve page name
+    const pageName = await parsePageName(args);
+    // parse kebab and pascal case of pageName
+    const pageNameKebab = toKebabCase(pageName);
+    const pageNamePascal = toPascalCase(pageName);
 
     // eslint-disable-next-line unicorn/no-array-for-each
     configs.forEach(async config => {
       const files: Array<string | Files> = config.manifest.files;
       // replace file names in config with kebab case equivalent
-      replaceTargetFileNames(files, componentNameKebab);
+      replaceTargetFileNames(files, pageNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, componentNameKebab);
-      // copy and update files for component being added
+      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, pageNameKebab);
+
+      // copy and update files for page being added
       await copyFiles(sourceDirectory, installDirectory, files);
-      await readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);
+      await readAndUpdateFeatureFiles(installDirectory, files, pageNameKebab, pageNamePascal);
     });
 
-    this.log(`${CLI_STATE.Success} component added: ${componentNameKebab}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Component)}\n`);
+    this.log(`${CLI_STATE.Success} page added: ${pageNameKebab}`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Page)}\n`);
   }
 }

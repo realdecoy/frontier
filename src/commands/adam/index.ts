@@ -3,7 +3,7 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class PluginVue extends Command {
-  static aliases = ['vue'];
+  static hidden = true;
 
   static description = 'Vue.js scaffolding';
 
@@ -12,10 +12,10 @@ export default class PluginVue extends Command {
   }
 
   static args = {
-    add: Args.string({ name: 'add', description: 'add a new module', hidden: false }),
-    'create-project': Args.string({ name: 'create-project', description: 'create a new rdvue project', hidden: false }),
-    plugin: Args.string({ name: 'plugin', description: 'install an rdvue plugin', hidden: false }),
-    upgrade: Args.string({ name: 'upgrade', description: 'specify the rdvue template version for a project', hidden: false }),
+    add: Args.string({ name: 'add', description: 'Add a new module', hidden: false }),
+    'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
+    plugin: Args.string({ name: 'plugin', description: 'Inject a utility to extend project functionality', hidden: false }),
+    upgrade: Args.string({ name: 'upgrade', description: 'Specify the template version for a project', hidden: false }),
   }
 
   showHelp(): void {

@@ -41,19 +41,25 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 <!-- custom-usage -->
 
 ```bash
+npm install --global @realdecoy/frontier
+frontier <namespace> <command>
+```
+or
+```bash
 npx @realdecoy/frontier <namespace> <command>
 ```
 > namespaces are optional if running frontier commands in an existing frontier project
 
-The help menu can be accessed with the command:
+The help menu can be accessed with the commands:
 
 ```bash
-npx @realdecoy/frontier --help
+frontier --help
+frontier <namespace> --help
 ```
 The current version of frontier can be retrieved with the command:
 
 ```bash
-npx @realdecoy/frontier --version
+frontier --version
 ```
 <!-- custom-usagestop -->
 
@@ -64,17 +70,11 @@ npx @realdecoy/frontier --version
 ## Options
 ```txt
 Usage:
-  npx @realdecoy/frontier <namespace> <command>
+  frontier <namespace>
 
 Namespaces:
     mobile           -  React Native Scaffolding
     vue              -  Vue.js Scaffolding
-
-Commands:
-    create-project   -  Scaffold a new project
-    add              -  Add a feature to a project
-    plugin           -  Inject a utility to extend project functionality
-    upgrade          -  Specify the template version for a project
   
 Options:
     --help           -  Show help information
@@ -88,13 +88,13 @@ Options:
 
 ## Namespaces
 
-| Name | Namespace | Alias | Status | More Information
-| --- | --- | --- | --- | --- |
-| .Net       | `plugin-dotnet` | dotnet | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Vue        | `plugin-vue`    | vue    | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-vue) |
-| QA         | `plugin-qa`     | qa     | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-qa) |
-| Mobile     | `plugin-mobile` | mobile | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier) |
-| Infrastructure | `plugin-iac`| iac    | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Name | Namespace | Status | More Information
+| --- | --- | --- | --- |
+| .Net       | `dotnet` | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Infrastructure | `iac`| Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Mobile     | `mobile` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/mobile) |
+| QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/qa) |
+| Vue        | `vue` | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/vue) |
 
 &nbsp;
 &nbsp;
@@ -117,11 +117,8 @@ npm install
 ```
 e.g.
 ```bash
-$ ./bin/dev vue create-project my-new-project
-? Pick a preset:  » - Use arrow-keys. Return to submit.
->   Buefy & Localization (recommended)
-    Vuetify & Localization
-    [Skip presets]
+$ ./bin/dev vue create-project
+? Enter a project name:  » my-rdvue-project
 ```
 ### Building
 
@@ -151,6 +148,12 @@ or
 ```bash
 npm run rebuild
 ```
+
+&nbsp; &nbsp; &nbsp;
+
+## Creating a frontier namespace
+#### [Adam](https://github.com/realdecoy/frontier/tree/main/commands/adam)
+To support the creation of new frointer-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/main/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
 
 &nbsp; &nbsp; &nbsp;
 
