@@ -92,7 +92,7 @@ Options:
 | --- | --- | --- | --- |
 | .Net       | `dotnet` | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
 | Infrastructure | `iac`| Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Mobile     | `mobile` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/mobile) |
+| Mobile     | `mobile` | Ready    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/mobile) |
 | QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/qa) |
 | Vue        | `vue` | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/vue) |
 
