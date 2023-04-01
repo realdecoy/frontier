@@ -18,14 +18,78 @@
 
 ## Usage
 <!-- custom-usage -->
+Copy the `/src/commands/adam` folder and rename as needed to support your new frontier namespace. Follow the folder and file structure create commands, topics and tests for your namespace.
+
+```bash
+npm install --global @realdecoy/frontier
+frontier adam <command>
+```
+or
+```bash
+npx @realdecoy/frontier adam <command>
+```
+
+The help menu can be accessed with the command:
+
+```bash
+frontier adam --help
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
 
 <!-- custom-usagestop -->
+
+## Options
+```txt
+Usage:
+  frontier adam <command>
+
+Commands:
+    hello            -  say hello
+    world            -  say hello to the world
+  
+Options:
+    --help           -  Show help information
+```
 
 &nbsp;
 &nbsp;
 &nbsp;
 
 ## Files
+```
+adam
+├── hello
+│   ├── hello.test.ts
+│   └── index.ts
+├── world
+│   ├── world.test.ts
+│   └── index.ts
+├── index.ts
+└── README.md
+```
+
+`./hello` - example of a command folder
+
+`./hello/hello.test.ts` - test file for `hello` command
+
+`./hello/index.ts` - configuration and execution logic for the `hello` command
+
+`./world` - example of a command folder (with nested commands)
+
+`./world/index.ts` - configuration and execution logic for the `world` command
+
+`./world/galaxy.test.ts` - test file for `world galaxy` command
+
+`./world/world.test.ts` - test file for `world` command
+
+`./world/galaxy.ts` - configuration and execution logic for the `world galaxy` command
+
+`./index.ts` - namespace configuration and descriptor for shorthand help menu
+
+`./README.md` - repository specific documentation for the namespace
 
 &nbsp;
 &nbsp;

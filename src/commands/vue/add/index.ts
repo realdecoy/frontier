@@ -3,9 +3,9 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Add extends Command {
-  static aliases = ['add'];
+  static aliases = ['vue add'];
 
-  static description = 'add a new modulezzz';
+  static description = 'add a new module';
 
   static flags = {
     help: Flags.help({ name: 'help', char: 'h', hidden: false }),

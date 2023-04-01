@@ -32,14 +32,16 @@ export default class MyHelpClass extends Help {
         return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
       });
 
-    log(`
+    const optionalNewline = `${commandArgs.length === 0 ? '' : '\n'}`;
+
+    const message = `
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} ${chalk.blue('<command>')}
-
-        Commands:${argsList}
-
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} ${commandArgs.length > 0 ? chalk.blue('<command>') : ''}${optionalNewline}
+        ${commandArgs.length > 0 ? 'Commands:' : ''}${argsList}${optionalNewline}
         Options:${optionList}
-    `);
+    `;
+
+    log(message);
   }
 
   formatRoot(): string {

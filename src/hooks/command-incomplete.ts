@@ -6,6 +6,7 @@ import { Hook, toConfiguredId, toStandardizedId } from '@oclif/core';
 
 const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id }) {
   const projectConfig: ProjectConfig = readProjectConfig();
+
   let command: string | undefined = '';
 
   // eslint-disable-next-line no-negated-condition
@@ -46,11 +47,13 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
     return;
   }
 
-  // if (argv.includes('--help') || argv.includes('-h')) {
-  //   return config.runCommand('help', [toStandardizedId(command as string, config)]);
-  // }
+  console.log('asdlksd');
+  const standardizedCommand = toStandardizedId(command as string, config);
+  if (argv.includes('--help') || argv.includes('-h')) {
+    return config.runCommand(standardizedCommand);
+  }
 
-  return config.runCommand(toStandardizedId(command as string, config), argv);
+  return config.runCommand(standardizedCommand, argv);
 };
 
 export default hook;

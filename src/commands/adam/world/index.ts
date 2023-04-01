@@ -2,24 +2,23 @@
 const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
-export default class Adam extends Command {
-  static hidden = true;
+export default class World extends Command {
+  static hidden = false;
 
-  static description = 'Frontier namespace template';
+  static description = 'say hello to the world';
 
   static flags = {
     help: Flags.help({ name: 'help', char: 'h', hidden: false }),
   }
 
   static args = {
-    hello: Args.string({ name: 'hello', description: 'say hello', hidden: false }),
-    world: Args.string({ name: 'world', description: 'say hello to the world', hidden: false }),
+    galaxy: Args.string({ name: 'galaxy', description: 'say hello to the galaxy', hidden: false }),
   }
 
   showHelp(): void {
-    const commandId = Adam.id;
-    const commandArgs = Object.values(Adam.args);
-    const commandFlags = Object.values(Adam.flags);
+    const commandId = World.id;
+    const commandArgs = Object.values(World.args);
+    const commandFlags = Object.values(World.flags);
 
     // parse argument config list
     const argsList = commandArgs
@@ -52,11 +51,15 @@ export default class Adam extends Command {
   }
 
   async run(): Promise<void> {
-    const { args } = await this.parse(Adam);
-    const commandArgs = Object.values(args);
+    const { flags } = await this.parse(World);
+    const commandFlags = Object.values(flags);
+    // const commandArgs = Object.values(args);
+    const isHelp = commandFlags.includes('--help') || commandFlags.includes('-h');
 
-    if (commandArgs.length === 0) {
+    if (isHelp) {
       this.showHelp();
+    } else {
+      this.log(chalk.green('The World says Hello!'));
     }
 
     return Promise.resolve();
