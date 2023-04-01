@@ -6,7 +6,7 @@ const chalk = require('chalk');
 import prompts from 'prompts';
 import { getProjectRoot, writeFile } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
-import { CLI_STATE, TEMPLATE_TAG, PLUGIN_PRESET_LIST } from './constants';
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
 
 /**
  * Description: determine if string is valid JSON string
@@ -38,6 +38,20 @@ function hasKebab(value = ''): boolean {
 }
 
 /**
+ * Description: check if string has a substring 'kebab' in it
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function hasCamel(value = ''): boolean {
+  let result = false;
+  if (value.match(/camel/gi) !== null) {
+    result = true;
+  }
+
+  return result;
+}
+
+/**
  * Description: convert a string to kebab case (e.g. my-project-name)
  * @param {string} value - a
  * @returns {string} - string value
@@ -47,6 +61,17 @@ function toKebabCase(value: string): string {
     (value.match(/[A-Z]{2,}(?=[A-Z][a-z]+\d*|\b)|[A-Z]?[a-z]+\d*|[A-Z]|\d+/g) ?? [''])
       .map(x => x.toLowerCase())
       .join('-');
+}
+
+/**
+ * Description: convert a string to camel case (e.g. myProjectName)
+ * @param {string} value - a
+ * @returns {string} - string value
+ */
+function toCamelCase(value: string): string {
+  const pascal = toPascalCase(value);
+
+  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
 }
 
 /**
@@ -112,6 +137,31 @@ function validateEnteredName(featureName: string, exampleName = '') {
 }
 
 /**
+ * Description: determine if string is valid project name
+ * @param {string} value - a string value
+ * @returns {any} -
+ */
+function validateDomain(value: string) {
+  const isString = typeof value === 'string';
+  const isNull = value === null || value.length === 0;
+  // characters in value are limited to alphanumeric characters and hyphens or underscores
+  const charactersMatch =
+    value.match(
+      /(?:[\da-z](?:[\da-z-]{0,61}[\da-z])?\.)+[\da-z][\da-z-]{0,61}[\da-z]/,
+    ) !== null;
+  const isValid = isString && charactersMatch;
+  let resultMessage = '';
+
+  if (isNull) {
+    resultMessage = `${CLI_STATE.Error} A bundleIdentifier is required`;
+  } else if (!charactersMatch) {
+    resultMessage = `${CLI_STATE.Error} bundleIdenifiter should be a valid domain. Normally this is the reverse of you website's domain (e.g. com.company.app)`;
+  }
+
+  return isValid ? true : resultMessage;
+}
+
+/**
  * Description: parse component or prompt user to provide name for component
  * @param {string} args - a string value
  * @returns {Lookup} -
@@ -146,6 +196,29 @@ async function parseComponentName(args: Lookup): Promise<string> {
     if (result && result !== true) {
       throwNameError(result);
     }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse project or prompt user to provide name for project
+ * @param {Lookup} args - a string value
+ * @returns {string} -
+ */
+async function parseScreenName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validatePageName = validateEnteredName('screen');
+  // if no page name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'hello-world',
+      message: 'Enter a screen name: ',
+      type: 'text',
+      validate: validatePageName,
+    }]);
+    argName = responses.name;
   }
 
   return argName;
@@ -244,7 +317,7 @@ async function parseVersionName(args: Lookup): Promise<string> {
   if (!argName) {
     const responses: any = await prompts([{
       name: 'name',
-      initial: TEMPLATE_TAG,
+      initial: VUE_TEMPLATE_TAG,
       message: 'Enter a version: ',
       type: 'text',
       validate: validateVersionName,
@@ -274,7 +347,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
       initial: 0,
       message: 'Pick a preset: ',
       type: 'select',
-      choices: PLUGIN_PRESET_LIST.map((item: string) => {
+      choices: VUE_PLUGIN_PRESET_LIST.map((item: string) => {
         return {
           title: item,
         };
@@ -418,6 +491,36 @@ async function parseStoreModuleName(args: Lookup): Promise<string> {
 }
 
 /**
+ * Description: parse project or prompt user to provide name for project
+ * @param {Lookup} args - a string value
+ * @returns {string} -
+ */
+async function parseBundleIdentifier(args: Lookup): Promise<string> {
+  let argName = args.bundleIdenifier;
+  // if no page name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'temp',
+      initial: 'com.company.app',
+      message: 'Enter app\'s Bundle Idenifier: ',
+      type: 'text',
+      validate: validateDomain,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+
+        return false;
+      },
+    });
+
+    argName = responses.temp;
+  }
+
+  return argName;
+}
+
+/**
  * Description: determine if command is ran within a valid rdvue project
  * @returns {any} -
  */
@@ -496,10 +599,13 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
 }
 
 export {
+  hasCamel,
   hasKebab,
+  toCamelCase,
   toKebabCase,
   toPascalCase,
   parseComponentName,
+  parseScreenName,
   parseLayoutName,
   parseProjectName,
   parseProjectPresets,
@@ -507,6 +613,7 @@ export {
   parsePageName,
   parseServiceName,
   parseStoreModuleName,
+  parseBundleIdentifier,
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,

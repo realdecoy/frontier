@@ -4,7 +4,7 @@ import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
-import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
+import { copyFiles, parseVueModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parseServiceName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
 
 const TEMPLATE_FOLDERS = ['service'];
@@ -69,7 +69,7 @@ export default class Service extends Command {
     let installDirectory: string;
 
     // parse config files required for scaffolding this module
-    const configs = parseModuleConfig(folderList, projectRoot);
+    const configs = parseVueModuleConfig(folderList, projectRoot);
 
     // retrieve service name
     const serviceName = await parseServiceName(args);

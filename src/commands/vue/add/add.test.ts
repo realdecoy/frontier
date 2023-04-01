@@ -6,7 +6,7 @@ describe(`${VUE_CLI_COMMANDS.AddModule} --help`, () => {
     .stdout()
     .command([VUE_CLI_COMMANDS.AddModule])
     .it(`runs frontier ${VUE_CLI_COMMANDS.AddModule} --help`, ctx => {
-      expect(ctx.stdout).to.contain('npx frontier frontier add <feature>');
+      expect(ctx.stdout).to.contain('frontier vue add <component>');
     });
 
   // test

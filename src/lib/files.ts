@@ -13,9 +13,9 @@ import path from 'node:path';
 import { log } from './stdout';
 import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
-import { hasKebab } from './utilities';
+import { hasCamel, hasKebab } from './utilities';
 import { Files, InjectOptions } from '../modules';
-import { DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, TEMPLATE_ROOT } from './constants';
+import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -102,9 +102,28 @@ function readProjectConfig(): any {
  * @param {string} projectRoot -
  * @returns {[any]} -
  */
-function parseModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+function parseMobileModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
   return folderList.map(folder => {
-    const moduleTemplatePath = path.join(projectRoot, TEMPLATE_ROOT, folder);
+    const moduleTemplatePath = path.join(projectRoot, MOBILE_TEMPLATE_ROOT, folder);
+    const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
+
+    return {
+      name: folder,
+      moduleTemplatePath,
+      manifest: readConfigFile(configFilePath),
+    };
+  });
+}
+
+/**
+ *  Description: parse config files required for scaffolding this module
+ * @param {string[]} folderList -
+ * @param {string} projectRoot -
+ * @returns {[any]} -
+ */
+function parseVueModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+  return folderList.map(folder => {
+    const moduleTemplatePath = path.join(projectRoot, VUE_TEMPLATE_ROOT, folder);
     const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
 
     return {
@@ -305,16 +324,19 @@ async function updateFile(
  * @param {Files[] | Array<string | Files>} files - files to read
  * @param {string} kebabName - name of feature in kebab case
  * @param {string} pascalName - name of feature in pascal case
+ * @param {string} camelName - name of feature in camel case
  * @returns {Promise<void>} -
  */
+// eslint-disable-next-line max-params
 async function readAndUpdateFeatureFiles(
   destDir: string,
   files: Files[] | Array<string | Files>,
   kebabName: string,
   pascalName: string,
+  camelName?: string,
 ): Promise<void> {
-  let filePath = EMPTY_STRING;
-  const promisedUpdates: any = [];
+  let filePath = '';
+  const promisedUpdates = [];
 
   // [3] For each file in the list
   for (const file of files) {
@@ -333,16 +355,21 @@ async function readAndUpdateFeatureFiles(
           // [4] Get the content at the desired file path
           const fileContent = readFile(filePath);
           // [5] Update the contents of the file at given filePath
-          promisedUpdates.push(updateFile(
-            filePath,
-            fileContent,
-            contentBlock.matchRegex,
-            hasKebab(contentBlock.replace) === true ?
-              kebabName :
-              (contentBlock.replace.includes('${') ?
-                pascalName :
-                contentBlock.replace),
-          ));
+          promisedUpdates.push(
+            updateFile(
+              filePath,
+              fileContent,
+              contentBlock.matchRegex,
+              hasKebab(contentBlock.replace) === true ?
+                kebabName :
+                (hasCamel(contentBlock.replace) === true && camelName ?
+                  camelName :
+                  // eslint-disable-next-line unicorn/no-nested-ternary
+                  contentBlock.replace.includes('${') ?
+                    pascalName :
+                    contentBlock.replace),
+            ),
+          );
         }
       }
     } else if (file.content) {
@@ -507,7 +534,7 @@ function parseDynamicObjects(
     const originalObjectString = objectInProject.slice(0, -2);
 
     // Append the new information and close files after changes
-    objectStringToBeWritten = `${originalObjectString}${modifiedJSONData.trim()},${objectName === DYNAMIC_OBJECTS.Routes ? ']' : '}'};`;
+    objectStringToBeWritten = `${originalObjectString}${modifiedJSONData.trim()},${objectName === VUE_DYNAMIC_OBJECTS.Routes ? ']' : '}'};`;
   }
 
   // 1[c] Once everything is clear write the updated file into the ./rdvue foldler
@@ -603,7 +630,8 @@ export {
   parseDynamicObjects,
   verifyTemplateFolderExists,
   checkIfFolderExists,
-  parseModuleConfig,
+  parseMobileModuleConfig,
+  parseVueModuleConfig,
   replaceInFiles,
   replaceTargetFileNames,
   readAndUpdateFeatureFiles,

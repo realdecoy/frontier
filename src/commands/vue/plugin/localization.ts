@@ -11,7 +11,7 @@ import { Files } from '../../../modules';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
-import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../lib/files';
+import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -89,7 +89,7 @@ export default class Localization extends Command {
     let installDirectory = '';
 
     // parse config files required for scaffolding this module
-    const configs = parseModuleConfig(folderList, projectRoot);
+    const configs = parseVueModuleConfig(folderList, projectRoot);
     const config = configs[0];
     const files: Array<string | Files> = config.manifest.files;
     const dependencies = config.manifest.packages.dependencies.toString()
@@ -101,7 +101,7 @@ export default class Localization extends Command {
 
     if (skipInstallStep === false) {
       try {
-        // // install dev dependencies
+        // install dev dependencies
         if (isTest !== true) {
           ux.action.start(`${CLI_STATE.Info} installing localization dev dependencies`);
         }
@@ -112,7 +112,7 @@ export default class Localization extends Command {
           ux.action.stop();
         }
 
-        // // install dependencies
+        // install dependencies
         if (isTest !== true) {
           ux.action.start(`${CLI_STATE.Info} installing localization dependencies`);
         }

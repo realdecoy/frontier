@@ -4,7 +4,7 @@ import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
 import { CLI_STATE, VUE_CLI_COMMANDS, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
-import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
+import { copyFiles, parseVueModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parseLayoutName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
 
 const TEMPLATE_FOLDERS = ['layout'];
@@ -70,7 +70,7 @@ export default class Layout extends Command {
     let installDirectory: string;
     // let templateFile: string;
 
-    const configs = parseModuleConfig(folderList, projectRoot);
+    const configs = parseVueModuleConfig(folderList, projectRoot);
 
     const layoutName = await parseLayoutName(args);
     // parse kebab and pascal case of layoutName

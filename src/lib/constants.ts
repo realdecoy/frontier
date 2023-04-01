@@ -48,19 +48,16 @@ enum VUE_CLI_COMMANDS_ENUM {
 export const VUE_CLI_COMMANDS = VUE_CLI_COMMANDS_ENUM;
 
 enum MOBILE_CLI_COMMANDS_ENUM {
-  CreateProject = 'create-project',
-  Upgrade = 'upgrade',
-  AddComponent = 'add:component',
-  AddLayout = 'add:layout',
-  AddScreen = 'add:screen',
-  AddService = 'add:service',
-  AddStore = 'add:store',
-  AddModule = 'add',
-  PluginBuefy = 'plugin:buefy',
-  PluginLocalization = 'plugin:localization',
-  PluginVuetify = 'plugin:vuetify',
-  PluginBitrise= 'plugin:bitrise',
-  PluginLibrary = 'plugin',
+  CreateProject = 'mobile create-project',
+  AddComponent = 'mobile add component',
+  AddLayout = 'mobile add layout',
+  AddScreen = 'mobile add screen',
+  AddService = 'mobile add service',
+  AddStore = 'mobile add store',
+  AddModule = 'mobile add',
+  PluginLocalization = 'mobile plugin localization',
+  PluginBitrise= 'mobile plugin bitrise',
+  PluginLibrary = 'mobile plugin',
   PoorHelpCommand = 'add-help',
 }
 export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
@@ -133,3 +130,12 @@ enum VUE_DYNAMIC_OBJECTS_ENUM {
 }
 
 export const VUE_DYNAMIC_OBJECTS = VUE_DYNAMIC_OBJECTS_ENUM;
+
+enum MOBILE_DYNAMIC_OBJECTS_ENUM {
+  Routes = 'routes',
+  Store = 'store',
+  Options = 'options',
+  Modules = 'modules',
+}
+
+export const MOBILE_DYNAMIC_OBJECTS = MOBILE_DYNAMIC_OBJECTS_ENUM;

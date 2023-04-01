@@ -1,19 +1,19 @@
-// eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
-const util = require('util');
-// eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
+// eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
+const util = require('util');
 const exec = util.promisify(shell.exec);
+// eslint-disable-next-line unicorn/prefer-module
+const chalk = require('chalk');
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
+import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
+import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
 
-const TEMPLATE_FOLDERS = ['vuetify'];
+const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,19 +22,19 @@ const CUSTOM_ERROR_CODES = new Set([
   'dependency-install-error',
 ]);
 
-export default class Vuetify extends Command {
-  static aliases = ['vue plugin vuetify'];
+export default class Localization extends Command {
+  static aliases = ['mobile plugin localization']
 
-  static description = 'lightweigth UI components for Vuejs';
+  static description = 'adds i18bn localization'
 
   static flags = {
     help: Flags.help({ char: 'h' }),
     isTest: Flags.boolean({ hidden: true }),
     forceProject: Flags.string({ hidden: true }),
     skipInstall: Flags.boolean({ hidden: true }),
-  };
+  }
 
-  static args = {};
+  static args = {}
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
@@ -61,7 +61,7 @@ export default class Vuetify extends Command {
   }
 
   async run(): Promise<void> {
-    const { flags } = await this.parse(Vuetify);
+    const { flags } = await this.parse(Localization);
     const projectName = flags.forceProject;
     const isTest = flags.isTest === true;
     const skipInstallStep = flags.skipInstall === true;
@@ -71,12 +71,12 @@ export default class Vuetify extends Command {
     const validityResponse = checkProjectValidity();
     const { isValid: isValidProject } = validityResponse;
     let { projectRoot } = validityResponse;
-    // block command unless being run within an frontier project
+    // block command unless being run within an mobile project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${VUE_CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('frontier')} project`,
+          message: `${MOBILE_CLI_COMMANDS.PluginLocalization} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -89,7 +89,7 @@ export default class Vuetify extends Command {
     let installDirectory = '';
 
     // parse config files required for scaffolding this module
-    const configs = parseVueModuleConfig(folderList, projectRoot);
+    const configs = parseMobileModuleConfig(folderList, projectRoot);
     const config = configs[0];
     const files: Array<string | Files> = config.manifest.files;
     const dependencies = config.manifest.packages.dependencies.toString()
@@ -103,10 +103,10 @@ export default class Vuetify extends Command {
       try {
         // install dev dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing vuetify dev dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing localization dev dependencies`);
         }
 
-        await exec(`${preInstallCommand} npm install --save-dev --legacy-peer-deps ${devDependencies}`, { silent: true });
+        await exec(`${preInstallCommand} npm install --save-dev ${devDependencies}`, { silent: true });
 
         if (isTest !== true) {
           ux.action.stop();
@@ -114,10 +114,10 @@ export default class Vuetify extends Command {
 
         // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing vuetify dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing localization dependencies`);
         }
 
-        await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
+        await exec(`${preInstallCommand} npm install --save ${dependencies}`, { silent: true });
 
         if (isTest !== true) {
           ux.action.stop();
@@ -126,13 +126,13 @@ export default class Vuetify extends Command {
         throw new Error(
           JSON.stringify({
             code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} vuetify dependencies failed to install`,
+            message: `${this.id?.split(':')[1]} localization dependencies failed to install`,
           }),
         );
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding vuetify dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding localization dependencies`);
       }
 
       await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
@@ -148,9 +148,8 @@ export default class Vuetify extends Command {
 
     // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), VUE_DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), VUE_DYNAMIC_OBJECTS.Options, true);
-
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), MOBILE_DYNAMIC_OBJECTS.Routes);
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), MOBILE_DYNAMIC_OBJECTS.Options, true);
     if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
       const { imports: mainImports, modules: mainModules } = config.manifest.main;
       injectImportsIntoMain(projectRoot, mainImports);
@@ -166,7 +165,7 @@ export default class Vuetify extends Command {
       }
     } else {
       // FP-414: backwards compatibility
-      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), VUE_DYNAMIC_OBJECTS.Modules, true);
+      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), MOBILE_DYNAMIC_OBJECTS.Modules, true);
     }
 
     if (skipInstallStep === false) {
