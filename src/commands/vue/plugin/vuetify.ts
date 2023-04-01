@@ -10,7 +10,7 @@ import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
 import { copyFiles, parseDynamicObjects, parseModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { CLI_COMMANDS, CLI_STATE, DYNAMIC_OBJECTS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
@@ -71,12 +71,12 @@ export default class Vuetify extends Command {
     const validityResponse = checkProjectValidity();
     const { isValid: isValidProject } = validityResponse;
     let { projectRoot } = validityResponse;
-    // block command unless being run within an rdvue project
+    // block command unless being run within an frontier project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${VUE_CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -148,8 +148,8 @@ export default class Vuetify extends Command {
 
     // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), DYNAMIC_OBJECTS.Options, true);
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), VUE_DYNAMIC_OBJECTS.Routes);
+    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), VUE_DYNAMIC_OBJECTS.Options, true);
 
     if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
       const { imports: mainImports, modules: mainModules } = config.manifest.main;
@@ -166,7 +166,7 @@ export default class Vuetify extends Command {
       }
     } else {
       // FP-414: backwards compatibility
-      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), DYNAMIC_OBJECTS.Modules, true);
+      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), VUE_DYNAMIC_OBJECTS.Modules, true);
     }
 
     if (skipInstallStep === false) {

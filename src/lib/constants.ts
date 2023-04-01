@@ -1,10 +1,18 @@
+import chalk from 'chalk';
+
 /* eslint-disable no-unused-vars */
-export const TEMPLATE_ROOT = '.rdvue/template';
-export const TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';
+export const VUE_TEMPLATE_ROOT = '.rdvue/template';
+export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
+export const MOBILE_TEMPLATE_REPO =
+  'https://github.com/realdecoy/rdvue-mobile-template';
+export const VUE_TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';
 export const DESIGN_TEMPLATE_REPO = 'https://github.com/realdecoy/design-system-components';
-export const TEMPLATE_TAG = 'v2.2.3'; // replace this with the appropriate release tag in the template repo
+export const VUE_TEMPLATE_TAG = 'v2.2.3'; // replace this with the appropriate release tag in the template repo
+export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the appropriate release tag in the template repo
 export const DESIGN_TEMPLATE_FOLDER = 'library';
 export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
+export const TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX = /__PROJECT_SCHEME__/g;
+export const TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX = /__BUNDLE_IDENTIFIER__/g;
 export const TEMPLATE_CONFIG_FILENAME = 'manifest.json';
 export const CHANGE_LOG_FOLDER = 'changelogs';
 export const CHANGE_LOG_FILENAME = 'CHANGELOG.md';
@@ -14,13 +22,6 @@ export const RDVUE_DIRECTORY = '.rdvue';
 export const FRONTIER_RC = '.frontierrc';
 export const RDVUE_COPY = '.rdvue-copy';
 
-enum DYNAMIC_OBJECTS_ENUM {
-  Routes = 'routes',
-  Store = 'store',
-  Options = 'options',
-  Modules = 'modules',
-}
-export const DYNAMIC_OBJECTS = DYNAMIC_OBJECTS_ENUM;
 export const CLI_NAMESPACES = [
   'vue',
   'mobile',
@@ -29,7 +30,7 @@ export const CLI_NAMESPACES = [
   'qa',
 ];
 
-enum CLI_COMMANDS_ENUM {
+enum VUE_CLI_COMMANDS_ENUM {
   CreateProject = 'vue create-project',
   Upgrade = 'vue upgrade',
   AddComponent = 'vue add component',
@@ -44,9 +45,27 @@ enum CLI_COMMANDS_ENUM {
   PluginLibrary = 'vue plugin',
   PoorHelpCommand = 'add-help'
 }
-export const CLI_COMMANDS = CLI_COMMANDS_ENUM;
+export const VUE_CLI_COMMANDS = VUE_CLI_COMMANDS_ENUM;
 
-enum DOCUMENTATION_LINKS_ENUM {
+enum MOBILE_CLI_COMMANDS_ENUM {
+  CreateProject = 'create-project',
+  Upgrade = 'upgrade',
+  AddComponent = 'add:component',
+  AddLayout = 'add:layout',
+  AddScreen = 'add:screen',
+  AddService = 'add:service',
+  AddStore = 'add:store',
+  AddModule = 'add',
+  PluginBuefy = 'plugin:buefy',
+  PluginLocalization = 'plugin:localization',
+  PluginVuetify = 'plugin:vuetify',
+  PluginBitrise= 'plugin:bitrise',
+  PluginLibrary = 'plugin',
+  PoorHelpCommand = 'add-help',
+}
+export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
+
+enum VUE_DOCUMENTATION_LINKS_ENUM {
   Rdvue = 'https://realdecoy.github.io/rdvue/#/',
   Component = 'https://realdecoy.github.io/rdvue/#/Features?id=components',
   Layout = 'https://realdecoy.github.io/rdvue/#/Features?id=layouts',
@@ -55,15 +74,25 @@ enum DOCUMENTATION_LINKS_ENUM {
   Store = 'https://realdecoy.github.io/rdvue/#/Features?id=stores',
   EsBuild = 'https://esbuild.github.io/',
 }
-export const DOCUMENTATION_LINKS = DOCUMENTATION_LINKS_ENUM;
+export const VUE_DOCUMENTATION_LINKS = VUE_DOCUMENTATION_LINKS_ENUM;
 
-export const PLUGIN_PRESET_LIST = [
+enum MOBILE_DOCUMENTATION_LINKS_ENUM {
+  Rdvue = 'https://realdecoy.github.io/rdvue/#/',
+  Component = 'http://frontier.realdecoy.com/mobile/features/components',
+  Screen = 'http://frontier.realdecoy.com/mobile/features/screens',
+  Service = 'http://frontier.realdecoy.com/mobile/features/services',
+  Navigation = 'http://frontier.realdecoy.com/mobile/features/navigation',
+  Store = 'http://frontier.realdecoy.com/mobile/features/stores',
+}
+export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
+
+export const VUE_PLUGIN_PRESET_LIST = [
   'Buefy & Localization (recommended)',
   'Vuetify & Localization',
   '[Skip presets]',
 ];
 
-export const TEMPLATE_REPLACEMENT_FILES = [
+export const VUE_TEMPLATE_REPLACEMENT_FILES = [
   'README.md',
   'package.json',
   '.rdvue/.rdvue',
@@ -71,9 +100,36 @@ export const TEMPLATE_REPLACEMENT_FILES = [
   'public/manifest.json',
 ];
 
+export const MOBILE_TEMPLATE_REPLACEMENT_FILES = [
+  'package.json',
+  'package-lock.json',
+  '.rdvue/.rdvue',
+  'app.json',
+];
+
+export const MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES = [
+  'bitrise.yml',
+  'app.json',
+];
+
 export const CLI_STATE = {
-  Info: '[rdvue]',
-  Error: '[rdvue]',
-  Warning: '[rdvue]',
-  Success: '[rdvue]',
+  Info: `${chalk.blue('[frontier]')}`,
+  Error: `${chalk.red('[frontier]')}`,
+  Warning: `${chalk.yellow('[frontier]')}`,
+  Success: `${chalk.green('[frontier]')}`,
 };
+
+export const BITRISE_CONFIGS = {
+  baseURL: 'https://api.bitrise.io/v0.1',
+};
+
+export const REQUEST_TIMEOUT_MILLISECONDS = 3600;
+
+enum VUE_DYNAMIC_OBJECTS_ENUM {
+  Routes = 'routes',
+  Store = 'store',
+  Options = 'options',
+  Modules = 'modules',
+}
+
+export const VUE_DYNAMIC_OBJECTS = VUE_DYNAMIC_OBJECTS_ENUM;

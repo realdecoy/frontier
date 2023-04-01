@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
 const skipPresets = '--skipPresets';
@@ -9,30 +9,30 @@ const testProjectName = 'rdv-hello-world-test';
 const testPageName = 'hello-world';
 // const badPageName = 'he%20-2world';
 
-describe(CLI_COMMANDS.AddPage, () => {
+describe(VUE_CLI_COMMANDS.AddPage, () => {
   test
     .stdout()
-    .command([CLI_COMMANDS.AddPage])
-    .it(`runs rdvue ${CLI_COMMANDS.AddPage} ${testPageName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddPage} command must be run in an existing rdvue project`);
+    .command([VUE_CLI_COMMANDS.AddPage])
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddPage} ${testPageName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] ${VUE_CLI_COMMANDS.AddPage} command must be run in an existing frontier project`);
     });
 
   test
     .stdout()
-    .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
+    .command([VUE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
     .do(() => process.chdir(testProjectName))
-    .command([CLI_COMMANDS.AddPage, testPageName])
+    .command([VUE_CLI_COMMANDS.AddPage, testPageName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddPage} ${testPageName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] page added: ${testPageName}`);
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddPage} ${testPageName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] page added: ${testPageName}`);
     });
 
   // test
   //   .stdout()
   //   .do(() => process.chdir(testProjectName))
-  //   .command([CLI_COMMANDS.AddPage, badPageName, skipPresets, isTest])
+  //   .command([VUE_CLI_COMMANDS.AddPage, badPageName, skipPresets, isTest])
   //   .it('tries to run create page with a poorly formatted command', ctx => {
-  //     expect(ctx.stdout).to.contain(`Error: command ${CLI_COMMANDS.AddPage} not found`);
+  //     expect(ctx.stdout).to.contain(`Error: command ${VUE_CLI_COMMANDS.AddPage} not found`);
   //   });
 
   after(() => {

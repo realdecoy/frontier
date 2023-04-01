@@ -9,14 +9,14 @@ import Localization from '../plugin/localization';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
 import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase } from '../../../lib/utilities';
 import {
-  TEMPLATE_REPO,
+  VUE_TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
   DESIGN_TEMPLATE_FOLDER,
-  TEMPLATE_TAG,
+  VUE_TEMPLATE_TAG,
   TEMPLATE_PROJECT_NAME_REGEX,
-  TEMPLATE_REPLACEMENT_FILES,
+  VUE_TEMPLATE_REPLACEMENT_FILES,
   CLI_STATE,
-  PLUGIN_PRESET_LIST,
+  VUE_PLUGIN_PRESET_LIST,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -71,10 +71,10 @@ export default class CreateProject extends Command {
 
   async run(): Promise<void> {
     const { flags, args } = await this.parse(CreateProject);
-    const template: string = TEMPLATE_REPO;
+    const template: string = VUE_TEMPLATE_REPO;
     const designTemplate: string = DESIGN_TEMPLATE_REPO;
     const designTemplateFolder: string = DESIGN_TEMPLATE_FOLDER;
-    const tag: string = TEMPLATE_TAG;
+    const tag: string = VUE_TEMPLATE_TAG;
     const replaceRegex = TEMPLATE_PROJECT_NAME_REGEX;
     const isTest = flags.isTest === true;
     const skipPresetsStep = flags.skipPresets === true;
@@ -83,16 +83,16 @@ export default class CreateProject extends Command {
     const withLocalization = flags.withLocalization === true;
     const withDesignSystem = flags.withDesignSystem === true;
 
-    let filesToReplace = TEMPLATE_REPLACEMENT_FILES;
+    let filesToReplace = VUE_TEMPLATE_REPLACEMENT_FILES;
     let projectName: string;
     let presetName = '';
     const { isValid: isValidProject } = checkProjectValidity();
-    // block command if being run within an rdvue project
+    // block command if being run within an frontier project
     if (isValidProject) {
       throw new Error(
         JSON.stringify({
           code: 'existing-project',
-          message: `you are already in an existing ${chalk.yellow('rdvue')} project`,
+          message: `you are already in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     }
@@ -101,7 +101,7 @@ export default class CreateProject extends Command {
     projectName = await parseProjectName(args);
     // retrieve project preset
     // on skip preset flag set presetName to skip presets
-    presetName = skipPresetsStep ? PLUGIN_PRESET_LIST[2] : await parseProjectPresets(args);
+    presetName = skipPresetsStep ? VUE_PLUGIN_PRESET_LIST[2] : await parseProjectPresets(args);
     // convert project name to kebab case
     projectName = toKebabCase(projectName);
     // verify that project folder doesnt already exist
@@ -122,7 +122,7 @@ export default class CreateProject extends Command {
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
-    const presetIndex = PLUGIN_PRESET_LIST.indexOf(presetName);
+    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
     const shouldInstallBuefy = presetIndex === 0 || withBuefy === true;
     const shouldInstallVuetify = presetIndex === 1 || withVuetify === true;
     const shouldInstallLocalization = presetIndex === 0 || presetIndex === 1 || withLocalization === true;

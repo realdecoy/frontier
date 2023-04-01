@@ -3,7 +3,7 @@ const chalk = require('chalk');
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
-import { CLI_STATE, CLI_COMMANDS, DOCUMENTATION_LINKS } from '../../../lib/constants';
+import { CLI_STATE, VUE_CLI_COMMANDS, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parseLayoutName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
 
@@ -54,12 +54,12 @@ export default class Layout extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+    // block command unless being run within an frontier project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddLayout} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${VUE_CLI_COMMANDS.AddLayout} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     }
@@ -91,6 +91,6 @@ export default class Layout extends Command {
     });
 
     this.log(`${CLI_STATE.Success} layout added: ${layoutNameKebab}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Layout)}\n`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(VUE_DOCUMENTATION_LINKS.Layout)}\n`);
   }
 }

@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
 const skipPresets = '--skipPresets';
@@ -9,30 +9,30 @@ const testProjectName = 'rdv-auth-service-test';
 const testServiceName = 'auth-service';
 // const badServiceName = 'auth%20-2service';
 
-describe(CLI_COMMANDS.AddService, () => {
+describe(VUE_CLI_COMMANDS.AddService, () => {
   test
     .stdout()
-    .command([CLI_COMMANDS.AddService])
-    .it(`runs rdvue ${CLI_COMMANDS.AddService} ${testServiceName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddService} command must be run in an existing rdvue project`);
+    .command([VUE_CLI_COMMANDS.AddService])
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddService} ${testServiceName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] ${VUE_CLI_COMMANDS.AddService} command must be run in an existing frontier project`);
     });
 
   test
     .stdout()
-    .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
+    .command([VUE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
     .do(() => process.chdir(testProjectName))
-    .command([CLI_COMMANDS.AddService, testServiceName])
+    .command([VUE_CLI_COMMANDS.AddService, testServiceName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddService} ${testServiceName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] service added: ${testServiceName}`);
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddService} ${testServiceName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] service added: ${testServiceName}`);
     });
 
   // test
   //   .stdout()
   //   .do(() => process.chdir(testProjectName))
-  //   .command([CLI_COMMANDS.AddService, badServiceName, skipPresets])
+  //   .command([VUE_CLI_COMMANDS.AddService, badServiceName, skipPresets])
   //   .it('tries to run create service with a poorly formatted command', ctx => {
-  //     expect(ctx.stdout).to.contain(`Error: command ${CLI_COMMANDS.AddService} not found`);
+  //     expect(ctx.stdout).to.contain(`Error: command ${VUE_CLI_COMMANDS.AddService} not found`);
   //   });
 
   after(() => {

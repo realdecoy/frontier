@@ -3,7 +3,7 @@ const chalk = require('chalk');
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
-import { CLI_COMMANDS, CLI_STATE, DOCUMENTATION_LINKS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parseComponentName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
 
@@ -54,12 +54,12 @@ export default class Component extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+    // block command unless being run within an frontier project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.AddComponent} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${VUE_CLI_COMMANDS.AddComponent} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     }
@@ -91,6 +91,6 @@ export default class Component extends Command {
     });
 
     this.log(`${CLI_STATE.Success} component added: ${componentNameKebab}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOCUMENTATION_LINKS.Component)}\n`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(VUE_DOCUMENTATION_LINKS.Component)}\n`);
   }
 }

@@ -10,7 +10,7 @@ import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
 import { Route } from '../../../modules/manifest';
 import { injectImportsIntoMain } from '../../../lib/plugins';
-import { CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { copyFiles, inject, parseModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
 
@@ -73,12 +73,12 @@ export default class Buefy extends Command {
     const { isValid: isValidProject } = projectValidity;
     let { projectRoot } = projectValidity;
 
-    // block command unless being run within an rdvue project
+    // block command unless being run within an frontier project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${VUE_CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     } else if (hasProjectName) {

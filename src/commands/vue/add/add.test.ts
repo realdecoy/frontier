@@ -1,18 +1,18 @@
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants';
 
-describe(`${CLI_COMMANDS.AddModule} --help`, () => {
+describe(`${VUE_CLI_COMMANDS.AddModule} --help`, () => {
   test
     .stdout()
-    .command([CLI_COMMANDS.AddModule])
-    .it(`runs rdvue ${CLI_COMMANDS.AddModule} --help`, ctx => {
-      expect(ctx.stdout).to.contain('npx frontier rdvue add <feature>');
+    .command([VUE_CLI_COMMANDS.AddModule])
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddModule} --help`, ctx => {
+      expect(ctx.stdout).to.contain('npx frontier frontier add <feature>');
     });
 
   // test
   //   .stdout()
-  //   .command([CLI_COMMANDS.PoorHelpCommand])
-  //   .it(`runs poorly formatted rdvue ${CLI_COMMANDS.AddModule} -help command`, ctx => {
-  //     expect(ctx.error).to.contain(`Error: command ${CLI_COMMANDS.PoorHelpCommand} not found`);
+  //   .command([VUE_CLI_COMMANDS.PoorHelpCommand])
+  //   .it(`runs poorly formatted frontier ${VUE_CLI_COMMANDS.AddModule} -help command`, ctx => {
+  //     expect(ctx.error).to.contain(`Error: command ${VUE_CLI_COMMANDS.PoorHelpCommand} not found`);
   //   });
 });

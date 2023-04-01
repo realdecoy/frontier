@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
 const skipPresets = '--skipPresets';
@@ -9,30 +9,30 @@ const testProjectName = 'rdv-store-module-test';
 const testStoreName = 'auth-store';
 // const badStoreName = 'auth%20-2store';
 
-describe(CLI_COMMANDS.AddStore, () => {
+describe(VUE_CLI_COMMANDS.AddStore, () => {
   test
     .stdout()
-    .command([CLI_COMMANDS.AddStore])
-    .it(`runs rdvue ${CLI_COMMANDS.AddStore} ${testStoreName} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.AddStore} command must be run in an existing rdvue project`);
+    .command([VUE_CLI_COMMANDS.AddStore])
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddStore} ${testStoreName} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] ${VUE_CLI_COMMANDS.AddStore} command must be run in an existing frontier project`);
     });
 
   test
     .stdout()
-    .command([CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
+    .command([VUE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets, isTest])
     .do(() => process.chdir(testProjectName))
-    .command([CLI_COMMANDS.AddStore, testStoreName])
+    .command([VUE_CLI_COMMANDS.AddStore, testStoreName])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.AddStore} ${testStoreName}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] store added: ${testStoreName}`);
+    .it(`runs frontier ${VUE_CLI_COMMANDS.AddStore} ${testStoreName}`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] store added: ${testStoreName}`);
     });
 
   // test
   //   .stdout()
   //   .do(() => process.chdir(testProjectName))
-  //   .command([CLI_COMMANDS.AddStore, badStoreName, skipPresets])
+  //   .command([VUE_CLI_COMMANDS.AddStore, badStoreName, skipPresets])
   //   .it('tries to run create store with a poorly formatted command', ctx => {
-  //     expect(ctx.stdout).to.contain(`Error: command ${CLI_COMMANDS.AddStore} not found`);
+  //     expect(ctx.stdout).to.contain(`Error: command ${VUE_CLI_COMMANDS.AddStore} not found`);
   //   });
 
   after(() => {

@@ -9,7 +9,7 @@ import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { checkProjectValidity, createChangelogReadme, isJsonString } from '../../../lib/utilities';
 import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../lib/files';
-import { CLI_COMMANDS, CLI_STATE, TEMPLATE_REPO, TEMPLATE_ROOT, TEMPLATE_TAG, DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_TEMPLATE_REPO, VUE_TEMPLATE_ROOT, VUE_TEMPLATE_TAG, VUE_DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../lib/constants';
 import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -18,7 +18,7 @@ const CUSTOM_ERROR_CODES = new Set([
 export default class Upgrade extends Command {
   static aliases = ['vue upgrade'];
 
-  static description = 'Specify the rdvue template version for a project'
+  static description = 'Specify the frontier template version for a project'
 
   static flags = {
     help: Flags.help({ char: 'h' }),
@@ -26,7 +26,7 @@ export default class Upgrade extends Command {
   }
 
   static args = {
-    name: Args.string({ name: 'name', description: 'rdvue version' }),
+    name: Args.string({ name: 'name', description: 'frontier version' }),
   }
 
   // override Command class error handler
@@ -55,23 +55,23 @@ export default class Upgrade extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
-    // block command unless being run within an rdvue project
+    // block command unless being run within an frontier project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${CLI_COMMANDS.Upgrade} command must be run in an existing ${chalk.yellow('rdvue')} project`,
+          message: `${VUE_CLI_COMMANDS.Upgrade} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     }
 
     const { args } = await this.parse(Upgrade);
-    const template: string = TEMPLATE_REPO;
-    const versionName = args.name ?? TEMPLATE_TAG;
+    const template: string = VUE_TEMPLATE_REPO;
+    const versionName = args.name ?? VUE_TEMPLATE_TAG;
     const temporaryProjectFolder = path.join(projectRoot, 'node_modules', '_temp');
-    const templateSourcePath = path.join(temporaryProjectFolder, TEMPLATE_ROOT);
+    const templateSourcePath = path.join(temporaryProjectFolder, VUE_TEMPLATE_ROOT);
 
-    const templateDestinationPath = path.join(projectRoot, TEMPLATE_ROOT);
+    const templateDestinationPath = path.join(projectRoot, VUE_TEMPLATE_ROOT);
     const changelogPath = path.join(projectRoot, CHANGE_LOG_FILENAME);
 
     // retrieve project files from template source
@@ -116,12 +116,12 @@ export default class Upgrade extends Command {
 
     fs.rmSync(temporaryProjectFolder, { recursive: true });
 
-    this.log(`${CLI_STATE.Success} rdvue updated to version: ${chalk.green(versionName)}`);
+    this.log(`${CLI_STATE.Success} frontier updated to version: ${chalk.green(versionName)}`);
 
     createChangelogReadme(versionName, changelogPath, changeLogData);
     this.log(`${CLI_STATE.Success} CHANGELOG.md generated at : ${chalk.green(changelogPath)}`);
 
-    this.log(`\n  ${chalk.yellow('rdvue')} has been updated to use the esbuild bundler!\n  Learn more here: ${chalk.yellow(DOCUMENTATION_LINKS.EsBuild)}\n`);
+    this.log(`\n  ${chalk.yellow('frontier')} has been updated to use the esbuild bundler!\n  Learn more here: ${chalk.yellow(VUE_DOCUMENTATION_LINKS.EsBuild)}\n`);
     this.log(changeLogData.reccomendations);
   }
 

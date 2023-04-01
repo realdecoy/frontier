@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
 const skipPresets = '--skipPresets';
@@ -8,22 +8,22 @@ const isTest = '--isTest';
 const testProjectName = 'rdv-plugin-localization-test';
 const testProjectName2 = 'rdv-plugin-localization-test-2';
 
-describe(CLI_COMMANDS.PluginLocalization, () => {
+describe(VUE_CLI_COMMANDS.PluginLocalization, () => {
   test
     .stdout()
-    .command([CLI_COMMANDS.PluginLocalization])
-    .it(`runs rdvue ${CLI_COMMANDS.PluginLocalization} (outside project)`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] ${CLI_COMMANDS.PluginLocalization} command must be run in an existing rdvue project`);
+    .command([VUE_CLI_COMMANDS.PluginLocalization])
+    .it(`runs frontier ${VUE_CLI_COMMANDS.PluginLocalization} (outside project)`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] ${VUE_CLI_COMMANDS.PluginLocalization} command must be run in an existing frontier project`);
     });
 
   test
     .stdout()
-    .command([CLI_COMMANDS.CreateProject, testProjectName2, skipPresets, isTest])
+    .command([VUE_CLI_COMMANDS.CreateProject, testProjectName2, skipPresets, isTest])
     .do(() => process.chdir(testProjectName2))
-    .command([CLI_COMMANDS.PluginLocalization, isTest])
+    .command([VUE_CLI_COMMANDS.PluginLocalization, isTest])
     .do(() => process.chdir('../'))
-    .it(`runs rdvue ${CLI_COMMANDS.PluginLocalization}`, ctx => {
-      expect(ctx.stdout).to.contain(`[rdvue] plugin added: ${CLI_COMMANDS.PluginLocalization.split(' ')[1]}`);
+    .it(`runs frontier ${VUE_CLI_COMMANDS.PluginLocalization}`, ctx => {
+      expect(ctx.stdout).to.contain(`[frontier] plugin added: ${VUE_CLI_COMMANDS.PluginLocalization.split(' ')[1]}`);
     });
 
   after(() => {
