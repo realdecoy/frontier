@@ -3,7 +3,6 @@ import { expect, test } from '@oclif/test';
 import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
-const skipPresets = '--skipPresets';
 const withLocalization = '--withLocalization';
 const testProjectName = 'mob-plugin-localization-test';
 
@@ -17,7 +16,7 @@ describe(MOBILE_CLI_COMMANDS.PluginLocalization, () => {
 
   test
     .stdout()
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets, withLocalization])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, withLocalization])
     .do(() => process.chdir(testProjectName))
     .command([MOBILE_CLI_COMMANDS.PluginLocalization])
     .do(() => process.chdir('../'))

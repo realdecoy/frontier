@@ -4,13 +4,12 @@ import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
 const testProjectName = 'mob-hello-world';
-const skipPresets = '--skipPresets';
 // const badProjectName = '$testProject@project';
 
 describe(MOBILE_CLI_COMMANDS.CreateProject, () => {
   test
     .stdout()
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName])
     .it(`runs ${MOBILE_CLI_COMMANDS.CreateProject} ${testProjectName}`, ctx => {
       expect(ctx.stdout).to.contain(`[frontier] ${testProjectName} is ready!`);
     });
@@ -18,7 +17,7 @@ describe(MOBILE_CLI_COMMANDS.CreateProject, () => {
   test
     .stdout()
     .do(() => process.chdir(testProjectName))
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName])
     .do(() => process.chdir('../'))
     .it(`runs ${MOBILE_CLI_COMMANDS.CreateProject} ${testProjectName}`, ctx => {
       expect(ctx.stdout).to.contain('[frontier] you are already in an existing mobile project');
@@ -26,7 +25,7 @@ describe(MOBILE_CLI_COMMANDS.CreateProject, () => {
 
   // test
   //   .stdout()
-  //   .command([MOBILE_CLI_COMMANDS.CreateProject, badProjectName, skipPresets])
+  //   .command([MOBILE_CLI_COMMANDS.CreateProject, badProjectName])
   //   .it('tries to run create project with a poorly formatted command', ctx => {
   //     expect(ctx.stdout).to.contain(`Error: command ${MOBILE_CLI_COMMANDS.CreateProject} not found`);
   //   });

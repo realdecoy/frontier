@@ -3,7 +3,6 @@ import { expect, test } from '@oclif/test';
 import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
-const skipPresets = '--skipPresets';
 const testProjectName = 'mob-component-test';
 const testComponentName = 'hello-world';
 const { log } = console;
@@ -18,7 +17,7 @@ describe(MOBILE_CLI_COMMANDS.AddComponent, () => {
 
   test
     .stdout()
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName])
     .do(() => process.chdir(testProjectName))
     .command([MOBILE_CLI_COMMANDS.AddComponent, testComponentName])
     .do(() => process.chdir('../'))

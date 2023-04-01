@@ -3,7 +3,6 @@ import { expect, test } from '@oclif/test';
 import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
-const skipPresets = '--skipPresets';
 const testProjectName = 'mob-hello-world-test';
 const testPageName = 'hello-world';
 // const badPageName = 'he%20-2world';
@@ -18,7 +17,7 @@ describe(MOBILE_CLI_COMMANDS.AddScreen, () => {
 
   test
     .stdout()
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName])
     .do(() => process.chdir(testProjectName))
     .command([MOBILE_CLI_COMMANDS.AddScreen, testPageName])
     .do(() => process.chdir('../'))
@@ -29,7 +28,7 @@ describe(MOBILE_CLI_COMMANDS.AddScreen, () => {
   // test
   //   .stdout()
   //   .do(() => process.chdir(testProjectName))
-  //   .command([MOBILE_CLI_COMMANDS.AddScreen, badPageName, skipPresets])
+  //   .command([MOBILE_CLI_COMMANDS.AddScreen, badPageName])
   //   .it('tries to run create page with a poorly formatted command', ctx => {
   //     expect(ctx.stdout).to.contain(`Error: command ${MOBILE_CLI_COMMANDS.AddScreen} not found`);
   //   });

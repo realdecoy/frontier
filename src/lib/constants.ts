@@ -47,6 +47,14 @@ enum VUE_CLI_COMMANDS_ENUM {
 }
 export const VUE_CLI_COMMANDS = VUE_CLI_COMMANDS_ENUM;
 
+enum ADAM_CLI_COMMANDS_ENUM {
+  Hello = 'adam hello',
+  World = 'adam world',
+  WorldGalaxy = 'adam world galaxy',
+  PoorHelpCommand = 'adam-help'
+}
+export const ADAM_CLI_COMMANDS = ADAM_CLI_COMMANDS_ENUM;
+
 enum MOBILE_CLI_COMMANDS_ENUM {
   CreateProject = 'mobile create-project',
   AddComponent = 'mobile add component',

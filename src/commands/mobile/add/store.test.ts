@@ -3,7 +3,6 @@ import { expect, test } from '@oclif/test';
 import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
 import { exec } from 'node:child_process';
 
-const skipPresets = '--skipPresets';
 const testProjectName = 'mob-store-module-test';
 const testStoreName = 'auth-store';
 // const badStoreName = 'auth%20-2store';
@@ -18,7 +17,7 @@ describe(MOBILE_CLI_COMMANDS.AddStore, () => {
 
   test
     .stdout()
-    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName, skipPresets])
+    .command([MOBILE_CLI_COMMANDS.CreateProject, testProjectName])
     .do(() => process.chdir(testProjectName))
     .command([MOBILE_CLI_COMMANDS.AddStore, testStoreName])
     .do(() => process.chdir('../'))
@@ -29,7 +28,7 @@ describe(MOBILE_CLI_COMMANDS.AddStore, () => {
   // test
   //   .stdout()
   //   .do(() => process.chdir(testProjectName))
-  //   .command([MOBILE_CLI_COMMANDS.AddStore, badStoreName, skipPresets])
+  //   .command([MOBILE_CLI_COMMANDS.AddStore, badStoreName])
   //   .it('tries to run create store with a poorly formatted command', ctx => {
   //     expect(ctx.stdout).to.contain(`Error: command ${MOBILE_CLI_COMMANDS.AddStore} not found`);
   //   });

@@ -3,6 +3,8 @@ const chalk = require('chalk');
 import { Command, Flags } from '@oclif/core';
 
 export default class Hello extends Command {
+  static aliases = ['adam hello'];
+
   static hidden = false;
 
   static description = 'say hello';

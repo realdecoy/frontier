@@ -9,10 +9,10 @@ describe(`${VUE_CLI_COMMANDS.AddModule} --help`, () => {
       expect(ctx.stdout).to.contain('frontier vue add <component>');
     });
 
-  // test
-  //   .stdout()
-  //   .command([VUE_CLI_COMMANDS.PoorHelpCommand])
-  //   .it(`runs poorly formatted frontier ${VUE_CLI_COMMANDS.AddModule} -help command`, ctx => {
-  //     expect(ctx.error).to.contain(`Error: command ${VUE_CLI_COMMANDS.PoorHelpCommand} not found`);
-  //   });
+  test
+    .stdout()
+    .command([VUE_CLI_COMMANDS.PoorHelpCommand])
+    .it(`runs poorly formatted frontier ${VUE_CLI_COMMANDS.AddModule} --help command`, ctx => {
+      expect(ctx.stdout).to.contain(`command not found: ${VUE_CLI_COMMANDS.PoorHelpCommand}`);
+    });
 });

@@ -47,7 +47,6 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
     return;
   }
 
-  console.log('asdlksd');
   const standardizedCommand = toStandardizedId(command as string, config);
   if (argv.includes('--help') || argv.includes('-h')) {
     return config.runCommand(standardizedCommand);

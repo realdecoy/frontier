@@ -3,6 +3,8 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class World extends Command {
+  static aliases = ['adam world'];
+
   static hidden = false;
 
   static description = 'say hello to the world';

@@ -17,6 +17,7 @@
     "/oclif.manifest.json"
   ],
   "dependencies": {
+    "@mdi/font": "^7.2.96",
     "@oclif/core": "2.8.0",
     "@oclif/plugin-help": "^5",
     "bluebird": "^3.7.2",
@@ -26,7 +27,8 @@
     "npm-run-all": "^4.1.5",
     "prompts": "^2.4.2",
     "replace-in-file": "^6.3.5",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "vuetify": "^3.1.12"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",

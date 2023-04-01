@@ -9,10 +9,10 @@ describe(`${MOBILE_CLI_COMMANDS.AddModule} module`, () => {
       expect(ctx.stdout).to.contain('frontier add <command>');
     });
 
-  // test
-  //   .stdout()
-  //   .command([MOBILE_CLI_COMMANDS.PoorHelpCommand])
-  //   .it(`runs poorly formatted mobile ${MOBILE_CLI_COMMANDS.AddModule} -help command`, ctx => {
-  //     expect(ctx.error).to.contain(`Error: command ${MOBILE_CLI_COMMANDS.PoorHelpCommand} not found`);
-  //   });
+  test
+    .stdout()
+    .command([MOBILE_CLI_COMMANDS.PoorHelpCommand])
+    .it(`runs poorly formatted mobile ${MOBILE_CLI_COMMANDS.AddModule} -help command`, ctx => {
+      expect(ctx.stdout).to.contain(`command not found: ${MOBILE_CLI_COMMANDS.PoorHelpCommand}`);
+    });
 });
