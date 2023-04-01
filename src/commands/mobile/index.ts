@@ -12,41 +12,42 @@ export default class Mobile extends Command {
   }
 
   static args = {
-    add: Args.string({ name: 'component', description: 'Add a new module', hidden: false }),
-    create: Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
+    add: Args.string({ name: 'component', description: 'Add a feature to a project', hidden: false }),
+    'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
   }
 
   showHelp(): void {
-    // const commandId = Mobile.id;
     const commandId = Mobile.id;
     const commandArgs = Object.values(Mobile.args);
-    // const commandFlags = Object.values(Mobile.flags);
+    const commandFlags = Object.values(Mobile.flags);
 
     // parse argument config list
     const argsList = commandArgs
-      .filter(arg => !arg.hidden)
-      .map(arg => {
-        const maxSpaces = 15;
+      .filter((arg: any) => !arg.hidden)
+      .map((arg: any) => {
+        const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
         return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
     // parse option config list
-    // const optionList = commandFlags
-    //   .filter(flag => !flag.hidden)
-    //   .map(flag => {
-    //     const maxSpaces = 8;
-    //     const numOfSpaces = maxSpaces - flag.name.length;
+    const optionList = commandFlags
+      .filter((flag: any) => !flag.hidden)
+      .map((flag: any) => {
+        const maxSpaces = 22;
+        const numOfSpaces = maxSpaces - flag.name.length;
 
-    //     return `\n\t    --${flag.name} | -${flag.char}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
-    //   });
+        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
+      });
 
     this.log(`
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId)} <command>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId)}  <command>
 
-        Commands: ${argsList}
+        Commands:${argsList}
+
+        Options:${optionList}
     `);
   }
 

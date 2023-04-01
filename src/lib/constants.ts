@@ -21,13 +21,13 @@ enum DYNAMIC_OBJECTS_ENUM {
   Modules = 'modules',
 }
 export const DYNAMIC_OBJECTS = DYNAMIC_OBJECTS_ENUM;
-enum CLI_NAMESPACES {
+export const CLI_NAMESPACES = [
   'vue',
   'mobile',
   'dotnet',
   'iac',
   'qa',
-}
+];
 
 enum CLI_COMMANDS_ENUM {
   CreateProject = 'vue create-project',

@@ -20,16 +20,15 @@ export default class Vue extends Command {
   }
 
   showHelp(): void {
-    // const commandId = Vue.id;
     const commandId = Vue.id;
     const commandArgs = Object.values(Vue.args);
     const commandFlags = Object.values(Vue.flags);
 
     // parse argument config list
     const argsList = commandArgs
-      .filter(arg => !arg.hidden)
-      .map(arg => {
-        const maxSpaces = 15;
+      .filter((arg: any) => !arg.hidden)
+      .map((arg: any) => {
+        const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
         return `\n\t    ${arg.name}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
@@ -37,21 +36,21 @@ export default class Vue extends Command {
 
     // parse option config list
     const optionList = commandFlags
-      .filter(flag => !flag.hidden)
-      .map(flag => {
-        const maxSpaces = 8;
+      .filter((flag: any) => !flag.hidden)
+      .map((flag: any) => {
+        const maxSpaces = 22;
         const numOfSpaces = maxSpaces - flag.name.length;
 
-        return `\n\t    --${flag.name} | -${flag.char}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
+        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
       });
 
     this.log(`
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId)} <feature>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId)}  <command>
 
-        Features: ${argsList}
+        Commands:${argsList}
 
-        Options: ${optionList}
+        Options:${optionList}
     `);
   }
 

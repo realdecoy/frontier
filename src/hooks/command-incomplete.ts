@@ -47,9 +47,9 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
     return;
   }
 
-  if (argv.includes('--help') || argv.includes('-h')) {
-    return config.runCommand('help', [toStandardizedId(command as string, config)]);
-  }
+  // if (argv.includes('--help') || argv.includes('-h')) {
+  //   return config.runCommand('help', [toStandardizedId(command as string, config)]);
+  // }
 
   return config.runCommand(toStandardizedId(command as string, config), argv);
 };

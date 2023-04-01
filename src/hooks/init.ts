@@ -1,6 +1,7 @@
 import { Hook, toStandardizedId } from '@oclif/core';
 import { readProjectConfig } from '../lib/files';
 import { ProjectConfig } from '../modules/project';
+// import { CLI_NAMESPACES } from '../lib/constants';
 
 // eslint-disable-next-line require-await
 const hook: Hook<'init'> = async function ({ id, config, argv }) {

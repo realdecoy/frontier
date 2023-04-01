@@ -46,7 +46,7 @@ export default class Add extends Command {
 
     this.log(`
         Usage:
-            npx ${chalk.yellow('@realdecoy/frontier')} ${chalk.green(commandId.split(':')[1])} <feature>
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} <feature>
 
         Features: \t - Utilities to create repeatable project elements${argsList}
 
