@@ -102,6 +102,18 @@ Options:
 
 ## Development
 
+### Prerequisites & Recommendations
+
+| Name | Description | More Information
+| ---- | ----------- | --------------- |
+| node | runtime     | version 19.8.1  |
+| yarn | dependency management | version 1.22.19  |
+| vscode | code editor |   |
+
+&nbsp;
+&nbsp;
+&nbsp;
+
 ### Install Dependencies
 ```bash
 yarn install

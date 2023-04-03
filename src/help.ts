@@ -1,6 +1,7 @@
 import { Help } from '@oclif/core';
 import { Topic } from '@oclif/core/lib/interfaces';
 import chalk from 'chalk';
+import { CLI_NAMESPACES } from './lib/constants';
 import { log } from './lib/stdout';
 
 export default class MyHelpClass extends Help {
@@ -54,6 +55,9 @@ export default class MyHelpClass extends Help {
   protected formatTopics(topics: Topic[]): string {
     // console.log(topics);
     const argsList = topics
+      .filter((arg: any) => {
+        return CLI_NAMESPACES.includes(arg.name);
+      })
       .map((arg: any) => {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
