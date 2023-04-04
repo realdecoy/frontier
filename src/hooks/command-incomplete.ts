@@ -32,7 +32,7 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
       ], {
         onCancel() {
           // eslint-disable-next-line no-console
-          console.log(`command ${chalk.red(id)} canceled`);
+          console.log(`command ${chalk.red(id.split(':').join(' '))} canceled`);
 
           return false;
         },

@@ -89,12 +89,12 @@ function toPascalCase(value: string): string {
 }
 
 /**
- * Description: remove the prefix '[rdvue]' from a string
+ * Description: remove the prefix '[frontier]' from a string
  * @param {string} value - a string value
- * @returns {string} - a string with the prefix '[rdvue]' removed
+ * @returns {string} - a string with the prefix '[frontier]' removed
  */
-function stripRdvuePrefix(value: string): string {
-  return value.replace('[rdvue]', '');
+function stripFrontierPrefix(value: string): string {
+  return value.replace('[frontier]', '');
 }
 
 // eslint-disable-next-line valid-jsdoc
@@ -107,7 +107,7 @@ function throwNameError(errorMessage: string): void {
   throw new Error(
     JSON.stringify({
       code: 'name-invalid',
-      message: stripRdvuePrefix(errorMessage),
+      message: stripFrontierPrefix(errorMessage),
     }),
   );
 }
@@ -181,7 +181,7 @@ async function parseComponentName(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} add component canceled`);
+        console.log(`${chalk.red('frontier')} add component canceled`);
 
         return false;
       },
@@ -237,14 +237,14 @@ async function parseProjectName(args: Lookup): Promise<string> {
   if (!argName) {
     const responses: any = await prompts([{
       name: 'name',
-      initial: 'my-rdvue-project',
+      initial: 'my-vue-project',
       message: 'Enter a project name: ',
       type: 'text',
       validate: validateProjectName,
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} create-project canceled`);
+        console.log(`${chalk.red('frontier')} create-project canceled`);
 
         return false;
       },
@@ -284,7 +284,7 @@ async function parseLayoutName(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} add layout canceled`);
+        console.log(`${chalk.red('frontier')} add layout canceled`);
 
         return false;
       },
@@ -355,7 +355,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} create-project canceled`);
+        console.log(`${chalk.red('frontier')} create-project canceled`);
 
         return false;
       },
@@ -390,7 +390,7 @@ async function parsePageName(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} add page canceled`);
+        console.log(`${chalk.red('frontier')} add page canceled`);
 
         return false;
       },
@@ -430,7 +430,7 @@ async function parseServiceName(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} add service canceled`);
+        console.log(`${chalk.red('frontier')} add service canceled`);
 
         return false;
       },
@@ -470,7 +470,7 @@ async function parseStoreModuleName(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('rdvue')} add store canceled`);
+        console.log(`${chalk.red('frontier')} add store canceled`);
 
         return false;
       },
@@ -521,7 +521,7 @@ async function parseBundleIdentifier(args: Lookup): Promise<string> {
 }
 
 /**
- * Description: determine if command is ran within a valid rdvue project
+ * Description: determine if command is ran within a valid frontier project
  * @returns {any} -
  */
 function checkProjectValidity(): { isValid: boolean, projectRoot: string } {
