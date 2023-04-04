@@ -3,6 +3,8 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Vue extends Command {
+  static alias = ['vue'];
+
   static hidden = false;
 
   static description = 'Vue.js scaffolding';

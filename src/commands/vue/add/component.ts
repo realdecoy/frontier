@@ -16,7 +16,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Component extends Command {
-  static aliases = ['vue add component']
+  // static aliases = ['vue add component']
 
   static description = 'add a new Component module.'
 

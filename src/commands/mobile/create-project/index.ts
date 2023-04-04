@@ -28,7 +28,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class CreateProject extends Command {
-  static aliases = ['mobile create-project'];
+  // static aliases = ['mobile create-project'];
 
   static description = 'create a new mobile project'
 

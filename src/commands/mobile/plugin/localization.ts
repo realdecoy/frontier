@@ -23,7 +23,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Localization extends Command {
-  static aliases = ['mobile plugin localization']
+  // static aliases = ['mobile plugin localization']
 
   static description = 'adds i18bn localization'
 

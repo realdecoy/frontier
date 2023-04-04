@@ -15,6 +15,8 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Screen extends Command {
+  // static aliases = ['mobile add screen']
+
   static description = 'add a new Screen module.'
 
   static flags = {

@@ -1,20 +1,32 @@
 import { Hook } from '@oclif/core';
 import chalk from 'chalk';
 
+const reduceCommand = function (command: string[]) {
+  return command.slice(0, -1).join(':');
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+const runHelp = async function (config: any, command: string) {
+  await config.runCommand(command, ['--help']);
+  // return command.slice(0, -1).join(':');
+};
+
 // eslint-disable-next-line require-await
 const hook: Hook<'command_not_found'> = async function ({ id, argv, config }) {
+  // console.log(config.commandIDs);
   let commandStrings = [];
-  commandStrings = id.includes(':') ? id?.split(':') : id?.split(' ');
+  const command = id.trim();
+  // console.log(command, argv);
+  commandStrings = command.includes(':') ? command?.split(':') : command?.split(' ');
+  // console.log(commandStrings);
 
   if (commandStrings.length > 1) {
-    const reducedCommand = commandStrings.slice(0, -1).join(':');
-    console.log(reducedCommand);
+    const reducedCommand = reduceCommand(commandStrings);
+    // console.log(reducedCommand);
     await config.runCommand(reducedCommand);
-    // eslint-disable-next-line no-invalid-this
-    this.exit();
   } else {
     // eslint-disable-next-line no-console
-    console.log(`${chalk.red('command not found')}: ${id} ${argv}`);
+    console.log(`${chalk.red('command not found')}: ${command} ${argv}`);
   }
 };
 

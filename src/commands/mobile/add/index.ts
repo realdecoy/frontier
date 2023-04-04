@@ -2,7 +2,7 @@ import { Args, Command, Flags } from '@oclif/core';
 import chalk from 'chalk';
 
 export default class Add extends Command {
-  static aliases = ['mobile add'];
+  // static aliases = ['mobile add'];
 
   static description = 'add a new module'
 

@@ -15,6 +15,8 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class StoreModule extends Command {
+  // static aliases = ['mobile add store']
+
   static description = 'add a new Store module.'
 
   static flags = {
