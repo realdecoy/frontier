@@ -6,15 +6,17 @@ const hook: Hook<'init'> = async function ({ id, config, argv }) {
   // console.log('FRONTIER', argv);
   const projectConfig: ProjectConfig = readProjectConfig();
   const namespace = projectConfig.type;
+  const hasNamespace = namespace !== undefined;
+  const hasCommandId = id !== undefined;
 
   // display namespace help menu if exists
-  if (namespace !== undefined && id === undefined) {
+  if (hasNamespace && !hasCommandId) {
     const command = toStandardizedId(namespace as string, config);
 
     await config.runCommand(command, argv);
     // eslint-disable-next-line no-invalid-this
     this.exit();
-  } else if (namespace !== undefined && id !== undefined) {
+  } else if (hasNamespace && hasCommandId) {
     // A nameespace has been identified and a command has been entered
     // if the namespace is already included in the command then dont duplicate it otherwise include it as a prefix
     const prefix = id.includes(namespace) ? '' : namespace;
@@ -29,7 +31,7 @@ const hook: Hook<'init'> = async function ({ id, config, argv }) {
     await config.runCommand(command, rawArgs);
     // eslint-disable-next-line no-invalid-this
     this.exit();
-  } else if (id !== undefined) {
+  } else if (hasCommandId) {
     console.log(`ID: ${id.trim()}`);
     console.log(`ARG: ${argv}`);
     await config.runCommand(id.trim(), argv);
