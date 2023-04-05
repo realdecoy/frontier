@@ -32,8 +32,8 @@ const hook: Hook<'init'> = async function ({ id, config, argv }) {
     // eslint-disable-next-line no-invalid-this
     this.exit();
   } else if (hasCommandId) {
-    console.log(`ID: ${id.trim()}`);
-    console.log(`ARG: ${argv}`);
+    // console.log(`ID: ${id.trim()}`);
+    // console.log(`ARG: ${argv}`);
     await config.runCommand(id.trim(), argv);
     // eslint-disable-next-line no-invalid-this
     this.exit();
