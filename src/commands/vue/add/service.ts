@@ -15,7 +15,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Service extends Command {
-  static aliases = ['vue add service']
+  // static aliases = ['vue add service']
 
   static description = 'add a new Service module.'
 

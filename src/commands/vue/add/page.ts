@@ -16,7 +16,7 @@ const CUSTOM_ERROR_MESSAGES = new Set([
 ]);
 
 export default class Page extends Command {
-  static aliases = ['vue add page']
+  // static aliases = ['vue add page']
 
   static description = 'add a new Page module.'
 

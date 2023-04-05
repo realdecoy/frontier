@@ -15,6 +15,8 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Screen extends Command {
+  // static aliases = ['mobile add screen']
+
   static description = 'add a new Screen module.'
 
   static flags = {
@@ -49,8 +51,7 @@ export default class Screen extends Command {
     return Promise.resolve();
   }
 
-  async run(): Promise<void> {
-    this.log(`\n  Test:\n  ${chalk.yellow(MOBILE_DOCUMENTATION_LINKS.Screen)}\n`);
+  async run(): Promise<void> {    
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an mobile project
     if (isValidProject === false) {

@@ -3,7 +3,7 @@ const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Plugin extends Command {
-  static aliases = ['mobile plugin'];
+  // static aliases = ['mobile plugin'];
 
   static description = 'install a plugin'
 

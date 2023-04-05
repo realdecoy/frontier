@@ -15,6 +15,8 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Layout extends Command {
+  // static aliases = ['mobile add layout']
+
   static description = 'add a new Layout module.'
 
   static flags = {

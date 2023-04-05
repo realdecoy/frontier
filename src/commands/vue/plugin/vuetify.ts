@@ -23,7 +23,7 @@ const CUSTOM_ERROR_CODES = new Set([
 ]);
 
 export default class Vuetify extends Command {
-  static aliases = ['vue plugin vuetify'];
+  // static aliases = ['vue plugin vuetify'];
 
   static description = 'lightweigth UI components for Vuejs';
 
