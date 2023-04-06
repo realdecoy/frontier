@@ -92,9 +92,9 @@ Options:
 | --- | --- | --- | --- |
 | .Net       | `dotnet` | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
 | Infrastructure | `iac`| Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Mobile     | `mobile` | Ready    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/mobile) |
-| QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/qa) |
-| Vue        | `vue` | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/main/src/commands/vue) |
+| Mobile     | `mobile` | Ready    | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/mobile) |
+| QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier) |
+| Vue        | `vue` | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/vue) |
 
 &nbsp;
 &nbsp;
@@ -164,8 +164,8 @@ npm run rebuild
 &nbsp; &nbsp; &nbsp;
 
 ## Creating a frontier namespace
-#### [Adam](https://github.com/realdecoy/frontier/tree/main/commands/adam)
-To support the creation of new frointer-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/main/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
+#### [Adam](https://github.com/realdecoy/frontier/tree/development/commands/adam)
+To support the creation of new frointer-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/development/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
 
 &nbsp; &nbsp; &nbsp;
 
