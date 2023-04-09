@@ -75,7 +75,7 @@ function toCamelCase(value: string): string {
 }
 
 /**
- * Description: convert a string to kebab case (e.g. my-project-name)
+ * Description: convert a string to pascal case (e.g. MyProjectName)
  * @param {string} value - a string value
  * @returns {string} -
  */
@@ -227,9 +227,10 @@ async function parseScreenName(args: Lookup): Promise<string> {
 /**
  * Description: parse project or prompt user to provide name for project
  * @param {string} args - a string value
+ * @param {string} defaultName - a string value
  * @returns {Lookup} -
  */
-async function parseProjectName(args: Lookup): Promise<string> {
+async function parseProjectName(args: Lookup, defaultName = 'my-vue-project'): Promise<string> {
   let argName = args.name;
   const validateProjectName = validateEnteredName('project');
   // if no project name is provided in command then prompt user
@@ -237,7 +238,7 @@ async function parseProjectName(args: Lookup): Promise<string> {
   if (!argName) {
     const responses: any = await prompts([{
       name: 'name',
-      initial: 'my-vue-project',
+      initial: defaultName,
       message: 'Enter a project name: ',
       type: 'text',
       validate: validateProjectName,
