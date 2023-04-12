@@ -90,7 +90,7 @@ Options:
 
 | Name | Namespace | Status | More Information
 | --- | --- | --- | --- |
-| .Net       | `dotnet` | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| .Net       | `dotnet` | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/dotnet) |
 | Infrastructure | `iac`| Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
 | Mobile     | `mobile` | Ready    | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/mobile) |
 | QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier) |
@@ -108,7 +108,7 @@ Options:
 | ---- | ----------- | --------------- |
 | node | runtime     | version 19.8.1  |
 | yarn | dependency management | version 1.22.19  |
-| vscode | code editor |   |
+| vscode | code editor | version 1.77.1  |
 
 &nbsp;
 &nbsp;
