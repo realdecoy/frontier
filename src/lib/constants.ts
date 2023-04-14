@@ -58,6 +58,23 @@ enum ADAM_CLI_COMMANDS_ENUM {
 }
 export const ADAM_CLI_COMMANDS = ADAM_CLI_COMMANDS_ENUM;
 
+enum DOTNET_CLI_COMMANDS_ENUM {
+  CreateProject = 'dotnet create-project',
+  AddModule = 'dotnet add',
+  AddEndpoint = 'dotnet add endpoint',
+  AddQuery = 'dotnet add query',
+  AddCommand = 'dotnet add command',
+  AddEntity = 'dotnet add entity',
+  AddConfiguration = 'dotnet add configuration',
+  MigrationNew = 'dotnet mirate new',
+  MigrationUp = 'dotnet mirate up',
+  MigrationDown = 'dotnet mirate down',
+  MigrationRemove = 'dotnet mirate remove',
+  PluginBackground = 'dotnet plugin background',
+  PoorHelpCommand = 'add-help'
+}
+export const DOTNET_CLI_COMMANDS = DOTNET_CLI_COMMANDS_ENUM;
+
 enum MOBILE_CLI_COMMANDS_ENUM {
   CreateProject = 'mobile create-project',
   AddComponent = 'mobile add component',

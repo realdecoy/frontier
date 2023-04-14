@@ -97,6 +97,37 @@ function readProjectConfig(): any {
 }
 
 /**
+ * Description: Read dotnet migration folder to determine options the tool can take
+ * @param {string} projectName -
+ * @returns {any} -
+ */
+function readMigrationNames(projectName: string): any {
+  const MIGRATIONS_FOLDER_PATH = `src/${projectName}.Persistence/Migrations`;
+  const folderPath: string = path.join(getProjectRoot() ?? '', MIGRATIONS_FOLDER_PATH);
+  const isExistingFolder = directoryExists(folderPath);
+  if (isExistingFolder === false) {
+    return {};
+  }
+
+  const fileNames = readFilesFromDirectory(folderPath).filter((file: string) => {
+    return !file.includes('Designer.cs') && !file.includes('DbContextModelSnapshot.cs');
+  });
+
+  return fileNames;
+}
+
+/**
+ * Description: Read dotnet migration folder to determine options the tool can take
+ * @param {string} directoryPath -
+ * @returns {any} -
+ */
+function readFilesFromDirectory(directoryPath: string): any {
+  const files = fs.readdirSync(directoryPath);
+
+  return files;
+}
+
+/**
  *  Description: parse config files required for scaffolding this module
  * @param {string[]} folderList -
  * @param {string} projectRoot -
@@ -418,6 +449,7 @@ function isRootDirectory(location: string | null = null): boolean {
  */
 function getProjectRoot(): string | null {
   const configFolderName = RDVUE_DIRECTORY;
+  const frontierFileName = FRONTIER_RC;
   const currentConfigFolder = path.join(process.cwd(), configFolderName);
   // Check if the current directory is the root of the project for older versions of rdvue
   if (fileExists(currentConfigFolder) && !fs.lstatSync(currentConfigFolder).isDirectory()) {
@@ -436,7 +468,7 @@ function getProjectRoot(): string | null {
     currentPath = path.join(process.cwd(), back);
     back = path.join(back, '../');
     currentTraverse += 1;
-    if (directoryExists(path.join(currentPath, configFolderName))) {
+    if (fileExists(path.join(currentPath, frontierFileName))) {
       projectRoot = currentPath;
       break;
     } else if (isRootDirectory(currentPath)) {
@@ -646,4 +678,5 @@ export {
   inject,
   deleteFile,
   updateFile,
+  readMigrationNames,
 };

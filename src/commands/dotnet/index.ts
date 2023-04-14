@@ -14,6 +14,7 @@ export default class Dotnet extends Command {
 
   static args = {
     'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new dotnet API project', hidden: false }),
+    migrate: Args.string({ name: 'create-project', description: 'manage migrations for database', hidden: false }),
   }
 
   showHelp(): void {

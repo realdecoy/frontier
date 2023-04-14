@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
 import { checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, isJsonString, toPascalCase } from '../../../lib/utilities';
+import { checkProjectValidity, parseProjectName, isJsonString } from '../../../lib/utilities';
 import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
@@ -64,7 +64,7 @@ export default class CreateProject extends Command {
     const tag: string = DOTNET_TEMPLATE_TAG;
     const isTest = flags.isTest === true;
 
-    let projectName: string;
+    let projectName = '';
     const { isValid: isValidProject } = checkProjectValidity();
     // block command if being run within an frontier project
     if (isValidProject) {
@@ -78,9 +78,6 @@ export default class CreateProject extends Command {
 
     // retrieve project name
     projectName = await parseProjectName(args, 'MyApiProject');
-    // retrieve project preset
-    // convert project name to kebab case
-    projectName = toPascalCase(projectName);
     // verify that project folder doesnt already exist
     checkIfFolderExists(projectName);
 
@@ -99,8 +96,8 @@ export default class CreateProject extends Command {
     }
 
     // retrieve project files from template source
-    const success1 = await shell.exec(`dotnet new --install ${template}${tag}`);
-    const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName}`);
+    const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
+    const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName}`, { silent: true });
 
     if (success1 === false || success2 === false) {
       throw new Error(
@@ -110,6 +107,9 @@ export default class CreateProject extends Command {
         }),
       );
     }
+
+    // initialize .frontierrc config file
+    await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
 
     // initialize git in the created project
     await shell.exec(`cd ${projectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });

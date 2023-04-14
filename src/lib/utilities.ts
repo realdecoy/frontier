@@ -4,7 +4,7 @@
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
 import prompts from 'prompts';
-import { getProjectRoot, writeFile } from './files';
+import { getProjectRoot, writeFile, readMigrationNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
 import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
 
@@ -335,20 +335,64 @@ async function parseVersionName(args: Lookup): Promise<string> {
 }
 
 /**
- * Description: parse project or prompt user to provide name for project
+ * Description: parse Migration or prompt user to provide name for Migration
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseMigrationName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateMigrationName = validateEnteredName('migration');
+  // if no Migration name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'InitialMigration',
+      message: 'Enter a migration name: ',
+      type: 'text',
+      validate: validateMigrationName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add migration canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validateMigrationName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse existing migrations for project
  * @param {Lookup} args - a string value
+ * @param {string} projectName - a string value
  * @returns {string} -
  */
-async function parseProjectPresets(args: Lookup): Promise<string> {
-  let argName = args.preset;
-  // if no project name is provided in command then prompt user
+async function parseMigrations(args: Lookup, projectName: string): Promise<string> {
+  let argName = args.name;
+  // if no migration name is provided in command then prompt user
+  const migrationNames = readMigrationNames(projectName);
+
   if (!argName) {
+    // read existing migrations
     const responses: any = await prompts([{
       name: 'preset',
       initial: 0,
-      message: 'Pick a preset: ',
+      message: 'Pick a migration to rollback to: ',
       type: 'select',
-      choices: VUE_PLUGIN_PRESET_LIST.map((item: string) => {
+      choices: migrationNames.map((item: string) => {
         return {
           title: item,
         };
@@ -356,7 +400,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
     }], {
       onCancel() {
         // eslint-disable-next-line no-console
-        console.log(`${chalk.red('frontier')} create-project canceled`);
+        console.log(`${chalk.red('frontier')} migration canceled`);
 
         return false;
       },
@@ -365,7 +409,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
       process.exit(1);
     }
 
-    argName = responses.preset;
+    argName = responses.name;
   }
 
   return argName;
@@ -522,6 +566,43 @@ async function parseBundleIdentifier(args: Lookup): Promise<string> {
 }
 
 /**
+ * Description: parse project or prompt user to provide name for project
+ * @param {Lookup} args - a string value
+ * @returns {string} -
+ */
+async function parseProjectPresets(args: Lookup): Promise<string> {
+  let argName = args.preset;
+  // if no project name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'preset',
+      initial: 0,
+      message: 'Pick a preset: ',
+      type: 'select',
+      choices: VUE_PLUGIN_PRESET_LIST.map((item: string) => {
+        return {
+          title: item,
+        };
+      }),
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+
+        return false;
+      },
+    });
+    if (responses.preset === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.preset;
+  }
+
+  return argName;
+}
+
+/**
  * Description: determine if command is ran within a valid frontier project
  * @returns {any} -
  */
@@ -605,6 +686,8 @@ export {
   toCamelCase,
   toKebabCase,
   toPascalCase,
+  parseMigrationName,
+  parseMigrations,
   parseComponentName,
   parseScreenName,
   parseLayoutName,
