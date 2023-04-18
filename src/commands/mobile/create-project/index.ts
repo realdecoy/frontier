@@ -145,7 +145,7 @@ export default class CreateProject extends Command {
       ux.action.start(`${CLI_STATE.Info} Installing dependencies`);
     }
 
-    await shell.exec(`cd ${kebabProjectName} && npm install`, { silent: !versbose });
+    await shell.exec(`cd ${kebabProjectName} && npm install --legacy-peer-deps`, { silent: !versbose });
 
     if (isTest !== true) {
       ux.action.stop();
