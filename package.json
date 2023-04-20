@@ -7,7 +7,7 @@
     "frontier": "./bin/run"
   },
   "homepage": "https://github.com/realdecoy/frontier",
-  "license": "GPL",
+  "license": "UNLICENSED",
   "main": "dist/index.js",
   "repository": "realdecoy/frontier",
   "files": [
