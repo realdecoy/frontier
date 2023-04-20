@@ -13,9 +13,9 @@ import path from 'node:path';
 import { log } from './stdout';
 import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
-import { hasCamel, hasKebab } from './utilities';
+import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
 import { Files, InjectOptions } from '../modules';
-import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT } from './constants';
+import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -118,6 +118,24 @@ function readMigrationNames(projectName: string): any {
 
 /**
  * Description: Read dotnet migration folder to determine options the tool can take
+ * @param {string} projectName -
+ * @returns {any} -
+ */
+function readApiFeatureNames(projectName: string): any {
+  const FEATURES_FOLDER_PATH = `src/${projectName}.Application/Features`;
+  const folderPath: string = path.join(getProjectRoot() ?? '', FEATURES_FOLDER_PATH);
+  const isExistingFolder = directoryExists(folderPath);
+  if (isExistingFolder === false) {
+    return {};
+  }
+
+  const fileNames = readFilesFromDirectory(folderPath);
+
+  return fileNames;
+}
+
+/**
+ * Description: Read dotnet migration folder to determine options the tool can take
  * @param {string} directoryPath -
  * @returns {any} -
  */
@@ -155,6 +173,25 @@ function parseMobileModuleConfig(folderList: string[], projectRoot: string): { n
 function parseVueModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
   return folderList.map(folder => {
     const moduleTemplatePath = path.join(projectRoot, VUE_TEMPLATE_ROOT, folder);
+    const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
+
+    return {
+      name: folder,
+      moduleTemplatePath,
+      manifest: readConfigFile(configFilePath),
+    };
+  });
+}
+
+/**
+ *  Description: parse config files required for scaffolding this module
+ * @param {string[]} folderList -
+ * @param {string} projectRoot -
+ * @returns {[any]} -
+ */
+function parseDotnetModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+  return folderList.map(folder => {
+    const moduleTemplatePath = path.join(projectRoot, DOTNET_TEMPLATE_ROOT, folder);
     const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
 
     return {
@@ -380,7 +417,7 @@ async function readAndUpdateFeatureFiles(
 
     // [3c] Check if the contents of the file is defined
     if (file.content !== undefined && Array.isArray(file.content)) {
-      // [3d] For each content block in the file contnet array
+      // [3d] For each content block in the file content array
       for (const contentBlock of file.content) {
         if (contentBlock && contentBlock.matchRegex) {
           // [4] Get the content at the desired file path
@@ -407,7 +444,91 @@ async function readAndUpdateFeatureFiles(
       throw new Error(
         JSON.stringify({
           code: 'failed-match-and-replace',
-          message: `failed to match and replace  for :${kebabName} files`,
+          message: `failed to match and replace for :${kebabName} files`,
+        }),
+      );
+    }
+  }
+
+  await Promise.all(promisedUpdates);
+}
+
+/**
+ * Read files that have been copied to target destination
+ * and replace template values with input recieved form user
+ * through prompts
+ * @param {string} destDir - target destination
+ * @param {Files[] | Array<string | Files>} files - files to read
+ * @param {string} kebabName - name of feature in kebab case
+ * @param {string} pascalName - name of feature in pascal case
+ * @param {string} camelName - name of feature in camel case
+ * @param {string} projectName - name of feature in project case
+ * @param {string} featureName - name of feature in feature case
+ * @param {string} endpointNameLower - name of feature in lower case
+ * @returns {Promise<void>} -
+ */
+// eslint-disable-next-line max-params
+async function readAndUpdateDotnetFeatureFiles(
+  destDir: string,
+  files: Files[] | Array<string | Files>,
+  kebabName: string,
+  pascalName: string,
+  camelName?: string,
+  projectName?: string,
+  featureName?: string,
+  endpointNameLower?: string,
+): Promise<void> {
+  let filePath = '';
+  const promisedUpdates = [];
+
+  // [3] For each file in the list
+  for (const file of files) {
+    if (typeof file === 'string') {
+      continue;
+    }
+
+    // [3b] Add the target file to the path of the desired destination directory
+    filePath = path.join(destDir, file.target);
+
+    // [3c] Check if the contents of the file is defined
+    if (file.content !== undefined && Array.isArray(file.content)) {
+      // [3d] For each content block in the file content array
+      for (const contentBlock of file.content) {
+        if (contentBlock && contentBlock.matchRegex) {
+          // [4] Get the content at the desired file path
+          const fileContent = readFile(filePath);
+          // [5] Update the contents of the file at given filePath
+          promisedUpdates.push(
+            updateFile(
+              filePath,
+              fileContent,
+              contentBlock.matchRegex,
+              hasKebab(contentBlock.replace) === true ?
+                kebabName :
+                (hasCamel(contentBlock.replace) === true && camelName ?
+                  camelName :
+                  // eslint-disable-next-line unicorn/no-nested-ternary
+                  (hasProject(contentBlock.replace) === true && projectName ?
+                    projectName :
+                    (hasFeature(contentBlock.replace) === true && featureName ?
+                      featureName :
+                      (hasEndpointLower(contentBlock.replace) === true && endpointNameLower ?
+                        endpointNameLower :
+                        contentBlock.replace.includes('${') ?
+                          pascalName :
+                          '')
+                    )
+                  )
+                ),
+            ),
+          );
+        }
+      }
+    } else if (file.content) {
+      throw new Error(
+        JSON.stringify({
+          code: 'failed-match-and-replace',
+          message: `failed to match and replace for :${kebabName} files`,
         }),
       );
     }
@@ -664,9 +785,11 @@ export {
   checkIfFolderExists,
   parseMobileModuleConfig,
   parseVueModuleConfig,
+  parseDotnetModuleConfig,
   replaceInFiles,
   replaceTargetFileNames,
   readAndUpdateFeatureFiles,
+  readAndUpdateDotnetFeatureFiles,
   copyFiles,
   copyDirectoryRecursive,
   getProjectRoot,
@@ -679,4 +802,5 @@ export {
   deleteFile,
   updateFile,
   readMigrationNames,
+  readApiFeatureNames,
 };

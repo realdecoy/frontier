@@ -3,6 +3,7 @@ import chalk from 'chalk';
 /* eslint-disable no-unused-vars */
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
+export const DOTNET_TEMPLATE_ROOT = '.frontier/template';
 export const MOBILE_TEMPLATE_REPO =
   'https://github.com/realdecoy/rdvue-mobile-template';
 export const VUE_TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';

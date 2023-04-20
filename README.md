@@ -73,6 +73,7 @@ Usage:
   frontier <namespace>
 
 Namespaces:
+    dotnet           -  Dotnet API Scaffolding
     mobile           -  React Native Scaffolding
     vue              -  Vue.js Scaffolding
   

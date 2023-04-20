@@ -97,7 +97,7 @@ export default class CreateProject extends Command {
 
     // retrieve project files from template source
     const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
-    const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName}`, { silent: true });
+    const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
 
     if (success1 === false || success2 === false) {
       throw new Error(

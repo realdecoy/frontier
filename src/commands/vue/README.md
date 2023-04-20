@@ -47,8 +47,8 @@ Usage:
   frontier vue <command>
 
 Commands:
-    add              -  Add a new module
-    create-project   -  Scaffold a new project
+    create-project   -  Scaffold a new Vue project
+    add              -  Add a module to a project
     plugin           -  Inject a utility to extend project functionality
     upgrade          -  Specify the template version for a project
   

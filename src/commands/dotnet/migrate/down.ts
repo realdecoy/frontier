@@ -82,6 +82,8 @@ export default class Down extends Command {
     // pick previous migration
     migrationName = await parseMigrations(args, projectName as string);
 
+    console.log(migrationName);
+
     await shell.exec('dotnet tool install --global dotnet-ef', { silent: true });
     // add a new migration to project
     await shell.exec(`export ASPNETCORE_ENVIRONMENT=${environment} &&

@@ -4,7 +4,7 @@
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
 import prompts from 'prompts';
-import { getProjectRoot, writeFile, readMigrationNames } from './files';
+import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
 import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
 
@@ -45,6 +45,62 @@ function hasKebab(value = ''): boolean {
 function hasCamel(value = ''): boolean {
   let result = false;
   if (value.match(/camel/gi) !== null) {
+    result = true;
+  }
+
+  return result;
+}
+
+/**
+ * Description: check if string has a substring 'kebab' in it
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function hasProject(value = ''): boolean {
+  let result = false;
+  if (value.match(/project/gi) !== null) {
+    result = true;
+  }
+
+  return result;
+}
+
+/**
+ * Description: check if string has a substring 'kebab' in it
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function hasFeature(value = ''): boolean {
+  let result = false;
+  if (value.match(/feature/gi) !== null) {
+    result = true;
+  }
+
+  return result;
+}
+
+/**
+ * Description: check if string has a substring 'kebab' in it
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function hasEndpoint(value = ''): boolean {
+  let result = false;
+  if (value.match(/endpointname/gi) !== null) {
+    result = true;
+  }
+
+  return result;
+}
+
+/**
+ * Description: check if string has a substring 'kebab' in it
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function hasEndpointLower(value = ''): boolean {
+  let result = false;
+  if (value.match(/endpointlowername/gi) !== null) {
     result = true;
   }
 
@@ -375,6 +431,208 @@ async function parseMigrationName(args: Lookup): Promise<string> {
 }
 
 /**
+ * Description: parse Entity or prompt user to provide name for Entity
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseEntityName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateEntityName = validateEnteredName('entity');
+  // if no Entity name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'User',
+      message: 'Enter an entity name: ',
+      type: 'text',
+      validate: validateEntityName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add entity canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validateEntityName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse Configuration or prompt user to provide name for Configuration
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseConfigurationName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateConfigurationName = validateEnteredName('configuration');
+  // if no Configuration name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'User',
+      message: 'Enter a configuration name: ',
+      type: 'text',
+      validate: validateConfigurationName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add configuration canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validateConfigurationName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse Command or prompt user to provide name for Command
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseCommandName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateCommandName = validateEnteredName('command');
+  // if no Command name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'RegisterUser',
+      message: 'Enter a command name: ',
+      type: 'text',
+      validate: validateCommandName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add command canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validateCommandName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse Endpoint or prompt user to provide name for Endpoint
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseEndpointName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateEndpointName = validateEnteredName('endpoint');
+  // if no Endpoint name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'endpoint',
+      initial: 'Authentication',
+      message: 'Enter an endpoint name: ',
+      type: 'text',
+      validate: validateEndpointName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add endpoint canceled`);
+
+        return false;
+      },
+    });
+    if (responses.endpoint === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.endpoint;
+  } else {
+    const result = validateEndpointName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse existing migrations for project
+ * @param {Lookup} args - a string value
+ * @param {string} projectName - a string value
+ * @param {string} type - a string value
+ * @returns {string} -
+ */
+async function parseApiFeatures(args: Lookup, projectName: string, type: string): Promise<string> {
+  let argName = args.name;
+  // if no migration name is provided in command then prompt user
+  const apiFeatureNames = readApiFeatureNames(projectName);
+
+  if (!argName) {
+    // read existing migrations
+    const responses: any = await prompts([{
+      name: 'feature',
+      initial: 0,
+      message: `Pick a feature to to insert your ${type}: `,
+      type: 'select',
+      choices: apiFeatureNames.map((item: string) => {
+        return {
+          title: item,
+        };
+      }),
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add ${type} canceled`);
+
+        return false;
+      },
+    });
+    if (responses.feature === undefined) {
+      process.exit(1);
+    }
+
+    argName = apiFeatureNames[responses.feature];
+  }
+
+  return argName;
+}
+
+/**
  * Description: parse existing migrations for project
  * @param {Lookup} args - a string value
  * @param {string} projectName - a string value
@@ -388,7 +646,7 @@ async function parseMigrations(args: Lookup, projectName: string): Promise<strin
   if (!argName) {
     // read existing migrations
     const responses: any = await prompts([{
-      name: 'preset',
+      name: 'migration',
       initial: 0,
       message: 'Pick a migration to rollback to: ',
       type: 'select',
@@ -405,11 +663,11 @@ async function parseMigrations(args: Lookup, projectName: string): Promise<strin
         return false;
       },
     });
-    if (responses.preset === undefined) {
+    if (responses.migration === undefined) {
       process.exit(1);
     }
 
-    argName = responses.name;
+    argName = migrationNames[responses.migration];
   }
 
   return argName;
@@ -596,7 +854,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
       process.exit(1);
     }
 
-    argName = responses.preset;
+    argName = VUE_PLUGIN_PRESET_LIST[responses.preset];
   }
 
   return argName;
@@ -683,10 +941,19 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
 export {
   hasCamel,
   hasKebab,
+  hasProject,
+  hasFeature,
+  hasEndpoint,
+  hasEndpointLower,
   toCamelCase,
   toKebabCase,
   toPascalCase,
   parseMigrationName,
+  parseEntityName,
+  parseConfigurationName,
+  parseCommandName,
+  parseEndpointName,
+  parseApiFeatures,
   parseMigrations,
   parseComponentName,
   parseScreenName,

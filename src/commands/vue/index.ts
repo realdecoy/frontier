@@ -15,8 +15,8 @@ export default class Vue extends Command {
   }
 
   static args = {
-    add: Args.string({ name: 'add', description: 'Add a feature to a project', hidden: false }),
     'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
+    add: Args.string({ name: 'add', description: 'Add a feature to a project', hidden: false }),
     plugin: Args.string({ name: 'plugin', description: 'Inject a utility to extend project functionality', hidden: false }),
     upgrade: Args.string({ name: 'upgrade', description: 'Specify the template version for a project', hidden: false }),
   }
