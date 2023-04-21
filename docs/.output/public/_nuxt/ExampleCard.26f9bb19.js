@@ -1,1 +1,0 @@
-import{a as e}from"./Container.f1017aa2.js";import{q as o,x as a,P as t}from"./runtime-core.esm-bundler.6894272a.js";import"./index.d2b0cb5e.js";const s={},c={class:"p-6 border bg-white dark:bg-black dark:border-gray-700 rounded"};function d(r,n){return o(),a("div",c,[t(r.$slots,"default")])}const i=e(s,[["render",d]]);export{i as default};

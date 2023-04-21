@@ -1,1 +1,0 @@
-import{a as e}from"./Container.f1017aa2.js";import{q as r,x as t}from"./runtime-core.esm-bundler.6894272a.js";import"./index.d2b0cb5e.js";const o={};function c(n,a){return r(),t("div")}const f=e(o,[["render",c]]);export{f as default};
