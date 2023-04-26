@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       reason: 
-        description: "Type 'RUN' to run workflow manually"
+        description: Type 'RUN' to run workflow manually
         required: true
 
   pull_request:
