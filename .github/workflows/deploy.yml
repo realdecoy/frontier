@@ -39,4 +39,4 @@ jobs:
       - name: build        
         run:  npm run build
       - name: deploy        
-        run: aws s3 sync ./.output/public/. s3://frontier.realdecoy.com
+        run: aws s3 sync ./output/public/. s3://frontier.realdecoy.com
