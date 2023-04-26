@@ -1,6 +1,14 @@
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
 import { Args, Command, Flags } from '@oclif/core';
+import { CLI_STATE } from '../../lib/constants';
+import { isJsonString } from '../../lib/utilities';
+
+const CUSTOM_ERROR_CODES = new Set([
+  'existing-project',
+  'existing-folder',
+  'file-not-changed',
+]);
 
 export default class Vue extends Command {
   static alias = ['vue'];
@@ -10,7 +18,7 @@ export default class Vue extends Command {
   static description = 'Vue.js scaffolding';
 
   static flags = {
-    help: Flags.help({ name: 'help', char: 'h', hidden: false }),
+    help: Flags.boolean({ hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 
@@ -21,8 +29,31 @@ export default class Vue extends Command {
     upgrade: Args.string({ name: 'upgrade', description: 'Specify the template version for a project', hidden: false }),
   }
 
+  // override Command class error handler
+  catch(error: Error): Promise<any> {
+    const errorMessage = error.message;
+    const isValidJSON = isJsonString(errorMessage);
+    const parsedError = isValidJSON ? JSON.parse(errorMessage) : {};
+    const customErrorCode = parsedError.code;
+    const customErrorMessage = parsedError.message;
+    const hasCustomErrorCode = customErrorCode !== undefined;
+    const hasNonExistentFlagError = errorMessage.includes('Nonexistent flag');
+
+    if (hasNonExistentFlagError) {
+      this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
+    } else if (!hasCustomErrorCode) {
+      // throw cli errors to be handled globally
+      throw errorMessage;
+    } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
+    } else {
+      throw new Error(customErrorMessage);
+    }
+
+    return Promise.resolve();
+  }
+
   showHelp(): void {
-    const commandId = Vue.id;
     const commandArgs = Object.values(Vue.args);
     const commandFlags = Object.values(Vue.flags);
 
@@ -48,7 +79,7 @@ export default class Vue extends Command {
 
     this.log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId)} ${chalk.blue('<command>')}
+            ${chalk.yellow('frontier')} ${chalk.blue('<command>')}
 
         Commands:${argsList}
 
@@ -56,13 +87,21 @@ export default class Vue extends Command {
     `);
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (args.length === 0) { // Show help when arguments missing
+      this.showHelp();
+    } else if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
-    const { args } = await this.parse(Vue);
+    const { args, flags } = await this.parse(Vue);
     const commandArgs = Object.values(args);
 
-    if (commandArgs.length === 0) {
-      this.showHelp();
-    }
+    this.handleHelp(commandArgs, flags);
 
     return Promise.resolve();
   }

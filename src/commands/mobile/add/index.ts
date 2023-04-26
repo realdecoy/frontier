@@ -7,7 +7,7 @@ export default class Add extends Command {
   static description = 'add a new module'
 
   static flags = {
-    help: Flags.help({ name: 'help', char: 'h', hidden: false }),
+    help: Flags.boolean({ hidden: false }),
   }
 
   static args = {
@@ -49,18 +49,26 @@ export default class Add extends Command {
             ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} ${chalk.blue('<command>')}
 
         Commands:${argsList}
-        
+
         Options:${optionList}
     `);
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (args.length === 0) { // Show help when arguments missing
+      this.showHelp();
+    } else if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
-    const { args } = await this.parse(Add);
+    const { args, flags } = await this.parse(Add);
     const commandArgs = Object.values(args);
 
-    if (commandArgs.length === 0) {
-      this.showHelp();
-    }
+    this.handleHelp(commandArgs, flags);
 
     return Promise.resolve();
   }

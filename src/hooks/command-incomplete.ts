@@ -11,7 +11,7 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
 
   // eslint-disable-next-line no-negated-condition
   if (projectConfig.type !== undefined) {
-    command = `${projectConfig.type} ${id}`;
+    command = `${projectConfig.type}:${id}`;
   } else {
     const choices = matches.map(p => {
       return {
@@ -47,9 +47,16 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
     return;
   }
 
+  // console.log(config.commandIDs);
+
   const standardizedCommand = toStandardizedId(command as string, config);
-  if (argv.includes('--help') || argv.includes('-h')) {
-    return config.runCommand(standardizedCommand);
+  // if (argv.includes('--help') || argv.includes('-h')) {
+  //   return config.runCommand(standardizedCommand);
+  // }
+  if (!standardizedCommand.includes('--help') && argv.includes('--help')) {
+    // console.log({ where: 'command-incomplete', key: { command, standardizedCommand, argv } });
+
+    return config.runCommand(`${standardizedCommand}`, ['--help']);
   }
 
   return config.runCommand(standardizedCommand, argv);

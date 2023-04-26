@@ -30,10 +30,10 @@ const CUSTOM_ERROR_CODES = new Set([
 export default class CreateProject extends Command {
   // static aliases = ['mobile create-project'];
 
-  static description = 'create a new mobile project'
+  static description = 'Scaffold a new project'
 
   static flags = {
-    help: Flags.help({ char: 'h' }),
+    help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
     verbose: Flags.boolean({ hidden: true }),
     // bare: flags.boolean({ hidden: true }),
@@ -52,14 +52,14 @@ export default class CreateProject extends Command {
     const customErrorCode = parsedError.code;
     const customErrorMessage = parsedError.message;
     const hasCustomErrorCode = customErrorCode !== undefined;
+    const hasNonExistentFlagError = errorMessage.includes('Nonexistent flag');
 
-    if (!hasCustomErrorCode) {
+    if (hasNonExistentFlagError) {
+      this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
+    } else if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
       throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.has(customErrorCode)) {
+    } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
@@ -68,8 +68,20 @@ export default class CreateProject extends Command {
     return Promise.resolve();
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
     const { args, flags } = await this.parse(CreateProject);
+    const commandArgs = Object.values(args);
+
+    this.handleHelp(commandArgs, flags);
+
     const versbose = flags.verbose === true;
     const isTest = flags.isTest === true;
     const template: string = MOBILE_TEMPLATE_REPO;

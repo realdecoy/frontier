@@ -20,7 +20,7 @@ export default class StoreModule extends Command {
   static description = 'add a new Store module.'
 
   static flags = {
-    help: Flags.help({ char: 'h' }),
+    help: Flags.boolean({ hidden: false }),
   }
 
   static args = {
@@ -35,20 +35,28 @@ export default class StoreModule extends Command {
     const customErrorCode = parsedError.code;
     const customErrorMessage = parsedError.message;
     const hasCustomErrorCode = customErrorCode !== undefined;
+    const hasNonExistentFlagError = errorMessage.includes('Nonexistent flag');
 
-    if (hasCustomErrorCode === false) {
+    if (hasNonExistentFlagError) {
+      this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
+    } else if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
       throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.has(customErrorCode)) {
+    } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
     }
 
     return Promise.resolve();
+  }
+
+  handleHelp(args: (string | undefined)[], flags: {
+    help: boolean;
+  }): void {
+    if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
   }
 
   async run(): Promise<void> {
@@ -64,7 +72,11 @@ export default class StoreModule extends Command {
       );
     }
 
-    const { args } = await this.parse(StoreModule);
+    const { args, flags } = await this.parse(StoreModule);
+    const commandArgs = Object.values(args);
+
+    this.handleHelp(commandArgs, flags);
+
     const folderList = TEMPLATE_FOLDERS;
 
     let sourceDirectory: string;

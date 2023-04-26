@@ -5,10 +5,11 @@ const reduceCommand = function (command: string[]) {
   const copyCommands = [...command];
   // const newCommands = command.slice(0, -1).join(':');
   const removedCommand = copyCommands.pop();
+
   return {
     reducedCommands: copyCommands.join(':'),
-    removedCommand
-  }
+    removedCommand,
+  };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
@@ -18,11 +19,11 @@ const runHelp = async function (config: any, command: string) {
 };
 
 // eslint-disable-next-line require-await
-const hook: Hook<'command_not_found'> = async function ({ id, argv, config }) {
-  // console.log(config.commandIDs);
+const hook: Hook.CommandNotFound = async function ({ id, argv, config }) {
   let commandStrings = [];
   const command = id.trim();
   // console.log("Not found: ", command, argv);
+  // console.log({ where: 'command-not-found', key: { command, argv } });
   commandStrings = command.includes(':') ? command?.split(':') : command?.split(' ');
   // console.log('Not found - commandStrings: ', commandStrings);
 

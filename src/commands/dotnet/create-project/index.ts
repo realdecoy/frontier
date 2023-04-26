@@ -25,7 +25,7 @@ export default class CreateProject extends Command {
   static description = 'Scaffold a new project'
 
   static flags = {
-    help: Flags.help({ char: 'h' }),
+    help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
   }
 
@@ -41,14 +41,14 @@ export default class CreateProject extends Command {
     const customErrorCode = parsedError.code;
     const customErrorMessage = parsedError.message;
     const hasCustomErrorCode = customErrorCode !== undefined;
+    const hasNonExistentFlagError = errorMessage.includes('Nonexistent flag');
 
-    if (!hasCustomErrorCode) {
+    if (hasNonExistentFlagError) {
+      this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
+    } else if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
       throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.has(customErrorCode)) {
+    } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
@@ -57,8 +57,20 @@ export default class CreateProject extends Command {
     return Promise.resolve();
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
     const { flags, args } = await this.parse(CreateProject);
+    const commandArgs = Object.values(args);
+
+    this.handleHelp(commandArgs, flags);
+
     const template: string = DOTNET_TEMPLATE_REPO;
     const templateShortName: string = DOTNET_TEMPLATE_SHORT_NAME;
     const tag: string = DOTNET_TEMPLATE_TAG;

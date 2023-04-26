@@ -52,7 +52,7 @@ Commands:
     mirgate          -  manage migrations for a database
   
 Options:
-    --help           -  Show CLI help
+    --help           -  Show help information
 ```
 
 

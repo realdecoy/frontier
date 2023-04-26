@@ -8,7 +8,7 @@ export default class Plugin extends Command {
   static description = 'install a plugin'
 
   static flags = {
-    help: Flags.help({ name: 'help', char: 'h', hidden: false }),
+    help: Flags.boolean({ hidden: false }),
   }
 
   static args = {
@@ -45,7 +45,7 @@ export default class Plugin extends Command {
 
     this.log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId.replaceAll(':', ' '))} ${chalk.blue('<command>')}
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} ${chalk.blue('<command>')}
 
         Commands:${argsList}
 
@@ -53,13 +53,21 @@ export default class Plugin extends Command {
     `);
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (args.length === 0) { // Show help when arguments missing
+      this.showHelp();
+    } else if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
-    const { args } = await this.parse(Plugin);
+    const { args, flags } = await this.parse(Plugin);
     const commandArgs = Object.values(args);
 
-    if (commandArgs.length === 0) {
-      this.showHelp();
-    }
+    this.handleHelp(commandArgs, flags);
 
     return Promise.resolve();
   }

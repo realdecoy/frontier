@@ -21,7 +21,7 @@ export default class Upgrade extends Command {
   static description = 'Specify the frontier template version for a project'
 
   static flags = {
-    help: Flags.help({ char: 'h' }),
+    help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
   }
 
@@ -37,20 +37,28 @@ export default class Upgrade extends Command {
     const customErrorCode = parsedError.code;
     const customErrorMessage = parsedError.message;
     const hasCustomErrorCode = customErrorCode !== undefined;
+    const hasNonExistentFlagError = errorMessage.includes('Nonexistent flag');
 
-    if (hasCustomErrorCode === false) {
+    if (hasNonExistentFlagError) {
+      this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
+    } else if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
       throw errorMessage;
-    }
-
-    // handle errors thrown with known error codes
-    if (CUSTOM_ERROR_CODES.has(customErrorCode)) {
+    } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
     } else {
       throw new Error(customErrorMessage);
     }
 
     return Promise.resolve();
+  }
+
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
   }
 
   async run(): Promise<void> {
@@ -65,7 +73,11 @@ export default class Upgrade extends Command {
       );
     }
 
-    const { args } = await this.parse(Upgrade);
+    const { args, flags } = await this.parse(Upgrade);
+    const commandArgs = Object.values(args);
+
+    this.handleHelp(commandArgs, flags);
+
     const template: string = VUE_TEMPLATE_REPO;
     const versionName = args.name ?? VUE_TEMPLATE_TAG;
     const temporaryProjectFolder = path.join(projectRoot, 'node_modules', '_temp');

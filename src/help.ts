@@ -30,7 +30,7 @@ export default class MyHelpClass extends Help {
         const maxSpaces = 22;
         const numOfSpaces = maxSpaces - flag.name.length;
 
-        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.description}`;
+        return `\n\t    --${flag.name} ${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${flag.name === 'help' ? 'Show help information' : flag.description}`;
       });
 
     const optionalNewline = `${commandArgs.length === 0 ? '' : '\n'}`;
