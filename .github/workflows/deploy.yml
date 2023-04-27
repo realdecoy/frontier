@@ -7,13 +7,11 @@ on:
       reason: 
         description: Type 'RUN' to run workflow manually
         required: true
-
-  pull_request:
-    types: 
-      - closed
+  push:
     branches: 
-      - testbranch
-
+      - 'development'
+    paths:
+      - 'docs/**'
 jobs:
   if_merged_to_main:
     if: github.event.pull_request.merged == true
