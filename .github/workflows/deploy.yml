@@ -1,34 +1,33 @@
-#Workflow for deploying
 name: Frontier Documentation to S3 Bucket
-
-on: push
-  branches: 
-    - 'development'
-  paths:
-    - 'docs/**'
+on:
+  push:
+    branches:
+      - development
+    paths:
+      - docs/**
 jobs:
   if_merged_to_main:
     if: github.event.pull_request.merged == true
-    runs-on: windows-latest   
+    runs-on: windows-latest
     steps:
       - run: |
           echo The PR was merged
       - name: Checkout
-        uses: actions/checkout@v3      
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3        
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x     
-      - name: Configure AWS credentials        
-        uses: aws-actions/configure-aws-credentials@v1        
+          node-version: 14.x
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2     
-      - name: Install dependencies        
+          aws-region: us-east-2
+      - name: Install dependencies
         run: npm install
-      - name: build        
-        run:  npm run build
-      - name: deploy        
+      - name: build
+        run: npm run build
+      - name: deploy
         run: aws s3 sync ./docs/.output/public/. s3://frontier.realdecoy.com
