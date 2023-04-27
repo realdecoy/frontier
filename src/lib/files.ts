@@ -356,7 +356,6 @@ function copyFilesOld(
       // Create all the necessary directories if they dont exist
       const dirName = getDirName(dest);
       mkdirp.sync(dirName);
-      console.log({ where: 'copyfiles', f });
 
       return copyFilePromise(source, dest);
     }),
