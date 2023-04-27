@@ -18,7 +18,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,6 +28,7 @@ jobs:
           aws-region: us-east-2
       - name: Install dependencies and build
         run: |
+          cd docs
           npm install
           npm run build
       - name: deploy
