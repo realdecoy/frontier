@@ -1,12 +1,11 @@
 #Workflow for deploying
 name: Frontier Documentation to S3 Bucket
 
-on:
-  push:
-    branches: 
-      - 'development'
-    paths:
-      - 'docs/**'
+on: push
+  branches: 
+    - 'development'
+  paths:
+    - 'docs/**'
 jobs:
   if_merged_to_main:
     if: github.event.pull_request.merged == true
