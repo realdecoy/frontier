@@ -98,7 +98,9 @@ export default class Component extends Command {
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
       installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, componentNameKebab);
       // copy and update files for component being added
-      await copyFiles(sourceDirectory, installDirectory, files);
+      const a = await copyFiles(sourceDirectory, installDirectory, files);
+      console.log(a);
+
       await readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);
     });
 

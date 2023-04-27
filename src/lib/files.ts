@@ -330,7 +330,7 @@ async function copyDirectoryRecursive(source: string, target: string): Promise<b
  * @param {Boolean} isCorePath - flag to optionally auto set core path if config path is included, true by default.
  * @returns {Promise<any>} -
  */
-function copyFiles(
+function copyFilesOld(
   srcDir: string,
   destDir: string,
   files: Array<string | Files>,
@@ -356,10 +356,50 @@ function copyFiles(
       // Create all the necessary directories if they dont exist
       const dirName = getDirName(dest);
       mkdirp.sync(dirName);
+      console.log({ where: 'copyfiles', f });
 
       return copyFilePromise(source, dest);
     }),
   );
+}
+
+/**
+ * Description: Copy files from a source directory to a destination directory
+ * @param {string} srcDir - directory from which files will be copied
+ * @param {string} destDir - directory to which files will be copied
+ * @param {Array<string|Files>} files - files to be copied
+ * @param {Boolean} isCorePath - flag to optionally auto set core path if config path is included, true by default.
+ * @returns {Promise<any>} -
+ */
+function copyFiles(
+  srcDir: string,
+  destDir: string,
+  files: Array<string | Files>,
+  isCorePath = true,
+): void {
+  // eslint-disable-next-line unicorn/no-array-for-each
+  files.forEach((f: Files | string) => {
+    let source = EMPTY_STRING;
+    let dest = EMPTY_STRING;
+    // Get source and destination paths
+    if (typeof f === 'string') {
+      source = path.join(
+        srcDir,
+        `${srcDir.includes('config') && isCorePath ? 'core' : EMPTY_STRING}`,
+        f,
+      );
+      dest = path.join(destDir, f);
+    } else {
+      source = path.join(srcDir, f.source);
+      dest = path.join(destDir, f.target);
+    }
+
+    // Create all the necessary directories if they dont exist
+    const dirName = getDirName(dest);
+    mkdirp.sync(dirName);
+
+    fs.copyFileSync(source, dest);
+  });
 }
 
 /**
@@ -478,11 +518,13 @@ async function readAndUpdateDotnetFeatureFiles(
   featureName?: string,
   endpointNameLower?: string,
 ): Promise<void> {
+  console.log('HELOOOO');
   let filePath = '';
   const promisedUpdates = [];
 
   // [3] For each file in the list
   for (const file of files) {
+    console.log({ where: 'readAndUpdate', file });
     if (typeof file === 'string') {
       continue;
     }
@@ -790,6 +832,7 @@ export {
   replaceTargetFileNames,
   readAndUpdateFeatureFiles,
   readAndUpdateDotnetFeatureFiles,
+  copyFilesOld,
   copyFiles,
   copyDirectoryRecursive,
   getProjectRoot,

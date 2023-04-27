@@ -4,7 +4,7 @@ const chalk = require('chalk');
 // const shell = require('shelljs');
 import { Args, Command, Flags } from '@oclif/core';
 import path from 'node:path';
-import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseDotnetModuleConfig, readAndUpdateDotnetFeatureFiles, readProjectConfig, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parseEntityName, isJsonString, toKebabCase } from '../../../lib/utilities';
 import { Files } from '../../../modules';
@@ -102,7 +102,7 @@ export default class Entity extends Command {
       const files: Array<string | Files> = config.manifest.files;
       config.manifest.installDirectory = config.manifest.installDirectory.replace('__PROJECT_NAME__', projectName);
 
-      // replace file names in config with kebab case equivalent
+      // replace file names in config with title case equivalent
       replaceTargetFileNames(files, entityName);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
       installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
@@ -110,5 +110,8 @@ export default class Entity extends Command {
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateDotnetFeatureFiles(installDirectory, files, entityNameKebab, entityName, undefined, projectName);
     });
+
+    this.log(`${CLI_STATE.Success} entity added: ${entityName}`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Entity)}\n`);
   }
 }

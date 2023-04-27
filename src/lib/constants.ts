@@ -85,25 +85,35 @@ enum MOBILE_CLI_COMMANDS_ENUM {
   AddStore = 'mobile add store',
   AddModule = 'mobile add',
   PluginLocalization = 'mobile plugin localization',
-  PluginBitrise= 'mobile plugin bitrise',
+  PluginBitrise = 'mobile plugin bitrise',
   PluginLibrary = 'mobile plugin',
   PoorHelpCommand = 'add-help',
 }
 export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
 
 enum VUE_DOCUMENTATION_LINKS_ENUM {
-  Rdvue = 'https://realdecoy.github.io/rdvue/#/',
-  Component = 'https://realdecoy.github.io/rdvue/#/Features?id=components',
-  Layout = 'https://realdecoy.github.io/rdvue/#/Features?id=layouts',
-  Page = 'https://realdecoy.github.io/rdvue/#/Features?id=pages',
-  Service = 'https://realdecoy.github.io/rdvue/#/Features?id=services',
-  Store = 'https://realdecoy.github.io/rdvue/#/Features?id=stores',
-  EsBuild = 'https://esbuild.github.io/',
+  FrontierVue = 'http://frontier.realdecoy.com/vue/introduction/whats-frontier-vue',
+  Component = 'http://frontier.realdecoy.com/vue/features/components',
+  Layout = 'http://frontier.realdecoy.com/vue/features/layouts',
+  Page = 'http://frontier.realdecoy.com/vue/features/pages',
+  Service = 'http://frontier.realdecoy.com/vue/features/services',
+  Store = 'http://frontier.realdecoy.com/vue/features/stores',
+  EsBuild = 'http://frontier.realdecoy.com/vue/features/bundle-analysis',
 }
 export const VUE_DOCUMENTATION_LINKS = VUE_DOCUMENTATION_LINKS_ENUM;
 
+enum DOTNET_DOCUMENTATION_LINKS_ENUM {
+  FrontierDotnet = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Entity = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Endpoint = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Query = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Command = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Configuration = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+}
+export const DOTNET_DOCUMENTATION_LINKS = DOTNET_DOCUMENTATION_LINKS_ENUM;
+
 enum MOBILE_DOCUMENTATION_LINKS_ENUM {
-  Rdvue = 'https://realdecoy.github.io/rdvue/#/',
+  FrontierMobile = 'http://frontier.realdecoy.com/mobile/introduction/whats-frontier-mobile',
   Component = 'http://frontier.realdecoy.com/mobile/features/components',
   Screen = 'http://frontier.realdecoy.com/mobile/features/screens',
   Service = 'http://frontier.realdecoy.com/mobile/features/services',

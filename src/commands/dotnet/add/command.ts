@@ -4,7 +4,7 @@ const chalk = require('chalk');
 // const shell = require('shelljs');
 import { Args, Command, Flags } from '@oclif/core';
 import path from 'node:path';
-import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseDotnetModuleConfig, readAndUpdateDotnetFeatureFiles, readProjectConfig, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, isJsonString, toKebabCase, parseCommandName, parseApiFeatures } from '../../../lib/utilities';
 import { Files } from '../../../modules';
@@ -114,5 +114,8 @@ export default class ApiCommand extends Command {
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateDotnetFeatureFiles(installDirectory, files, commandNameKebab, commandName, undefined, projectName, featureName);
     });
+
+    this.log(`${CLI_STATE.Success} command added: ${commandName}`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Entity)}\n`);
   }
 }

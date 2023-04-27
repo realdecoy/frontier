@@ -102,7 +102,7 @@ export default class Layout extends Command {
       await readAndUpdateFeatureFiles(installDirectory, files, layoutNameKebab, layoutNamePascal);
     });
 
-    this.log(`${CLI_STATE.Success} component added: ${layoutNameKebab}`);
+    this.log(`${CLI_STATE.Success} layout added: ${layoutNameKebab}`);
     this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(MOBILE_DOCUMENTATION_LINKS.Component)}\n`);
   }
 }
