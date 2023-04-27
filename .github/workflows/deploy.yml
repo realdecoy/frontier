@@ -5,6 +5,8 @@ on:
       - development
     paths:
       - docs/**
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 jobs:
   update_documentation:
     runs-on: windows-latest
@@ -24,11 +26,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
-      - name: Change directory to docs folder
-        run: cd docs
-      - name: Install dependencies
-        run: npm install
-      - name: build
-        run: npm run build
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
       - name: deploy
         run: aws s3 sync ./docs/.output/public/. s3://frontier.realdecoy.com
