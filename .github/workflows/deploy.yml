@@ -2,11 +2,6 @@
 name: Frontier Documentation to S3 Bucket
 
 on:
-  workflow_dispatch:
-    inputs:
-      reason: 
-        description: Type 'RUN' to run workflow manually
-        required: true
   push:
     branches: 
       - 'development'
