@@ -518,13 +518,11 @@ async function readAndUpdateDotnetFeatureFiles(
   featureName?: string,
   endpointNameLower?: string,
 ): Promise<void> {
-  console.log('HELOOOO');
   let filePath = '';
   const promisedUpdates = [];
 
   // [3] For each file in the list
   for (const file of files) {
-    console.log({ where: 'readAndUpdate', file });
     if (typeof file === 'string') {
       continue;
     }
