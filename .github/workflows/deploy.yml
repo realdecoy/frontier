@@ -4,9 +4,9 @@ on:
     branches:
       - development
     paths:
-      - docs/**
+      - docs/content/**/*
 jobs:
-  if_docs_update:
+  update_documentation:
     if: github.event.pull_request.merged == true
     runs-on: windows-latest
     steps:
