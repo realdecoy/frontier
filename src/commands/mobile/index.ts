@@ -18,7 +18,7 @@ export default class Mobile extends Command {
   static description = 'React Native scaffolding';
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 
@@ -66,6 +66,8 @@ export default class Mobile extends Command {
         return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
 
+    const commandList = argsList.join("").split(",")
+
     // parse option config list
     const optionList = commandFlags
       .filter((flag: any) => !flag.hidden)
@@ -80,7 +82,7 @@ export default class Mobile extends Command {
         Usage:
             ${chalk.yellow('frontier')} ${chalk.blue('<command>')}
 
-        Commands:${argsList}
+        Commands:${commandList}
 
         Options:${optionList}
     `);
