@@ -2,7 +2,7 @@ name: Frontier Documentation to S3 Bucket
 on:
   push:
     branches:
-      - SEPA-711-update-next-steps-for-the-create-project-command
+      - development
     paths:
       - docs/**
   # Allows you to run this workflow manually from the Actions tab
