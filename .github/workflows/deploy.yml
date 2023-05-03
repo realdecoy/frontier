@@ -2,7 +2,7 @@ name: Frontier Documentation to S3 Bucket
 on:
   push:
     branches:
-      - development
+      -  SEPA-707-update-vue-namespace-help-menu
     paths:
       - docs/**
   # Allows you to run this workflow manually from the Actions tab

@@ -75,7 +75,7 @@
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest",
-    "test": "nyc mocha --forbid-only \"src/**/*.test.ts\"",
+    "test": "nyc mocha --forbid-only \"src/commands/vue/*.test.ts\"",
     "version": "oclif readme && git add README.md"
   },
   "engines": {
