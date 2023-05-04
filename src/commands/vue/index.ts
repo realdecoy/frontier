@@ -18,7 +18,7 @@ export default class Vue extends Command {
   static description = 'Vue.js scaffolding';
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 
@@ -59,13 +59,15 @@ export default class Vue extends Command {
 
     // parse argument config list
     const argsList = commandArgs
-      .filter((arg: any) => !arg.hidden)
-      .map((arg: any) => {
+      .filter(arg => !arg.hidden)
+      .map(arg => {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
+        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(" ")}- ${arg.description}` ;
       });
+
+    const commandList = argsList.join("").split(",")
 
     // parse option config list
     const optionList = commandFlags
@@ -81,11 +83,13 @@ export default class Vue extends Command {
         Usage:
             ${chalk.yellow('frontier')} ${chalk.blue('<command>')}
 
-        Commands:${argsList}
+        Commands:${commandList}
 
         Options:${optionList}
     `);
   }
+
+ 
 
   handleHelp(args: (string | undefined)[], flags: {
       help: boolean;
