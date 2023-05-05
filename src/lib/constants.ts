@@ -87,6 +87,7 @@ enum MOBILE_CLI_COMMANDS_ENUM {
   PluginLocalization = 'mobile plugin localization',
   PluginBitrise = 'mobile plugin bitrise',
   PluginLibrary = 'mobile plugin',
+  PluginSentry = 'mobile plugin sentry',
   PoorHelpCommand = 'add-help',
 }
 export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;

@@ -938,6 +938,54 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
   console.log(readmeContent);
 }
 
+/**
+ * Description: parse project or prompt user to provide name of organization
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseOrganization(args: Lookup): Promise<string> {
+  let argName = args.organization;
+  const validateProjectName = validateEnteredName('project');
+  // if no project name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([
+      {
+        name: 'organization',
+        initial: 'my-rdvue-organization',
+        message: 'Enter a organization: ',
+        type: 'text',
+        validate: validateProjectName,
+      },
+    ]);
+    argName = responses.organization;
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse project or prompt user to provide authorization token
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseAuthorizationToken(args: Lookup): Promise<string> {
+  let argName = args.authorizationToken;
+  // if no project name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([
+      {
+        name: 'authorizationToken',
+        initial: 'asdasf342423',
+        message: 'Enter a authorization token: ',
+        type: 'text',
+      },
+    ]);
+    argName = responses.authorizationToken;
+  }
+
+  return argName;
+}
+
 export {
   hasCamel,
   hasKebab,
@@ -968,4 +1016,6 @@ export {
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
+  parseOrganization,
+  parseAuthorizationToken,
 };
