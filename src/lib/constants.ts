@@ -104,11 +104,11 @@ export const VUE_DOCUMENTATION_LINKS = VUE_DOCUMENTATION_LINKS_ENUM;
 
 enum DOTNET_DOCUMENTATION_LINKS_ENUM {
   FrontierDotnet = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
-  Entity = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
-  Endpoint = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
-  Query = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
-  Command = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
-  Configuration = 'http://frontier.realdecoy.com/frontier/introduction/whats-frontier',
+  Entity = 'http://frontier.realdecoy.com/dotnet/features/entity',
+  Endpoint = 'http://frontier.realdecoy.com/dotnet/features/endpoint',
+  Query =  'http://frontier.realdecoy.com/dotnet/features/query',
+  Command = 'http://frontier.realdecoy.com/dotnet/features/command',
+  Configuration =  'http://frontier.realdecoy.com/dotnet/features/configuration',
 }
 export const DOTNET_DOCUMENTATION_LINKS = DOTNET_DOCUMENTATION_LINKS_ENUM;
 

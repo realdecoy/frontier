@@ -111,6 +111,6 @@ export default class Configuration extends Command {
     });
 
     this.log(`${CLI_STATE.Success} configuration added: ${configurationName}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Entity)}\n`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Configuration)}\n`);
   }
 }

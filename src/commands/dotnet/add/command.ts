@@ -116,6 +116,6 @@ export default class ApiCommand extends Command {
     });
 
     this.log(`${CLI_STATE.Success} command added: ${commandName}`);
-    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Entity)}\n`);
+    this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(DOTNET_DOCUMENTATION_LINKS.Command)}\n`);
   }
 }
