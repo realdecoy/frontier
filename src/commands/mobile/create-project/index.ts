@@ -19,6 +19,8 @@ import {
   MOBILE_TEMPLATE_REPLACEMENT_FILES,
   MOBILE_TEMPLATE_REPO,
   MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES,
+  TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX,
+  TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -86,8 +88,12 @@ export default class CreateProject extends Command {
     const isTest = flags.isTest === true;
     const template: string = MOBILE_TEMPLATE_REPO;
     const tag: string = MOBILE_TEMPLATE_TAG;
-    const replaceRegex = TEMPLATE_PROJECT_NAME_REGEX;
+    const replaceNameRegex = TEMPLATE_PROJECT_NAME_REGEX;
+    const replaceSchemeRegex = TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX;
+    const replaceBundleIdRegex = TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX;
+
     let filesToReplace = MOBILE_TEMPLATE_REPLACEMENT_FILES;
+    let cicdFilesToReplace = MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES;
 
     const { isValid: isValidProject } = checkProjectValidity();
 
@@ -102,7 +108,7 @@ export default class CreateProject extends Command {
 
     // retrieve project name
     const projectName = await parseProjectName(args);
-    const bundleIdenifier = await parseBundleIdentifier(args);
+    const bundleIdentifier = await parseBundleIdentifier(args);
 
     // convert project name to kebab case
     const kebabProjectName = toKebabCase(projectName);
@@ -112,6 +118,7 @@ export default class CreateProject extends Command {
 
     // update files to be replaced with project name reference
     filesToReplace = filesToReplace.map(p => `${kebabProjectName}/${p}`);
+    cicdFilesToReplace = cicdFilesToReplace.map(file => `${kebabProjectName}/${file}`);
 
     this.log(`${CLI_STATE.Info} creating mobile project ${chalk.whiteBright(kebabProjectName)}`);
 
@@ -119,15 +126,11 @@ export default class CreateProject extends Command {
     await shell.exec(`git clone ${template} --depth 1 --branch ${tag} ${kebabProjectName}`, { silent: !versbose });
 
     // find and replace project name references
-    const success = await replaceInFiles(filesToReplace, replaceRegex, `${kebabProjectName}`);
+    const success = await replaceInFiles(filesToReplace, replaceNameRegex, `${kebabProjectName}`);
 
-    MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES
-      .map(file => `${kebabProjectName}/${file}`)
-      // eslint-disable-next-line unicorn/no-array-for-each
-      .forEach(async file => {
-        await replaceInFiles(file, /__PROJECT_SCHEME__/g, toPascalCase(projectName));
-        await replaceInFiles(file, /__BUNDLE_IDENTIFIER__/g, bundleIdenifier.toLowerCase());
-      });
+    // Find a replace CI CD related files
+    await replaceInFiles(cicdFilesToReplace, replaceSchemeRegex, toPascalCase(projectName));
+    await replaceInFiles(cicdFilesToReplace, replaceBundleIdRegex, bundleIdentifier.trim().toLowerCase());
 
     if (success === false) {
       throw new Error(
