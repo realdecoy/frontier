@@ -8,7 +8,7 @@ export default class Migrate extends Command {
   static description = 'perform a migration action';
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
   }
 
   static args = {
