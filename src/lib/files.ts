@@ -16,6 +16,7 @@ import bluebirdPromise from 'bluebird';
 import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
 import { Files, InjectOptions } from '../modules';
 import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
+import chalk from 'chalk';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -65,15 +66,19 @@ function fileExists(filePath: string): boolean {
 /**
  * Description: Read main config file to determine options the tool can take
  * @param {string} filePath -
+ * @param {string} message - error message to be displayed
  * @returns {any} -
  */
-function readConfigFile(filePath: string): any {
+function readConfigFile<T = any>(
+  filePath: string,
+  message = `template file not found, run ${chalk.whiteBright('rdvue upgrade')} to continue`
+): T {
   const isExistingFile = fileExists(filePath);
   if (isExistingFile === false) {
     throw new Error(
       JSON.stringify({
         code: 'missing-template-file',
-        message: 'template file not found, run rdvue upgrade to continue',
+        message,
       }),
     );
   }
