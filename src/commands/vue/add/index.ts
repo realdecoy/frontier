@@ -17,7 +17,7 @@ export default class Add extends Command {
   static description = 'add a new module';
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
   }
 
   static args = {

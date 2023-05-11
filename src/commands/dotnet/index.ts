@@ -16,7 +16,7 @@ export default class Dotnet extends Command {
   static description = 'Dotnet API scaffolding';
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 

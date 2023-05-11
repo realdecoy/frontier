@@ -8,7 +8,7 @@ export default class Plugin extends Command {
   static description = 'install a plugin'
 
   static flags = {
-    help: Flags.boolean({ hidden: false }),
+    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
   }
 
   static args = {
