@@ -10,7 +10,7 @@ export const VUE_TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';
 export const DOTNET_TEMPLATE_REPO = 'Net.WebApi.Template::';
 export const DESIGN_TEMPLATE_REPO = 'https://github.com/realdecoy/design-system-components';
 export const VUE_TEMPLATE_TAG = 'v2.3.1'; // replace this with the appropriate release tag in the template repo
-export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the appropriate release tag in the template repo
+export const MOBILE_TEMPLATE_TAG = 'SEPA-716-navigation'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_TAG = '1.0.0-rc.5'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_SHORT_NAME = 'net7webapi'; // replace this with the appropriate release tag in the template repo
 export const DESIGN_TEMPLATE_FOLDER = 'library';
@@ -85,6 +85,7 @@ enum MOBILE_CLI_COMMANDS_ENUM {
   AddStore = 'mobile add store',
   AddModule = 'mobile add',
   PluginLocalization = 'mobile plugin localization',
+  PluginNavigation = 'mobile plugin navigation',
   PluginBitrise = 'mobile plugin bitrise',
   PluginLibrary = 'mobile plugin',
   PoorHelpCommand = 'add-help',

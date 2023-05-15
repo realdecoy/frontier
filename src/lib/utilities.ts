@@ -938,6 +938,40 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
   console.log(readmeContent);
 }
 
+/**
+ * Description: parse existing navigation options for project
+ * @param {Lookup} args - a string value
+ * @param {string} projectName - a string value
+ * @returns {string} -
+ */
+async function parseNavigationOptions(): Promise<string> {
+  const choices = [
+    { title: 'stack' }, 
+    { title: 'tab' }, 
+    { title: 'drawer' }, 
+  ];
+
+  const responses = await prompts<'navigation'>([{
+    name: 'navigation',
+    initial: 0,
+    message: 'Pick a navigation type to use: ',
+    type: 'select',
+    choices,
+  }], {
+    onCancel() {
+      // eslint-disable-next-line no-console
+      console.log(`${chalk.red('frontier')} navigation selection canceled`);
+
+      return false;
+    },
+  });
+  if (responses.navigation === undefined) {
+    process.exit(1);
+  }
+
+  return choices[(responses as {navigation : number}).navigation].title;
+}
+
 export {
   hasCamel,
   hasKebab,
@@ -968,4 +1002,5 @@ export {
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
+  parseNavigationOptions,
 };

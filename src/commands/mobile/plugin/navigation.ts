@@ -6,14 +6,15 @@ const exec = util.promisify(shell.exec);
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
 import path from 'node:path';
-import { Command, Flags, ux } from '@oclif/core';
+import { Args, Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
+import { copyFiles, parseDynamicObjects, parseMobileModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames, updateDynamicImportsAndExports } from '../../../lib/files';
+import { checkProjectValidity, isJsonString, parseComponentName, parseNavigationOptions, toKebabCase, toPascalCase } from '../../../lib/utilities';
 import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants';
 import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
 
-const TEMPLATE_FOLDERS = ['localization'];
+const ROOT_LOCATION = 'navigation';
+const TEMPLATE_FOLDERS = [ROOT_LOCATION];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,10 +23,8 @@ const CUSTOM_ERROR_CODES = new Set([
   'dependency-install-error',
 ]);
 
-export default class Localization extends Command {
-  // static aliases = ['mobile plugin localization']
-
-  static description = 'adds i18bn localization'
+export default class Navigation extends Command {
+  static description = 'adds navigation required functions'
 
   static flags = {
     help: Flags.boolean({ hidden: false }),
@@ -34,7 +33,9 @@ export default class Localization extends Command {
     skipInstall: Flags.boolean({ hidden: true }),
   }
 
-  static args = {}
+  static args = {
+    navigationType: Args.string({ name: 'navigator type', description: 'type of navigation' }),
+  }
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
@@ -69,14 +70,11 @@ export default class Localization extends Command {
   }
 
   async run(): Promise<void> {
-    const { flags, args } = await this.parse(Localization);
+    const { flags, args } = await this.parse(Navigation);
+    const { skipInstall, isTest, forceProject: projectName } = flags;
     const commandArgs = Object.values(args);
 
     this.handleHelp(commandArgs, flags);
-
-    const projectName = flags.forceProject;
-    const isTest = flags.isTest === true;
-    const skipInstallStep = flags.skipInstall === true;
     const hasProjectName = projectName !== undefined;
     const preInstallCommand = hasProjectName ? `cd ${projectName} &&` : '';
 
@@ -88,7 +86,7 @@ export default class Localization extends Command {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${MOBILE_CLI_COMMANDS.PluginLocalization} command must be run in an existing ${chalk.yellow('mobile')} project`,
+          message: `${MOBILE_CLI_COMMANDS.PluginNavigation} command must be run in an existing ${chalk.yellow('mobile')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -96,45 +94,37 @@ export default class Localization extends Command {
       projectRoot = dir.trim();
     }
 
+    // retrieve component name
+    const componentName = await parseComponentName(args);
+
+    // Parse navigation type
+    const type = await parseNavigationOptions();
+
     const folderList = TEMPLATE_FOLDERS;
+    const navigationFiles = ['gesture-handler', type];
+    navigationFiles.forEach(folder => folderList.push(`navigation/${folder}`));
+    
     let sourceDirectory = '';
     let installDirectory = '';
 
     // parse config files required for scaffolding this module
     const configs = parseMobileModuleConfig(folderList, projectRoot);
-    const config = configs[0];
-    const files: Array<string | Files> = config.manifest.files;
     let dependencies = '';
-    let devDependencies = '';
     
-    if(config.manifest.packages && config.manifest.packages.dependencies) {
-      dependencies = config.manifest.packages.dependencies.toString()
+    for (const config of configs) {
+      if(config.manifest.packages && config.manifest.packages.dependencies) {
+        dependencies += dependencies.length > 0  ? ' ' : '';
+        dependencies += config.manifest.packages.dependencies.toString()
         .split(',')
         .join(' ');
+      }
     }
 
-    if(config.manifest.packages && config.manifest.packages.devDependencies) {
-      devDependencies = config.manifest.packages.devDependencies.toString()
-        .split(',')
-        .join(' ');
-    }
-
-    if (skipInstallStep === false) {
+    if (!skipInstall) {
       try {
-        // install dev dependencies
-        if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing localization dev dependencies`);
-        }
-
-        await exec(`${preInstallCommand} npm install --save-dev ${devDependencies}`, { silent: true });
-
-        if (isTest !== true) {
-          ux.action.stop();
-        }
-
         // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing localization dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing navigation dependencies`);
         }
 
         await exec(`${preInstallCommand} npm install --save ${dependencies}`, { silent: true });
@@ -146,16 +136,14 @@ export default class Localization extends Command {
         throw new Error(
           JSON.stringify({
             code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} localization dependencies failed to install`,
+            message: `${this.id?.split(':')[1]} navigation dependencies (${dependencies}) failed to install`,
           }),
         );
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding localization dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding navigation dependencies`);
       }
-
-      await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
@@ -163,32 +151,30 @@ export default class Localization extends Command {
       }
     }
 
-    sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-    installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+    // parse kebab and pascal case of componentName
+    const componentNameKebab = toKebabCase(componentName);
+    const componentNamePascal = toPascalCase(componentName);
 
-    // copy files for plugin being added
-    await copyFiles(sourceDirectory, installDirectory, files);
-    // await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), MOBILE_DYNAMIC_OBJECTS.Routes);
-    // await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), MOBILE_DYNAMIC_OBJECTS.Options, true);
-    // if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
-    //   const { imports: mainImports, modules: mainModules } = config.manifest.main;
-    //   injectImportsIntoMain(projectRoot, mainImports);
-    //   try {
-    //     injectModulesIntoMain(projectRoot, mainModules);
-    //   } catch {
-    //     this.error(
-    //       JSON.stringify({
-    //         code: 'import-injection-error',
-    //         message: `${this.id?.split(':')[1]} failed to inject import statements`,
-    //       }),
-    //     );
-    //   }
-    // } else {
-    //   // FP-414: backwards compatibility
-    //   await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), MOBILE_DYNAMIC_OBJECTS.Modules, true);
-    // }
+    for await (const [i, config] of configs.entries()) {
+      const { moduleTemplatePath, manifest } = config;
+      const files: Array<string | Files> = manifest.files;
+      sourceDirectory = path.join(moduleTemplatePath, manifest.sourceDirectory);
+      installDirectory = path.join(projectRoot, 'src', manifest.installDirectory);
 
-    if (skipInstallStep === false) {
+      // replace file names in config with kebab case equivalent
+      replaceTargetFileNames(files, componentNameKebab);
+      // copy files for plugin being added
+      copyFiles(sourceDirectory, installDirectory, manifest.files);
+      readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);
+  
+      if(Array.isArray(manifest.moduleImports)) {
+        // update imports
+        updateDynamicImportsAndExports(projectRoot, manifest.installDirectory, manifest.moduleImports, 'index.ts');
+      }
+    }
+
+
+    if (skipInstall === false) {
       this.log(`${CLI_STATE.Success} plugin added: ${this.id?.split(':')[1]}`);
     }
   }

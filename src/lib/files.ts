@@ -16,6 +16,7 @@ import bluebirdPromise from 'bluebird';
 import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
 import { Files, InjectOptions } from '../modules';
 import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
+import { Manifest } from '../modules/manifest';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fileSystem);
@@ -67,7 +68,7 @@ function fileExists(filePath: string): boolean {
  * @param {string} filePath -
  * @returns {any} -
  */
-function readConfigFile(filePath: string): any {
+function readConfigFile<T = unknown>(filePath: string): T {
   const isExistingFile = fileExists(filePath);
   if (isExistingFile === false) {
     throw new Error(
@@ -151,7 +152,7 @@ function readFilesFromDirectory(directoryPath: string): any {
  * @param {string} projectRoot -
  * @returns {[any]} -
  */
-function parseMobileModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+function parseMobileModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: Manifest }[] {
   return folderList.map(folder => {
     const moduleTemplatePath = path.join(projectRoot, MOBILE_TEMPLATE_ROOT, folder);
     const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
@@ -159,7 +160,7 @@ function parseMobileModuleConfig(folderList: string[], projectRoot: string): { n
     return {
       name: folder,
       moduleTemplatePath,
-      manifest: readConfigFile(configFilePath),
+      manifest: readConfigFile<Manifest>(configFilePath),
     };
   });
 }
