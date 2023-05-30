@@ -9,8 +9,10 @@ import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
   DOTNET_TEMPLATE_SHORT_NAME,
-  CLI_STATE,
+  CLI_STATE, 
 } from '../../../lib/constants';
+import path from 'path';
+
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',
@@ -134,5 +136,18 @@ export default class CreateProject extends Command {
 
     // Output final instructions to user
     this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} docker-compose up --build`);
+
+
+     // Execute dotnet dev-certs command
+  // if (process.platform === 'win32') {
+  //   await shell.exec(`dotnet dev-certs https -ep "$env:USERPROFILE\.aspnet\https\aspnetapp.pfx" -p Password123`);
+  //   await shell.exec('dotnet dev-certs https --trust');
+  // }
+  // else
+  // {
+  //   await shell.exec(`dotnet dev-certs https -ep "${HOME}\.aspnet\https\aspnetapp.pfx" -p Password123`)
+  //   await shell.exec('dotnet dev-certs https --trust');
+  // }
+    
   }
 }
