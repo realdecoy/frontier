@@ -9,7 +9,7 @@ import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
   DOTNET_TEMPLATE_SHORT_NAME,
-  CLI_STATE,
+  CLI_STATE, 
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -129,6 +129,20 @@ export default class CreateProject extends Command {
     if (isTest !== true) {
       ux.action.stop();
     }
+
+  // Generate and trust SSL certificate for HTTPS
+
+  // For Windows
+  if (process.platform === 'win32') {
+    await shell.exec('dotnet dev-certs https -ep "$env:USERPROFILE\\.aspnet\\https\\aspnetapp.pfx" -p Password123', { silent: true });
+    await shell.exec('dotnet dev-certs https --trust', { silent: true });
+  }
+  // For Linux/Mac
+  else
+  {
+    await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
+    await shell.exec('dotnet dev-certs https --trust', { silent: true });
+  }   
 
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
 
