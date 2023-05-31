@@ -141,7 +141,7 @@ export default class CreateProject extends Command {
   else
   {
     await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
-    await shell.exec('dotnet dev-certs https --trust');
+    await shell.exec('dotnet dev-certs https --trust', { silent: true });
   }   
 
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
