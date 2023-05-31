@@ -11,8 +11,6 @@ import {
   DOTNET_TEMPLATE_SHORT_NAME,
   CLI_STATE, 
 } from '../../../lib/constants';
-import path from 'path';
-
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',
@@ -132,32 +130,23 @@ export default class CreateProject extends Command {
       ux.action.stop();
     }
 
-
   // Generate and trust SSL certificate for HTTPS
 
   // For Windows
   if (process.platform === 'win32') {
-
     await shell.exec('dotnet dev-certs https -ep "$env:USERPROFILE\\.aspnet\\https\\aspnetapp.pfx" -p Password123', { silent: true });
-      await shell.exec('dotnet dev-certs https --trust', { silent: true });
-    this.log('pass1')
-    
-    this.log('pass2')
+    await shell.exec('dotnet dev-certs https --trust', { silent: true });
   }
   // For Linux/Mac
   else
   {
     await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
     await shell.exec('dotnet dev-certs https --trust');
-  }
-    
+  }   
 
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
 
     // Output final instructions to user
     this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} docker-compose up --build`);
-
-
-
   }
 }
