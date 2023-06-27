@@ -50,6 +50,7 @@ enum VUE_CLI_COMMANDS_ENUM {
   AddLayout = 'vue add layout',
   AddModule = 'vue add',
   PluginBuefy = 'vue plugin buefy',
+  PluginElementPlus = 'vue plugin element-plus',
   PluginLocalization = 'vue plugin localization',
   PluginVuetify = 'vue plugin vuetify',
   PluginLibrary = 'vue plugin',
@@ -129,8 +130,7 @@ enum MOBILE_DOCUMENTATION_LINKS_ENUM {
 export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
 
 export const VUE_PLUGIN_PRESET_LIST = [
-  'Buefy & Localization (recommended)',
-  'Vuetify & Localization',
+  'Localization (recommended)',
   '[Skip presets]',
 ];
 

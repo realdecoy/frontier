@@ -14,7 +14,7 @@ import { log } from './stdout';
 import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
 import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
-import { Files, InjectOptions } from '../modules';
+import { Files, InjectOptions, ModuleConfig } from '../modules';
 import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
@@ -170,7 +170,7 @@ function parseMobileModuleConfig(folderList: string[], projectRoot: string): { n
  * @param {string} projectRoot -
  * @returns {[any]} -
  */
-function parseVueModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+function parseVueModuleConfig(folderList: string[], projectRoot: string): Array<ModuleConfig> {
   return folderList.map(folder => {
     const moduleTemplatePath = path.join(projectRoot, VUE_TEMPLATE_ROOT, folder);
     const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
