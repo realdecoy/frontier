@@ -9,7 +9,7 @@ import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
   DOTNET_TEMPLATE_SHORT_NAME,
-  CLI_STATE, 
+  CLI_STATE,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -58,7 +58,7 @@ export default class CreateProject extends Command {
   }
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (flags.help === true) { // Exit execution which will show help menu for help flag
       this.exit(0);
@@ -108,41 +108,69 @@ export default class CreateProject extends Command {
     }
 
     // retrieve project files from template source
-    const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
-    const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
+    const success1 = await shell.exec(`dotnet new --install${template}${tag}`, { silent: true });
 
-    if (success1 === false || success2 === false) {
+    // eslint-disable-next-line no-negated-condition
+    if (success1.code !== 0) {
       throw new Error(
         JSON.stringify({
           code: 'project-not-created',
-          message: 'an error occured',
+          message: `an error occured in retrieving project files from template source.\n${success1.stderr}`,
         }),
       );
+    } else {
+      const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
+      if (success2.code !== 0) {
+        throw new Error(
+          JSON.stringify({
+            code: 'project-not-created',
+            message: `an error has occured while creating the project.\n${success2.stderr}`,
+          }),
+        );
+      }
     }
 
     // initialize .frontierrc config file
-    await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
+    try {
+      await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
+    } catch (error) {
+      console.error('Error in initializing .frontierrc config file:', error);
+    }
 
     // initialize git in the created project
-    await shell.exec(`cd ${projectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
+    try {
+      await shell.exec(`cd ${projectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
+    } catch (error) {
+      console.error('Error in initializing .frontierrc config file:', error);
+    }
+
 
     if (isTest !== true) {
       ux.action.stop();
     }
 
-  // Generate and trust SSL certificate for HTTPS
+    // Generate and trust SSL certificate for HTTPS
 
-  // For Windows
-  if (process.platform === 'win32') {
-    await shell.exec('dotnet dev-certs https -ep "$env:USERPROFILE\\.aspnet\\https\\aspnetapp.pfx" -p Password123', { silent: true });
-    await shell.exec('dotnet dev-certs https --trust', { silent: true });
-  }
-  // For Linux/Mac
-  else
-  {
-    await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
-    await shell.exec('dotnet dev-certs https --trust', { silent: true });
-  }   
+    // For Windows
+    if (process.platform === 'win32') {
+      try {
+        await shell.exec('dotnet dev-certs https -ep "$env:USERPROFILE\\.aspnet\\https\\aspnetapp.pfx" -p Password123', { silent: true });
+        await shell.exec('dotnet dev-certs https --trust', { silent: true });
+      } catch (error) {
+        console.error('Errorin  generating and trusting SSL certificate for HTTPS:', error);
+      }
+    // eslint-disable-next-line brace-style
+    }
+    // For Linux/Mac
+    else {
+      try {
+        // eslint-disable-next-line no-template-curly-in-string
+        await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
+        await shell.exec('dotnet dev-certs https --trust', { silent: true });
+      } catch (error) {
+        console.error('Error in generating and trusting SSL certificate for HTTPS:', error);
+      }
+    }
 
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
 
