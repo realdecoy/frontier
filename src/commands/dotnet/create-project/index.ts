@@ -123,7 +123,7 @@ export default class CreateProject extends Command {
         throw new Error(
           JSON.stringify({
             code: 'project-not-created',
-            message: `An error occurred while retrieving project files from template sourcet. \n${success2.stderr}`,
+            message: `An error occurred while retrieving project files from template source. \n${success2.stderr}`,
           }),
         );
       }
