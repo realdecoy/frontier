@@ -108,25 +108,32 @@ export default class CreateProject extends Command {
     }
 
     // retrieve project files from template source
-    const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
-
-    if (success1.code !== 0) {
-      throw new Error(
-        JSON.stringify({
-          code: 'project-not-created',
-          message: `An error occurred while r the project. \n${success1.stderr}`,
-        }),
-      );
-    } else {
-      const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
-    if (success2.code !== 0) {
+    try {
+      const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
+    
+      if (success1.code !== 0) {
         throw new Error(
           JSON.stringify({
             code: 'project-not-created',
-            message: `An error occurred while retrieving project files from template source. \n${success2.stderr}`,
-          }),
+            message: `An error occurred while retrieving project files from the template source. \n\n${success1.stderr}`,
+          })
         );
+      } else {
+        const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
+        
+        if (success2.code !== 0) {
+          throw new Error(
+            JSON.stringify({
+              code: 'project-not-created',
+              message: `An error occurred while creating the project. \n\n${success2.stderr}`,
+            })
+          );
+        }
       }
+    } catch (error) {
+      throw error;
+    }
+    
 
     // initialize .frontierrc config file
     const frontierrcResult = await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
@@ -135,7 +142,7 @@ export default class CreateProject extends Command {
       throw new Error(
         JSON.stringify({
           code: 'frontierrc-initialization-error',
-          message: `An error occurred while initializing the .frontierrc config file.\n${frontierrcResult.stderr}`,
+          message: `An error occurred while initializing the .frontierrc config file.\n\n${frontierrcResult.stderr}`,
         }),
       );
     }
@@ -147,7 +154,7 @@ export default class CreateProject extends Command {
       throw new Error(
         JSON.stringify({
           code: 'git-initialization-error',
-          message: `An error occurred while initializing git in the created project.\n${gitResult.stderr}`,
+          message: `An error occurred while initializing git in the created project.\n\n${gitResult.stderr}`,
         }),
       );
     }
@@ -167,7 +174,7 @@ export default class CreateProject extends Command {
         throw new Error(
           JSON.stringify({
             code: 'ssl-certificate-error',
-            message: 'An error occurred while generating or trusting the SSL certificate.',
+            message: `An error occurred while generating or trusting the SSL certificate.\n\n${devCerts1.stderr} \n\n${devCerts2.stderr}`,
           }),
         );
       }
@@ -181,7 +188,7 @@ export default class CreateProject extends Command {
         throw new Error(
           JSON.stringify({
             code: 'ssl-certificate-error',
-            message: 'An error occurred while generating or trusting the SSL certificate.',
+            message: `An error occurred while generating or trusting the SSL certificate.\n\n${devCerts1.stderr} \n\n${devCerts2.stderr}`,
           }),
         );
       }
