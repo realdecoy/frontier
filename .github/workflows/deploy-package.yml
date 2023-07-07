@@ -2,7 +2,6 @@ name: Frontier Package to NPM
 on:
   push:
     branches:
-      - development
       - main
 jobs:
   npm-publish:
