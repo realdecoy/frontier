@@ -1,15 +1,13 @@
 name: Frontier Documentation to S3 Bucket
 on:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
   push:
     branches:
-      - development
-    paths:
-      - docs/**
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+      - main
 jobs:
   update_documentation:
     runs-on: windows-latest
+    if: contains(github.action_path, 'docs')
     steps:
       - run: |
           echo Documentation update pushed
