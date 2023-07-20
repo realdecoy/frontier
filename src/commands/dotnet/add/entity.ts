@@ -11,6 +11,7 @@ import { Files } from '../../../modules';
 import { ProjectConfig } from '../../../modules/project';
 
 const TEMPLATE_FOLDERS = ['entity'];
+const AUDITABLE_TEMPLATE_FOLDERS = ['auditable entity'];
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
   'failed-match-and-replace',
@@ -25,7 +26,7 @@ export default class Entity extends Command {
 
   static flags = {
     help: Flags.boolean({ hidden: false }),
-    auditable: Flags.boolean({ hidden: true }),
+    auditable: Flags.boolean({ hidden: false }),
   }
 
   static args = {
@@ -64,6 +65,16 @@ export default class Entity extends Command {
     }
   }
 
+  handleAuditable(args: (string | undefined)[], flags: {
+    auditable: boolean;
+  }): boolean {
+    if (flags.auditable === true) { // Exit execution which will show help menu for help flag
+      return true;
+    }
+
+    return false;
+  }
+
   async run(): Promise<void> {
     const { isValid: isValidProject, projectRoot } = checkProjectValidity();
     // block command unless being run within an frontier project
@@ -84,7 +95,7 @@ export default class Entity extends Command {
 
     this.handleHelp(commandArgs, flags);
 
-    const folderList = TEMPLATE_FOLDERS;
+    const folderList = this.handleAuditable(commandArgs, flags) ? AUDITABLE_TEMPLATE_FOLDERS : TEMPLATE_FOLDERS;
     let sourceDirectory: string;
     let installDirectory: string;
 
