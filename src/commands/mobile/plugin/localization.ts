@@ -11,7 +11,7 @@ import { Files } from '../../../modules';
 import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
+import { injectImportsIntoMain, injectModulesIntoMainVue2 as injectModulesIntoMain } from '../../../lib/plugins';
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
