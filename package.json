@@ -3,9 +3,7 @@
   "version": "0.0.2-beta.12",
   "description": "Frontier: Software Development Toolkit",
   "author": "RealDecoy",
-  "bin": {
-    "frontier": "./bin/run"
-  },
+  "bin": "./bin/run",
   "homepage": "https://github.com/realdecoy/frontier",
   "license": "UNLICENSED",
   "main": "dist/index.js",
