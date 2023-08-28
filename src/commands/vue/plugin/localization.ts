@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
@@ -10,8 +11,8 @@ import { Command, Flags, ux } from '@oclif/core';
 import { Files, ModuleConfig } from '../../../modules';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
-import { copyFiles, parseDynamicObjects, parseVueModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
+import { injectImportsIntoMain,  injectModulesIntoMainVue2,  injectModulesIntoMainVue3, injectRoutesIntoRouter } from '../../../lib/plugins';
+import { copyFiles, inject, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -78,7 +79,6 @@ export default class Localization extends Command {
     let sourceDirectory = '';
     let installDirectory = '';
 
-
     const files: Array<string | Files> = config.manifest.files;
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
@@ -142,7 +142,7 @@ export default class Localization extends Command {
       const { imports: mainImports, modules: mainModules } = config.manifest.main;
       injectImportsIntoMain(projectRoot, mainImports);
       try {
-        injectModulesIntoMain(projectRoot, mainModules);
+        injectModulesIntoMainVue2(projectRoot, mainModules);
       } catch {
         this.error(
           JSON.stringify({
@@ -196,9 +196,9 @@ export default class Localization extends Command {
     const config = configs[0];
 
     // If Vue 2
-    if(flags.vue2) {
+    if (flags.vue2) {
       await this.handleVue2(config, projectName, projectRoot);
-      
+
       return Promise.resolve();
     }
 
@@ -245,19 +245,19 @@ export default class Localization extends Command {
     // copy and update files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
 
-    const { manifest: { modules } } = config;
+    // update routes.ts file
+    const { manifest: { routes } } = config;
 
-    const moduleLocations = Object.keys(modules);
-    for (const location of moduleLocations) {
-      const localizationArr = location.split('/');
-      const filename = localizationArr[localizationArr.length - 1];
-      updateDynamicImportsAndExports(
-        projectRoot,
-        `modules/${localizationArr.filter((l, i) => i !== localizationArr.length - 1).join('/')}`,
-        modules[location],
-        filename
-      );
-    }
+    injectRoutesIntoRouter(projectRoot, routes);
+
+    // update main.ts file
+    const { manifest: { main } } = config;
+
+    const linesToInject = main.imports;
+    await injectImportsIntoMain(projectRoot, linesToInject);
+
+    const modulesToInject = main.modules;
+    await injectModulesIntoMainVue3(projectRoot, modulesToInject);
 
     if (skipInstallStep === false) {
       this.log(`${CLI_STATE.Success} plugin added: localization.`);

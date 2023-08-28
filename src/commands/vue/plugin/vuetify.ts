@@ -11,7 +11,7 @@ import { Files } from '../../../modules';
 import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
+import { injectImportsIntoMain, injectModulesIntoMainVue2 as injectModulesIntoMain } from '../../../lib/plugins';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

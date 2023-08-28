@@ -136,8 +136,6 @@ export default class CreateProject extends Command {
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
     const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
-    const shouldInstallBuefy = presetIndex === 0 || withBuefy === true;
-    const shouldInstallVuetify = presetIndex === 1 || withVuetify === true;
     const shouldInstallLocalization = presetIndex === 0 || presetIndex === 1 || withLocalization === true;
     const shouldInstallDesignSystem = withDesignSystem === true;
 
@@ -148,18 +146,8 @@ export default class CreateProject extends Command {
           message: 'updating your project failed',
         }),
       );
-    } else {
-      if (shouldInstallBuefy === true) { // buefy
-        await Buefy.run(['--forceProject', projectName, '--skipInstall']);
-      }
-
-      if (shouldInstallVuetify) { // Vuetify
-        await Vuetify.run(['--forceProject', projectName, '--skipInstall']);
-      }
-
-      if (shouldInstallLocalization === true) { // localization
-        await Localization.run(['--forceProject', projectName, '--skipInstall']);
-      }
+    } else if (shouldInstallLocalization === true) { // localization
+      await Localization.run(['--forceProject', projectName, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {
