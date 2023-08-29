@@ -6,6 +6,7 @@ import { Files } from '../../../modules';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
 import { copyFiles, parseVueModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
 import { checkProjectValidity, parsePageName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
+import { injectRoutesIntoRouter } from '../../../lib/plugins';
 
 const TEMPLATE_FOLDERS = ['page'];
 const CUSTOM_ERROR_CODES = new Set([
@@ -101,6 +102,17 @@ export default class Page extends Command {
       // copy and update files for page being added
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateFeatureFiles(installDirectory, files, pageNameKebab, pageNamePascal);
+      const routeObj = {
+        path: `'/${pageNameKebab}'`,
+        name: `'${pageNamePascal}'`,
+        component: {
+          import: `() => import('@/views/${pageNameKebab}/${pageNameKebab}.vue')`,
+          webpackChunkName: `'${pageNamePascal}'`,
+        },
+      };
+
+      // Inject the route into the router configuration
+      injectRoutesIntoRouter(projectRoot, [routeObj]);
     });
 
     this.log(`${CLI_STATE.Success} page added: ${pageNameKebab}`);
