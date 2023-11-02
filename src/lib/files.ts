@@ -780,12 +780,6 @@ async function updateDynamicImportsAndExports(
   featuredata: string | string[],
   fileName: string,
 ): Promise<void> {
-  console.log({
-    projectRoot,
-    folderName,
-    featuredata,
-    fileName,
-  });
   const SOURCE_DIRECTORY = 'src';
 
   if (projectRoot === null) {
