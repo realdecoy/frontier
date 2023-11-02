@@ -4,8 +4,6 @@ const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
-import Buefy from '../plugin/buefy';
-import Vuetify from '../plugin/vuetify';
 import Localization from '../plugin/localization';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
 import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase } from '../../../lib/utilities';
@@ -35,9 +33,7 @@ export default class CreateProject extends Command {
     help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
     skipPresets: Flags.boolean({ hidden: true }),
-    withBuefy: Flags.boolean({ hidden: true }),
     withLocalization: Flags.boolean({ hidden: true }),
-    withVuetify: Flags.boolean({ hidden: true }),
     withDesignSystem: Flags.boolean({ hidden: true }),
   }
 
@@ -91,8 +87,6 @@ export default class CreateProject extends Command {
     const replaceRegex = TEMPLATE_PROJECT_NAME_REGEX;
     const isTest = flags.isTest === true;
     const skipPresetsStep = flags.skipPresets === true;
-    const withBuefy = flags.withBuefy === true;
-    const withVuetify = flags.withVuetify === true;
     const withLocalization = flags.withLocalization === true;
     const withDesignSystem = flags.withDesignSystem === true;
 
@@ -136,7 +130,7 @@ export default class CreateProject extends Command {
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
     const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
-    const shouldInstallLocalization = presetIndex === 0 || presetIndex === 1 || withLocalization === true;
+    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
     const shouldInstallDesignSystem = withDesignSystem === true;
 
     if (success === false) {
@@ -146,7 +140,10 @@ export default class CreateProject extends Command {
           message: 'updating your project failed',
         }),
       );
-    } else if (shouldInstallLocalization === true) { // localization
+    }
+    
+    // localization
+    if (shouldInstallLocalization === true) {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
     }
 
