@@ -47,6 +47,7 @@ enum VUE_CLI_COMMANDS_ENUM {
   PluginElementPlus = 'vue plugin element-plus',
   PluginLocalization = 'vue plugin localization',
   PluginVuetify = 'vue plugin vuetify',
+  PluginSentry = 'vue plugin sentry',
   PluginLibrary = 'vue plugin',
   PoorHelpCommand = 'add-help'
 }
@@ -125,6 +126,7 @@ export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
 
 export const VUE_PLUGIN_PRESET_LIST = [
   'Localization (recommended)',
+  'Sentry',
   '[Skip presets]',
 ];
 

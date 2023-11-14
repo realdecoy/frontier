@@ -5,8 +5,9 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
 import Localization from '../plugin/localization';
+import Sentry from '../plugin/sentry';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase } from '../../../lib/utilities';
+import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase, parseSentryDSN } from '../../../lib/utilities';
 import {
   VUE_TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
@@ -35,6 +36,7 @@ export default class CreateProject extends Command {
     skipPresets: Flags.boolean({ hidden: true }),
     withLocalization: Flags.boolean({ hidden: true }),
     withDesignSystem: Flags.boolean({ hidden: true }),
+    withSentry: Flags.boolean({ hidden: true }),
   }
 
   static args = {
@@ -89,9 +91,11 @@ export default class CreateProject extends Command {
     const skipPresetsStep = flags.skipPresets === true;
     const withLocalization = flags.withLocalization === true;
     const withDesignSystem = flags.withDesignSystem === true;
+    const withSentry = flags.withSentry === true;
 
     let filesToReplace = VUE_TEMPLATE_REPLACEMENT_FILES;
     let projectName: string;
+    let sentryDsn = '';
     let presetName = '';
     const { isValid: isValidProject } = checkProjectValidity();
     // block command if being run within an frontier project
@@ -131,6 +135,7 @@ export default class CreateProject extends Command {
 
     const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
     const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
+    const shouldInstallSentry = presetIndex === 1 || withSentry === true;
     const shouldInstallDesignSystem = withDesignSystem === true;
 
     if (success === false) {
@@ -145,6 +150,11 @@ export default class CreateProject extends Command {
     // localization
     if (shouldInstallLocalization === true) {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
+    }
+
+    if (shouldInstallSentry === true) {
+      sentryDsn = await parseSentryDSN(args);
+      await Sentry.run(['--forceProject', projectName, '--addSentryDsn' , sentryDsn, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {
