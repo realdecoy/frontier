@@ -168,6 +168,21 @@ function throwNameError(errorMessage: string): void {
   );
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Description: Throws an error with the provided message
+ * @param {string} errorMessage - error message to be thrown
+ * @throws {Error}
+ */
+function throwSentryDsnError(errorMessage: string): void {
+  throw new Error(
+    JSON.stringify({
+      code: 'dsn-invalid',
+      message: stripFrontierPrefix(errorMessage),
+    }),
+  );
+}
+
 /**
  * Description: determine if string is valid component name
  * @param {string} featureName - the name of the feature whose name is being validated
@@ -190,6 +205,28 @@ function validateEnteredName(featureName: string, exampleName = '') {
 
     return isValidName ? true : resultMessage;
   };
+}
+
+/**
+ * Description: determine if string is valid component name
+ * @param {string} dsn - the name of the feature whose name is being validated
+ * @param {string} exampleDsn - an example of a valid DSN in Sentry
+ * @returns {any} -
+ */
+function validateDsn(dsn: string) {
+
+  const isString = typeof dsn === 'string';
+  const isNull = dsn === null || dsn.length === 0;
+  const charactersMatch = dsn.match(/^https:\/\/([a-z0-9]+)@([a-z0-9.-]+)\.[\w]+\/{1,2}\d+$/) !== null;
+  const isValidDsn = isString && charactersMatch;
+  let resultMessage = '';
+  if (isNull) {
+    resultMessage = `${CLI_STATE.Error} A ${dsn} is required`;
+  } else if (!charactersMatch) {
+    resultMessage = `${CLI_STATE.Error} Refer to the Sentry Documentation to retrieve your DSN (e.g. https://publickey@sentry.example.com/1)`;
+  }
+
+  return isValidDsn ? true : resultMessage;
 }
 
 /**
@@ -825,6 +862,44 @@ async function parseBundleIdentifier(args: Lookup): Promise<string> {
 
 /**
  * Description: parse project or prompt user to provide name for project
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseSentryDSN(args: Lookup): Promise<string> {
+  let argDsn = args.dsn;
+  // eslint-disable-next-line no-negated-condition
+  if (!argDsn) {
+    const responses: any = await prompts([{
+      name: 'dsn',
+      message: 'Enter your Sentry DSN: ',
+      type: 'text',
+      validate: validateDsn,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+        return false;
+      },
+    });
+
+    if (responses.dsn === undefined) {
+      process.exit(1);
+    }
+
+    argDsn = responses.dsn;
+  } else {
+    const result = validateDsn(argDsn);
+    if (result && result !== true) {
+      throwSentryDsnError(result);
+    }
+  }
+
+  return argDsn;
+}
+
+
+/**
+ * Description: parse project or prompt user to provide name for project
  * @param {Lookup} args - a string value
  * @returns {string} -
  */
@@ -968,4 +1043,5 @@ export {
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
+  parseSentryDSN,
 };

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { inject } from './files';
+import { inject, readFile, writeFile } from './files';
 
 /**
  * Private helper method for finding index of last import statement.
@@ -78,6 +78,14 @@ function getMainPath(projectRoot: string): string {
 }
 
 /**
+ * private helper method for assembling path to .env file
+ * @param {string} projectRoot root path to the project
+ * @returns {string} returns the path
+ */
+function getProjectEnvPath(projectRoot: string): string {
+  return path.join(projectRoot, '.env');
+}
+/**
  * private helper method for converting route object to string
  * @param {object} routeObj the route object
  * @returns {string} the string representation of the route object
@@ -132,17 +140,31 @@ function injectModulesIntoMainVue2(projectRoot: string, lines: string | string[]
   });
 }
 
-function injectModulesIntoMainVue3(projectRoot: string, moduleNames: string | string[]): void {
+function injectModulesIntoMainVue3(projectRoot: string, moduleNames: string | string[], isVueModule: boolean = true): void {
   const mainPath = getMainPath(projectRoot);
+  let uses = "";
 
   // Assuming the moduleNames are just the names, we map them to create the correct syntax
-  const uses = Array.isArray(moduleNames) ?
-    moduleNames.map(m => `app.use(${m});`).join('\n') :
-    `app.use(${moduleNames.trim()});`;
+  if (isVueModule) {
+    uses = Array.isArray(moduleNames) ?
+      moduleNames.map(m => `app.use(${m});`).join('\n') : `app.use(${moduleNames.trim()});`; 
+  } else {
+    uses = Array.isArray(moduleNames) ? moduleNames.map(m => m).join('\n') : moduleNames.trim();
+  }
 
   inject(mainPath, uses, {
     index: findIndexOfVueConstructorVue3,
   });
+}
+
+function appendVariableToEnvFile(projectRoot: string, variables: { key: string, value: string }[]): void {
+  const envPath = getProjectEnvPath(projectRoot);
+  const newContents = variables.map(({key, value}) => `${key}=${value}`);
+  const existingEnvContent = readFile(envPath);
+  const envLines = existingEnvContent.split(/\r?\n/g);
+  const newEnvLines = [...envLines, ...newContents].join("\n")
+
+  writeFile(envPath, newEnvLines)
 }
 
 function injectRoutesIntoRouter(projectRoot: string, routesObj: any[]): void {
@@ -172,4 +194,5 @@ export {
   injectModulesIntoMainVue2,
   injectModulesIntoMainVue3,
   injectRoutesIntoRouter,
+  appendVariableToEnvFile,
 };

@@ -5,8 +5,9 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
 import Localization from '../plugin/localization';
+import Sentry from '../plugin/sentry';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase } from '../../../lib/utilities';
+import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase, parseSentryDSN } from '../../../lib/utilities';
 import {
   VUE_TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
@@ -35,6 +36,7 @@ export default class CreateProject extends Command {
     skipPresets: Flags.boolean({ hidden: true }),
     withLocalization: Flags.boolean({ hidden: true }),
     withDesignSystem: Flags.boolean({ hidden: true }),
+    withSentry: Flags.boolean({ hidden: true }),
   }
 
   static args = {
@@ -89,11 +91,14 @@ export default class CreateProject extends Command {
     const skipPresetsStep = flags.skipPresets === true;
     const withLocalization = flags.withLocalization === true;
     const withDesignSystem = flags.withDesignSystem === true;
+    const withSentry = flags.withSentry === true;
 
     let filesToReplace = VUE_TEMPLATE_REPLACEMENT_FILES;
     let projectName: string;
+    let sentryDsn = '';
     let presetName = '';
     const { isValid: isValidProject } = checkProjectValidity();
+
     // block command if being run within an frontier project
     if (isValidProject) {
       throw new Error(
@@ -106,13 +111,21 @@ export default class CreateProject extends Command {
 
     // retrieve project name
     projectName = await parseProjectName(args);
-    // retrieve project preset
-    // on skip preset flag set presetName to skip presets
+    // retrieve project preset on skip preset flag set presetName to skip presets
     presetName = skipPresetsStep ? VUE_PLUGIN_PRESET_LIST[2] : await parseProjectPresets(args);
     // convert project name to kebab case
     projectName = toKebabCase(projectName);
     // verify that project folder doesnt already exist
     checkIfFolderExists(projectName);
+
+    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
+    const shouldInstallSentry = presetIndex === 1 || withSentry === true;
+    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
+    const shouldInstallDesignSystem = withDesignSystem === true;
+
+    if (shouldInstallSentry === true) { 
+      sentryDsn = await parseSentryDSN(args);
+    }
 
     // update files to be replaced with project name reference
     filesToReplace = filesToReplace.map(p => `${projectName}/${p}`);
@@ -129,10 +142,6 @@ export default class CreateProject extends Command {
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
-    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
-    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
-    const shouldInstallDesignSystem = withDesignSystem === true;
-
     if (success === false) {
       throw new Error(
         JSON.stringify({
@@ -145,6 +154,16 @@ export default class CreateProject extends Command {
     // localization
     if (shouldInstallLocalization === true) {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
+    }
+
+    if (shouldInstallSentry === true) {    
+      if (isTest !== true) { 
+        // We need to stop the loading in order for the prompt to
+        // work. The prompt wont show up while the loader is running
+        ux.action.stop(); 
+      }
+
+      await Sentry.run(['--project', projectName, '--dsn' , sentryDsn, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {
