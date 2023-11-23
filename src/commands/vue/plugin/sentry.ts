@@ -9,7 +9,7 @@ import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
 import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, isJsonString, parseSentryDSN } from '../../../lib/utilities';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
 import { appendVariableToEnvFile, injectImportsIntoMain, injectModulesIntoMainVue3 as injectModulesIntoMain } from '../../../lib/plugins';
 
@@ -79,12 +79,18 @@ export default class Sentry extends Command {
     const isTest = flags.isTest === true;
     const skipInstallStep = flags.skipInstall === true;
     const hasProjectName = projectName !== undefined;
-    const hasSentryDsn = sentryDsn !== undefined;
     const preInstallCommand = hasProjectName ? `cd ${projectName} &&` : '';
 
     const validityResponse = checkProjectValidity();
     const { isValid: isValidProject } = validityResponse;
     let { projectRoot } = validityResponse;
+    let enteredDsn = sentryDsn;
+    
+    if (!sentryDsn) {
+      enteredDsn = await parseSentryDSN(args);
+    }
+
+    const hasSentryDsn = enteredDsn !== undefined;
 
     // block command unless being run within an frontier project
     if (isValidProject === false && !hasProjectName) {
@@ -177,7 +183,7 @@ export default class Sentry extends Command {
         const formattedEnvVariables = envVariables.map(({key, value}) => {
           return {
             key,
-            value: value == "__SENTRY_DSN__" ? sentryDsn : value
+            value: value == "__SENTRY_DSN__" ? enteredDsn || "" : value
           }
         });
 
@@ -187,9 +193,9 @@ export default class Sentry extends Command {
           this.warn(`${this.id?.split(':')[1]} failed to add the sentry DSN to the .env file. Before you get started, add `);
         }
 
-        ux.action.stop();
       }
-
+      
+      ux.action.stop();
     } else {
       // FP-414: backwards compatibility
       await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), VUE_DYNAMIC_OBJECTS.Modules, true);
