@@ -17,7 +17,7 @@ export default class Plugin extends Command {
     vuetify: Args.string({ name: 'vuetify', description: 'material design framework for Vue.js', hidden: false }),
     storybook: Args.string({ name: 'storybook', description: '[coming soon] UI component explorer for frontend devs', hidden: true }),
     'element-plus': Args.string({ name: 'element-plus', description: 'UI component library for Vue 3', hidden: false }),
-    sentry: Args.string({ name: 'sentry', description: 'third party service to track errors and monitor performance', hidden: false }),
+    sentry: Args.string({ name: 'sentry', description: 'Add Sentry to track errors and monitor performance', hidden: false }),
   }
 
   showHelp(): void {

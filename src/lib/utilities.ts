@@ -213,21 +213,20 @@ function validateEnteredName(featureName: string, exampleName = '') {
  * @param {string} exampleDsn - an example of a valid DSN in Sentry
  * @returns {any} -
  */
-function validateEnteredDSN(dsn: string, exampleDsn = 'https://publickey@sentry.example.com/1') {
-  return (value: any) => {
-    const isString = typeof value === 'string';
-    const isNull = value === null || value.length === 0;
-    const charactersMatch = value.match(/^https:\/\/[a-f0-9]+@[^\/]+\/\d+$/) !== null;
-    const isValidDsn = isString && charactersMatch;
-    let resultMessage = '';
-    if (isNull) {
-      resultMessage = `${CLI_STATE.Error} A ${dsn} is required`;
-    } else if (!charactersMatch) {
-      resultMessage = `${CLI_STATE.Error} Refer to the Sentry Documentation to retrieve your DSN (e.g. ${exampleDsn})`;
-    }
+function validateDsn(dsn: string) {
 
-    return isValidDsn ? true : resultMessage;
-  };
+  const isString = typeof dsn === 'string';
+  const isNull = dsn === null || dsn.length === 0;
+  const charactersMatch = dsn.match(/^https:\/\/([a-z0-9]+)@([a-z0-9.-]+)\.[\w]+\/{1,2}\d+$/) !== null;
+  const isValidDsn = isString && charactersMatch;
+  let resultMessage = '';
+  if (isNull) {
+    resultMessage = `${CLI_STATE.Error} A ${dsn} is required`;
+  } else if (!charactersMatch) {
+    resultMessage = `${CLI_STATE.Error} Refer to the Sentry Documentation to retrieve your DSN (e.g. https://publickey@sentry.example.com/1)`;
+  }
+
+  return isValidDsn ? true : resultMessage;
 }
 
 /**
@@ -863,6 +862,44 @@ async function parseBundleIdentifier(args: Lookup): Promise<string> {
 
 /**
  * Description: parse project or prompt user to provide name for project
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseSentryDSN(args: Lookup): Promise<string> {
+  let argDsn = args.dsn;
+  // eslint-disable-next-line no-negated-condition
+  if (!argDsn) {
+    const responses: any = await prompts([{
+      name: 'dsn',
+      message: 'Enter your Sentry DSN: ',
+      type: 'text',
+      validate: validateDsn,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+        return false;
+      },
+    });
+
+    if (responses.dsn === undefined) {
+      process.exit(1);
+    }
+
+    argDsn = responses.dsn;
+  } else {
+    const result = validateDsn(argDsn);
+    if (result && result !== true) {
+      throwSentryDsnError(result);
+    }
+  }
+
+  return argDsn;
+}
+
+
+/**
+ * Description: parse project or prompt user to provide name for project
  * @param {Lookup} args - a string value
  * @returns {string} -
  */
@@ -974,47 +1011,6 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
   writeFile(changelogPath, readmeContent);
   // eslint-disable-next-line no-console
   console.log(readmeContent);
-}
-
-/**
- * Description: parse project or prompt user to provide name for project
- * @param {string} args - a string value
- * @returns {Lookup} -
- */
-async function parseSentryDSN(args: Lookup): Promise<string> {
-  let argDsn = args.dsn;
-
-  const validateDsn = validateEnteredDSN('dsn');
-  // eslint-disable-next-line no-negated-condition
-  if (!argDsn) {
-  const responses: any = await prompts([{
-    name: 'dsn',
-    message: 'Enter sentry DSN: ',
-    type: 'text',
-    validate: validateDsn,
-  }], {
-    onCancel() {
-      // eslint-disable-next-line no-console
-      console.log(`${chalk.red('frontier')} create-project canceled`);
-
-      return false;
-    },
-  });
-
-  if (responses.dsn === undefined) {
-    process.exit(1);
-  }
-
-  argDsn = responses.dsn;
-  
-  } else {
-    const result = validateDsn(argDsn);
-    if (result && result !== true) {
-      throwSentryDsnError(result);
-    }
-  }
-
-  return argDsn;
 }
 
 export {

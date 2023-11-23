@@ -98,6 +98,7 @@ export default class CreateProject extends Command {
     let sentryDsn = '';
     let presetName = '';
     const { isValid: isValidProject } = checkProjectValidity();
+
     // block command if being run within an frontier project
     if (isValidProject) {
       throw new Error(
@@ -110,8 +111,7 @@ export default class CreateProject extends Command {
 
     // retrieve project name
     projectName = await parseProjectName(args);
-    // retrieve project preset
-    // on skip preset flag set presetName to skip presets
+    // retrieve project preset on skip preset flag set presetName to skip presets
     presetName = skipPresetsStep ? VUE_PLUGIN_PRESET_LIST[2] : await parseProjectPresets(args);
     // convert project name to kebab case
     projectName = toKebabCase(projectName);
@@ -152,9 +152,17 @@ export default class CreateProject extends Command {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
     }
 
-    if (shouldInstallSentry === true) {
+
+    if (shouldInstallSentry === true) {    
+      if (isTest !== true) { 
+        // We need to stop the loading in order for the prompt to
+        // work. The prompt wont show up while the loader is running
+        ux.action.stop(); 
+      }
+
       sentryDsn = await parseSentryDSN(args);
-      await Sentry.run(['--forceProject', projectName, '--addSentryDsn' , sentryDsn, '--skipInstall']);
+  
+      await Sentry.run(['--project', projectName, '--dsn' , sentryDsn, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {

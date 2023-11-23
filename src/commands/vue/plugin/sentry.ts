@@ -11,7 +11,7 @@ import { Files } from '../../../modules';
 import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
 import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMainVue3 as injectModulesIntoMain } from '../../../lib/plugins';
+import { appendVariableToEnvFile, injectImportsIntoMain, injectModulesIntoMainVue3 as injectModulesIntoMain } from '../../../lib/plugins';
 
 const TEMPLATE_FOLDERS = ['sentry'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
@@ -24,13 +24,13 @@ const CUSTOM_ERROR_CODES = new Set([
 
 export default class Sentry extends Command {
 
-  static description = 'third party service to track errors and monitor performance';
+  static description = 'Add Sentry to track errors and monitor performance';
 
   static flags = {
     help: Flags.boolean({ hidden: false }),
+    dsn: Flags.string({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
-    forceProject: Flags.string({ hidden: true }),
-    addSentryDsn: Flags.string({ hidden: true }),
+    project: Flags.string({ hidden: true }),
     skipInstall: Flags.boolean({ hidden: true }),
   };
 
@@ -74,8 +74,8 @@ export default class Sentry extends Command {
 
     this.handleHelp(commandArgs, flags);
 
-    const projectName = flags.forceProject;
-    const sentryDsn = flags.addSentryDsn;
+    const projectName = flags.project;
+    const sentryDsn = flags.dsn;
     const isTest = flags.isTest === true;
     const skipInstallStep = flags.skipInstall === true;
     const hasProjectName = projectName !== undefined;
@@ -85,6 +85,7 @@ export default class Sentry extends Command {
     const validityResponse = checkProjectValidity();
     const { isValid: isValidProject } = validityResponse;
     let { projectRoot } = validityResponse;
+
     // block command unless being run within an frontier project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
@@ -103,25 +104,18 @@ export default class Sentry extends Command {
     let installDirectory = '';
 
     // parse config files required for scaffolding this module
-    this.log(`folderList: ${folderList}, projectRoot: ${projectRoot}`)
     const configs = parseVueModuleConfig(folderList, projectRoot);
-    this.log(`configs: ${configs}`);
     const config = configs[0];
-    this.log(`config: ${config}`);
     const files: Array<string | Files> = config.manifest.files;
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
-    this.log(`dependencies: ${dependencies}`);
-    const devDependencies = config.manifest.packages.devDependencies.toString()
-      .split(',')
-      .join(' ');
-    this.log(`devDependencies: ${devDependencies}`);
+
     if (skipInstallStep === false) {
       try {
         // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing sentry dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing Sentry dependencies`);
         }
 
         await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
@@ -140,7 +134,7 @@ export default class Sentry extends Command {
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding sentry dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding Sentry dependencies to package.json`);
       }
 
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
@@ -155,22 +149,47 @@ export default class Sentry extends Command {
 
     // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), VUE_DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), VUE_DYNAMIC_OBJECTS.Options, true);
 
     if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
       const { imports: mainImports, modules: mainModules } = config.manifest.main;
+      const envVariables: { key: string, value: string }[] = config.manifest.env;
+
+      if (isTest !== true) {
+        ux.action.start(`${CLI_STATE.Info} updating Sentry modules and environment variables`);
+      }
+
+      // Added sentry imports and modules
       injectImportsIntoMain(projectRoot, mainImports);
       try {
-        injectModulesIntoMain(projectRoot, mainModules);
+        injectModulesIntoMain(projectRoot, mainModules, false);
       } catch {
+        ux.action.stop();
         this.error(
           JSON.stringify({
             code: 'import-injection-error',
             message: `${this.id?.split(':')[1]} failed to inject import statements`,
           }),
         );
+      } 
+
+      if (hasSentryDsn && Array.isArray(envVariables) && envVariables.length > 0) {
+        // Added sentry environment variables
+        const formattedEnvVariables = envVariables.map(({key, value}) => {
+          return {
+            key,
+            value: value == "__SENTRY_DSN__" ? sentryDsn : value
+          }
+        });
+
+        try {
+          appendVariableToEnvFile(projectRoot, formattedEnvVariables);
+        } catch (error) {
+          this.warn(`${this.id?.split(':')[1]} failed to add the sentry DSN to the .env file. Before you get started, add `);
+        }
+
+        ux.action.stop();
       }
+
     } else {
       // FP-414: backwards compatibility
       await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), VUE_DYNAMIC_OBJECTS.Modules, true);
