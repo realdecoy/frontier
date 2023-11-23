@@ -118,6 +118,15 @@ export default class CreateProject extends Command {
     // verify that project folder doesnt already exist
     checkIfFolderExists(projectName);
 
+    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
+    const shouldInstallSentry = presetIndex === 1 || withSentry === true;
+    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
+    const shouldInstallDesignSystem = withDesignSystem === true;
+
+    if (shouldInstallSentry === true) { 
+      sentryDsn = await parseSentryDSN(args);
+    }
+
     // update files to be replaced with project name reference
     filesToReplace = filesToReplace.map(p => `${projectName}/${p}`);
 
@@ -133,11 +142,6 @@ export default class CreateProject extends Command {
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
-    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
-    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
-    const shouldInstallSentry = presetIndex === 1 || withSentry === true;
-    const shouldInstallDesignSystem = withDesignSystem === true;
-
     if (success === false) {
       throw new Error(
         JSON.stringify({
@@ -152,7 +156,6 @@ export default class CreateProject extends Command {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
     }
 
-
     if (shouldInstallSentry === true) {    
       if (isTest !== true) { 
         // We need to stop the loading in order for the prompt to
@@ -160,8 +163,6 @@ export default class CreateProject extends Command {
         ux.action.stop(); 
       }
 
-      sentryDsn = await parseSentryDSN(args);
-  
       await Sentry.run(['--project', projectName, '--dsn' , sentryDsn, '--skipInstall']);
     }
 
