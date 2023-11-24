@@ -4,19 +4,29 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
 import { checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, isJsonString } from '../../../lib/utilities';
+import {
+  checkProjectValidity,
+  parseProjectName,
+  isJsonString,
+  getDockerDotnetCommand
+} from '../../../lib/utilities';
 import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
   DOTNET_TEMPLATE_SHORT_NAME,
   CLI_STATE,
+  DOTNET_DOCKER_IMAGE,
+  DOTNET_DOCKER_IMAGE_TAG,
+  DOTNET_DOCKER_VOLUME,
+  DOCKER_RUN_COMMAND,
+  DOCKER_APP_DIR,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',
   'existing-folder',
   'project-not-created',
-  'dotnet-sdk-required',
+  'docker-required',
 ]);
 
 export default class CreateProject extends Command {
@@ -26,6 +36,8 @@ export default class CreateProject extends Command {
 
   static flags = {
     help: Flags.boolean({ hidden: false }),
+    dotnetVersion: Flags.string({ hidden: false }),
+    withSentry: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
   }
 
@@ -71,10 +83,19 @@ export default class CreateProject extends Command {
 
     this.handleHelp(commandArgs, flags);
 
-    const template: string = DOTNET_TEMPLATE_REPO;
-    const templateShortName: string = DOTNET_TEMPLATE_SHORT_NAME;
-    const tag: string = DOTNET_TEMPLATE_TAG;
+    const template = DOTNET_TEMPLATE_REPO;
+    const templateShortName = DOTNET_TEMPLATE_SHORT_NAME;
+    const tag = DOTNET_TEMPLATE_TAG;
+    const dotnetImageName = DOTNET_DOCKER_IMAGE;
+    const volumeName = `${DOTNET_DOCKER_VOLUME}_${tag}`;
+    const dockerRunCommand = DOCKER_RUN_COMMAND;
+    const appPath = DOCKER_APP_DIR;
     const isTest = flags.isTest === true;
+    const dotnetImageversion = flags.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
+    const withSentry = (flags.withSentry || true) === true;
+
+    const dockerImage = `${dotnetImageName}:${dotnetImageversion}`;
+    const dockerDotnetCommand = getDockerDotnetCommand(dotnetImageversion)
 
     let projectName = '';
     const { isValid: isValidProject } = checkProjectValidity();
@@ -93,23 +114,28 @@ export default class CreateProject extends Command {
     // verify that project folder doesnt already exist
     checkIfFolderExists(projectName);
 
-    if (!shell.which('dotnet')) {
+    if (!shell.which('docker')) {
       throw new Error(
         JSON.stringify({
-          code: 'dotnet-sdk-required',
-          message: 'dotnet not found',
+          code: 'docker-required',
+          message: 'docker not found',
         }),
       );
     }
 
     ux.action.type = 'spinner';
+
     if (isTest !== true) {
       ux.action.start(`${CLI_STATE.Info} creating project ${chalk.whiteBright(projectName)}`);
     }
 
     // retrieve project files from template source
     try {
-      const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
+      // Creating a volume that will be used to share the Dotnet template installation 
+      await shell.exec(`docker volume create ${volumeName}`, { silent: true });
+
+      // Downloading the template
+      const success1 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root ${dockerImage} dotnet new install ${template}${tag} --force`, { silent: true });
     
       if (success1.code !== 0) {
         throw new Error(
@@ -118,25 +144,34 @@ export default class CreateProject extends Command {
             message: `An error occurred while retrieving project files from the template source. \n\n${success1.stderr}`,
           })
         );
-      } else {
-        const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
-        
-        if (success2.code !== 0) {
-          throw new Error(
-            JSON.stringify({
-              code: 'project-not-created',
-              message: `An error occurred while creating the project. \n\n${success2.stderr}`,
-            })
-          );
-        }
+      } 
+
+      // Creating the project using the tempplate 
+      const success2 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root -v ./:${appPath}/ -w ${appPath} ${dockerImage} dotnet new ${templateShortName} --name ${projectName} --sentry ${withSentry}`, { silent: true });
+      
+      if (success2.code !== 0) {
+        throw new Error(
+          JSON.stringify({
+            code: 'project-not-created',
+            message: `An error occurred while creating the project. \n\n${success2.stderr}`,
+          })
+        );
       }
+
+      // Removing the template volume after the project has been created
+      await shell.exec(`docker volume rm ${volumeName}`, { silent: true });
+
     } catch (error) {
       throw error;
     }
-    
+
+    if (isTest !== true) {
+      ux.action.stop();
+      ux.action.start(`${CLI_STATE.Info} Setting up project configurations`);
+    }
 
     // initialize .frontierrc config file
-    const frontierrcResult = await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
+    const frontierrcResult = await shell.exec(`${dockerDotnetCommand} echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
 
     if (frontierrcResult.code !== 0) {
       throw new Error(
@@ -148,7 +183,7 @@ export default class CreateProject extends Command {
     }
 
     // initialize git in the created project
-    const gitResult = await shell.exec(`cd ${projectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
+    const gitResult = await shell.exec(`${dockerDotnetCommand} git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
 
     if (gitResult.code !== 0) {
       throw new Error(
@@ -164,34 +199,16 @@ export default class CreateProject extends Command {
     }
 
     // Generate and trust SSL certificate for HTTPS
+    const devCerts1 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https -ep "/root/.aspnet/https/aspnetapp.pfx" -p Pa55w0rd2023`, { silent: true });
+    const devCerts2 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https --trust`, { silent: true });
 
-    // For Windows
-    if (process.platform === 'win32') {
-      const devCerts1 = await shell.exec('dotnet dev-certs https -ep "$env:USERPROFILE\\.aspnet\\https\\aspnetapp.pfx" -p Password123', { silent: true });
-      const devCerts2 = await shell.exec('dotnet dev-certs https --trust', { silent: true });
-
-      if (devCerts1.code !== 0 || devCerts2.code !== 0) {
-        throw new Error(
-          JSON.stringify({
-            code: 'ssl-certificate-error',
-            message: `An error occurred while generating or trusting the SSL certificate.\n\n${devCerts1.stderr} \n\n${devCerts2.stderr}`,
-          }),
-        );
-      }
-    }
-    // For Linux/Mac
-    else {
-      const devCerts1 = await shell.exec('dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p Password123', { silent: true });
-      const devCerts2 = await shell.exec('dotnet dev-certs https --trust', { silent: true });
-
-      if (devCerts1.code !== 0 || devCerts2.code !== 0) {
-        throw new Error(
-          JSON.stringify({
-            code: 'ssl-certificate-error',
-            message: `An error occurred while generating or trusting the SSL certificate.\n\n${devCerts1.stderr} \n\n${devCerts2.stderr}`,
-          }),
-        );
-      }
+    if (devCerts1.code !== 0 || devCerts2.code !== 0) {
+      throw new Error(
+        JSON.stringify({
+          code: 'ssl-certificate-error',
+          message: `An error occurred while generating or trusting the SSL certificate.\n\n${devCerts1.stderr} \n\n${devCerts2.stderr}`,
+        }),
+      );
     }
 
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);

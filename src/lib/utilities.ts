@@ -6,7 +6,19 @@ const chalk = require('chalk');
 import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
-import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, DOTNET_DOCKER_IMAGE, DOCKER_RUN_COMMAND, DOCKER_APP_DIR } from './constants';
+
+/**
+ * Construct the docker run command for Dotnet Projects
+ * @param {string} value - a string value
+ * @returns {boolean} -
+ */
+function getDockerDotnetCommand(dotnetImageVersion: string): string {
+  const dockerImage = `${DOTNET_DOCKER_IMAGE}:${dotnetImageVersion}`;
+
+  return `${DOCKER_RUN_COMMAND} -v ./:${DOCKER_APP_DIR}/ -w ${DOCKER_APP_DIR} ${dockerImage}`;
+}
+
 
 /**
  * Description: determine if string is valid JSON string
@@ -968,4 +980,5 @@ export {
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
+  getDockerDotnetCommand,
 };
