@@ -1,7 +1,7 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
-// const shell = require('shelljs');
+// import shell from 'shelljs';
 import { Args, Command, Flags } from '@oclif/core';
 import path from 'node:path';
 import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCUMENTATION_LINKS } from '../../../lib/constants';

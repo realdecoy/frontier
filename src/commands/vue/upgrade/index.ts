@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
-const fs = require('fs');
+import fs from 'node:fs';
 // eslint-disable-next-line unicorn/prefer-module
-const shell = require('shelljs');
+import shell from 'shelljs';
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { checkProjectValidity, createChangelogReadme, isJsonString } from '../../../lib/utilities';
@@ -54,7 +54,7 @@ export default class Upgrade extends Command {
   }
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (flags.help === true) { // Exit execution which will show help menu for help flag
       this.exit(0);
@@ -237,7 +237,7 @@ export default class Upgrade extends Command {
   }
 
   jsonReader(filePath: string): any {
-    const text = fs.readFileSync(filePath);
+    const text = fs.readFileSync(filePath, { encoding: 'utf-8' });
 
     return JSON.parse(text);
   }

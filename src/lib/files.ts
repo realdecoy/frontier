@@ -1,24 +1,24 @@
 /* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
-const ncp = require('ncp').ncp;
+import { ncp as ncpSync } from 'ncp';
 // eslint-disable-next-line unicorn/prefer-module
-const fsSync = require('fs');
+import fsSync from 'node:fs';
 // eslint-disable-next-line unicorn/prefer-module
-const mkdirp = require('mkdirp');
+import mkdirp from 'mkdirp';
 // eslint-disable-next-line unicorn/prefer-module
-const replace = require('replace-in-file');
+import {replaceInFile} from 'replace-in-file';
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
-const util = require('util');
+import util from 'node:util';
 import path from 'node:path';
 import { log } from './stdout';
-import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
 import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
 import { Files, InjectOptions } from '../modules';
 import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
-const fs = bluebirdPromise.promisifyAll(fileSystem);
+const fs = bluebirdPromise.promisifyAll(fsSync);
+const ncp = bluebirdPromise.promisify(ncpSync);
 const copyFilePromise = util.promisify(fs.copyFile);
 const getDirName = path.dirname;
 
@@ -41,7 +41,7 @@ function readFile(filePath: string): string {
  * @param {string} filePath - a path to a file
  * @returns {boolean} -
  */
-function directoryExists(filePath: string): boolean {
+export function directoryExists(filePath: string): boolean {
   try {
     return fs.statSync(filePath).isDirectory();
   } catch {
@@ -238,7 +238,7 @@ async function replaceInFiles(files: string | string[], from: RegExp, to: string
   };
 
   try {
-    replaceResults = await replace(options);
+    replaceResults = await replaceInFile(options);
     failedFiles = replaceResults
       .filter((result: { file: string; hasChanged: boolean }) => !result.hasChanged)
       .map((result: { file: string; hasChanged: boolean }) => result.file);
@@ -320,6 +320,23 @@ async function copyDirectoryRecursive(source: string, target: string): Promise<b
   }
 
   return success;
+}
+
+/**
+ * Function to copy project template files when a user executes the project copy command
+ * @param {string} from - Folder to copy
+ * @param {string} to - Where the copied files should go
+ * @returns void
+ */
+export function copyFolderSync(from: string, to: string): void {
+  fs.mkdirSync(to);
+  fs.readdirSync(from).forEach((element: any) => {
+    if (fs.lstatSync(path.join(from, element)).isFile()) {
+      fs.copyFileSync(path.join(from, element), path.join(to, element));
+    } else {
+      copyFolderSync(path.join(from, element), path.join(to, element));
+    }
+  });
 }
 
 /**

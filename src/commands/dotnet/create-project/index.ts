@@ -1,7 +1,7 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
-const shell = require('shelljs');
+import shell from 'shelljs';
 import { Args, Command, Flags, ux } from '@oclif/core';
 import { checkIfFolderExists } from '../../../lib/files';
 import { checkProjectValidity, parseProjectName, isJsonString } from '../../../lib/utilities';
@@ -110,7 +110,7 @@ export default class CreateProject extends Command {
     // retrieve project files from template source
     try {
       const success1 = await shell.exec(`dotnet new --install ${template}${tag}`, { silent: true });
-    
+
       if (success1.code !== 0) {
         throw new Error(
           JSON.stringify({
@@ -120,7 +120,7 @@ export default class CreateProject extends Command {
         );
       } else {
         const success2 = await shell.exec(`dotnet new ${templateShortName} --name ${projectName} --sentry true`, { silent: true });
-        
+
         if (success2.code !== 0) {
           throw new Error(
             JSON.stringify({
@@ -133,7 +133,7 @@ export default class CreateProject extends Command {
     } catch (error) {
       throw error;
     }
-    
+
 
     // initialize .frontierrc config file
     const frontierrcResult = await shell.exec(`echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });

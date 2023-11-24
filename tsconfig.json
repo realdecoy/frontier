@@ -3,7 +3,8 @@
     "declaration": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "module": "commonjs",
+    "module": "ES2020",
+    "moduleResolution": "Node",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
@@ -16,5 +17,8 @@
     "src/**/*" ],
   "exclude": [
     "node_modules/**/*"
-  ]
+  ],
+  "ts-node": {
+    "esm": true
+  }
 }

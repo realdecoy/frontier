@@ -1,25 +1,23 @@
-// eslint-disable-next-line unicorn/prefer-module
-import chalk from 'chalk';
 import { Args, Command, Flags } from '@oclif/core';
+import chalk from 'chalk';
 
-export default class Adam extends Command {
-  static hidden = true;
+export default class Add extends Command {
+  // static aliases = ['mobile add'];
 
-  static description = 'Frontier namespace template';
+  static description = 'add a new module'
 
   static flags = {
-    help: Flags.help({ name: 'help', char: 'h', hidden: false }),
+    help: Flags.boolean({ name: 'help', description: 'Show help information ', hidden: false }),
   }
 
   static args = {
-    hello: Args.string({ name: 'hello', description: 'say hello', hidden: false }),
-    world: Args.string({ name: 'world', description: 'say hello to the world', hidden: false }),
+    'page-object': Args.string({ name: 'page-object', description: 'page object file', hidden: false }),
   }
 
   showHelp(): void {
-    const commandId = Adam.id;
-    const commandArgs = Object.values(Adam.args);
-    const commandFlags = Object.values(Adam.flags);
+    const commandId = Add.id;
+    const commandArgs = Object.values(Add.args);
+    const commandFlags = Object.values(Add.flags);
 
     // parse argument config list
     const argsList = commandArgs
@@ -43,7 +41,7 @@ export default class Adam extends Command {
 
     this.log(`
         Usage:
-            ${chalk.yellow('frontier')} ${chalk.green(commandId)} ${chalk.blue('<command>')}
+            ${chalk.yellow('frontier')} ${chalk.green(commandId.split(':')[1])} ${chalk.blue('<command>')}
 
         Commands:${argsList}
 
@@ -51,13 +49,21 @@ export default class Adam extends Command {
     `);
   }
 
+  handleHelp(args: (string | undefined)[], flags: {
+      help: boolean;
+  }): void {
+    if (args.length === 0) { // Show help when arguments missing
+      this.showHelp();
+    } else if (flags.help === true) { // Exit execution which will show help menu for help flag
+      this.exit(0);
+    }
+  }
+
   async run(): Promise<void> {
-    const { args } = await this.parse(Adam);
+    const { args, flags } = await this.parse(Add);
     const commandArgs = Object.values(args);
 
-    if (commandArgs.length === 0) {
-      this.showHelp();
-    }
+    this.handleHelp(commandArgs, flags);
 
     return Promise.resolve();
   }

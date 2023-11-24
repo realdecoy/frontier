@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
-const shell = require('shelljs');
+import shell from 'shelljs';
 import { Args, Command, Flags, ux } from '@oclif/core';
 import Buefy from '../plugin/buefy';
 import Vuetify from '../plugin/vuetify';
@@ -71,7 +71,7 @@ export default class CreateProject extends Command {
   }
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (flags.help === true) { // Exit execution which will show help menu for help flag
       this.exit(0);

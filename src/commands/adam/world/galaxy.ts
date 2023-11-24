@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import { Command, Flags } from '@oclif/core';
 
 export default class Galaxy extends Command {

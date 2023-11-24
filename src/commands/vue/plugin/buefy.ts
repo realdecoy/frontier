@@ -1,10 +1,7 @@
-// eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
-const util = require('util');
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
-const shell = require('shelljs');
-const exec = util.promisify(shell.exec);
+import shell from 'shelljs';
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
@@ -115,7 +112,7 @@ export default class Buefy extends Command {
           ux.action.start(`${CLI_STATE.Info} installing buefy dependencies`);
         }
 
-        await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
+        await shell.exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
 
         if (isTest !== true) {
           ux.action.stop();
@@ -133,7 +130,7 @@ export default class Buefy extends Command {
         ux.action.start(`${CLI_STATE.Info} adding buefy dependencies`);
       }
 
-      await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
+      await shell.exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
         ux.action.stop();

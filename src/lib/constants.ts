@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 
 /* eslint-disable no-unused-vars */
+export const ROOT_SPECTRE_FILE = 'wdio.conf.ts';
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
 export const DOTNET_TEMPLATE_ROOT = '.frontier/template';

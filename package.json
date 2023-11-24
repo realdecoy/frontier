@@ -3,8 +3,9 @@
   "version": "0.0.2-beta.12",
   "description": "Frontier: Software Development Toolkit",
   "author": "RealDecoy",
+  "type": "module",
   "bin": {
-    "frontier": "./bin/run"
+    "frontier": "./bin/run.js"
   },
   "homepage": "https://github.com/realdecoy/frontier",
   "license": "UNLICENSED",
@@ -13,6 +14,7 @@
   "files": [
     "/bin",
     "/dist",
+    "/template",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -36,8 +38,10 @@
     "@types/bluebird": "^3.5.38",
     "@types/chai": "^4",
     "@types/mocha": "^9.0.0",
+    "@types/ncp": "^2.0.8",
     "@types/node": "^16.18.20",
     "@types/prompts": "^2.4.3",
+    "@types/shelljs": "^0.8.15",
     "@types/sinon": "^10.0.13",
     "chai": "^4",
     "eslint": "^7.32.0",

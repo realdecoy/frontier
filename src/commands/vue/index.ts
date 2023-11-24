@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import { Args, Command, Flags } from '@oclif/core';
 import { CLI_STATE } from '../../lib/constants';
 import { isJsonString } from '../../lib/utilities';
@@ -18,7 +18,7 @@ export default class Vue extends Command {
   static description = 'Vue.js scaffolding';
 
   static flags = {
-    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
+    help: Flags.boolean({ name: 'help', description: 'Show help information ', hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 
@@ -64,7 +64,7 @@ export default class Vue extends Command {
         const maxSpaces = 25;
         const numOfSpaces = maxSpaces - arg.name.length;
 
-        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(" ")}- ${arg.description}` ;
+        return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(" ")}- ${arg.description}`;
       });
 
     const commandList = argsList.join("").split(",")
@@ -89,10 +89,10 @@ export default class Vue extends Command {
     `);
   }
 
- 
+
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (args.length === 0) { // Show help when arguments missing
       this.showHelp();

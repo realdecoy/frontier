@@ -10,10 +10,12 @@ const CUSTOM_ERROR_CODES = new Set([
   'file-not-changed',
 ]);
 
-export default class Dotnet extends Command {
+export default class Spectre extends Command {
+  static alias = ['spectre'];
+
   static hidden = false;
 
-  static description = 'Dotnet API scaffolding';
+  static description = 'Spectre scaffolding';
 
   static flags = {
     help: Flags.boolean({ name: 'help', description: 'Show help information ', hidden: false }),
@@ -21,9 +23,8 @@ export default class Dotnet extends Command {
   }
 
   static args = {
-    'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new dotnet API project', hidden: false }),
-    add: Args.string({ name: 'add', description: 'add a module to a project', hidden: false }),
-    migrate: Args.string({ name: 'migrate', description: 'manage migrations for a database', hidden: false }),
+    'create-project': Args.string({ name: 'create-project', description: 'Scaffold a new project', hidden: false }),
+    add: Args.string({ name: 'component', description: 'Add a feature to a project', hidden: false }),
   }
 
   // override Command class error handler
@@ -51,8 +52,8 @@ export default class Dotnet extends Command {
   }
 
   showHelp(): void {
-    const commandArgs = Object.values(Dotnet.args);
-    const commandFlags = Object.values(Dotnet.flags);
+    const commandArgs = Object.values(Spectre.args);
+    const commandFlags = Object.values(Spectre.flags);
 
     // parse argument config list
     const argsList = commandArgs
@@ -63,6 +64,8 @@ export default class Dotnet extends Command {
 
         return `\n\t    ${chalk.blue(arg.name)}${Array.from({ length: numOfSpaces + 1 }).join(' ')}- ${arg.description}`;
       });
+
+    const commandList = argsList.join('').split(',');
 
     // parse option config list
     const optionList = commandFlags
@@ -78,7 +81,7 @@ export default class Dotnet extends Command {
         Usage:
             ${chalk.yellow('frontier')} ${chalk.blue('<command>')}
 
-        Commands:${argsList}
+        Commands:${commandList}
 
         Options:${optionList}
     `);
@@ -95,7 +98,7 @@ export default class Dotnet extends Command {
   }
 
   async run(): Promise<void> {
-    const { args, flags } = await this.parse(Dotnet);
+    const { args, flags } = await this.parse(Spectre);
     const commandArgs = Object.values(args);
 
     this.handleHelp(commandArgs, flags);

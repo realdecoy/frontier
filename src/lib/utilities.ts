@@ -2,11 +2,12 @@
 /* eslint-disable unicorn/no-process-exit */
 /* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
-import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE } from './constants';
+import { existsSync } from 'fs';
 
 /**
  * Description: determine if string is valid JSON string
@@ -858,6 +859,19 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
   }
 
   return argName;
+}
+
+/**
+ * This method checks if the project where a command is being ran is a valid rdspec project
+ * @returns {boolean} - is this command being ran in a valid project
+ */
+export function checkSpectreProjectValidity(): boolean {
+  // Checks if this is a valid web automation project
+  if (existsSync(ROOT_SPECTRE_FILE) === true) {
+    return true;
+  }
+
+  return false;
 }
 
 /**

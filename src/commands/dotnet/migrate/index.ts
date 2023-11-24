@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import { Args, Command, Flags } from '@oclif/core';
 
 export default class Migrate extends Command {
@@ -8,7 +8,7 @@ export default class Migrate extends Command {
   static description = 'perform a migration action';
 
   static flags = {
-    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
+    help: Flags.boolean({ name: 'help', description: 'Show help information ', hidden: false }),
   }
 
   static args = {
@@ -54,7 +54,7 @@ export default class Migrate extends Command {
   }
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (args.length === 0) { // Show help when arguments missing
       this.showHelp();

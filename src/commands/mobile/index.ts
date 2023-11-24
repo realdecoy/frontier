@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import { Args, Command, Flags } from '@oclif/core';
 import { CLI_STATE } from '../../lib/constants';
 import { isJsonString } from '../../lib/utilities';
@@ -18,7 +18,7 @@ export default class Mobile extends Command {
   static description = 'React Native scaffolding';
 
   static flags = {
-    help: Flags.boolean({name:'help',description: 'Show help information ', hidden: false }),
+    help: Flags.boolean({ name: 'help', description: 'Show help information ', hidden: false }),
     isTopic: Flags.string({ name: 'isTopic', hidden: true }),
   }
 
@@ -89,7 +89,7 @@ export default class Mobile extends Command {
   }
 
   handleHelp(args: (string | undefined)[], flags: {
-      help: boolean;
+    help: boolean;
   }): void {
     if (args.length === 0) { // Show help when arguments missing
       this.showHelp();

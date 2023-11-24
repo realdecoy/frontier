@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/prefer-module
-const chalk = require('chalk');
+import chalk from 'chalk';
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
 import { Files } from '../../../modules';
