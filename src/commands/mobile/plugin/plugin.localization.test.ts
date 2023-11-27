@@ -1,6 +1,6 @@
 /* global after */
 import { expect, test } from '@oclif/test';
-import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
+import { MOBILE_CLI_COMMANDS } from '../../../lib/constants.js';
 import { exec } from 'node:child_process';
 
 const withLocalization = '--withLocalization';

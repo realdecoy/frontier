@@ -2,10 +2,10 @@
 import chalk from 'chalk';
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
-import { Files } from '../../../modules';
-import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants';
-import { copyFiles, parseVueModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseServiceName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities';
+import { Files } from '../../../modules/index.js';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DOCUMENTATION_LINKS } from '../../../lib/constants.js';
+import { copyFiles, parseVueModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files.js';
+import { checkProjectValidity, parseServiceName, isJsonString, toKebabCase, toPascalCase } from '../../../lib/utilities.js';
 
 const TEMPLATE_FOLDERS = ['service'];
 const CUSTOM_ERROR_CODES = new Set([

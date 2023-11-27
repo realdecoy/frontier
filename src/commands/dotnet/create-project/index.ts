@@ -3,14 +3,14 @@ import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
 import shell from 'shelljs';
 import { Args, Command, Flags, ux } from '@oclif/core';
-import { checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, isJsonString } from '../../../lib/utilities';
+import { checkIfFolderExists } from '../../../lib/files.js';
+import { checkProjectValidity, parseProjectName, isJsonString } from '../../../lib/utilities.js';
 import {
   DOTNET_TEMPLATE_REPO,
   DOTNET_TEMPLATE_TAG,
   DOTNET_TEMPLATE_SHORT_NAME,
   CLI_STATE,
-} from '../../../lib/constants';
+} from '../../../lib/constants.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',

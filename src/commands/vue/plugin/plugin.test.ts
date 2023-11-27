@@ -1,5 +1,5 @@
 import { expect, test } from '@oclif/test';
-import { VUE_CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants.js';
 
 describe(`${VUE_CLI_COMMANDS.PluginLibrary} --help`, () => {
   test

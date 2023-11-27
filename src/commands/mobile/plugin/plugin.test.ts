@@ -1,5 +1,5 @@
 import { expect, test } from '@oclif/test';
-import { MOBILE_CLI_COMMANDS } from '../../../lib/constants';
+import { MOBILE_CLI_COMMANDS } from '../../../lib/constants.js';
 
 describe(`${MOBILE_CLI_COMMANDS.PluginLibrary} module`, () => {
   test

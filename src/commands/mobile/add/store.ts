@@ -1,10 +1,10 @@
 import { Args, Command, Flags } from '@oclif/core';
 import path from 'node:path';
 import chalk from 'chalk';
-import { Files } from '../../../modules';
-import { copyFiles, parseMobileModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseStoreModuleName, toCamelCase, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
-import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants';
+import { Files } from '../../../modules/index.js';
+import { copyFiles, parseMobileModuleConfig, readAndUpdateFeatureFiles, replaceTargetFileNames } from '../../../lib/files.js';
+import { checkProjectValidity, parseStoreModuleName, toCamelCase, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities.js';
+import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants.js';
 
 const TEMPLATE_FOLDERS = ['context'];
 const CUSTOM_ERROR_CODES = new Set([

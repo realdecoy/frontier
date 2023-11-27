@@ -1,6 +1,6 @@
 import { Hook, toStandardizedId } from '@oclif/core';
-import { readProjectConfig } from '../lib/files';
-import { ProjectConfig } from '../modules/project';
+import { readProjectConfig } from '../lib/files.js';
+import { ProjectConfig } from '../modules/project.js';
 
 const hook: Hook.Init = async function ({ id, config, argv }) {
   // console.log({ where: 'init', { id, argv }});

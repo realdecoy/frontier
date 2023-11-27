@@ -1,26 +1,27 @@
 /* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
-import { ncp as ncpSync } from 'ncp';
+import _ncp from 'ncp';
 // eslint-disable-next-line unicorn/prefer-module
 import fsSync from 'node:fs';
 // eslint-disable-next-line unicorn/prefer-module
 import mkdirp from 'mkdirp';
 // eslint-disable-next-line unicorn/prefer-module
-import {replaceInFile} from 'replace-in-file';
+import _replaceInFile from 'replace-in-file';
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
 import util from 'node:util';
 import path from 'node:path';
-import { log } from './stdout';
+import { log } from './stdout.js';
 import bluebirdPromise from 'bluebird';
-import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
-import { Files, InjectOptions } from '../modules';
-import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
+import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities.js';
+import { Files, InjectOptions } from '../modules/index.js';
+import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants.js';
 
 const UTF8 = 'utf-8';
 const fs = bluebirdPromise.promisifyAll(fsSync);
-const ncp = bluebirdPromise.promisify(ncpSync);
+const ncp = bluebirdPromise.promisify(_ncp.ncp);
 const copyFilePromise = util.promisify(fs.copyFile);
 const getDirName = path.dirname;
+const { replaceInFile } = _replaceInFile;
 
 /**
  * Description: Read file located at specified filePath

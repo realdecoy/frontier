@@ -1,8 +1,8 @@
 import { Help } from '@oclif/core';
 import { Topic } from '@oclif/core/lib/interfaces';
 import chalk from 'chalk';
-import { CLI_NAMESPACES } from './lib/constants';
-import { log } from './lib/stdout';
+import { CLI_NAMESPACES } from './lib/constants.js';
+import { log } from './lib/stdout.js';
 
 export default class MyHelpClass extends Help {
   // display help for a command

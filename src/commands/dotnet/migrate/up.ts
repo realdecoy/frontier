@@ -3,10 +3,10 @@ import chalk from 'chalk';
 // eslint-disable-next-line unicorn/prefer-module
 import shell from 'shelljs';
 import { Command, Flags } from '@oclif/core';
-import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
-import { readProjectConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { ProjectConfig } from '../../../modules/project';
+import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants.js';
+import { readProjectConfig } from '../../../lib/files.js';
+import { checkProjectValidity, isJsonString } from '../../../lib/utilities.js';
+import { ProjectConfig } from '../../../modules/project.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',

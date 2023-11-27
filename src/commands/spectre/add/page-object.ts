@@ -1,7 +1,7 @@
 import { Args, Command, Flags } from '@oclif/core';
 import chalk from 'chalk';
-import { parseComponentName, toKebabCase, isJsonString, checkSpectreProjectValidity, toPascalCase } from '../../../lib/utilities';
-import { CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants';
+import { parseComponentName, toKebabCase, isJsonString, checkSpectreProjectValidity, toPascalCase } from '../../../lib/utilities.js';
+import { CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -85,7 +85,7 @@ export default class Component extends Command {
       const pageObject = await generate(
         pageObjectData,
         {
-          importsSnippet: 'import BasePage from "../base.page";',
+          importsSnippet: 'import BasePage from "../base.page";.js',
           xpath: false,
           indentSize: 2,
           spacing: 'Tabs',

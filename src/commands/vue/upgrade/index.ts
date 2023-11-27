@@ -7,10 +7,10 @@ import shell from 'shelljs';
 import chalk from 'chalk';
 import path from 'node:path';
 import { Args, Command, Flags } from '@oclif/core';
-import { checkProjectValidity, createChangelogReadme, isJsonString } from '../../../lib/utilities';
-import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../lib/files';
-import { VUE_CLI_COMMANDS, CLI_STATE, VUE_TEMPLATE_REPO, VUE_TEMPLATE_ROOT, VUE_TEMPLATE_TAG, VUE_DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../lib/constants';
-import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules';
+import { checkProjectValidity, createChangelogReadme, isJsonString } from '../../../lib/utilities.js';
+import { copyDirectoryRecursive, copyFiles, deleteFile, readFile, updateFile } from '../../../lib/files.js';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_TEMPLATE_REPO, VUE_TEMPLATE_ROOT, VUE_TEMPLATE_TAG, VUE_DOCUMENTATION_LINKS, CHANGE_LOG_FOLDER, CHANGE_LOG_FILENAME, CHAR_PERIOD } from '../../../lib/constants.js';
+import { DEFAULT_CHANGE_LOG, changeLogFile, ChangelogResource, ChangelogResourcesContent, ChangeLog, ChangelogConfigTypes, handlePrimitives, handleArraysAndObjects } from '../../../modules/index.js';
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
 ]);

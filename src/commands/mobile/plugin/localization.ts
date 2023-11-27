@@ -4,11 +4,11 @@ import shell from 'shelljs';
 import chalk from 'chalk';
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
-import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
+import { Files } from '../../../modules/index.js';
+import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files.js';
+import { checkProjectValidity, isJsonString } from '../../../lib/utilities.js';
+import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants.js';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins.js';
 
 const TEMPLATE_FOLDERS = ['localization'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

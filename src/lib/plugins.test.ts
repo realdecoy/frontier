@@ -1,7 +1,7 @@
 /* global beforeEach, afterEach */
 import sinon from 'sinon';
 import fs from 'node:fs';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../src/lib/plugins';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../src/lib/plugins.js';
 import { expect } from 'chai';
 
 describe('lib/plugins.injectImportsIntoMain', () => {

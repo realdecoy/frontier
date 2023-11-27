@@ -8,11 +8,11 @@ import {
   isJsonString,
   parseProjectName,
   checkProjectValidity,
-} from '../../../lib/utilities';
-import { checkIfFolderExists, copyFolderSync } from '../../../lib/files';
+} from '../../../lib/utilities.js';
+import { checkIfFolderExists, copyFolderSync } from '../../../lib/files.js';
 import {
   CLI_STATE,
-} from '../../../lib/constants';
+} from '../../../lib/constants.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',

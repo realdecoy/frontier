@@ -4,12 +4,12 @@ import chalk from 'chalk';
 import shell from 'shelljs';
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
-import { Files } from '../../../modules';
-import { Route } from '../../../modules/manifest';
-import { injectImportsIntoMain } from '../../../lib/plugins';
-import { VUE_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { copyFiles, inject, parseVueModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
+import { Files } from '../../../modules/index.js';
+import { Route } from '../../../modules/manifest.js';
+import { injectImportsIntoMain } from '../../../lib/plugins.js';
+import { VUE_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants.js';
+import { checkProjectValidity, isJsonString } from '../../../lib/utilities.js';
+import { copyFiles, inject, parseVueModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files.js';
 
 const TEMPLATE_FOLDERS = ['buefy'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

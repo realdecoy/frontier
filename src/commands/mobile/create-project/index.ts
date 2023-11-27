@@ -10,8 +10,8 @@ import {
   parseProjectName,
   checkProjectValidity,
   parseBundleIdentifier,
-} from '../../../lib/utilities';
-import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
+} from '../../../lib/utilities.js';
+import { replaceInFiles, checkIfFolderExists } from '../../../lib/files.js';
 import {
   MOBILE_TEMPLATE_TAG,
   TEMPLATE_PROJECT_NAME_REGEX,
@@ -21,7 +21,7 @@ import {
   MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES,
   TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX,
   TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX,
-} from '../../../lib/constants';
+} from '../../../lib/constants.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',

@@ -1,8 +1,8 @@
 // eslint-disable-next-line unicorn/prefer-module
 import chalk from 'chalk';
 import { Args, Command, Flags } from '@oclif/core';
-import { CLI_STATE } from '../../../lib/constants';
-import { isJsonString } from '../../../lib/utilities';
+import { CLI_STATE } from '../../../lib/constants.js';
+import { isJsonString } from '../../../lib/utilities.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',

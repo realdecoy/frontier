@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { inject } from './files';
+import { inject } from './files.js';
 
 /**
  * Private helper method for finding index of last import statement.

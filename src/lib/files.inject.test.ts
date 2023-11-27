@@ -1,7 +1,7 @@
 /* global beforeEach, afterEach */
 import sinon from 'sinon';
 import fs from 'node:fs';
-import { inject } from '../../src/lib/files';
+import { inject } from '../../src/lib/files.js';
 import { expect } from 'chai';
 
 describe('lib/files.inject', () => {

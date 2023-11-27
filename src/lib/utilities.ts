@@ -4,9 +4,9 @@
 // eslint-disable-next-line unicorn/prefer-module
 import chalk from 'chalk';
 import prompts from 'prompts';
-import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
-import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
-import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE } from './constants';
+import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files.js';
+import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules/index.js';
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE } from './constants.js';
 import { existsSync } from 'fs';
 
 /**

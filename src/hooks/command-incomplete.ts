@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import prompts from 'prompts';
-import { ProjectConfig } from '../modules/project';
-import { readProjectConfig } from '../lib/files';
+import { ProjectConfig } from '../modules/project.js';
+import { readProjectConfig } from '../lib/files.js';
 import { Hook, toConfiguredId, toStandardizedId } from '@oclif/core';
 
 const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id }) {
@@ -30,13 +30,13 @@ const hook: Hook.CommandIncomplete = async function ({ config, matches, argv, id
           choices,
         },
       ], {
-        onCancel() {
-          // eslint-disable-next-line no-console
-          console.log(`command ${chalk.red(id.split(':').join(' '))} canceled`);
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`command ${chalk.red(id.split(':').join(' '))} canceled`);
 
-          return false;
-        },
+        return false;
       },
+    },
     );
     const commandIndex = responses.command;
     // eslint-disable-next-line no-negated-condition

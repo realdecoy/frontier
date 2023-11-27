@@ -1,3 +1,3 @@
-export * from './file';
-export * from './lookup';
-export * from './changelog';
+export * from './file.js';
+export * from './lookup.js';
+export * from './changelog.js';

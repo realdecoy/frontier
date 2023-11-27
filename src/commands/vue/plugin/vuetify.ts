@@ -4,11 +4,11 @@ import chalk from 'chalk';
 import shell from 'shelljs';
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
-import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
+import { Files } from '../../../modules/index.js';
+import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files.js';
+import { checkProjectValidity, isJsonString } from '../../../lib/utilities.js';
+import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants.js';
+import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins.js';
 
 const TEMPLATE_FOLDERS = ['vuetify'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;

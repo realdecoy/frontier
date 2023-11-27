@@ -2,7 +2,7 @@
 import sinon from 'sinon';
 import fs from 'node:fs';
 import { expect } from 'chai';
-import { readAndUpdateFeatureFiles } from '../../src/lib/files';
+import { readAndUpdateFeatureFiles } from '../../src/lib/files.js';
 
 describe('lib/files.readAndUpdateFeatureFiles', () => {
   const matchRegex = '__VALUE__';

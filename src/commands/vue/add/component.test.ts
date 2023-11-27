@@ -1,5 +1,5 @@
 import { expect, test } from '@oclif/test';
-import { VUE_CLI_COMMANDS } from '../../../lib/constants';
+import { VUE_CLI_COMMANDS } from '../../../lib/constants.js';
 import { exec } from 'node:child_process';
 
 const skipPresets = '--skipPresets';

@@ -4,11 +4,11 @@ import chalk from 'chalk';
 // import shell from 'shelljs';
 import { Args, Command, Flags } from '@oclif/core';
 import path from 'node:path';
-import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCUMENTATION_LINKS } from '../../../lib/constants';
-import { copyFiles, parseDotnetModuleConfig, readAndUpdateDotnetFeatureFiles, readProjectConfig, replaceTargetFileNames } from '../../../lib/files';
-import { checkProjectValidity, parseEntityName, isJsonString, toKebabCase } from '../../../lib/utilities';
-import { Files } from '../../../modules';
-import { ProjectConfig } from '../../../modules/project';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCUMENTATION_LINKS } from '../../../lib/constants.js';
+import { copyFiles, parseDotnetModuleConfig, readAndUpdateDotnetFeatureFiles, readProjectConfig, replaceTargetFileNames } from '../../../lib/files.js';
+import { checkProjectValidity, parseEntityName, isJsonString, toKebabCase } from '../../../lib/utilities.js';
+import { Files } from '../../../modules/index.js';
+import { ProjectConfig } from '../../../modules/project.js';
 
 const TEMPLATE_FOLDERS = ['entity'];
 const CUSTOM_ERROR_CODES = new Set([
