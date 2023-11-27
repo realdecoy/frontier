@@ -1,6 +1,8 @@
+import { INodeObject } from '@rd-page-object-generator/core';
 import chalk from 'chalk';
 
 /* eslint-disable no-unused-vars */
+export const DEFAULT_PAGE_OBJECT_URL = 'https://the-internet.herokuapp.com/checkboxes';
 export const ROOT_SPECTRE_FILE = 'wdio.conf.ts';
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
@@ -92,6 +94,14 @@ enum MOBILE_CLI_COMMANDS_ENUM {
 }
 export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
 
+enum SPECTRE_CLI_COMMANDS_ENUM {
+  CreateProject = 'spectre create-project',
+  AddPageObject = 'spectre add page-object',
+  PoorHelpCommand = 'add-help',
+}
+
+export const SPECTRE_CLI_COMMANDS = SPECTRE_CLI_COMMANDS_ENUM;
+
 enum VUE_DOCUMENTATION_LINKS_ENUM {
   FrontierVue = 'http://frontier.realdecoy.com/vue/introduction/whats-frontier-vue',
   Component = 'http://frontier.realdecoy.com/vue/features/components',
@@ -122,6 +132,12 @@ enum MOBILE_DOCUMENTATION_LINKS_ENUM {
   Store = 'http://frontier.realdecoy.com/mobile/features/stores',
 }
 export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
+
+enum SPECTRE_DOCUMENTATION_LINKS_ENUM {
+  PageObject = 'http://frontier.realdecoy.com/spectre/features/page-objects',
+}
+
+export const SPECTRE_DOCUMENTATION_LINKS = SPECTRE_DOCUMENTATION_LINKS_ENUM;
 
 export const VUE_PLUGIN_PRESET_LIST = [
   'Buefy & Localization (recommended)',
@@ -179,3 +195,15 @@ enum MOBILE_DYNAMIC_OBJECTS_ENUM {
 }
 
 export const MOBILE_DYNAMIC_OBJECTS = MOBILE_DYNAMIC_OBJECTS_ENUM;
+
+export const EMPTY_PAGE_OBJECT_DATA = {
+  children: new Array<INodeObject>(),
+  name: 'empty',
+  attributes: {},
+  classList: new Array<string>(),
+  selector: '#empty',
+  xpath: '//*[@id=\'empty\']',
+  element: 'div',
+  id: '#empty',
+  text: new Array<string>(),
+};

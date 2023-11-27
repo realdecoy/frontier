@@ -6,8 +6,8 @@ import chalk from 'chalk';
 import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files.js';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules/index.js';
-import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE } from './constants.js';
-import { existsSync } from 'fs';
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE, DEFAULT_PAGE_OBJECT_URL } from './constants.js';
+import { existsSync } from 'node:fs';
 
 /**
  * Description: determine if string is valid JSON string
@@ -169,6 +169,21 @@ function throwNameError(errorMessage: string): void {
   );
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Description: Throws an error with the provided message
+ * @param {string} errorMessage - error message to be thrown
+ * @throws {Error}
+ */
+function throwUrlError(errorMessage: string): void {
+  throw new Error(
+    JSON.stringify({
+      code: 'url-invalid',
+      message: stripFrontierPrefix(errorMessage),
+    }),
+  );
+}
+
 /**
  * Description: determine if string is valid component name
  * @param {string} featureName - the name of the feature whose name is being validated
@@ -190,6 +205,31 @@ function validateEnteredName(featureName: string, exampleName = '') {
     }
 
     return isValidName ? true : resultMessage;
+  };
+}
+
+/**
+ * Description: determine if string is valid URL
+ * @param {string} featureUrl - the name of the feature whose URL is being validated
+ * @param {string} exampleUrl - an example of a valid URL
+ * @param {string} required   - true if the URL is required
+ * @returns {any} -
+ */
+function validateEnteredUrl(featureUrl: string, exampleUrl = '', required = true) {
+  return (value: any) => {
+    const isString = typeof value === 'string';
+    const isNull = value === null || value.length === 0;
+    // characters in value are limited to alphanumeric characters and hyphens or underscores
+    const charactersMatch = value.match(/\bhttps?:\/\/(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?\b/i) !== null;
+    const isValidUrl = (isString && charactersMatch) || (isNull && !required);
+    let resultMessage = '';
+    if (isNull && required) {
+      resultMessage = `${CLI_STATE.Error} A ${featureUrl} URL is required`;
+    } else if (!charactersMatch) {
+      resultMessage = `${CLI_STATE.Error} Use letters, numbers and '-' for ${featureUrl} URLs (e.g. ${exampleUrl ? exampleUrl : `https://my-${featureUrl}-url.com`})`;
+    }
+
+    return isValidUrl ? true : resultMessage;
   };
 }
 
@@ -256,6 +296,86 @@ async function parseComponentName(args: Lookup): Promise<string> {
   }
 
   return argName;
+}
+
+/**
+ * Description: parse page object name or prompt user to provide name for page object
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parsePageObjectName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validatePageObjectName = validateEnteredName('page object');
+  // if no page object name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'my-page-object',
+      message: 'Enter a page object name: ',
+      type: 'text',
+      validate: validatePageObjectName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add page object canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validatePageObjectName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse page object source url or prompt user to provide source url for page object
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parsePageObjectUrl(args: Lookup): Promise<string> {
+  let argUrl = args.url;
+  const example = DEFAULT_PAGE_OBJECT_URL;
+  const validatePageObjectUrl = validateEnteredUrl('page object', example, false);
+  // if no page object url is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argUrl) {
+    const responses: any = await prompts([{
+      name: 'URL',
+      message: 'Enter a page object source URL (optional): ',
+      type: 'text',
+      validate: validatePageObjectUrl,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add page object canceled`);
+
+        return false;
+      },
+    });
+    if (responses.URL === undefined) {
+      process.exit(1);
+    }
+
+    argUrl = responses.URL;
+  } else {
+    const result = validatePageObjectUrl(argUrl);
+    if (result && result !== true) {
+      throwUrlError(result);
+    }
+  }
+
+  return argUrl;
 }
 
 /**
@@ -970,6 +1090,8 @@ export {
   parseApiFeatures,
   parseMigrations,
   parseComponentName,
+  parsePageObjectName,
+  parsePageObjectUrl,
   parseScreenName,
   parseLayoutName,
   parseProjectName,
