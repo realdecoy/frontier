@@ -2,6 +2,8 @@ import { Args, Command, Flags } from '@oclif/core';
 import chalk from 'chalk';
 import { parseComponentName, toKebabCase, isJsonString, checkSpectreProjectValidity, toPascalCase } from '../../../lib/utilities.js';
 import { CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants.js';
+import { generate, parseFromURL } from '@rd-page-object-generator/core';
+import { writeFile } from '../../../lib/files.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -79,27 +81,22 @@ export default class Component extends Command {
     // parse kebab and pascal case of pageObjectName
     const pageObjectNameKebab = toKebabCase(pageObjectName);
     const pageObjectNamePascal = toPascalCase(pageObjectName);
-    try {
-      const { generate, parseFromURL } = await import('@rd-page-object-generator/core');
-      const pageObjectData = await parseFromURL('https://the-internet.herokuapp.com/checkboxes');
-      const pageObject = await generate(
-        pageObjectData,
-        {
-          importsSnippet: 'import BasePage from "../base.page";.js',
-          xpath: false,
-          indentSize: 2,
-          spacing: 'Tabs',
-          title: pageObjectNamePascal,
-          methodsOnly: false,
-          extendsSnippet: 'extends BasePage',
-          elementTypeParam: false,
-          selectorFuncSnippet: '$',
-        },
-      );
-      this.log(pageObject);
-    } catch (error) {
-      this.log((error as Error).message);
-    }
+    const pageObjectData = await parseFromURL('https://the-internet.herokuapp.com/checkboxes');
+    const pageObject = await generate(
+      pageObjectData,
+      {
+        importsSnippet: 'import BasePage from "./page";',
+        xpath: false,
+        indentSize: 1,
+        spacing: 'Tabs',
+        title: pageObjectNamePascal,
+        methodsOnly: false,
+        extendsSnippet: 'BasePage',
+        elementTypeParam: false,
+        selectorFuncSnippet: '$',
+      },
+    );
+    writeFile(`./src/page_objects/${pageObjectNameKebab}.page.ts`, pageObject);
 
     this.log(`${CLI_STATE.Success} page object added: ${pageObjectNameKebab}`);
     this.log(`\n  Visit the documentation page for more info:\n  ${chalk.yellow(MOBILE_DOCUMENTATION_LINKS.Component)}\n`);
