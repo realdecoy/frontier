@@ -582,10 +582,10 @@
     supports-color "^8.1.1"
     tslib "^2"
 
-"@oclif/core@^2.8.0", "@oclif/core@2.8.0":
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/@oclif/core/-/core-2.8.0.tgz"
-  integrity sha512-A2wHItFrD/WOw5bJ6Mtv9MD7If0bsKNR0pwEY0me+fo4HSXlJOtgYGqmzb8t8akX3DUUT7XsjPajsoHLkIJyvg==
+"@oclif/core@^2.8.0":
+  version "2.15.0"
+  resolved "https://registry.npmjs.org/@oclif/core/-/core-2.15.0.tgz"
+  integrity sha512-fNEMG5DzJHhYmI3MgpByTvltBOMyFcnRIUMxbiz2ai8rhaYgaTHMG3Q38HcosfIvtw9nCjxpcQtC8MN8QtVCcA==
   dependencies:
     "@types/cli-progress" "^3.11.0"
     ansi-escapes "^4.3.2"
@@ -596,7 +596,6 @@
     cli-progress "^3.12.0"
     debug "^4.3.4"
     ejs "^3.1.8"
-    fs-extra "^9.1.0"
     get-package-type "^0.1.0"
     globby "^11.1.0"
     hyperlinker "^1.0.0"
@@ -606,7 +605,7 @@
     natural-orderby "^2.0.3"
     object-treeify "^1.1.33"
     password-prompt "^1.1.2"
-    semver "^7.3.7"
+    slice-ansi "^4.0.0"
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
     supports-color "^8.1.1"
@@ -683,6 +682,39 @@
     supports-hyperlinks "^2.2.0"
     ts-node "^10.9.1"
     tslib "^2.5.0"
+    widest-line "^3.1.0"
+    wordwrap "^1.0.0"
+    wrap-ansi "^7.0.0"
+
+"@oclif/core@^3.0.0":
+  version "3.12.0"
+  resolved "https://registry.npmjs.org/@oclif/core/-/core-3.12.0.tgz"
+  integrity sha512-mT1Vpd1E20IJ7P6GDYOivylPdTHq/xVgFjeCDjitFW86UAklFM8BEFyFB7KpsTvpmjRbCoda3yU10lSI1224lw==
+  dependencies:
+    ansi-escapes "^4.3.2"
+    ansi-styles "^4.3.0"
+    cardinal "^2.1.1"
+    chalk "^4.1.2"
+    clean-stack "^3.0.1"
+    cli-progress "^3.12.0"
+    color "^4.2.3"
+    debug "^4.3.4"
+    ejs "^3.1.9"
+    get-package-type "^0.1.0"
+    globby "^11.1.0"
+    hyperlinker "^1.0.0"
+    indent-string "^4.0.0"
+    is-wsl "^2.2.0"
+    js-yaml "^3.14.1"
+    natural-orderby "^2.0.3"
+    object-treeify "^1.1.33"
+    password-prompt "^1.1.2"
+    slice-ansi "^4.0.0"
+    string-width "^4.2.3"
+    strip-ansi "^6.0.1"
+    supports-color "^8.1.1"
+    supports-hyperlinks "^2.2.0"
+    tsconfck "^3.0.0"
     widest-line "^3.1.0"
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
@@ -2001,7 +2033,7 @@ color-convert@^2.0.1:
   dependencies:
     color-name "~1.1.4"
 
-color-name@~1.1.4:
+color-name@^1.0.0, color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
@@ -2011,10 +2043,26 @@ color-name@1.1.3:
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz"
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw== sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==
 
+color-string@^1.9.0:
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz"
+  integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
+  dependencies:
+    color-name "^1.0.0"
+    simple-swizzle "^0.2.2"
+
 color-support@^1.1.2, color-support@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/color-support/-/color-support-1.1.3.tgz"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
+
+color@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/color/-/color-4.2.3.tgz"
+  integrity sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==
+  dependencies:
+    color-convert "^2.0.1"
+    color-string "^1.9.0"
 
 colors@1.0.3:
   version "1.0.3"
@@ -2267,7 +2315,7 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
-ejs@^3.1.8:
+ejs@^3.1.8, ejs@^3.1.9:
   version "3.1.9"
   resolved "https://registry.npmjs.org/ejs/-/ejs-3.1.9.tgz"
   integrity sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
@@ -3477,6 +3525,11 @@ is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz"
   integrity sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg== sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
+
+is-arrayish@^0.3.1:
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz"
+  integrity sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==
 
 is-bigint@^1.0.1:
   version "1.0.4"
@@ -5820,6 +5873,13 @@ sigstore@^1.3.0:
     make-fetch-happen "^11.0.1"
     tuf-js "^1.1.3"
 
+simple-swizzle@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz"
+  integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
+  dependencies:
+    is-arrayish "^0.3.1"
+
 sinon@^15.0.3:
   version "15.0.4"
   resolved "https://registry.npmjs.org/sinon/-/sinon-15.0.4.tgz"
@@ -6306,6 +6366,11 @@ ts-node@^10.9.1:
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
 
+tsconfck@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/tsconfck/-/tsconfck-3.0.0.tgz"
+  integrity sha512-w3wnsIrJNi7avf4Zb0VjOoodoO0woEqGgZGQm+LHH9przdUI+XDKsWAXwxHA1DaRTjeuZNcregSzr7RaA8zG9A==
+
 tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
@@ -6396,6 +6461,11 @@ typescript@^4.9.5, typescript@>=2.7, "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3
   version "4.9.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+
+typescript@^5.0.0:
+  version "5.3.2"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-5.3.2.tgz"
+  integrity sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
