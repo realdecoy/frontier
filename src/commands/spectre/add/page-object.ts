@@ -24,7 +24,7 @@ const CUSTOM_ERROR_CODES = new Set([
   'missing-template-folder',
 ]);
 
-export default class Component extends Command {
+export default class PageObject extends Command {
   // static aliases = ['spectre add page-object'];
 
   static description = 'add a new page object file.'
@@ -83,7 +83,7 @@ export default class Component extends Command {
       );
     }
 
-    const { args, flags } = await this.parse(Component);
+    const { args, flags } = await this.parse(PageObject);
     const commandArgs = Object.values(args);
 
     this.handleHelp(commandArgs, flags);

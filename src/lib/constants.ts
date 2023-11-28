@@ -206,4 +206,5 @@ export const EMPTY_PAGE_OBJECT_DATA = {
   element: 'div',
   id: '#empty',
   text: new Array<string>(),
+  prototypeClassName: 'HTMLDivElement',
 };
