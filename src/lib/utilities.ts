@@ -8,6 +8,7 @@ import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } fr
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules/index.js';
 import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, ROOT_SPECTRE_FILE, DEFAULT_PAGE_OBJECT_URL } from './constants.js';
 import { existsSync } from 'node:fs';
+import { pascalCase } from '@rd-page-object-generator/core';
 
 /**
  * Description: determine if string is valid JSON string
@@ -164,6 +165,21 @@ function throwNameError(errorMessage: string): void {
   throw new Error(
     JSON.stringify({
       code: 'name-invalid',
+      message: stripFrontierPrefix(errorMessage),
+    }),
+  );
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Description: Throws an error with the provided message
+ * @param {string} errorMessage - error message to be thrown
+ * @throws {Error}
+ */
+function throwTypeError(errorMessage: string): void {
+  throw new Error(
+    JSON.stringify({
+      code: 'type-invalid',
       message: stripFrontierPrefix(errorMessage),
     }),
   );
@@ -440,6 +456,49 @@ async function parseProjectName(args: Lookup, defaultName = 'my-vue-project'): P
   }
 
   return argName;
+}
+
+/**
+ * Description: parse spectre project type or prompt user to provide type of project
+ * @param {string} args - a string value
+ * @param {string} defaultType - a string value
+ * @returns {Lookup} -
+ */
+async function parseSpectreProjectType(args: Lookup, defaultType = 'web'): Promise<string> {
+  let argType = args.type;
+  const choices = ['web', 'mobile'];
+  const validateProjectType = (type: string | null) => Boolean(type && choices.includes(type));
+  // if no project type is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argType) {
+    const responses: any = await prompts([{
+      name: 'type',
+      initial: choices.indexOf(defaultType),
+      message: 'What type of project is this? ',
+      type: 'select',
+      choices: choices.map(title => ({ title: pascalCase(title), value: title })),
+      validate: validateProjectType,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+
+        return false;
+      },
+    });
+    if (responses.type === undefined) {
+      process.exit(1);
+    }
+
+    argType = responses.type;
+  } else {
+    const result = validateProjectType(argType);
+    if (result && result !== true) {
+      throwTypeError(result);
+    }
+  }
+
+  return argType;
 }
 
 /**
@@ -1095,6 +1154,7 @@ export {
   parseScreenName,
   parseLayoutName,
   parseProjectName,
+  parseSpectreProjectType,
   parseProjectPresets,
   parseVersionName,
   parsePageName,

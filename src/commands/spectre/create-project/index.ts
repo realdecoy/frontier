@@ -8,6 +8,7 @@ import {
   isJsonString,
   parseProjectName,
   checkProjectValidity,
+  parseSpectreProjectType,
 } from '../../../lib/utilities.js';
 import { checkIfFolderExists, copyFolderSync } from '../../../lib/files.js';
 import {
@@ -76,7 +77,6 @@ export default class CreateProject extends Command {
 
     const versbose = flags.verbose === true;
     const isTest = flags.isTest === true;
-    const template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/project-template';
 
     const { isValid: isValidProject } = checkProjectValidity();
 
@@ -92,6 +92,9 @@ export default class CreateProject extends Command {
     // retrieve project name
     const projectName = await parseProjectName(args, 'specs');
 
+    // retrieve project type (web or mobile)
+    const projectType = await parseSpectreProjectType(args, 'web');
+
     // convert project name to kebab case
     const kebabProjectName = toKebabCase(projectName);
 
@@ -101,6 +104,11 @@ export default class CreateProject extends Command {
     this.log(`${CLI_STATE.Info} creating spectre project ${chalk.whiteBright(kebabProjectName)}`);
 
     // retrieve project files from template source
+    let template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/project-template';
+    if (projectType === 'mobile') {
+      template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/mobile-project-template';
+    }
+
     await copyFolderSync(template, kebabProjectName); // TODO: replace with git clone from remote repo
 
     if (isTest !== true) {
