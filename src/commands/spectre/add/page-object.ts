@@ -99,6 +99,8 @@ export default class PageObject extends Command {
     // parse kebab and pascal case of pageObjectName
     const pageObjectNameKebab = toKebabCase(pageObjectName);
     const pageObjectNamePascal = toPascalCase(pageObjectName);
+
+    this.log('Generating page object...');
     const pageObjectData = pageObjectUrl ? await parseFromURL(pageObjectUrl) : EMPTY_PAGE_OBJECT_DATA;
     const pageObject = await generate(
       pageObjectData,
