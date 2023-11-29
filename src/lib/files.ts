@@ -700,6 +700,27 @@ function verifyTemplateFolderExists(folderPath: string): void {
 }
 
 /**
+ * Description: Determine whether or not the given folder path is a
+ *              directory which exists
+ * @param {string} folderPath - a path to a folder
+ * @param {string} code - the error code to be thrown
+ * @param {string} message - the error message to be thrown
+ * @returns {void}
+ */
+function verifyFolderExists(folderPath: string, code: string, message: string): void {
+  const isExistingFolder = directoryExists(folderPath);
+  // block command if project folder already exists
+  if (isExistingFolder === false) {
+    throw new Error(
+      JSON.stringify({
+        code,
+        message,
+      }),
+    );
+  }
+}
+
+/**
  * Description: Inject dynamic objects into project files
  * @param {string} projectRoot -
  * @param {string} jsonData - stringified json data from file
@@ -839,6 +860,7 @@ export {
   updateDynamicImportsAndExports,
   parseDynamicObjects,
   verifyTemplateFolderExists,
+  verifyFolderExists,
   checkIfFolderExists,
   parseMobileModuleConfig,
   parseVueModuleConfig,

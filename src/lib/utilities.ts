@@ -1041,7 +1041,7 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
 }
 
 /**
- * This method checks if the project where a command is being ran is a valid rdspec project
+ * This method checks if the project where a command is being ran is a valid spectre project
  * @returns {boolean} - is this command being ran in a valid project
  */
 export function checkSpectreProjectValidity(): boolean {

@@ -15,7 +15,7 @@ import {
   SPECTRE_DOCUMENTATION_LINKS,
 } from '../../../lib/constants.js';
 import { generate, parseFromURL } from '@rd-page-object-generator/core';
-import { writeFile } from '../../../lib/files.js';
+import { verifyFolderExists, writeFile } from '../../../lib/files.js';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -73,6 +73,11 @@ export default class PageObject extends Command {
 
   async run(): Promise<void> {
     const isValidProject = checkSpectreProjectValidity();
+    verifyFolderExists(
+      './src/page_objects',
+      'missing-page-objects-folder',
+      'page_objects/ folder not found, are you sure you are in a spectre web project?',
+    );
     // block command unless being run within a spectre project
     if (isValidProject === false) {
       throw new Error(
