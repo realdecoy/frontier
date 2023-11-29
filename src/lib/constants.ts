@@ -145,6 +145,10 @@ export const VUE_PLUGIN_PRESET_LIST = [
   '[Skip presets]',
 ];
 
+export const SPECTRE_TEMPLATE_REPLACEMENT_FILES = [
+  'package.json',
+];
+
 export const VUE_TEMPLATE_REPLACEMENT_FILES = [
   'README.md',
   'package.json',

@@ -10,9 +10,9 @@ import {
   checkProjectValidity,
   parseSpectreProjectType,
 } from '../../../lib/utilities.js';
-import { checkIfFolderExists, copyFolderSync } from '../../../lib/files.js';
+import { checkIfFolderExists, copyFolderSync, replaceInFiles } from '../../../lib/files.js';
 import {
-  CLI_STATE,
+  CLI_STATE, SPECTRE_TEMPLATE_REPLACEMENT_FILES, TEMPLATE_PROJECT_NAME_REGEX,
 } from '../../../lib/constants.js';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -75,6 +75,9 @@ export default class CreateProject extends Command {
 
     this.handleHelp(commandArgs, flags);
 
+    const replaceNameRegex = TEMPLATE_PROJECT_NAME_REGEX;
+    let filesToReplace = SPECTRE_TEMPLATE_REPLACEMENT_FILES;
+
     const versbose = flags.verbose === true;
     const isTest = flags.isTest === true;
 
@@ -101,6 +104,9 @@ export default class CreateProject extends Command {
     // verify that project folder doesnt already exist
     checkIfFolderExists(kebabProjectName);
 
+    // update files to be replaced with project name reference
+    filesToReplace = filesToReplace.map(p => `${kebabProjectName}/${p}`);
+
     this.log(`${CLI_STATE.Info} creating spectre project ${chalk.whiteBright(kebabProjectName)}`);
 
     // retrieve project files from template source
@@ -110,6 +116,18 @@ export default class CreateProject extends Command {
     }
 
     await copyFolderSync(template, kebabProjectName); // TODO: replace with git clone from remote repo
+
+    // find and replace project name references
+    const success = await replaceInFiles(filesToReplace, replaceNameRegex, `${kebabProjectName}`);
+
+    if (success === false) {
+      throw new Error(
+        JSON.stringify({
+          code: 'file-not-changed',
+          message: 'updating your project failed',
+        }),
+      );
+    }
 
     if (isTest !== true) {
       ux.action.start(`${CLI_STATE.Info} Initializing Git`);
