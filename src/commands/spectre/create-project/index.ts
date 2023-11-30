@@ -14,6 +14,8 @@ import { checkIfFolderExists, copyFolderSync, replaceInFiles } from '../../../li
 import {
   CLI_STATE, SPECTRE_TEMPLATE_REPLACEMENT_FILES, TEMPLATE_PROJECT_NAME_REGEX,
 } from '../../../lib/constants.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',
@@ -110,12 +112,12 @@ export default class CreateProject extends Command {
     this.log(`${CLI_STATE.Info} creating spectre project ${chalk.whiteBright(kebabProjectName)}`);
 
     // retrieve project files from template source
-    let template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/project-template';
+    let template = '../../../../../template/project-template';
     if (projectType === 'mobile') {
-      template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/mobile-project-template';
+      template = '../../../../../template/mobile-project-template';
     }
 
-    copyFolderSync(template, kebabProjectName); // TODO: replace with git clone from remote repo
+    copyFolderSync(path.join(fileURLToPath(import.meta.url), template), kebabProjectName); // TODO: replace with git clone from remote repo
 
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceNameRegex, `${kebabProjectName}`);
