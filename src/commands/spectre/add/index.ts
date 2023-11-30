@@ -11,7 +11,8 @@ export default class Add extends Command {
   }
 
   static args = {
-    'page-object': Args.string({ name: 'page-object', description: 'page object file', hidden: false }),
+    'page-object': Args.string({ name: 'page-object', description: 'creates a page object file in the page_objects/ folder', hidden: false }),
+    'screen-object': Args.string({ name: 'screen-object', description: 'creates a screen object file in the screen_objects/ folder', hidden: false }),
   }
 
   showHelp(): void {

@@ -35,7 +35,6 @@ export default class ScreenObject extends Command {
 
   static args = {
     name: Args.string({ name: 'name', description: 'name of new screen object' }),
-    URL: Args.string({ name: 'URL', description: 'URL of new screen object', required: false }),
   }
 
   // override Command class error handler
