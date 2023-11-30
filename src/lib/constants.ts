@@ -95,6 +95,7 @@ enum MOBILE_CLI_COMMANDS_ENUM {
 export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
 
 enum SPECTRE_CLI_COMMANDS_ENUM {
+  AddModule = 'spectre add',
   CreateProject = 'spectre create-project',
   AddPageObject = 'spectre add page-object',
   AddScreenObject = 'spectre add screen-object',

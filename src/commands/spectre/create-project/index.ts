@@ -7,8 +7,8 @@ import {
   toKebabCase,
   isJsonString,
   parseProjectName,
-  checkProjectValidity,
   parseSpectreProjectType,
+  checkSpectreProjectValidity,
 } from '../../../lib/utilities.js';
 import { checkIfFolderExists, copyFolderSync, replaceInFiles } from '../../../lib/files.js';
 import {
@@ -81,7 +81,7 @@ export default class CreateProject extends Command {
     const versbose = flags.verbose === true;
     const isTest = flags.isTest === true;
 
-    const { isValid: isValidProject } = checkProjectValidity();
+    const isValidProject = checkSpectreProjectValidity();
 
     if (isValidProject) {
       throw new Error(
