@@ -7,8 +7,7 @@ import { checkIfFolderExists } from '../../../lib/files';
 import {
   checkProjectValidity,
   parseProjectName,
-  isJsonString,
-  getDockerDotnetCommand
+  isJsonString
 } from '../../../lib/utilities';
 import {
   DOTNET_TEMPLATE_REPO,
@@ -95,7 +94,6 @@ export default class CreateProject extends Command {
     const withSentry = (flags.withSentry || true) === true;
 
     const dockerImage = `${dotnetImageName}:${dotnetImageversion}`;
-    const dockerDotnetCommand = getDockerDotnetCommand(dotnetImageversion)
 
     let projectName = '';
     const { isValid: isValidProject } = checkProjectValidity();
@@ -147,7 +145,7 @@ export default class CreateProject extends Command {
       } 
 
       // Creating the project using the tempplate 
-      const success2 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root -v ./:${appPath}/ -w ${appPath} ${dockerImage} dotnet new ${templateShortName} --name ${projectName} --sentry ${withSentry}`, { silent: true });
+      const success2 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root -v ./:${appPath} -w ${appPath} ${dockerImage} dotnet new ${templateShortName} --name ${projectName} --sentry ${withSentry}`, { silent: true });
       
       if (success2.code !== 0) {
         throw new Error(
@@ -171,7 +169,7 @@ export default class CreateProject extends Command {
     }
 
     // initialize .frontierrc config file
-    const frontierrcResult = await shell.exec(`${dockerDotnetCommand} echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}"\n}' > ./${projectName}/.frontierrc`, { silent: false });
+    const frontierrcResult = await shell.exec(`cd ${projectName} && echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}",\n\t"dotnetVersion": "${dotnetImageversion}"\n}' > .frontierrc`, { silent: true });
 
     if (frontierrcResult.code !== 0) {
       throw new Error(
@@ -183,7 +181,7 @@ export default class CreateProject extends Command {
     }
 
     // initialize git in the created project
-    const gitResult = await shell.exec(`${dockerDotnetCommand} git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
+    const gitResult = await shell.exec(`cd ${projectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: true });
 
     if (gitResult.code !== 0) {
       throw new Error(
@@ -198,8 +196,11 @@ export default class CreateProject extends Command {
       ux.action.stop();
     }
 
+    const certHostMountDir = process.platform === 'win32' ? '%USERPROFILE%\.aspnet\https' : '${HOME}/.aspnet/https'
+    const dockerDotnetCommand = `${dockerRunCommand} -v ./${projectName}:/app -v ${certHostMountDir}:/https -w ${appPath} ${dockerImage}`
+    
     // Generate and trust SSL certificate for HTTPS
-    const devCerts1 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https -ep "/root/.aspnet/https/aspnetapp.pfx" -p Pa55w0rd2023`, { silent: true });
+    const devCerts1 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https -ep "/https/aspnetapp.pfx" -p Password123`, { silent: true });
     const devCerts2 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https --trust`, { silent: true });
 
     if (devCerts1.code !== 0 || devCerts2.code !== 0) {

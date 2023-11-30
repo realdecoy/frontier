@@ -6,19 +6,7 @@ const chalk = require('chalk');
 import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
-import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST, DOTNET_DOCKER_IMAGE, DOCKER_RUN_COMMAND, DOCKER_APP_DIR } from './constants';
-
-/**
- * Construct the docker run command for Dotnet Projects
- * @param {string} value - a string value
- * @returns {boolean} -
- */
-function getDockerDotnetCommand(dotnetImageVersion: string): string {
-  const dockerImage = `${DOTNET_DOCKER_IMAGE}:${dotnetImageVersion}`;
-
-  return `${DOCKER_RUN_COMMAND} -v ./:${DOCKER_APP_DIR}/ -w ${DOCKER_APP_DIR} ${dockerImage}`;
-}
-
+import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
 
 /**
  * Description: determine if string is valid JSON string
@@ -332,6 +320,43 @@ async function parseProjectName(args: Lookup, defaultName = 'my-vue-project'): P
 
   return argName;
 }
+
+
+/**
+ * Description: parse project or prompt user to provide name for project
+ * @param {string} args - a string value
+ * @param {string} defaultName - a string value
+ * @returns {Lookup} -
+ */
+async function parseAppContainerName(containerName: string | undefined, defaultName: string): Promise<string> {
+  // const validateProjectName = validateEnteredName('project');
+  // if no project name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!containerName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: defaultName,
+      message: 'Enter a name of the app container: ',
+      type: 'text',
+      // validate: validateProjectName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} app container parsing canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    containerName = responses.name as string;
+  }
+
+  return containerName;
+}
+
 
 /**
  * Description: parse layout or prompt user to provide name for layout
@@ -977,8 +1002,8 @@ export {
   parseServiceName,
   parseStoreModuleName,
   parseBundleIdentifier,
+  parseAppContainerName,
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
-  getDockerDotnetCommand,
 };
