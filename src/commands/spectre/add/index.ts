@@ -13,6 +13,7 @@ export default class Add extends Command {
   static args = {
     'page-object': Args.string({ name: 'page-object', description: 'creates a page object file in the page_objects/ folder', hidden: false }),
     'screen-object': Args.string({ name: 'screen-object', description: 'creates a screen object file in the screen_objects/ folder', hidden: false }),
+    'test': Args.string({ name: 'test', description: 'creates a test file in the specs/ folder', hidden: false }),
   }
 
   showHelp(): void {

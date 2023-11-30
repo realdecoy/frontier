@@ -17,6 +17,7 @@ export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the app
 export const DOTNET_TEMPLATE_TAG = '1.0.0-rc.5'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_SHORT_NAME = 'net7webapi'; // replace this with the appropriate release tag in the template repo
 export const DESIGN_TEMPLATE_FOLDER = 'library';
+export const TEMPLATE_TEST_NAME_REGEX = /__TEST_NAME__/g;
 export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
 export const TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX = /__PROJECT_SCHEME__/g;
 export const TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX = /__BUNDLE_IDENTIFIER__/g;
@@ -97,6 +98,7 @@ export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
 enum SPECTRE_CLI_COMMANDS_ENUM {
   AddModule = 'spectre add',
   CreateProject = 'spectre create-project',
+  AddTest = 'spectre add test',
   AddPageObject = 'spectre add page-object',
   AddScreenObject = 'spectre add screen-object',
   PoorHelpCommand = 'add-help',
@@ -138,6 +140,7 @@ export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
 enum SPECTRE_DOCUMENTATION_LINKS_ENUM {
   PageObject = 'http://frontier.realdecoy.com/spectre/features/page-objects',
   ScreenObject = 'http://frontier.realdecoy.com/spectre/features/screen-objects',
+  Test = 'http://frontier.realdecoy.com/spectre/features/tests',
 }
 
 export const SPECTRE_DOCUMENTATION_LINKS = SPECTRE_DOCUMENTATION_LINKS_ENUM;

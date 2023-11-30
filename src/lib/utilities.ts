@@ -355,6 +355,38 @@ async function parsePageObjectName(args: Lookup): Promise<string> {
 }
 
 /**
+ * Description: parse test name or prompt user to provide name for test
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseTestName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  // if no test name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'My Test',
+      message: 'Enter a test name: ',
+      type: 'text',
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add test canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  }
+
+  return argName;
+}
+
+/**
  * Description: parse screen object name or prompt user to provide name for screen object
  * @param {string} args - a string value
  * @returns {Lookup} -
@@ -1189,6 +1221,7 @@ export {
   parseApiFeatures,
   parseMigrations,
   parseComponentName,
+  parseTestName,
   parsePageObjectName,
   parseScreenObjectName,
   parsePageObjectUrl,
