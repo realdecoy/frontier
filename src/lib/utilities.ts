@@ -355,6 +355,46 @@ async function parsePageObjectName(args: Lookup): Promise<string> {
 }
 
 /**
+ * Description: parse screen object name or prompt user to provide name for screen object
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseScreenObjectName(args: Lookup): Promise<string> {
+  let argName = args.name;
+  const validateScreenObjectName = validateEnteredName('screen object');
+  // if no screen object name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: 'my-screen-object',
+      message: 'Enter a screen object name: ',
+      type: 'text',
+      validate: validateScreenObjectName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} add screen object canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    argName = responses.name;
+  } else {
+    const result = validateScreenObjectName(argName);
+    if (result && result !== true) {
+      throwNameError(result);
+    }
+  }
+
+  return argName;
+}
+
+/**
  * Description: parse page object source url or prompt user to provide source url for page object
  * @param {string} args - a string value
  * @returns {Lookup} -
@@ -1150,6 +1190,7 @@ export {
   parseMigrations,
   parseComponentName,
   parsePageObjectName,
+  parseScreenObjectName,
   parsePageObjectUrl,
   parseScreenName,
   parseLayoutName,

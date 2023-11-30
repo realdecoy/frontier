@@ -3,7 +3,7 @@ import chalk from 'chalk';
 
 /* eslint-disable no-unused-vars */
 export const DEFAULT_PAGE_OBJECT_URL = 'https://the-internet.herokuapp.com/checkboxes';
-export const ROOT_SPECTRE_FILE = 'wdio.conf.ts';
+export const ROOT_SPECTRE_FILE = 'specconfig.json';
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
 export const DOTNET_TEMPLATE_ROOT = '.frontier/template';
@@ -97,6 +97,7 @@ export const MOBILE_CLI_COMMANDS = MOBILE_CLI_COMMANDS_ENUM;
 enum SPECTRE_CLI_COMMANDS_ENUM {
   CreateProject = 'spectre create-project',
   AddPageObject = 'spectre add page-object',
+  AddScreenObject = 'spectre add screen-object',
   PoorHelpCommand = 'add-help',
 }
 
@@ -135,6 +136,7 @@ export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
 
 enum SPECTRE_DOCUMENTATION_LINKS_ENUM {
   PageObject = 'http://frontier.realdecoy.com/spectre/features/page-objects',
+  ScreenObject = 'http://frontier.realdecoy.com/spectre/features/screen-objects',
 }
 
 export const SPECTRE_DOCUMENTATION_LINKS = SPECTRE_DOCUMENTATION_LINKS_ENUM;
@@ -211,4 +213,17 @@ export const EMPTY_PAGE_OBJECT_DATA = {
   id: '#empty',
   text: new Array<string>(),
   prototypeClassName: 'HTMLDivElement',
+};
+
+export const EMPTY_SCREEN_OBJECT_DATA = {
+  children: new Array<INodeObject>(),
+  name: 'empty-container',
+  attributes: {},
+  classList: new Array<string>(),
+  selector: '~empty-container',
+  xpath: '//*[@id=\'empty\']',
+  element: 'element',
+  id: '~empty-container',
+  text: new Array<string>(),
+  prototypeClassName: 'Element',
 };

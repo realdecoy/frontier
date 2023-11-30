@@ -115,7 +115,7 @@ export default class CreateProject extends Command {
       template = 'C:/Users/nayja/Desktop/work-projects/spectre/template/mobile-project-template';
     }
 
-    await copyFolderSync(template, kebabProjectName); // TODO: replace with git clone from remote repo
+    copyFolderSync(template, kebabProjectName); // TODO: replace with git clone from remote repo
 
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceNameRegex, `${kebabProjectName}`);
