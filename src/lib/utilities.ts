@@ -432,7 +432,7 @@ async function parseVersionName(args: Lookup): Promise<string> {
  * @param {string} args - a string value
  * @returns {Lookup} -
  */
-async function parseMigrationName(args: Lookup): Promise<string> {
+async function parseMigrationName(args: Lookup, initial='InitialMigration'): Promise<string> {
   let argName = args.name;
   const validateMigrationName = validateEnteredName('migration');
   // if no Migration name is provided in command then prompt user
@@ -440,7 +440,7 @@ async function parseMigrationName(args: Lookup): Promise<string> {
   if (!argName) {
     const responses: any = await prompts([{
       name: 'name',
-      initial: 'InitialMigration',
+      initial: initial,
       message: 'Enter a migration name: ',
       type: 'text',
       validate: validateMigrationName,

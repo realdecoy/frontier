@@ -3,7 +3,7 @@ const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 import { Command, Flags } from '@oclif/core';
-import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_DOCKER_VOLUME } from '../../../lib/constants';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_DOCKER_VOLUME, DOTNET_TOOL_EXPORT_PATH } from '../../../lib/constants';
 import { readProjectConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString, parseAppContainerName, parseProjectName } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
@@ -76,7 +76,7 @@ export default class Up extends Command {
     const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
     const envVariables = [
       `ASPNETCORE_ENVIRONMENT=${environment}`,
-      `PATH=\"$PATH:/root/.dotnet/tools\"`
+      DOTNET_TOOL_EXPORT_PATH
     ]
     .map(e => `-e ${e}`)
     .join(" ");
@@ -85,7 +85,7 @@ export default class Up extends Command {
 
     const installCommand = `docker exec ${parsedContainerName} sh -c "dotnet tool install --global dotnet-ef --version ${dotnetVersion}"`;
 
-    const migrateCommand = `docker exec -i ${envVariables} ${parsedContainerName} sh -c "cd ../ && \
+    const migrateCommand = `docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && \
     dotnet ef database update --context ${projectName}DbContext \
       --startup-project ${projectName}.Api/${projectName}.Api.csproj \
       --configuration ${configuration} \

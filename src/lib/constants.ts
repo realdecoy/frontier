@@ -30,6 +30,7 @@ export const CHAR_PERIOD = '.';
 export const RDVUE_DIRECTORY = '.rdvue';
 export const FRONTIER_RC = '.frontierrc';
 export const RDVUE_COPY = '.rdvue-copy';
+export const DOTNET_TOOL_EXPORT_PATH = 'PATH="$PATH:/root/.dotnet/tools"';
 
 export const CLI_NAMESPACES = [
   'vue',
