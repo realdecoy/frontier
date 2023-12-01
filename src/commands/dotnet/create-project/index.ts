@@ -19,6 +19,7 @@ import {
   DOTNET_DOCKER_VOLUME,
   DOCKER_RUN_COMMAND,
   DOCKER_APP_DIR,
+  FRONTIER_RC,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -169,13 +170,13 @@ export default class CreateProject extends Command {
     }
 
     // initialize .frontierrc config file
-    const frontierrcResult = await shell.exec(`cd ${projectName} && echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}",\n\t"dotnetVersion": "${dotnetImageversion}"\n}' > .frontierrc`, { silent: true });
+    const frontierrcResult = await shell.exec(`cd ${projectName} && echo '{\n\t"type": "dotnet",\n\t"projectName": "${projectName}",\n\t"dotnetVersion": "${dotnetImageversion}"\n}' > ${FRONTIER_RC}`, { silent: true });
 
     if (frontierrcResult.code !== 0) {
       throw new Error(
         JSON.stringify({
           code: 'frontierrc-initialization-error',
-          message: `An error occurred while initializing the .frontierrc config file.\n\n${frontierrcResult.stderr}`,
+          message: `An error occurred while initializing the ${FRONTIER_RC} config file.\n\n${frontierrcResult.stderr}`,
         }),
       );
     }
@@ -215,6 +216,6 @@ export default class CreateProject extends Command {
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
 
     // Output final instructions to user
-    this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} docker-compose up --build`);
+    this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} frontier migrate new Initial -a ${chalk.whiteBright(projectName)} \n${chalk.magenta('-')} docker-compose up --build`);
   }
 }
