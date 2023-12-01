@@ -216,6 +216,6 @@ export default class CreateProject extends Command {
     this.log(`${CLI_STATE.Success} ${chalk.whiteBright(projectName)} is ready!`);
 
     // Output final instructions to user
-    this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} frontier migrate new Initial -a ${chalk.whiteBright(projectName)} \n${chalk.magenta('-')} docker-compose up --build`);
+    this.log(`\nNext Steps:\n${chalk.magenta('-')} cd ${chalk.whiteBright(projectName)}\n${chalk.magenta('-')} docker-compose up --build\n${chalk.magenta('-')} ${chalk.yellow('frontier')} migrate new Initial -a ${chalk.whiteBright(projectName)}\n`);
   }
 }
