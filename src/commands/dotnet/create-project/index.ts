@@ -21,6 +21,9 @@ import {
   DOCKER_APP_DIR,
   FRONTIER_RC,
 } from '../../../lib/constants';
+import path from 'path';
+import os from 'os';
+
 
 const CUSTOM_ERROR_CODES = new Set([
   'existing-project',
@@ -128,6 +131,10 @@ export default class CreateProject extends Command {
       ux.action.start(`${CLI_STATE.Info} creating project ${chalk.whiteBright(projectName)}`);
     }
 
+    const currentDir = process.cwd()
+    const appHostMountDir = path.join(currentDir, projectName);
+    const certHostMountDir = path.join(os.homedir(), '.aspnet', 'https');
+    
     // retrieve project files from template source
     try {
       // Creating a volume that will be used to share the Dotnet template installation 
@@ -146,7 +153,7 @@ export default class CreateProject extends Command {
       } 
 
       // Creating the project using the tempplate 
-      const success2 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root -v ./:${appPath} -w ${appPath} ${dockerImage} dotnet new ${templateShortName} --name ${projectName} --sentry ${withSentry}`, { silent: true });
+      const success2 = await shell.exec(`${dockerRunCommand} -v ${volumeName}:/root -v ${currentDir}:${appPath} -w ${appPath} ${dockerImage} dotnet new ${templateShortName} --name ${projectName} --sentry ${withSentry}`, { silent: true });
       
       if (success2.code !== 0) {
         throw new Error(
@@ -197,8 +204,11 @@ export default class CreateProject extends Command {
       ux.action.stop();
     }
 
-    const certHostMountDir = process.platform === 'win32' ? '%USERPROFILE%\.aspnet\https' : '${HOME}/.aspnet/https'
-    const dockerDotnetCommand = `${dockerRunCommand} -v ./${projectName}:/app -v ${certHostMountDir}:/https -w ${appPath} ${dockerImage}`
+    this.log(`certHostMountDir: ${certHostMountDir}`);
+    this.log(`appHostMountDir: ${appHostMountDir}`);
+
+    // const certHostMountDir = process.platform === 'win32' ? '%USERPROFILE%\.aspnet\https' : '${HOME}/.aspnet/https'
+    const dockerDotnetCommand = `${dockerRunCommand} -v ${appHostMountDir}:/app -v ${certHostMountDir}:/https -w ${appPath} ${dockerImage}`
     
     // Generate and trust SSL certificate for HTTPS
     const devCerts1 = await shell.exec(`${dockerDotnetCommand} dotnet dev-certs https -ep "/https/aspnetapp.pfx" -p Password123`, { silent: true });
