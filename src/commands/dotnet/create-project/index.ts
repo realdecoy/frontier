@@ -204,10 +204,6 @@ export default class CreateProject extends Command {
       ux.action.stop();
     }
 
-    this.log(`certHostMountDir: ${certHostMountDir}`);
-    this.log(`appHostMountDir: ${appHostMountDir}`);
-
-    // const certHostMountDir = process.platform === 'win32' ? '%USERPROFILE%\.aspnet\https' : '${HOME}/.aspnet/https'
     const dockerDotnetCommand = `${dockerRunCommand} -v ${appHostMountDir}:/app -v ${certHostMountDir}:/https -w ${appPath} ${dockerImage}`
     
     // Generate and trust SSL certificate for HTTPS

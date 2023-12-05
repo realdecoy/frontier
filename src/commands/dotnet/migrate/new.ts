@@ -77,20 +77,10 @@ export default class New extends Command {
     const projectConfig: ProjectConfig = readProjectConfig();
     const projectName = projectConfig.projectName || "";
     const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
-
-    // const startupProject = path.join(`${projectName}.Api`, `${projectName}.Api.csproj`);
-    // const project = path.join(`${projectName}.Persistence`, `${projectName}.Persistence.csproj`);
-
-    const envVariables = [
-      `ASPNETCORE_ENVIRONMENT=${environment}`,
-      // DOTNET_TOOL_EXPORT_PATH
-    ]
-    .map(e => `-e ${e}`)
-    .join(" ");
+    const envVariables = [`ASPNETCORE_ENVIRONMENT=${environment}`]
+      .map((e) => `-e ${e}`)
+      .join(" ");
     
-    // this.log(`startupProject: ${startupProject}`)
-    // this.log(`project: ${project}`)
-
     // retrieve migration name
     const migrationName = await parseMigrationName(args);
     const parsedContainerName = await parseAppContainerName(appContainer, projectName);
