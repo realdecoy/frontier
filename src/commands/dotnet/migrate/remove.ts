@@ -7,6 +7,7 @@ import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_TOOL_EX
 import { readProjectConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString, parseAppContainerName } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
+// import path from 'path';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -79,31 +80,35 @@ export default class Remove extends Command {
     const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
     const envVariables = [
       `ASPNETCORE_ENVIRONMENT=${environment}`,
-      DOTNET_TOOL_EXPORT_PATH
+      // DOTNET_TOOL_EXPORT_PATH
     ]
     .map(e => `-e ${e}`)
     .join(" ");
 
+    // const startupProject = path.join(`${projectName}.Api`, `${projectName}.Api.csproj`);
+    // const project = path.join(`${projectName}.Persistence`, `${projectName}.Persistence.csproj`);
+    
     const dotnetEfFlags = `--context ${projectName}DbContext\
-    --startup-project ${projectName}.Api/${projectName}.Api.csproj\
-    --configuration ${configuration}\
-    --project ${projectName}.Persistence/${projectName}.Persistence.csproj`
+    --startup-project ${projectName}.Api/${projectName}.Api.csproj \
+    --configuration ${configuration} \
+    --project ${projectName}.Persistence/${projectName}.Persistence.csproj`;
     
     // Get the container name if it not added as flag
     const parsedContainerName = await parseAppContainerName(appContainer, projectName);
 
-    await shell.exec(`docker exec ${parsedContainerName} sh -c "dotnet tool install\
-     --global dotnet-ef \
-     --version ${dotnetVersion}"`, { silent: true });
+    await shell.exec(`docker exec ${parsedContainerName} /bin/sh -c "dotnet tool install \
+    --global dotnet-ef --version ${dotnetVersion}"`, { silent: true });
 
     if (prevMigration && prevMigration.trim()) {
       // Update the database up to the migration enttered and remove all migrations that follow from the Database      
-      await shell.exec(`docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && \
+      await shell.exec(`docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "\cd ../ && \
+      export ${DOTNET_TOOL_EXPORT_PATH} && \
       dotnet ef database update ${prevMigration} ${dotnetEfFlags}"`, { silent: false });
     }
 
     // Delete the last migration file to project
-    await shell.exec(`docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && \
+    await shell.exec(`docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "cd ../ && \
+    export ${DOTNET_TOOL_EXPORT_PATH} && \
     dotnet ef migrations remove ${dotnetEfFlags}"`, { silent: false });
   }
 }

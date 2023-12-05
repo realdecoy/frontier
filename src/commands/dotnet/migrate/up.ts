@@ -7,6 +7,7 @@ import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_DOCKER_
 import { readProjectConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString, parseAppContainerName, parseProjectName } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
+// import path from 'path';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -74,9 +75,13 @@ export default class Up extends Command {
     const projectConfig: ProjectConfig = readProjectConfig();
     const projectName = projectConfig.projectName || "";
     const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
+
+    // const startupProject = path.join(`${projectName}.Api`, `${projectName}.Api.csproj`);
+    // const project = path.join(`${projectName}.Persistence`, `${projectName}.Persistence.csproj`);
+
     const envVariables = [
       `ASPNETCORE_ENVIRONMENT=${environment}`,
-      DOTNET_TOOL_EXPORT_PATH
+      // DOTNET_TOOL_EXPORT_PATH
     ]
     .map(e => `-e ${e}`)
     .join(" ");
@@ -85,11 +90,11 @@ export default class Up extends Command {
 
     const installCommand = `docker exec ${parsedContainerName} sh -c "dotnet tool install --global dotnet-ef --version ${dotnetVersion}"`;
 
-    const migrateCommand = `docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && \
+    const migrateCommand = `docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && export ${DOTNET_TOOL_EXPORT_PATH} &&\
     dotnet ef database update --context ${projectName}DbContext \
-      --startup-project ${projectName}.Api/${projectName}.Api.csproj \
-      --configuration ${configuration} \
-      --project ${projectName}.Persistence/${projectName}.Persistence.csproj"`;
+    --startup-project ${projectName}.Api/${projectName}.Api.csproj \
+    --configuration ${configuration} \
+    --project ${projectName}.Persistence/${projectName}.Persistence.csproj"`;
 
     await shell.exec(`${installCommand}`, { silent: true });
 
