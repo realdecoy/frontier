@@ -24,7 +24,7 @@ export default class New extends Command {
   static flags = {
     help: Flags.help({ char: 'h' }),
     environment: Flags.string({ char: 'e', description: "The target environment for the migrations to be applied. Default is 'Local'." }),
-    configuration: Flags.string({ char: 'c', description: "This can either be Debug or Release. The default is Debug" }),
+    configuration: Flags.string({ char: 'c', description: "This can either be Debug or Release. The default is 'Debug'" }),
     appContainer: Flags.string({ char: 'a', description: "This is the name of the container that is running the application" }),
   }
 
