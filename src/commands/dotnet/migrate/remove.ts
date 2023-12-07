@@ -95,7 +95,7 @@ export default class Remove extends Command {
 
     if (prevMigration && prevMigration.trim()) {
       // Update the database up to the migration enttered and remove all migrations that follow from the Database      
-      await shell.exec(`docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "\cd ../ && \
+      await shell.exec(`docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "cd ../ && \
       export ${DOTNET_TOOL_EXPORT_PATH} && \
       dotnet ef database update ${prevMigration} ${dotnetEfFlags}"`, { silent: false });
     }
