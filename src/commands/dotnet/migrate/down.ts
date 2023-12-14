@@ -7,6 +7,7 @@ import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_TOOL_EXPORT_PATH, DOTNET_DOCKER_
 import { readProjectConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString, parseAppContainerName, parseMigrations } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
+import path from 'node:path';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -92,12 +93,14 @@ export default class Down extends Command {
     // pick previous migration
     migrationName = await parseMigrations(args, projectName as string);
     parsedContainerName = await parseAppContainerName(appContainer, projectName);
+    
+    const migrationFileName = path.parse(migrationName).name;
 
     await shell.exec(`docker exec ${parsedContainerName} /bin/sh -c "dotnet tool install \
     --global dotnet-ef --version ${dotnetVersion}"`, { silent: true });
 
     await shell.exec(`docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "cd ../ && \
     export ${DOTNET_TOOL_EXPORT_PATH} && \
-    dotnet ef database update ${migrationName} ${dotnetEfFlags}"`, { silent: false });
+    dotnet ef database update ${migrationFileName} ${dotnetEfFlags}"`, { silent: false });
   }
 }
