@@ -11,7 +11,7 @@ on:
         default: false
         type: boolean
       createTag:
-        description: 'Is a Beta release'
+        description: 'Should a new tag be created'
         required: true
         default: true
         type: boolean
