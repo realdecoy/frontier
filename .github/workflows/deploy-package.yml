@@ -36,7 +36,7 @@ jobs:
         run: npm i
       - name: Publish to NPM
         if: inputs.versionNumber != ''
-        run: npm version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && inputs.versionMessage || github.event.head_commit.message }}"
+        run: npm version --no-git-tag-version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && 'Updating version to %s' || github.event.head_commit.message }}"
       - name: Publish to NPM
         if: inputs.isBeta == false
         run: npm publish --non-interactive
