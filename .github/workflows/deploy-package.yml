@@ -25,16 +25,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Publish if the version has been updated
-        uses: pascalgn/npm-publish-action@1.3.9
-        with: # All of theses inputs are optional
-          tag_name: "v%s"
-          tag_message: "v%s"
-          create_tag: "${{ inputs.createTag }}"
-          commit_pattern: "^Release (\\S+)"
-          workspace: "."
-          publish_command: "npm"
-          publish_args: "${{ inputs.isBeta && '--tag beta' || '' }} --non-interactive"
-        env: # More info about the environment variables in the README
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
+      # Setup .npmrc file to publish to npm
+      - name: Publish to NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci # Clean install
+      - run: "npm publish --non-interactive ${{ $IS_BETA && '--tag beta' || '' }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          IS_BETA: ${{ inputs.isBeta }}
