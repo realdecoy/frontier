@@ -27,7 +27,7 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Installing Dependencies
-        run: npm ci # Clean install
+        run: npm i
       - name: Publish to NPM
         if: inputs.isBeta == false
         run: npm publish --non-interactive
