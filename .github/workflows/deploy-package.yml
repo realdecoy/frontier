@@ -7,6 +7,12 @@ on:
         required: true
         default: false
         type: boolean
+      versionNumber:
+        description: 'Override Package.json version'
+        required: false
+      versionMessage:
+        description: 'Override git message with custom message'
+        required: false
   push:
     branches:    
       - main
@@ -28,6 +34,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Installing Dependencies
         run: npm i
+      - name: Publish to NPM
+        if: inputs.versionNumber != ''
+        run: npm version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && inputs.versionMessage || github.event.head_commit.message }}"
       - name: Publish to NPM
         if: inputs.isBeta == false
         run: npm publish --non-interactive
