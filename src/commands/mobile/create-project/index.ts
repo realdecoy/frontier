@@ -5,11 +5,11 @@ const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
 import {
   toKebabCase,
-  toPascalCase,
   isJsonString,
   parseProjectName,
   checkProjectValidity,
   parseBundleIdentifier,
+  toCamelCase,
 } from '../../../lib/utilities';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
 import {
@@ -19,8 +19,8 @@ import {
   MOBILE_TEMPLATE_REPLACEMENT_FILES,
   MOBILE_TEMPLATE_REPO,
   MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES,
-  TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX,
-  TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX,
+  TEMPLATE_MOBILE_PROJECT_SCHEME_REGEX,
+  TEMPLATE_MOBILE_PROJECT_BUNDLE_IDENTIFIER_REGEX,
 } from '../../../lib/constants';
 
 const CUSTOM_ERROR_CODES = new Set([
@@ -84,13 +84,13 @@ export default class CreateProject extends Command {
 
     this.handleHelp(commandArgs, flags);
 
-    const versbose = flags.verbose === true;
+    const verbose = flags.verbose === true;
     const isTest = flags.isTest === true;
     const template: string = MOBILE_TEMPLATE_REPO;
     const tag: string = MOBILE_TEMPLATE_TAG;
     const replaceNameRegex = TEMPLATE_PROJECT_NAME_REGEX;
-    const replaceSchemeRegex = TEMPLATE_MOBILE_PROJECT_SCEHEM_REGEX;
-    const replaceBundleIdRegex = TEMPLATE_MOBILE_PROJECT_BUNLDE_IDNEITIFIER_REGEX;
+    const replaceSchemeRegex = TEMPLATE_MOBILE_PROJECT_SCHEME_REGEX;
+    const replaceBundleIdRegex = TEMPLATE_MOBILE_PROJECT_BUNDLE_IDENTIFIER_REGEX;
 
     let filesToReplace = MOBILE_TEMPLATE_REPLACEMENT_FILES;
     let cicdFilesToReplace = MOBILE_TEMPLATE_CI_CD_REPLACEMENT_FILES;
@@ -123,13 +123,13 @@ export default class CreateProject extends Command {
     this.log(`${CLI_STATE.Info} creating mobile project ${chalk.whiteBright(kebabProjectName)}`);
 
     // retrieve project files from template source
-    await shell.exec(`git clone ${template} --depth 1 --branch ${tag} ${kebabProjectName}`, { silent: !versbose });
+    await shell.exec(`git clone ${template} --depth 1 --branch ${tag} ${kebabProjectName}`, { silent: !verbose });
 
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceNameRegex, `${kebabProjectName}`);
 
     // Find a replace CI CD related files
-    await replaceInFiles(cicdFilesToReplace, replaceSchemeRegex, toPascalCase(projectName));
+    await replaceInFiles(cicdFilesToReplace, replaceSchemeRegex, toCamelCase(projectName));
     await replaceInFiles(cicdFilesToReplace, replaceBundleIdRegex, bundleIdentifier.trim().toLowerCase());
 
     if (success === false) {
@@ -146,10 +146,10 @@ export default class CreateProject extends Command {
     }
 
     // remove git folder reference to base project
-    await shell.exec(`npm install -g rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !versbose });
+    await shell.exec(`npm install -g rimraf && npx rimraf ${kebabProjectName}/.git`, { silent: !verbose });
 
     // initialize git in the created project
-    await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: !versbose });
+    await shell.exec(`cd ${kebabProjectName} && git init && git add . && git commit -m "Setup: first commit" && git branch -M main`, { silent: !verbose });
 
     if (isTest !== true) {
       ux.action.stop();
@@ -160,7 +160,7 @@ export default class CreateProject extends Command {
       ux.action.start(`${CLI_STATE.Info} Installing dependencies`);
     }
 
-    await shell.exec(`cd ${kebabProjectName} && npm install --legacy-peer-deps`, { silent: !versbose });
+    await shell.exec(`cd ${kebabProjectName} && npm install --legacy-peer-deps`, { silent: !verbose });
 
     if (isTest !== true) {
       ux.action.stop();
