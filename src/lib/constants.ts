@@ -13,6 +13,11 @@ export const VUE_TEMPLATE_TAG = 'v2.3.1'; // replace this with the appropriate r
 export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_TAG = '1.0.0-rc.5'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_SHORT_NAME = 'net7webapi'; // replace this with the appropriate release tag in the template repo
+export const DOTNET_DOCKER_IMAGE = 'mcr.microsoft.com/dotnet/sdk'; 
+export const DOTNET_DOCKER_IMAGE_TAG = '7.0'; 
+export const DOTNET_DOCKER_VOLUME = 'tmp_dotnet_vol'; 
+export const DOCKER_RUN_COMMAND = 'docker run --rm'; 
+export const DOCKER_APP_DIR = '/app';
 export const DESIGN_TEMPLATE_FOLDER = 'library';
 export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
 export const TEMPLATE_MOBILE_PROJECT_SCHEME_REGEX = /__PROJECT_SCHEME__/g;
@@ -25,6 +30,7 @@ export const CHAR_PERIOD = '.';
 export const RDVUE_DIRECTORY = '.rdvue';
 export const FRONTIER_RC = '.frontierrc';
 export const RDVUE_COPY = '.rdvue-copy';
+export const DOTNET_TOOL_EXPORT_PATH = 'PATH="$PATH:/root/.dotnet/tools"';
 
 export const CLI_NAMESPACES = [
   'vue',
