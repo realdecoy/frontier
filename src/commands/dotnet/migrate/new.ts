@@ -3,10 +3,11 @@ const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 import { Args, Command, Flags } from '@oclif/core';
-import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_TOOL_EXPORT_PATH } from '../../../lib/constants';
 import { readProjectConfig } from '../../../lib/files';
-import { checkProjectValidity, parseMigrationName, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, parseMigrationName, isJsonString, parseAppContainerName } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
+// import path from 'path';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,6 +23,9 @@ export default class New extends Command {
 
   static flags = {
     help: Flags.help({ char: 'h' }),
+    environment: Flags.string({ char: 'e', description: "The target environment for the migrations to be applied. Default is 'Local'." }),
+    configuration: Flags.string({ char: 'c', description: "This can either be Debug or Release. The default is 'Debug'" }),
+    appContainer: Flags.string({ char: 'a', description: "This is the name of the container that is running the application" }),
   }
 
   static args = {
@@ -64,18 +68,35 @@ export default class New extends Command {
       );
     }
 
+    const { flags, args } = await this.parse(New);
+
+    const environment = flags.environment || 'Local';
+    const configuration = flags.configuration || 'Debug';
+    const appContainer = flags.appContainer;
+
     const projectConfig: ProjectConfig = readProjectConfig();
-    const projectName = projectConfig.projectName;
-
-    const { args } = await this.parse(New);
-
-    // retrieve component name
+    const projectName = projectConfig.projectName || "";
+    const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
+    const envVariables = [`ASPNETCORE_ENVIRONMENT=${environment}`]
+      .map((e) => `-e ${e}`)
+      .join(" ");
+    
+    // retrieve migration name
     const migrationName = await parseMigrationName(args);
+    const parsedContainerName = await parseAppContainerName(appContainer, projectName);
+ 
+    const installCommand = `docker exec ${parsedContainerName} /bin/sh -c "dotnet tool install --global dotnet-ef --version ${dotnetVersion}"`;
+    
+    const addNewCommand = `docker exec ${envVariables} ${parsedContainerName} /bin/sh -c "cd ../ && export ${DOTNET_TOOL_EXPORT_PATH} &&\
+    dotnet ef migrations add ${migrationName} --context ${projectName}DbContext \
+    --startup-project ${projectName}.Api/${projectName}.Api.csproj \
+    --configuration ${configuration} \
+    --project ${projectName}.Persistence/${projectName}.Persistence.csproj"`;
 
-    await shell.exec('dotnet tool install --global dotnet-ef', { silent: true });
-    // add a new migration to project
-    await shell.exec(`dotnet ef migrations add ${migrationName} --context ${projectName}DbContext\
-    --startup-project src/${projectName}.Api/${projectName}.Api.csproj\
-    --project src/${projectName}.Persistence/${projectName}.Persistence.csproj`, { silent: false });
+    // Install dotnet tools
+    await shell.exec(installCommand, { silent: true });
+
+    // Add a new migration to project
+    await shell.exec(addNewCommand, { silent: false });
   }
 }

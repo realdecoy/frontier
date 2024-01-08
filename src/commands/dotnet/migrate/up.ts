@@ -3,10 +3,11 @@ const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 import { Command, Flags } from '@oclif/core';
-import { DOTNET_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
+import { DOTNET_CLI_COMMANDS, CLI_STATE, DOTNET_DOCKER_IMAGE_TAG, DOTNET_DOCKER_VOLUME, DOTNET_TOOL_EXPORT_PATH } from '../../../lib/constants';
 import { readProjectConfig } from '../../../lib/files';
-import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
+import { checkProjectValidity, isJsonString, parseAppContainerName, parseProjectName } from '../../../lib/utilities';
 import { ProjectConfig } from '../../../modules/project';
+// import path from 'path';
 
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,6 +23,9 @@ export default class Up extends Command {
 
   static flags = {
     help: Flags.help({ char: 'h' }),
+    environment: Flags.string({ char: 'e', description: "The target environment for the migrations to be applied. Default is Local." }),
+    configuration: Flags.string({ char: 'c', description: "This can either be Debug or Release. The default is Debug" }),
+    appContainer: Flags.string({ char: 'a', description: "This is the name of the container that is running the Dotnet API" }),
   }
 
   static args = {}
@@ -52,33 +56,43 @@ export default class Up extends Command {
 
   async run(): Promise<void> {
     const { isValid: isValidProject } = checkProjectValidity();
-    const environment = 'Local';
-    const configuration = 'Debug';
+    const { flags, args } = await this.parse(Up);
+    
+    const environment = flags.environment || 'Local';
+    const configuration = flags.environment || 'Debug';
+    const appContainer = flags.appContainer;
+
     // block command unless being run within an frontier project
     if (isValidProject === false) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${DOTNET_CLI_COMMANDS.MigrationNew} command must be run in an existing ${chalk.yellow('frontier')} project`,
+          message: `${DOTNET_CLI_COMMANDS.MigrationUp} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     }
 
     const projectConfig: ProjectConfig = readProjectConfig();
-    const projectName = projectConfig.projectName;
+    const projectName = projectConfig.projectName || "";
+    const dotnetVersion = projectConfig.dotnetVersion || DOTNET_DOCKER_IMAGE_TAG;
+    const envVariables = [`ASPNETCORE_ENVIRONMENT=${environment}`]
+      .map((e) => `-e ${e}`)
+      .join(" ");
+  
+    const parsedContainerName = await parseAppContainerName(appContainer, projectName);
 
-    // pick environment
-    // environment = await parseEnvironment(args, 'MyApiProject');
+    const installCommand = `docker exec ${parsedContainerName} sh -c "dotnet tool install --global dotnet-ef --version ${dotnetVersion}"`;
 
-    // pick configuration
-    // configuration = await parseConfiguration(args, 'MyApiProject');
+    const migrateCommand = `docker exec ${envVariables} ${parsedContainerName} sh -c "cd ../ && export ${DOTNET_TOOL_EXPORT_PATH} &&\
+    dotnet ef database update --context ${projectName}DbContext \
+    --startup-project ${projectName}.Api/${projectName}.Api.csproj \
+    --configuration ${configuration} \
+    --project ${projectName}.Persistence/${projectName}.Persistence.csproj"`;
 
-    await shell.exec('dotnet tool install --global dotnet-ef', { silent: true });
+    await shell.exec(`${installCommand}`, { silent: true });
+
     // add a new migration to project
-    await shell.exec(`export ASPNETCORE_ENVIRONMENT=${environment} &&
-    dotnet ef database update --context ${projectName}DbContext\
-    --startup-project src/${projectName}.Api/${projectName}.Api.csproj\
-    --configuration ${configuration}\
-    --project src/${projectName}.Persistence/${projectName}.Persistence.csproj`, { silent: false });
+    await shell.exec(`${migrateCommand}`, { silent: false });
+
   }
 }

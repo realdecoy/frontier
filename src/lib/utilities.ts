@@ -321,6 +321,43 @@ async function parseProjectName(args: Lookup, defaultName = 'my-vue-project'): P
   return argName;
 }
 
+
+/**
+ * Description: parse project or prompt user to provide name for project
+ * @param {string} args - a string value
+ * @param {string} defaultName - a string value
+ * @returns {Lookup} -
+ */
+async function parseAppContainerName(containerName: string | undefined, defaultName: string): Promise<string> {
+  // const validateProjectName = validateEnteredName('project');
+  // if no project name is provided in command then prompt user
+  // eslint-disable-next-line no-negated-condition
+  if (!containerName) {
+    const responses: any = await prompts([{
+      name: 'name',
+      initial: defaultName,
+      message: 'Enter a name of the app container: ',
+      type: 'text',
+      // validate: validateProjectName,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} app container parsing canceled`);
+
+        return false;
+      },
+    });
+    if (responses.name === undefined) {
+      process.exit(1);
+    }
+
+    containerName = responses.name as string;
+  }
+
+  return containerName;
+}
+
+
 /**
  * Description: parse layout or prompt user to provide name for layout
  * @param {string} args  - a string value
@@ -395,7 +432,7 @@ async function parseVersionName(args: Lookup): Promise<string> {
  * @param {string} args - a string value
  * @returns {Lookup} -
  */
-async function parseMigrationName(args: Lookup): Promise<string> {
+async function parseMigrationName(args: Lookup, initial='InitialMigration'): Promise<string> {
   let argName = args.name;
   const validateMigrationName = validateEnteredName('migration');
   // if no Migration name is provided in command then prompt user
@@ -403,7 +440,7 @@ async function parseMigrationName(args: Lookup): Promise<string> {
   if (!argName) {
     const responses: any = await prompts([{
       name: 'name',
-      initial: 'InitialMigration',
+      initial: initial,
       message: 'Enter a migration name: ',
       type: 'text',
       validate: validateMigrationName,
@@ -965,6 +1002,7 @@ export {
   parseServiceName,
   parseStoreModuleName,
   parseBundleIdentifier,
+  parseAppContainerName,
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
