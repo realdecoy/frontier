@@ -35,7 +35,7 @@ jobs:
       - name: Installing Dependencies
         run: npm i
       - name: Building project
-        run: npm run build
+        run: npm run rebuild
       - name: Manually Changing version using input
         if: inputs.versionNumber != ''
         run: npm version --no-git-tag-version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && 'Updating version to %s' || github.event.head_commit.message }}"
