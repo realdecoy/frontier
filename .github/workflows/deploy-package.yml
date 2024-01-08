@@ -36,15 +36,10 @@ jobs:
         run: npm i
       - name: Building project
         run: npm run build
-      - name: Publish to NPM
+      - name: Manually Changing version using input
         if: inputs.versionNumber != ''
         run: npm version --no-git-tag-version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && 'Updating version to %s' || github.event.head_commit.message }}"
       - name: Publish to NPM
-        if: inputs.isBeta == false
-        run: npm publish --non-interactive
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - name: Publish to Beta version to NPM
         if: inputs.isBeta
         run: npm publish $PUBLISH_ARGS
         env:
