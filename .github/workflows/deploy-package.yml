@@ -37,7 +37,6 @@ jobs:
         if: inputs.versionNumber != ''
         run: npm version --no-git-tag-version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && 'Updating version to %s' || github.event.head_commit.message }}"
       - name: Publish to NPM
-        if: inputs.isBeta
         run: npm publish $PUBLISH_ARGS
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
