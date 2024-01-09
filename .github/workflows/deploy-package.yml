@@ -14,9 +14,6 @@ on:
         description: 'Override git message with custom message'
         required: false
   push:
-    branches:    
-      - main
-      - 'releases/**'
     tags:        
       - "v*"
 jobs:
