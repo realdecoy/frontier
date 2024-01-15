@@ -8,13 +8,11 @@ const chalk = require('chalk');
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseMobileModuleConfig } from '../../../lib/files';
+import { copyFiles, parseMobileModuleConfig } from '../../../lib/files';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMain } from '../../../lib/plugins';
+import { MOBILE_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
 
 const TEMPLATE_FOLDERS = ['localization'];
-const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
   'missing-template-file',
@@ -107,23 +105,9 @@ export default class Localization extends Command {
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
-    const devDependencies = config.manifest.packages.devDependencies.toString()
-      .split(',')
-      .join(' ');
 
     if (skipInstallStep === false) {
       try {
-        // install dev dependencies
-        if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing localization dev dependencies`);
-        }
-
-        await exec(`${preInstallCommand} npm install --save-dev ${devDependencies}`, { silent: true });
-
-        if (isTest !== true) {
-          ux.action.stop();
-        }
-
         // install dependencies
         if (isTest !== true) {
           ux.action.start(`${CLI_STATE.Info} installing localization dependencies`);
@@ -147,7 +131,6 @@ export default class Localization extends Command {
         ux.action.start(`${CLI_STATE.Info} adding localization dependencies`);
       }
 
-      await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
@@ -160,25 +143,6 @@ export default class Localization extends Command {
 
     // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), MOBILE_DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), MOBILE_DYNAMIC_OBJECTS.Options, true);
-    if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
-      const { imports: mainImports, modules: mainModules } = config.manifest.main;
-      injectImportsIntoMain(projectRoot, mainImports);
-      try {
-        injectModulesIntoMain(projectRoot, mainModules);
-      } catch {
-        this.error(
-          JSON.stringify({
-            code: 'import-injection-error',
-            message: `${this.id?.split(':')[1]} failed to inject import statements`,
-          }),
-        );
-      }
-    } else {
-      // FP-414: backwards compatibility
-      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), MOBILE_DYNAMIC_OBJECTS.Modules, true);
-    }
 
     if (skipInstallStep === false) {
       this.log(`${CLI_STATE.Success} plugin added: ${this.id?.split(':')[1]}`);

@@ -12,10 +12,7 @@ export default class Plugin extends Command {
   }
 
   static args = {
-    // { name: 'buefy', description: 'lightweigth UI components for Vue.js', hidden: false },
     localization: Args.string({ name: 'localization', description: 'library for localizing content', hidden: false }),
-    // { name: 'vuetify', description: 'material design framework for Vue.js', hidden: false },
-    // { name: 'storybook', description: '[coming soon] UI component explorer for frontend devs', hidden: true },
   }
 
   showHelp(): void {
