@@ -50,7 +50,6 @@ export default class Component extends Command {
       throw new Error(customErrorMessage);
     }
     
-    console.error(error);
     return Promise.resolve();
   }
 
@@ -88,7 +87,6 @@ export default class Component extends Command {
     
     // parse config files required for scaffolding this module
     const configs = parseMobileModuleConfig(folderList, projectRoot);
-    console.log(configs);
 
     // retrieve component name
     const componentName = await parseComponentName(args);
