@@ -96,7 +96,7 @@ export default class Layout extends Command {
       replaceTargetFileNames(files, layoutNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
 
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, config.manifest.installWithinFolder ? layoutNameKebab : '');
+      installDirectory = path.join(projectRoot, config.manifest.installDirectory, layoutNameKebab);
       // copy and update files for component being added
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateFeatureFiles(installDirectory, files, layoutNameKebab, layoutNamePascal);

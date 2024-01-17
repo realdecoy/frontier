@@ -94,7 +94,7 @@ export default class Service extends Command {
       // replace file names in config with kebab case equivalent
       replaceTargetFileNames(files, serviceNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+      installDirectory = path.join(projectRoot, config.manifest.installDirectory);
 
       // copy and update files for service being added
       await copyFiles(sourceDirectory, installDirectory, files);

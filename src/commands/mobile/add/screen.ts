@@ -95,7 +95,7 @@ export default class Screen extends Command {
       // replace file names in config with kebab case equivalent
       replaceTargetFileNames(files, screenNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, screenNameKebab);
+      installDirectory = path.join(projectRoot, config.manifest.installDirectory, screenNameKebab);
       // copy and update files for screen being added
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateFeatureFiles(installDirectory, files, screenNameKebab, screenNamePascal);
