@@ -10,6 +10,7 @@ const replace = require('replace-in-file');
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
 const util = require('util');
 import path from 'node:path';
+import * as fsExtra from 'fs-extra';
 import { log } from './stdout';
 import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
@@ -33,6 +34,17 @@ function readFile(filePath: string): string {
   } catch {
     return EMPTY_STRING;
   }
+}
+
+/**
+ * Description: Enumerate all directories in the given directory
+ * @param {string} directoryPath - a path to a directory
+ * @returns {string[]} - an array of directories
+ */
+function enumerateDirectories(directoryPath: string): string[] {
+  return fs.readdirSync(directoryPath).filter(file => {
+    return fs.statSync(path.join(directoryPath, file)).isDirectory();
+  });
 }
 
 /**
@@ -397,7 +409,7 @@ function copyFiles(
     const dirName = getDirName(dest);
     mkdirp.sync(dirName);
 
-    fs.copyFileSync(source, dest);
+    fsExtra.copy(source, dest);
   });
 }
 
@@ -818,6 +830,8 @@ function deleteFile(filePath: string): boolean {
 }
 
 export {
+  readFilesFromDirectory,
+  enumerateDirectories,
   updateDynamicImportsAndExports,
   parseDynamicObjects,
   verifyTemplateFolderExists,
