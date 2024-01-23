@@ -65,7 +65,7 @@ export default class Component extends Command {
 
   async handleUi(args: (string | undefined)[], flags: {
     ui: boolean;
-  }): Promise<void> {
+  }): Promise<boolean> {
     if (flags.ui) {
       const components = enumerateDirectories(UI_COMPONENTS_ROOT);
       const component = await promptUiComponentChoice(args, components);
@@ -91,8 +91,10 @@ export default class Component extends Command {
         shell.exec('npm install --legacy-peer-deps'),
       ]);
 
-      this.exit(0);
+      return true;
     }
+
+    return false;
   }
 
   async run(): Promise<void> {
@@ -112,7 +114,9 @@ export default class Component extends Command {
     const commandArgs = Object.values(args);
 
     this.handleHelp(commandArgs, flags);
-    await this.handleUi(commandArgs, flags);
+    if (await this.handleUi(commandArgs, flags)) {
+      return;
+    }
 
     let sourceDirectory: string;
     let installDirectory: string;
