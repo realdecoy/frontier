@@ -6,7 +6,7 @@ import { copyFiles, parseMobileModuleConfig, readAndUpdateFeatureFiles, replaceT
 import { checkProjectValidity, parseComponentName, toKebabCase, toPascalCase, isJsonString } from '../../../lib/utilities';
 import { MOBILE_CLI_COMMANDS, CLI_STATE, MOBILE_DOCUMENTATION_LINKS } from '../../../lib/constants';
 
-const TEMPLATE_FOLDERS = ['components'];
+const TEMPLATE_FOLDERS = ['component'];
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
   'failed-match-and-replace',
@@ -49,7 +49,7 @@ export default class Component extends Command {
     } else {
       throw new Error(customErrorMessage);
     }
-
+    
     return Promise.resolve();
   }
 
@@ -81,10 +81,10 @@ export default class Component extends Command {
     const isFunctionBased = flags.type.toLowerCase() === 'function';
     const componentType = isFunctionBased ? 'function' : 'class';
     const folderList =  TEMPLATE_FOLDERS.map(folder => path.join(folder, componentType));
-
+    
     let sourceDirectory: string;
     let installDirectory: string;
-
+    
     // parse config files required for scaffolding this module
     const configs = parseMobileModuleConfig(folderList, projectRoot);
 
@@ -100,7 +100,7 @@ export default class Component extends Command {
       // replace file names in config with kebab case equivalent
       replaceTargetFileNames(files, componentNameKebab);
       sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-      installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory, componentNameKebab);
+      installDirectory = path.join(projectRoot, config.manifest.installDirectory, componentNameKebab);
       // copy and update files for component being added
       await copyFiles(sourceDirectory, installDirectory, files);
       await readAndUpdateFeatureFiles(installDirectory, files, componentNameKebab, componentNamePascal);

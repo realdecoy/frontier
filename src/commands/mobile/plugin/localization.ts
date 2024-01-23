@@ -139,7 +139,7 @@ export default class Localization extends Command {
     }
 
     sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-    installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+    installDirectory = path.join(projectRoot, config.manifest.installDirectory);
 
     // copy files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
