@@ -86,8 +86,10 @@ export default class Component extends Command {
       }
 
       packageJson.dependencies = compareAndUpdateDependencies(packagesToInstall, installedPackages);
-      await writeFile(path.join(process.cwd(), 'package.json'), JSON.stringify(packageJson, null, 2));
-      await shell.exec('npm install --legacy-peer-deps');
+      await Promise.all([
+        writeFile(path.join(process.cwd(), 'package.json'), JSON.stringify(packageJson, null, 2)),
+        shell.exec('npm install --legacy-peer-deps'),
+      ]);
 
       this.exit(0);
     }
