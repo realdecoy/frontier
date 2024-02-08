@@ -10,3 +10,4 @@ oclif.manifest.json
 # TEST PROJECT PREFIXES
 /rdv-*
 /mob-*
+/docs/.nuxt
