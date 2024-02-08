@@ -11,3 +11,5 @@ oclif.manifest.json
 /rdv-*
 /mob-*
 /docs/.nuxt
+docs/.nuxt
+docs/.nuxt/*
