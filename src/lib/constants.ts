@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 
 /* eslint-disable no-unused-vars */
+export const UI_COMPONENTS_ROOT = '.rdvue/template/components/ui';
+export const COMPONENTS_LIB_ROOT = '.rdvue/template/components/lib';
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
 export const DOTNET_TEMPLATE_ROOT = '.frontier/template';
@@ -23,6 +25,7 @@ export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
 export const TEMPLATE_MOBILE_PROJECT_SCHEME_REGEX = /__PROJECT_SCHEME__/g;
 export const TEMPLATE_MOBILE_PROJECT_BUNDLE_IDENTIFIER_REGEX = /__BUNDLE_IDENTIFIER__/g;
 export const TEMPLATE_CONFIG_FILENAME = 'manifest.json';
+export const UI_COMPONENT_CONFIG_FILENAME = 'package.json';
 export const CHANGE_LOG_FOLDER = 'changelogs';
 export const CHANGE_LOG_FILENAME = 'CHANGELOG.md';
 export const EMPTY_STRING = '';

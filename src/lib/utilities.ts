@@ -7,6 +7,25 @@ import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
 import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
+import { compareVersions } from 'compare-versions';
+
+/**
+ * Compares dependencies found in source and destination objects and updates the destination object with the latest versions
+ * @param source Key-value pairs of dependencies to be compared
+ * @param destination Key-value pairs of dependencies to be compared, updated and returned
+ * @returns The destination object with updated dependencies
+ */
+function compareAndUpdateDependencies(source: Record<string, string>, destination: Record<string, string>): Record<string, string> {
+  for (const dependency of Object.keys(source)) {
+    const versionToInstall = source[dependency];
+    const installedVersion = destination[dependency];
+    if (installedVersion === undefined || compareVersions(installedVersion, versionToInstall) === -1) {
+      destination[dependency] = versionToInstall;
+    }
+  }
+
+  return destination;
+}
 
 /**
  * Description: determine if string is valid JSON string
@@ -934,7 +953,6 @@ async function parseSentryDSN(args: Lookup): Promise<string> {
   return argDsn;
 }
 
-
 /**
  * Description: parse project or prompt user to provide name for project
  * @param {Lookup} args - a string value
@@ -967,6 +985,43 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
     }
 
     argName = VUE_PLUGIN_PRESET_LIST[responses.preset];
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse project or prompt user to provide name for project
+ * @param {Lookup} args - a string value
+ * @returns {string} -
+ */
+async function promptUiComponentChoice(args: Lookup, components: string[]): Promise<string> {
+  let argName = args.component;
+  // if no project name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'component',
+      initial: 0,
+      message: 'Pick a component: ',
+      type: 'select',
+      choices: components.map((component: string) => {
+        return {
+          title: component,
+        };
+      }),
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+
+        return false;
+      },
+    });
+    if (responses.component === undefined) {
+      process.exit(1);
+    }
+
+    argName = components[responses.component];
   }
 
   return argName;
@@ -1051,6 +1106,7 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
 }
 
 export {
+  compareAndUpdateDependencies,
   hasCamel,
   hasKebab,
   hasProject,
@@ -1078,6 +1134,7 @@ export {
   parseStoreModuleName,
   parseBundleIdentifier,
   parseAppContainerName,
+  promptUiComponentChoice,
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
