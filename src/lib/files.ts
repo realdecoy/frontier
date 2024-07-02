@@ -409,7 +409,14 @@ function copyFiles(
     const dirName = getDirName(dest);
     mkdirp.sync(dirName);
 
-    fsExtra.copy(source, dest);
+    // console.log(`Sorce: ${source}`);
+    // console.log(`Desti: ${dest}`);
+    // fsExtra.copy(source, dest);
+    fs.copyFile(source, dest, err => {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 }
 

@@ -29,7 +29,8 @@
     "prompts": "^2.4.2",
     "replace-in-file": "^6.3.5",
     "shelljs": "^0.8.5",
-    "vuetify": "^3.1.12"
+    "vuetify": "^3.1.12",
+    "vue": "^3.3.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
