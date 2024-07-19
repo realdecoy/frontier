@@ -151,7 +151,7 @@ npm run build
 
 
 #### Rebuild
-Rebuilding the frontier packages automatically reconstructs the packages forgetting about any previous compliation of them.
+Rebuilding the frontier packages automatically reconstructs the packages forgetting about any previous compilation of them.
 To rebuild the frontier packages, run the command:
 
 ```bash
@@ -166,7 +166,7 @@ npm run rebuild
 
 ## Creating a frontier namespace
 #### [Adam](https://github.com/realdecoy/frontier/tree/development/commands/adam)
-To support the creation of new frointer-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/development/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
+To support the creation of new frontier-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/development/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
 
 &nbsp; &nbsp; &nbsp;
 
@@ -190,10 +190,10 @@ npm run test
 
 ## Contribution Instructions 
 ### Testing Requirements
-All code contributions made to this repository be properly tested. For testing the testing framework Jest is used. All test files must be writen with the extension ".spec.ts", to maintain the consistency of this project.
+All code contributions made to this repository must be properly tested. Jest is the testing framework that is used. All test files must be written with the extension ".spec.ts", to maintain the consistency of this project.
 
 ### GitHub Commits 
-All commits maded to this repository be rewritten according to the [Conventional Commit Messages Standard](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). This is to ensure that consistency is maintained throughout the repository. 
+All commits made to this repository should be written according to the [Conventional Commit Messages Standard](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). This is to ensure that consistency is maintained throughout the repository. 
 
 ### Pull Request
-When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number/s that the pull request satisfies.
+When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number(s) that the pull request satisfies.
