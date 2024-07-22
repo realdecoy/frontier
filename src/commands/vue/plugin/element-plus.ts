@@ -8,12 +8,12 @@ const exec = util.promisify(shell.exec);
 import path from 'node:path';
 import { Command, Flags, ux } from '@oclif/core';
 import { Files } from '../../../modules';
-import { copyFiles, parseDynamicObjects, parseVueModuleConfig } from '../../../lib/files';
+import { injectImportsIntoMain } from '../../../lib/plugins';
+import { VUE_CLI_COMMANDS, CLI_STATE } from '../../../lib/constants';
 import { checkProjectValidity, isJsonString } from '../../../lib/utilities';
-import { VUE_CLI_COMMANDS, CLI_STATE, VUE_DYNAMIC_OBJECTS } from '../../../lib/constants';
-import { injectImportsIntoMain, injectModulesIntoMainVue2 as injectModulesIntoMain } from '../../../lib/plugins';
+import { copyFiles, parseVueModuleConfig, updateDynamicImportsAndExports } from '../../../lib/files';
 
-const TEMPLATE_FOLDERS = ['vuetify'];
+const TEMPLATE_FOLDERS = ['element-plus'];
 const TEMPLATE_MIN_VERSION_SUPPORTED = 2;
 const CUSTOM_ERROR_CODES = new Set([
   'project-invalid',
@@ -22,19 +22,17 @@ const CUSTOM_ERROR_CODES = new Set([
   'dependency-install-error',
 ]);
 
-export default class Vuetify extends Command {
-  // static aliases = ['vue plugin vuetify'];
-
-  static description = 'lightweigth UI components for Vuejs';
+export default class ElementPlus extends Command {
+  static description = 'UI component library for Vue 3'
 
   static flags = {
     help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
     forceProject: Flags.string({ hidden: true }),
     skipInstall: Flags.boolean({ hidden: true }),
-  };
+  }
 
-  static args = {};
+  static args = {}
 
   // override Command class error handler
   catch(error: Error): Promise<any> {
@@ -50,6 +48,7 @@ export default class Vuetify extends Command {
       this.log(`${CLI_STATE.Error} Flag not found. See more with --help`);
     } else if (!hasCustomErrorCode) {
       // throw cli errors to be handled globally
+      this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
       throw errorMessage;
     } else if (CUSTOM_ERROR_CODES.has(customErrorCode)) { // handle errors thrown with known error codes
       this.log(`${CLI_STATE.Error} ${customErrorMessage}`);
@@ -69,7 +68,7 @@ export default class Vuetify extends Command {
   }
 
   async run(): Promise<void> {
-    const { flags, args } = await this.parse(Vuetify);
+    const { flags, args } = await this.parse(ElementPlus);
     const commandArgs = Object.values(args);
 
     this.handleHelp(commandArgs, flags);
@@ -80,15 +79,16 @@ export default class Vuetify extends Command {
     const hasProjectName = projectName !== undefined;
     const preInstallCommand = hasProjectName ? `cd ${projectName} &&` : '';
 
-    const validityResponse = checkProjectValidity();
-    const { isValid: isValidProject } = validityResponse;
-    let { projectRoot } = validityResponse;
+    const projectValidity = checkProjectValidity();
+    const { isValid: isValidProject } = projectValidity;
+    let { projectRoot } = projectValidity;
+
     // block command unless being run within an frontier project
     if (isValidProject === false && !hasProjectName) {
       throw new Error(
         JSON.stringify({
           code: 'project-invalid',
-          message: `${VUE_CLI_COMMANDS.PluginVuetify} command must be run in an existing ${chalk.yellow('frontier')} project`,
+          message: `${VUE_CLI_COMMANDS.PluginBuefy} command must be run in an existing ${chalk.yellow('frontier')} project`,
         }),
       );
     } else if (hasProjectName) {
@@ -97,8 +97,6 @@ export default class Vuetify extends Command {
     }
 
     const folderList = TEMPLATE_FOLDERS;
-    let sourceDirectory = '';
-    let installDirectory = '';
 
     // parse config files required for scaffolding this module
     const configs = parseVueModuleConfig(folderList, projectRoot);
@@ -107,26 +105,12 @@ export default class Vuetify extends Command {
     const dependencies = config.manifest.packages.dependencies.toString()
       .split(',')
       .join(' ');
-    const devDependencies = config.manifest.packages.devDependencies.toString()
-      .split(',')
-      .join(' ');
 
     if (skipInstallStep === false) {
       try {
-        // install dev dependencies
-        if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing vuetify dev dependencies`);
-        }
-
-        await exec(`${preInstallCommand} npm install --save-dev --legacy-peer-deps ${devDependencies}`, { silent: true });
-
-        if (isTest !== true) {
-          ux.action.stop();
-        }
-
         // install dependencies
         if (isTest !== true) {
-          ux.action.start(`${CLI_STATE.Info} installing vuetify dependencies`);
+          ux.action.start(`${CLI_STATE.Info} installing element plus dependencies`);
         }
 
         await exec(`${preInstallCommand} npm install --save --legacy-peer-deps ${dependencies}`, { silent: true });
@@ -135,19 +119,18 @@ export default class Vuetify extends Command {
           ux.action.stop();
         }
       } catch {
-        throw new Error(
+        this.error(
           JSON.stringify({
             code: 'dependency-install-error',
-            message: `${this.id?.split(':')[1]} vuetify dependencies failed to install`,
+            message: `${this.id?.split(':')[1]} dependencies failed to install`,
           }),
         );
       }
     } else {
       if (isTest !== true) {
-        ux.action.start(`${CLI_STATE.Info} adding vuetify dependencies`);
+        ux.action.start(`${CLI_STATE.Info} adding element plus dependencies`);
       }
 
-      await exec(`cd ${projectName} && npx add-dependencies ${devDependencies} --save-dev`, { silent: true });
       await exec(`cd ${projectName} && npx add-dependencies ${dependencies}`, { silent: true });
 
       if (isTest !== true) {
@@ -155,34 +138,28 @@ export default class Vuetify extends Command {
       }
     }
 
-    sourceDirectory = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
-    installDirectory = path.join(projectRoot, 'src', config.manifest.installDirectory);
+    const sourceDirectory: string = path.join(config.moduleTemplatePath, config.manifest.sourceDirectory);
+    const installDirectory: string = path.join(projectRoot, 'src', config.manifest.installDirectory);
 
-    // copy files for plugin being added
+    // copy and update files for plugin being added
     await copyFiles(sourceDirectory, installDirectory, files);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.routes, null, 1), VUE_DYNAMIC_OBJECTS.Routes);
-    await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.vueOptions, null, 1), VUE_DYNAMIC_OBJECTS.Options, true);
 
-    if (config.manifest.version >= TEMPLATE_MIN_VERSION_SUPPORTED) {
-      const { imports: mainImports, modules: mainModules } = config.manifest.main;
-      injectImportsIntoMain(projectRoot, mainImports);
-      try {
-        injectModulesIntoMain(projectRoot, mainModules);
-      } catch {
-        this.error(
-          JSON.stringify({
-            code: 'import-injection-error',
-            message: `${this.id?.split(':')[1]} failed to inject import statements`,
-          }),
-        );
-      }
-    } else {
-      // FP-414: backwards compatibility
-      await parseDynamicObjects(projectRoot, JSON.stringify(config.manifest.modules, null, 1), VUE_DYNAMIC_OBJECTS.Modules, true);
+    const { manifest: { modules } } = config;
+
+    const moduleLocations = Object.keys(modules);
+    for (const location of moduleLocations) {
+      const localizationArr = location.split('/');
+      const filename = localizationArr[localizationArr.length - 1];
+      updateDynamicImportsAndExports(
+        projectRoot,
+        `modules/${localizationArr.filter((l, i) => i !== localizationArr.length - 1).join('/')}`,
+        modules[location],
+        filename
+      );
     }
 
     if (skipInstallStep === false) {
-      this.log(`${CLI_STATE.Success} plugin added: ${this.id?.split(':')[1]}`);
+      this.log(`${CLI_STATE.Success} plugin added: element-plus.`);
     }
   }
 }

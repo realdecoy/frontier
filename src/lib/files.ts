@@ -10,11 +10,12 @@ const replace = require('replace-in-file');
 // eslint-disable-next-line unicorn/import-style, unicorn/prefer-module
 const util = require('util');
 import path from 'node:path';
+import * as fsExtra from 'fs-extra';
 import { log } from './stdout';
 import fileSystem from 'node:fs';
 import bluebirdPromise from 'bluebird';
 import { hasCamel, hasEndpointLower, hasFeature, hasKebab, hasProject } from './utilities';
-import { Files, InjectOptions } from '../modules';
+import { Files, InjectOptions, ModuleConfig } from '../modules';
 import { VUE_DYNAMIC_OBJECTS, EMPTY_STRING, FRONTIER_RC, RDVUE_DIRECTORY, TEMPLATE_CONFIG_FILENAME, VUE_TEMPLATE_ROOT, MOBILE_TEMPLATE_ROOT, DOTNET_TEMPLATE_ROOT } from './constants';
 
 const UTF8 = 'utf-8';
@@ -33,6 +34,17 @@ function readFile(filePath: string): string {
   } catch {
     return EMPTY_STRING;
   }
+}
+
+/**
+ * Description: Enumerate all directories in the given directory
+ * @param {string} directoryPath - a path to a directory
+ * @returns {string[]} - an array of directories
+ */
+function enumerateDirectories(directoryPath: string): string[] {
+  return fs.readdirSync(directoryPath).filter(file => {
+    return fs.statSync(path.join(directoryPath, file)).isDirectory();
+  });
 }
 
 /**
@@ -170,7 +182,7 @@ function parseMobileModuleConfig(folderList: string[], projectRoot: string): { n
  * @param {string} projectRoot -
  * @returns {[any]} -
  */
-function parseVueModuleConfig(folderList: string[], projectRoot: string): { name: string, moduleTemplatePath: string, manifest: any }[] {
+function parseVueModuleConfig(folderList: string[], projectRoot: string): Array<ModuleConfig> {
   return folderList.map(folder => {
     const moduleTemplatePath = path.join(projectRoot, VUE_TEMPLATE_ROOT, folder);
     const configFilePath = path.join(moduleTemplatePath, TEMPLATE_CONFIG_FILENAME);
@@ -397,7 +409,14 @@ function copyFiles(
     const dirName = getDirName(dest);
     mkdirp.sync(dirName);
 
-    fs.copyFileSync(source, dest);
+    // console.log(`Sorce: ${source}`);
+    // console.log(`Desti: ${dest}`);
+    // fsExtra.copy(source, dest);
+    fs.copyFile(source, dest, err => {
+      if (err) {
+        console.log(err);
+      }
+    });
   });
 }
 
@@ -818,6 +837,8 @@ function deleteFile(filePath: string): boolean {
 }
 
 export {
+  readFilesFromDirectory,
+  enumerateDirectories,
   updateDynamicImportsAndExports,
   parseDynamicObjects,
   verifyTemplateFolderExists,

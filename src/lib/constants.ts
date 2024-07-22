@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 
 /* eslint-disable no-unused-vars */
+export const UI_COMPONENTS_ROOT = '.rdvue/template/components/ui';
+export const COMPONENTS_LIB_ROOT = '.rdvue/template/components/lib';
 export const VUE_TEMPLATE_ROOT = '.rdvue/template';
 export const MOBILE_TEMPLATE_ROOT = '.rdvue/template';
 export const DOTNET_TEMPLATE_ROOT = '.frontier/template';
@@ -9,7 +11,7 @@ export const MOBILE_TEMPLATE_REPO =
 export const VUE_TEMPLATE_REPO = 'https://github.com/realdecoy/rdvue-template';
 export const DOTNET_TEMPLATE_REPO = 'Net.WebApi.Template::';
 export const DESIGN_TEMPLATE_REPO = 'https://github.com/realdecoy/design-system-components';
-export const VUE_TEMPLATE_TAG = 'v2.3.1'; // replace this with the appropriate release tag in the template repo
+export const VUE_TEMPLATE_TAG = 'vue3'; // replace this with the appropriate release tag in the template repo
 export const MOBILE_TEMPLATE_TAG = 'beta-refactor'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_TAG = '1.0.0-rc.5'; // replace this with the appropriate release tag in the template repo
 export const DOTNET_TEMPLATE_SHORT_NAME = 'net7webapi'; // replace this with the appropriate release tag in the template repo
@@ -23,6 +25,7 @@ export const TEMPLATE_PROJECT_NAME_REGEX = /__PROJECT_NAME__/g;
 export const TEMPLATE_MOBILE_PROJECT_SCHEME_REGEX = /__PROJECT_SCHEME__/g;
 export const TEMPLATE_MOBILE_PROJECT_BUNDLE_IDENTIFIER_REGEX = /__BUNDLE_IDENTIFIER__/g;
 export const TEMPLATE_CONFIG_FILENAME = 'manifest.json';
+export const UI_COMPONENT_CONFIG_FILENAME = 'package.json';
 export const CHANGE_LOG_FOLDER = 'changelogs';
 export const CHANGE_LOG_FILENAME = 'CHANGELOG.md';
 export const EMPTY_STRING = '';
@@ -50,8 +53,10 @@ enum VUE_CLI_COMMANDS_ENUM {
   AddLayout = 'vue add layout',
   AddModule = 'vue add',
   PluginBuefy = 'vue plugin buefy',
+  PluginElementPlus = 'vue plugin element-plus',
   PluginLocalization = 'vue plugin localization',
   PluginVuetify = 'vue plugin vuetify',
+  PluginSentry = 'vue plugin sentry',
   PluginLibrary = 'vue plugin',
   PoorHelpCommand = 'add-help'
 }
@@ -129,8 +134,8 @@ enum MOBILE_DOCUMENTATION_LINKS_ENUM {
 export const MOBILE_DOCUMENTATION_LINKS = MOBILE_DOCUMENTATION_LINKS_ENUM;
 
 export const VUE_PLUGIN_PRESET_LIST = [
-  'Buefy & Localization (recommended)',
-  'Vuetify & Localization',
+  'Localization (recommended)',
+  'Sentry',
   '[Skip presets]',
 ];
 

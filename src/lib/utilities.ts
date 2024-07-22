@@ -7,6 +7,25 @@ import prompts from 'prompts';
 import { getProjectRoot, writeFile, readMigrationNames, readApiFeatureNames } from './files';
 import { ChangeLog, ChangelogConfigTypes, Lookup } from '../modules';
 import { CLI_STATE, VUE_TEMPLATE_TAG, VUE_PLUGIN_PRESET_LIST } from './constants';
+import { compareVersions } from 'compare-versions';
+
+/**
+ * Compares dependencies found in source and destination objects and updates the destination object with the latest versions
+ * @param source Key-value pairs of dependencies to be compared
+ * @param destination Key-value pairs of dependencies to be compared, updated and returned
+ * @returns The destination object with updated dependencies
+ */
+function compareAndUpdateDependencies(source: Record<string, string>, destination: Record<string, string>): Record<string, string> {
+  for (const dependency of Object.keys(source)) {
+    const versionToInstall = source[dependency];
+    const installedVersion = destination[dependency];
+    if (installedVersion === undefined || compareVersions(installedVersion, versionToInstall) === -1) {
+      destination[dependency] = versionToInstall;
+    }
+  }
+
+  return destination;
+}
 
 /**
  * Description: determine if string is valid JSON string
@@ -168,6 +187,21 @@ function throwNameError(errorMessage: string): void {
   );
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Description: Throws an error with the provided message
+ * @param {string} errorMessage - error message to be thrown
+ * @throws {Error}
+ */
+function throwSentryDsnError(errorMessage: string): void {
+  throw new Error(
+    JSON.stringify({
+      code: 'dsn-invalid',
+      message: stripFrontierPrefix(errorMessage),
+    }),
+  );
+}
+
 /**
  * Description: determine if string is valid component name
  * @param {string} featureName - the name of the feature whose name is being validated
@@ -190,6 +224,28 @@ function validateEnteredName(featureName: string, exampleName = '') {
 
     return isValidName ? true : resultMessage;
   };
+}
+
+/**
+ * Description: determine if string is valid component name
+ * @param {string} dsn - the name of the feature whose name is being validated
+ * @param {string} exampleDsn - an example of a valid DSN in Sentry
+ * @returns {any} -
+ */
+function validateDsn(dsn: string) {
+
+  const isString = typeof dsn === 'string';
+  const isNull = dsn === null || dsn.length === 0;
+  const charactersMatch = dsn.match(/^https:\/\/([a-z0-9]+)@([a-z0-9.-]+)\.[\w]+\/{1,2}\d+$/) !== null;
+  const isValidDsn = isString && charactersMatch;
+  let resultMessage = '';
+  if (isNull) {
+    resultMessage = `${CLI_STATE.Error} A ${dsn} is required`;
+  } else if (!charactersMatch) {
+    resultMessage = `${CLI_STATE.Error} Refer to the Sentry Documentation to retrieve your DSN (e.g. https://publickey@sentry.example.com/1)`;
+  }
+
+  return isValidDsn ? true : resultMessage;
 }
 
 /**
@@ -862,6 +918,43 @@ async function parseBundleIdentifier(args: Lookup): Promise<string> {
 
 /**
  * Description: parse project or prompt user to provide name for project
+ * @param {string} args - a string value
+ * @returns {Lookup} -
+ */
+async function parseSentryDSN(args: Lookup): Promise<string> {
+  let argDsn = args.dsn;
+  // eslint-disable-next-line no-negated-condition
+  if (!argDsn) {
+    const responses: any = await prompts([{
+      name: 'dsn',
+      message: 'Enter your Sentry DSN: ',
+      type: 'text',
+      validate: validateDsn,
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+        return false;
+      },
+    });
+
+    if (responses.dsn === undefined) {
+      process.exit(1);
+    }
+
+    argDsn = responses.dsn;
+  } else {
+    const result = validateDsn(argDsn);
+    if (result && result !== true) {
+      throwSentryDsnError(result);
+    }
+  }
+
+  return argDsn;
+}
+
+/**
+ * Description: parse project or prompt user to provide name for project
  * @param {Lookup} args - a string value
  * @returns {string} -
  */
@@ -892,6 +985,43 @@ async function parseProjectPresets(args: Lookup): Promise<string> {
     }
 
     argName = VUE_PLUGIN_PRESET_LIST[responses.preset];
+  }
+
+  return argName;
+}
+
+/**
+ * Description: parse project or prompt user to provide name for project
+ * @param {Lookup} args - a string value
+ * @returns {string} -
+ */
+async function promptUiComponentChoice(args: Lookup, components: string[]): Promise<string> {
+  let argName = args.component;
+  // if no project name is provided in command then prompt user
+  if (!argName) {
+    const responses: any = await prompts([{
+      name: 'component',
+      initial: 0,
+      message: 'Pick a component: ',
+      type: 'select',
+      choices: components.map((component: string) => {
+        return {
+          title: component,
+        };
+      }),
+    }], {
+      onCancel() {
+        // eslint-disable-next-line no-console
+        console.log(`${chalk.red('frontier')} create-project canceled`);
+
+        return false;
+      },
+    });
+    if (responses.component === undefined) {
+      process.exit(1);
+    }
+
+    argName = components[responses.component];
   }
 
   return argName;
@@ -976,6 +1106,7 @@ ${changeLogData.reccomendations || 'No notes on the upgrade'}
 }
 
 export {
+  compareAndUpdateDependencies,
   hasCamel,
   hasKebab,
   hasProject,
@@ -1003,7 +1134,9 @@ export {
   parseStoreModuleName,
   parseBundleIdentifier,
   parseAppContainerName,
+  promptUiComponentChoice,
   isJsonString,
   checkProjectValidity,
   createChangelogReadme,
+  parseSentryDSN,
 };

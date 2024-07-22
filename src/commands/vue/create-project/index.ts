@@ -4,11 +4,10 @@ const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
 const shell = require('shelljs');
 import { Args, Command, Flags, ux } from '@oclif/core';
-import Buefy from '../plugin/buefy';
-import Vuetify from '../plugin/vuetify';
 import Localization from '../plugin/localization';
+import Sentry from '../plugin/sentry';
 import { replaceInFiles, checkIfFolderExists } from '../../../lib/files';
-import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase } from '../../../lib/utilities';
+import { checkProjectValidity, parseProjectName, parseProjectPresets, isJsonString, toKebabCase, parseSentryDSN } from '../../../lib/utilities';
 import {
   VUE_TEMPLATE_REPO,
   DESIGN_TEMPLATE_REPO,
@@ -35,10 +34,9 @@ export default class CreateProject extends Command {
     help: Flags.boolean({ hidden: false }),
     isTest: Flags.boolean({ hidden: true }),
     skipPresets: Flags.boolean({ hidden: true }),
-    withBuefy: Flags.boolean({ hidden: true }),
     withLocalization: Flags.boolean({ hidden: true }),
-    withVuetify: Flags.boolean({ hidden: true }),
     withDesignSystem: Flags.boolean({ hidden: true }),
+    withSentry: Flags.boolean({ hidden: true }),
   }
 
   static args = {
@@ -91,15 +89,16 @@ export default class CreateProject extends Command {
     const replaceRegex = TEMPLATE_PROJECT_NAME_REGEX;
     const isTest = flags.isTest === true;
     const skipPresetsStep = flags.skipPresets === true;
-    const withBuefy = flags.withBuefy === true;
-    const withVuetify = flags.withVuetify === true;
     const withLocalization = flags.withLocalization === true;
     const withDesignSystem = flags.withDesignSystem === true;
+    const withSentry = flags.withSentry === true;
 
     let filesToReplace = VUE_TEMPLATE_REPLACEMENT_FILES;
     let projectName: string;
+    let sentryDsn = '';
     let presetName = '';
     const { isValid: isValidProject } = checkProjectValidity();
+
     // block command if being run within an frontier project
     if (isValidProject) {
       throw new Error(
@@ -112,13 +111,21 @@ export default class CreateProject extends Command {
 
     // retrieve project name
     projectName = await parseProjectName(args);
-    // retrieve project preset
-    // on skip preset flag set presetName to skip presets
+    // retrieve project preset on skip preset flag set presetName to skip presets
     presetName = skipPresetsStep ? VUE_PLUGIN_PRESET_LIST[2] : await parseProjectPresets(args);
     // convert project name to kebab case
     projectName = toKebabCase(projectName);
     // verify that project folder doesnt already exist
     checkIfFolderExists(projectName);
+
+    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
+    const shouldInstallSentry = presetIndex === 1 || withSentry === true;
+    const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
+    const shouldInstallDesignSystem = withDesignSystem === true;
+
+    if (shouldInstallSentry === true) { 
+      sentryDsn = await parseSentryDSN(args);
+    }
 
     // update files to be replaced with project name reference
     filesToReplace = filesToReplace.map(p => `${projectName}/${p}`);
@@ -135,12 +142,6 @@ export default class CreateProject extends Command {
     // find and replace project name references
     const success = await replaceInFiles(filesToReplace, replaceRegex, `${projectName}`);
 
-    const presetIndex = VUE_PLUGIN_PRESET_LIST.indexOf(presetName);
-    const shouldInstallBuefy = presetIndex === 0 || withBuefy === true;
-    const shouldInstallVuetify = presetIndex === 1 || withVuetify === true;
-    const shouldInstallLocalization = presetIndex === 0 || presetIndex === 1 || withLocalization === true;
-    const shouldInstallDesignSystem = withDesignSystem === true;
-
     if (success === false) {
       throw new Error(
         JSON.stringify({
@@ -148,18 +149,21 @@ export default class CreateProject extends Command {
           message: 'updating your project failed',
         }),
       );
-    } else {
-      if (shouldInstallBuefy === true) { // buefy
-        await Buefy.run(['--forceProject', projectName, '--skipInstall']);
+    }
+    
+    // localization
+    if (shouldInstallLocalization === true) {
+      await Localization.run(['--forceProject', projectName, '--skipInstall']);
+    }
+
+    if (shouldInstallSentry === true) {    
+      if (isTest !== true) { 
+        // We need to stop the loading in order for the prompt to
+        // work. The prompt wont show up while the loader is running
+        ux.action.stop(); 
       }
 
-      if (shouldInstallVuetify) { // Vuetify
-        await Vuetify.run(['--forceProject', projectName, '--skipInstall']);
-      }
-
-      if (shouldInstallLocalization === true) { // localization
-        await Localization.run(['--forceProject', projectName, '--skipInstall']);
-      }
+      await Sentry.run(['--project', projectName, '--dsn' , sentryDsn, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {
