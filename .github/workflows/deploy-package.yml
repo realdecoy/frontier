@@ -1,0 +1,43 @@
+name: Frontier Package to NPM
+on:
+  workflow_dispatch:
+    inputs:
+      isBeta:
+        description: 'Is a Beta release'
+        required: true
+        default: false
+        type: boolean
+      versionNumber:
+        description: 'Override Package.json version'
+        required: false
+      versionMessage:
+        description: 'Override git message with custom message'
+        required: false
+  push:
+    tags:        
+      - "v*"
+jobs:
+  npm-publish:
+    name: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # Setup .npmrc file to publish to npm
+      - name: Configuring Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Installing Dependencies
+        run: npm i
+      - name: Building project
+        run: npm run rebuild
+      - name: Manually Changing version using input
+        if: inputs.versionNumber != ''
+        run: npm version --no-git-tag-version ${{ inputs.versionNumber }} -m "${{ inputs.versionMessage && 'Updating version to %s' || github.event.head_commit.message }}"
+      - name: Publish to NPM
+        run: npm publish $PUBLISH_ARGS
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          PUBLISH_ARGS: --non-interactive ${{ inputs.isBeta && '--tag beta' || '' }}

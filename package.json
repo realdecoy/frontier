@@ -1,70 +1,91 @@
 {
-  "name": "frontier",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Realdecoy Labs Shared Libraries",
-  "main": "index.js",
-  "author": "Realdecoy",
-  "license": "MIT",
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "typecheck": "lerna run typecheck",
-    "test": "yarn jest --passWithNoTests -c jest.config/all.js ",
-    "test:packages": "jest -c jest.config/packages.js",
-    "test:packages:ci": "yarn test:packages --ci --coverage",
-    "nuke": "run-s nuke:artifacts",
-    "nuke:artifacts": "lerna run clean",
-    "postinstall": "patch-package",
-    "build": "yarn && run-s build:packages build:finish",
-    "build:finish": "notify -t \"Frontier\" -m \"All packages rebuilt\"",
-    "build:packages": "lerna run rebuild --stream",
-    "precommit": "test && lint-staged",
-    "prepare": "husky install"
+  "name": "@realdecoy/frontier",
+  "version": "0.0.2-beta.13",
+  "description": "Frontier: Software Development Toolkit",
+  "author": "RealDecoy",
+  "bin": "./bin/run",
+  "homepage": "https://github.com/realdecoy/frontier",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "repository": "realdecoy/frontier",
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "dependencies": {
+    "@mdi/font": "^7.2.96",
+    "@oclif/core": "2.8.0",
+    "@oclif/plugin-help": "^5",
+    "@types/fs-extra": "^11.0.4",
+    "bluebird": "^3.7.2",
+    "chalk": "4.1.2",
+    "compare-versions": "^6.1.0",
+    "fs-extra": "^11.2.0",
+    "mkdirp": "^2.1.6",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prompts": "^2.4.2",
+    "replace-in-file": "^6.3.5",
+    "shelljs": "^0.8.5",
+    "vuetify": "^3.1.12",
+    "vue": "^3.3.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
-    "@commitlint/cli": "^16.3.0",
-    "@commitlint/config-conventional": "^16.2.4",
-    "@types/jest": "^27.4.1",
-    "babel-loader": "^8.2.4",
-    "core-js": "^3.22.0",
-    "eslint": "^8.13.0",
-    "jest": "^27.5.1",
-    "jest-fetch-mock": "^3.0.3",
-    "lerna": "^4.0.0",
-    "lint-staged": "^12.3.8",
-    "node-notifier-cli": "^2.0.0",
-    "prettier": "^2.6.2",
-    "ts-jest": "^27.1.4",
-    "webpack": "^4.0",
-    "webpack-node-externals": "^3.0.0"
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@oclif/test": "^2.3.13",
+    "@types/bluebird": "^3.5.38",
+    "@types/chai": "^4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.18.20",
+    "@types/prompts": "^2.4.3",
+    "@types/sinon": "^10.0.13",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.3",
+    "mocha": "^9",
+    "nyc": "^15.1.0",
+    "oclif": "^3",
+    "shx": "^0.3.3",
+    "sinon": "^15.0.3",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
   },
-  "dependencies": {
-    "@babel/core": "^7.17.9",
-    "husky": "^7.0.4",
-    "node-notifier": "^10.0.1",
-    "nodemon": "^2.0.15",
-    "npm-run-all": "^4.1.5",
-    "open": "^8.4.0",
-    "patch-package": "^6.4.7",
-    "rimraf": "^3.0.2",
-    "tslib": "^2.3.1",
-    "typescript": "^4.6.3"
+  "oclif": {
+    "bin": "frontier",
+    "dirname": "frontier",
+    "commands": "./dist/commands",
+    "helpClass": "./dist/help",
+    "flexibleTaxonomy": true,
+    "hooks": {
+      "init": "./dist/hooks/init.js",
+      "command_incomplete": "./dist/hooks/command-incomplete.js",
+      "command_not_found": "./dist/hooks/command-not-found.js"
+    },
+    "plugins": [],
+    "topicSeparator": " "
   },
-  "workspaces": {
-    "packages": [
-      "packages/**"
-    ],
-    "nohoist": [
-      "packages/frontier-plugins/plugin-qa/template/mobile-project-template",
-      "packages/frontier-plugins/plugin-qa/template/project-template"
-    ]
+  "scripts": {
+    "audit": "npm audit --production",
+    "build": "tsc -b",
+    "rebuild": "run-s clean build && oclif manifest",
+    "clean": "shx rm -rf dist types lib tsconfig.tsbuildinfo oclif.manifest.json",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "prepack": "yarn build && oclif manifest",
+    "test": "nyc mocha --forbid-only \"src/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
   },
-  "lint-staged": {
-    "src/**/*.ts": [
-      "prettier --write --no-semi --single-quote "
-    ]
-  }
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "bugs": "https://github.com/realdecoy/frontier/issues",
+  "keywords": [
+    "oclif"
+  ],
+  "types": "dist/index.d.ts"
 }

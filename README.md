@@ -1,11 +1,9 @@
-
-<div align="left">
+<p align="left">
   <br/>
   <a href="https://www.realdecoy.com/jamaica/" title="REALDECOY">
     <img width=400px src="https://www.realdecoy.com/wp-content/uploads/2019/02/Realdecoy-logo-transparent.png" alt="rd logo">
   </a>
-  <br/>
-</div>
+</p>
 
 # Frontier  
 
@@ -18,103 +16,123 @@ Contributions are welcome! You can help us by reporting or fixing bugs and givin
 
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![Version](https://img.shields.io/npm/v/@realdecoy/frontier.svg)](https://npmjs.org/package/@realdecoy/frontier)
+[![Downloads/week](https://img.shields.io/npm/dw/@realdecoy/frontier.svg)](https://npmjs.org/package/@realdecoy/frontier)
+[![License](https://img.shields.io/npm/l/@realdecoy/frontier.svg)](https://github.com/realdecoy/@realdecoy/frontier/blob/main/package.json)
 
-
-&nbsp; &nbsp; &nbsp;
-
+&nbsp;
+&nbsp;
+&nbsp;
 <!-- custom-toc -->
 ## Table of Contents
 
-* [About](#about)
 * [Usage](#usage)
-* [Bootstrapping](#bootstrapinghttpslernajsorgdocscore-conceptsbootstrapping)
-* [Addons](#addons)
-* [Libraries](#libraries)
 * [Options](#options)
-* [Development Instructions](#development-instructions)
-* [Contributions](#contribution-instructions)
+* [Documentation](http://frontier.realdecoy.com/)
+* [Dev Instructions](#development)
+* [Testing](#testing)
 <!-- custom-tocstop -->
 
-&nbsp; &nbsp; &nbsp;
-
-
-## About 
-
-Frontier offers a set of standard libraries and typing kits that can be use across engineering projects to allow for more consistency software development. With frontier, a set of plugins are available for use by developers which can be used to easily generate base project files contributing to a faster development process. 
+&nbsp;
+&nbsp;
+&nbsp;
 
 ## Usage
- 
 <!-- custom-usage -->
-When using the frontier cli tool it is prefered that when runing commands `yarn` is used over `npm`. When `npm` is used some  frontier's mono repositoy features may not work as they should therefore `yarn` is needed. Using `yarn` also allows for parallel installation of the frontier tool to take place. 
+
+```bash
+npm install --global @realdecoy/frontier
+frontier <namespace> <command>
+```
+or
+```bash
+npx @realdecoy/frontier <namespace> <command>
+```
+> namespaces are optional if running frontier commands in an existing frontier project
+
+The help menu can be accessed with the commands:
+
+```bash
+frontier --help
+frontier <namespace> --help
+```
+The current version of frontier can be retrieved with the command:
+
+```bash
+frontier --version
+```
 <!-- custom-usagestop -->
 
-&nbsp; &nbsp; &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
-#### [Bootstraping](https://lerna.js.org/docs/core-concepts/bootstrapping)
-Bootstraping allows for the linking of different frontier packages so they can import and utilize each other without having to be published.
-To bootstrap all frontier packages and their dependencies run the command:
+## Options
+```txt
+Usage:
+  frontier <namespace>
+
+Namespaces:
+    dotnet           -  Dotnet API Scaffolding
+    mobile           -  React Native Scaffolding
+    vue              -  Vue.js Scaffolding
+  
+Options:
+    --help           -  Show help information
+    --version        -  Show cli version
 ```
-npm run bootstrap 
+
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+## Namespaces
+
+| Name | Namespace | Status | More Information
+| --- | --- | --- | --- |
+| .Net       | `dotnet` | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/dotnet) |
+| Infrastructure | `iac`| Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
+| Mobile     | `mobile` | Ready    | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/mobile) |
+| QA         | `qa` | Technical Proposal    | [ Read More ](https://github.com/realdecoy/frontier) |
+| Vue        | `vue` | Ready                 | [ Read More ](https://github.com/realdecoy/frontier/tree/development/src/commands/vue) |
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+## Development
+
+### Prerequisites & Recommendations
+
+| Name | Description | More Information
+| ---- | ----------- | --------------- |
+| node | runtime     | version 19.8.1  |
+| yarn | dependency management | version 1.22.19  |
+| vscode | code editor | version 1.77.1  |
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+### Install Dependencies
+```bash
+yarn install
 ```
 or
-```
-yarn run bootstrap 
-```
-
-&nbsp; &nbsp; &nbsp;
-
-#### [Type Checking](https://lerna.js.org/docs/core-concepts/bootstrapping)
-Type checking, see the validation of the type of very variable in the code base.
-To type check all frontier packages and their dependencies run the command:
-```
-npm run typecheck
-```
-or
-```
-yarn run typecheck
+```bash
+npm install
 ```
 
-&nbsp; &nbsp; &nbsp;
-
-## Components
-
-### Addons
-
-| Name | Package | Status | More Information
-| --- | --- | --- | --- |
-| Backend           | `@rdfrontier/plugin-backend`      | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Spring Boot       | `@rdfrontier/plugin-java`         | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Javascript        | `@rdfrontier/plugin-js`           | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| .Net              | `@rdfrontier/plugin-dotnet`       | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Frontend          | `@rdfrontier/plugin-frontend`     | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| Vue               | `@rdfrontier/plugin-vue`          | Ready                | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-vue) |
-| React             | `@rdfrontier/plugin-react`        | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| QA                | `@rdfrontier/plugin-qa`           | Ready                  | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-plugins/plugin-qa) |
-| Mobile            | `@rdfrontier/plugin-mobile`       | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-| React Native      | `@rdfrontier/plugin-react-native` | Technical Proposal     | [ Read More ](https://github.com/realdecoy/frontier) |
-| Infrastructure    | `@rdfrontier/plugin-iac`          | Pre-Technical Proposal | [ Read More ](https://github.com/realdecoy/frontier) |
-
-&nbsp;
-&nbsp;
-
-### Libraries
-
-| Name | Package | Status | More Information
-| --- | --- | --- | --- |
-| Frontier Standard Library  | `@rdfrontier/stdlib`      | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/stdlib) |
-| Frontier TypeKit           | `@rdfrontier/typekit`       | Ready | [ Read More ](https://github.com/realdecoy/frontier/tree/main/packages/frontier-libraries/typekit) |
-
-&nbsp; &nbsp; &nbsp;
-
-
-
-&nbsp;
-&nbsp; 
-&nbsp;
-
-
-## Development Instructions 
-
+### Execute CLI commands
+```bash
+./bin/dev <namespace> <command>
+```
+e.g.
+```bash
+$ ./bin/dev vue create-project
+? Enter a project name:  » my-rdvue-project
+```
 ### Building
 
 #### Build
@@ -133,7 +151,7 @@ npm run build
 
 
 #### Rebuild
-Rebuilding the frontier packages automatically reconstructs the packages forgetting about any previous compliation of them.
+Rebuilding the frontier packages automatically reconstructs the packages forgetting about any previous compilation of them.
 To rebuild the frontier packages, run the command:
 
 ```bash
@@ -146,94 +164,36 @@ npm run rebuild
 
 &nbsp; &nbsp; &nbsp;
 
-
-### Testing
-Testing any piece of software created is critical for developers. Frontier uses the jest configuration for testing the packages in its monorepository. 
-[`Testing Monorepo with Jest`](https://orlandobayo.com/blog/monorepo-testing-using-jest/)
-
-&nbsp; 
-
-##### Run Unit Test Suites From Root
-To test all frontier packages from the root level run the command:
-
-```
-npm run test
-```
-or
-```
-yarn run test
-```
-
-&nbsp; &nbsp; 
-
-##### Run Unit Test Suites From Package Level
-To test all frontier packages from the package level run the command:
-
-```
-npm run test:packages
-```
-or
-```
-yarn run test:packages
-```
-
-&nbsp; &nbsp; 
-
-##### Run Unit Test Suites From Package Level with Coverage Report
-Test converage is a measure of the amount of testing preformed by a test suite. 
-To get a test coverage report of Frontier packages run the command:
-
-```
-npm run test:packages:ci
-```
-or
-```
-yarn run test:packages:ci
-```
-
-&nbsp; &nbsp; &nbsp;  
-
-### Nuking
-Nuking strips the source code of all distribuatble code previously built. 
-
-#### Nuke
-To nuke the packages of frontier, run the command:
-
-```bash
-yarn run nuke
-```
-or 
-```bash
-npm run nuke
-```
-
-&nbsp; &nbsp; 
-
-
-#### Nuke:artifacts
-To nuke artifacts of the frontier packages, run the command:
-
-```bash
-yarn run nuke:artifacts
-```
-or 
-```bash
-npm run nuke:artifacts
-```
+## Creating a frontier namespace
+#### [Adam](https://github.com/realdecoy/frontier/tree/development/commands/adam)
+To support the creation of new frontier-based namespaces a template, [Adam](https://github.com/realdecoy/frontier/tree/development/src/commands/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based namespace. It also provides sample commands and tests to get you started. 
 
 &nbsp; &nbsp; &nbsp;
 
-## Creating a frontier based project
-#### [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam)
-To support the creation of new frointer-based projects a template, [Adam](https://github.com/realdecoy/frontier/tree/main/templates/adam), has been provided to allow for easier development. This template provides the basic structure needed to develop a simple frontier-based project. 
+## Testing
 
+### Run Unit Test Suite
+```bash
+yarn run test
+```
+or
+```bash
+npm run test
+```
+
+### Creating Tests
+- create a ```<module-name>.test.ts``` file in the respective folder
+- using ```chai``` assertion syntax, describe your unit test cases
+- visit the oclif [testing documentation](https://oclif.io/docs/testing) to see more details
+
+&nbsp; &nbsp; &nbsp;
 
 ## Contribution Instructions 
 ### Testing Requirements
-All code contributions made to this repository be properly tested. For testing the testing framework Jest is used. All test files must be writen with the extension ".spec.ts", to maintain the consistency of this project.
+All code contributions made to this repository must be properly tested. Jest is the testing framework that is used. All test files must be written with the extension ".spec.ts", to maintain the consistency of this project.
 
 ### GitHub Commits 
-All commits maded to this repository be rewritten according to the [Conventional Commit Messages Standard](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). This is to ensure that consistency is maintained throughout the repository. 
+All commits made to this repository should be written according to the [Conventional Commit Messages Standard](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). This is to ensure that consistency is maintained throughout the repository. 
 
 ### Pull Request
-When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number/s that the pull request satisfies. 
+When creating a pull request ensure that the request is well documented and the changes made to the repository have been properly noted. Ensure to link the issue number(s) that the pull request satisfies.
