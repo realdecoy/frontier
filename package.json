@@ -1,11 +1,11 @@
 {
   "name": "@realdecoy/frontier",
-  "version": "0.0.2-beta.13",
+  "version": "1.0.0",
   "description": "Frontier: Software Development Toolkit",
   "author": "RealDecoy",
   "bin": "./bin/run",
   "homepage": "https://github.com/realdecoy/frontier",
-  "license": "UNLICENSED",
+  "license": "AGPL-3.0",
   "main": "dist/index.js",
   "repository": "realdecoy/frontier",
   "files": [
