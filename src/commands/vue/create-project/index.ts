@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 // eslint-disable-next-line unicorn/prefer-module
 const chalk = require('chalk');
 // eslint-disable-next-line unicorn/prefer-module
@@ -123,7 +122,7 @@ export default class CreateProject extends Command {
     const shouldInstallLocalization = presetIndex === 0 || withLocalization === true;
     const shouldInstallDesignSystem = withDesignSystem === true;
 
-    if (shouldInstallSentry === true) { 
+    if (shouldInstallSentry === true) {
       sentryDsn = await parseSentryDSN(args);
     }
 
@@ -150,20 +149,20 @@ export default class CreateProject extends Command {
         }),
       );
     }
-    
+
     // localization
     if (shouldInstallLocalization === true) {
       await Localization.run(['--forceProject', projectName, '--skipInstall']);
     }
 
-    if (shouldInstallSentry === true) {    
-      if (isTest !== true) { 
+    if (shouldInstallSentry === true) {
+      if (isTest !== true) {
         // We need to stop the loading in order for the prompt to
         // work. The prompt wont show up while the loader is running
-        ux.action.stop(); 
+        ux.action.stop();
       }
 
-      await Sentry.run(['--project', projectName, '--dsn' , sentryDsn, '--skipInstall']);
+      await Sentry.run(['--project', projectName, '--dsn', sentryDsn, '--skipInstall']);
     }
 
     if (shouldInstallDesignSystem === true) {
