@@ -1,1 +1,0 @@
-import{a as s}from"./Container.f1017aa2.js";import{q as t,x as r,E as a,P as o}from"./runtime-core.esm-bundler.6894272a.js";import"./index.d2b0cb5e.js";const c={},n={class:"text-4xl"};function l(e,i){return t(),r("section",null,[a("h1",n,[o(e.$slots,"default")]),o(e.$slots,"description")])}const p=s(c,[["render",l]]);export{p as default};

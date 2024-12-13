@@ -2,7 +2,7 @@ export default defineAppConfig({
   github: {
     owner: 'realdecoy',
     repo: 'frontier',
-    branch: 'main'
+    branch: 'main',
   },
   docus: {
     title: 'Frontier',
@@ -10,7 +10,7 @@ export default defineAppConfig({
     image: 'https://content.nuxtjs.org/preview.png',
     url: 'https://realdecoy.com',
     socials: {
-      github: 'realdecoy/frontier'
+      github: 'realdecoy/frontier',
     },
     github: {
       dir: '',
@@ -19,17 +19,17 @@ export default defineAppConfig({
       releases: true,
       owner: 'realdecoy',
       repo: 'frontier',
-      branch: 'main'
+      branch: 'main',
     },
     cover: {
       src: '/cover.jpg',
-      alt: 'Tooling maded easy for developers'
+      alt: 'Tooling maded easy for developers',
     },
     aside: {
-      level: 1
+      level: 1,
     },
     layout: {
-      fluid: true
+      fluid: true,
     },
     header: {
       logo: 'Logo',
@@ -39,9 +39,9 @@ export default defineAppConfig({
         {
           label: 'Realdecoy',
           href: 'https://realdecoy.com',
-          icon: 'IconNuxt'
-        }
-      ]
-    }
-  }
-})
+          icon: 'IconNuxt',
+        },
+      ],
+    },
+  },
+});

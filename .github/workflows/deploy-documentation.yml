@@ -1,0 +1,28 @@
+name: Frontier Documentation to S3 Bucket
+on:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+jobs:
+  update_documentation:
+    runs-on: windows-latest
+    steps:
+      - run: |
+          echo Documentation update pushed
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Install dependencies and build
+        run: |
+          cd docs
+          npm install
+          npm run generate
+      - name: deploy
+        run: aws s3 sync ./docs/.output/public/. s3://frontier.realdecoy.com

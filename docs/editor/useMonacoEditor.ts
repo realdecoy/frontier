@@ -1,7 +1,7 @@
-import { watch, Ref, unref, ref } from 'vue'
-import type { editor as Editor } from 'monaco-editor-core'
-import { createSingletonPromise } from '@vueuse/core'
-import { language as mdcLanguage } from './mdc.tmLanguage'
+import { watch, Ref, unref, ref } from 'vue';
+import type { editor as Editor } from 'monaco-editor-core';
+import { createSingletonPromise } from '@vueuse/core';
+import { language as mdcLanguage } from './mdc.tmLanguage';
 
 declare global {
   interface Window {
@@ -11,23 +11,23 @@ declare global {
     }
   }
 }
-const MONACO_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/'
+const MONACO_CDN_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.1/min/';
 
 const loadMonacoScript = (src: string) => {
   return new Promise((resolve, reject) => {
-    const loaderScript = window.document.createElement('script')
-    loaderScript.type = 'text/javascript'
-    loaderScript.src = MONACO_CDN_BASE + src
-    loaderScript.addEventListener('load', resolve)
-    loaderScript.addEventListener('error', reject)
-    window.document.body.appendChild(loaderScript)
-  })
-}
+    const loaderScript = window.document.createElement('script');
+    loaderScript.type = 'text/javascript';
+    loaderScript.src = MONACO_CDN_BASE + src;
+    loaderScript.addEventListener('load', resolve);
+    loaderScript.addEventListener('error', reject);
+    window.document.body.append(loaderScript);
+  });
+};
 
 const setupMonaco = createSingletonPromise(async () => {
-  await loadMonacoScript('vs/loader.min.js')
-  window.require.config({ paths: { vs: `${MONACO_CDN_BASE}/vs` } })
-  const monaco = await new Promise<any>(resolve => window.require(['vs/editor/editor.main'], resolve))
+  await loadMonacoScript('vs/loader.min.js');
+  window.require.config({ paths: { vs: `${MONACO_CDN_BASE}/vs` } });
+  const monaco = await new Promise<any>(resolve => window.require(['vs/editor/editor.main'], resolve));
 
   window.MonacoEnvironment = {
     getWorkerUrl: function () {
@@ -35,10 +35,10 @@ const setupMonaco = createSingletonPromise(async () => {
         self.MonacoEnvironment = {
           baseUrl: '${MONACO_CDN_BASE}'
         };
-        importScripts('${MONACO_CDN_BASE}vs/base/worker/workerMain.js');`
-      )}`
-    }
-  }
+        importScripts('${MONACO_CDN_BASE}vs/base/worker/workerMain.js');`,
+      )}`;
+    },
+  };
 
   monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
     ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
@@ -46,47 +46,64 @@ const setupMonaco = createSingletonPromise(async () => {
     noUnusedParameters: false,
     allowUnreachableCode: true,
     allowUnusedLabels: true,
-    strict: true
-  })
+    strict: true,
+  });
 
-  monaco.languages.register({ id: 'mdc' })
+  monaco.languages.register({ id: 'mdc' });
   // Register a tokens provider for the language
-  monaco.languages.setMonarchTokensProvider('mdc', mdcLanguage)
+  monaco.languages.setMonarchTokensProvider('mdc', mdcLanguage);
 
-  return { monaco }
-})
+  return { monaco };
+});
 
-export function useMonaco (
+export function useMonaco(
   target: Ref,
-  options: { readOnly?: boolean, code: string; language: string; onChanged?: (content: string) => void, onDidCreateEditor?: () => void }
+  options: { readOnly?: boolean, code: string; language: string; onChanged?: (content: string) => void, onDidCreateEditor?: () => void },
 ) {
-  const isSetup = ref(false)
-  let editor: Editor.IStandaloneCodeEditor
+  const isSetup = ref(false);
+  let editor: Editor.IStandaloneCodeEditor;
 
   const setContent = (content: string) => {
-    if (!isSetup.value) { return }
-    if (editor) { editor.setValue(content) }
-  }
+    if (!isSetup.value) {
+      return;
+    }
+
+    if (editor) {
+      editor.setValue(content);
+    }
+  };
 
   const init = async () => {
-    const { monaco } = await setupMonaco()
+    const { monaco } = await setupMonaco();
 
     watch(
       target,
       () => {
-        const el = unref(target)
+        const el = unref(target);
 
-        if (!el) { return }
+        if (!el) {
+          return;
+        }
 
         const extension = () => {
-          if (options.language === 'typescript') { return 'ts' } else if (options.language === 'javascript') { return 'js' } else if (options.language === 'html') { return 'html' }
-        }
+          if (options.language === 'typescript') {
+            return 'ts';
+          }
+
+          if (options.language === 'javascript') {
+            return 'js';
+          }
+
+          if (options.language === 'html') {
+            return 'html';
+          }
+        };
 
         const model = monaco.editor.createModel(
           options.code,
           options.language,
-          monaco.Uri.parse(`file:///root/${Date.now()}.${extension()}`)
-        )
+          monaco.Uri.parse(`file:///root/${Date.now()}.${extension()}`),
+        );
 
         editor = monaco.editor.create(el, {
           readOnly: options.readOnly,
@@ -103,31 +120,31 @@ export function useMonaco (
           automaticLayout: true,
           theme: 'vs-dark',
           minimap: {
-            enabled: false
+            enabled: false,
           },
-          onDidCreateEditor: options?.onDidCreateEditor
-        })
+          onDidCreateEditor: options?.onDidCreateEditor,
+        });
 
         setTimeout(() => {
-          options?.onDidCreateEditor?.()
-        }, 1000)
+          options?.onDidCreateEditor?.();
+        }, 1000);
 
-        isSetup.value = true
+        isSetup.value = true;
 
         editor.getModel()?.onDidChangeContent(() => {
-          options.onChanged?.(editor.getValue())
-        })
+          options.onChanged?.(editor.getValue());
+        });
       },
       {
         flush: 'post',
-        immediate: true
-      }
-    )
-  }
+        immediate: true,
+      },
+    );
+  };
 
-  init()
+  init();
 
   return {
-    setContent
-  }
+    setContent,
+  };
 }

@@ -1,6 +1,6 @@
-import { resolve } from 'pathe'
+import { resolve } from 'pathe';
 
-const alias = {}
+const alias = {};
 
 export default defineNuxtConfig({
   alias,
@@ -10,32 +10,32 @@ export default defineNuxtConfig({
         {
           defer: true,
           'data-domain': 'frontier.realdecoy.com',
-          src: 'https://plausible.io/js/script.js'
-        }
-      ]
-    }
+          src: 'https://plausible.io/js/script.js',
+        },
+      ],
+    },
   },
-  content: { },
+  content: {},
   nitro: {
     prerender: {
       routes: [
         '/',
-      ]
-    }
+      ],
+    },
   },
   modules: ['@nuxtlabs/github-module', '@nuxthq/studio'],
   extends: process.env.DOCUS_THEME_PATH || '@nuxt-themes/docus',
   github: {
     owner: 'realdecoy',
     repo: 'frontier',
-    branch: 'main'
+    branch: 'main',
   },
   colorMode: {
-    preference: 'dark'
+    preference: 'dark',
   },
   runtimeConfig: {
     content: {
-      host: 'https://content.nuxtjs.org'
+      host: 'https://content.nuxtjs.org',
     },
     public: {
       algolia: {
@@ -43,9 +43,9 @@ export default defineNuxtConfig({
         apiKey: '',
         langAttribute: 'lang',
         docSearch: {
-          indexName: 'frontier'
-        }
-      }
-    }
-  }
-})
+          indexName: 'frontier',
+        },
+      },
+    },
+  },
+});
